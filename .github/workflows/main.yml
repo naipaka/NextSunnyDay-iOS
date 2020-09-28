@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - README.md
+  pull_request:
+    branches:
+      - develop
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
+
+jobs:
+  build:
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Xcode Build
+        run: xcodebuild -sdk iphonesimulator -configuration Debug build
