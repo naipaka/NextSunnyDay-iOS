@@ -1,0 +1,585 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51382521763500B4E384 /* NextSunnyDayApp.swift */; };
+		915F513B2521763500B4E384 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F513A2521763500B4E384 /* ContentView.swift */; };
+		915F513D2521763600B4E384 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
+		915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513F2521763600B4E384 /* Preview Assets.xcassets */; };
+		915F514B2521763600B4E384 /* NextSunnyDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F514A2521763600B4E384 /* NextSunnyDayTests.swift */; };
+		915F51562521763600B4E384 /* NextSunnyDayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51552521763600B4E384 /* NextSunnyDayUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		915F51472521763600B4E384 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915F512D2521763500B4E384 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 915F51342521763500B4E384;
+			remoteInfo = NextSunnyDay;
+		};
+		915F51522521763600B4E384 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915F512D2521763500B4E384 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 915F51342521763500B4E384;
+			remoteInfo = NextSunnyDay;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		915F51352521763500B4E384 /* NextSunnyDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		915F51382521763500B4E384 /* NextSunnyDayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayApp.swift; sourceTree = "<group>"; };
+		915F513A2521763500B4E384 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		915F513C2521763600B4E384 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		915F513F2521763600B4E384 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		915F51412521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		915F51462521763600B4E384 /* NextSunnyDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextSunnyDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		915F514A2521763600B4E384 /* NextSunnyDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayTests.swift; sourceTree = "<group>"; };
+		915F514C2521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextSunnyDayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		915F51552521763600B4E384 /* NextSunnyDayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayUITests.swift; sourceTree = "<group>"; };
+		915F51572521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		915F51322521763500B4E384 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915F51432521763600B4E384 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915F514E2521763600B4E384 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		915F512C2521763500B4E384 = {
+			isa = PBXGroup;
+			children = (
+				915F51372521763500B4E384 /* NextSunnyDay */,
+				915F51492521763600B4E384 /* NextSunnyDayTests */,
+				915F51542521763600B4E384 /* NextSunnyDayUITests */,
+				915F51362521763500B4E384 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		915F51362521763500B4E384 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				915F51352521763500B4E384 /* NextSunnyDay.app */,
+				915F51462521763600B4E384 /* NextSunnyDayTests.xctest */,
+				915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		915F51372521763500B4E384 /* NextSunnyDay */ = {
+			isa = PBXGroup;
+			children = (
+				915F51382521763500B4E384 /* NextSunnyDayApp.swift */,
+				915F513A2521763500B4E384 /* ContentView.swift */,
+				915F513C2521763600B4E384 /* Assets.xcassets */,
+				915F51412521763600B4E384 /* Info.plist */,
+				915F513E2521763600B4E384 /* Preview Content */,
+			);
+			path = NextSunnyDay;
+			sourceTree = "<group>";
+		};
+		915F513E2521763600B4E384 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				915F513F2521763600B4E384 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		915F51492521763600B4E384 /* NextSunnyDayTests */ = {
+			isa = PBXGroup;
+			children = (
+				915F514A2521763600B4E384 /* NextSunnyDayTests.swift */,
+				915F514C2521763600B4E384 /* Info.plist */,
+			);
+			path = NextSunnyDayTests;
+			sourceTree = "<group>";
+		};
+		915F51542521763600B4E384 /* NextSunnyDayUITests */ = {
+			isa = PBXGroup;
+			children = (
+				915F51552521763600B4E384 /* NextSunnyDayUITests.swift */,
+				915F51572521763600B4E384 /* Info.plist */,
+			);
+			path = NextSunnyDayUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		915F51342521763500B4E384 /* NextSunnyDay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
+			buildPhases = (
+				915F51312521763500B4E384 /* Sources */,
+				915F51322521763500B4E384 /* Frameworks */,
+				915F51332521763500B4E384 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NextSunnyDay;
+			productName = NextSunnyDay;
+			productReference = 915F51352521763500B4E384 /* NextSunnyDay.app */;
+			productType = "com.apple.product-type.application";
+		};
+		915F51452521763600B4E384 /* NextSunnyDayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915F515D2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDayTests" */;
+			buildPhases = (
+				915F51422521763600B4E384 /* Sources */,
+				915F51432521763600B4E384 /* Frameworks */,
+				915F51442521763600B4E384 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				915F51482521763600B4E384 /* PBXTargetDependency */,
+			);
+			name = NextSunnyDayTests;
+			productName = NextSunnyDayTests;
+			productReference = 915F51462521763600B4E384 /* NextSunnyDayTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		915F51502521763600B4E384 /* NextSunnyDayUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915F51602521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDayUITests" */;
+			buildPhases = (
+				915F514D2521763600B4E384 /* Sources */,
+				915F514E2521763600B4E384 /* Frameworks */,
+				915F514F2521763600B4E384 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				915F51532521763600B4E384 /* PBXTargetDependency */,
+			);
+			name = NextSunnyDayUITests;
+			productName = NextSunnyDayUITests;
+			productReference = 915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		915F512D2521763500B4E384 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					915F51342521763500B4E384 = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+					915F51452521763600B4E384 = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 915F51342521763500B4E384;
+					};
+					915F51502521763600B4E384 = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 915F51342521763500B4E384;
+					};
+				};
+			};
+			buildConfigurationList = 915F51302521763500B4E384 /* Build configuration list for PBXProject "NextSunnyDay" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 915F512C2521763500B4E384;
+			productRefGroup = 915F51362521763500B4E384 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				915F51342521763500B4E384 /* NextSunnyDay */,
+				915F51452521763600B4E384 /* NextSunnyDayTests */,
+				915F51502521763600B4E384 /* NextSunnyDayUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		915F51332521763500B4E384 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */,
+				915F513D2521763600B4E384 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915F51442521763600B4E384 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915F514F2521763600B4E384 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		915F51312521763500B4E384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915F513B2521763500B4E384 /* ContentView.swift in Sources */,
+				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915F51422521763600B4E384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915F514B2521763600B4E384 /* NextSunnyDayTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915F514D2521763600B4E384 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915F51562521763600B4E384 /* NextSunnyDayUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		915F51482521763600B4E384 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 915F51342521763500B4E384 /* NextSunnyDay */;
+			targetProxy = 915F51472521763600B4E384 /* PBXContainerItemProxy */;
+		};
+		915F51532521763600B4E384 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 915F51342521763500B4E384 /* NextSunnyDay */;
+			targetProxy = 915F51522521763600B4E384 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		915F51582521763600B4E384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		915F51592521763600B4E384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		915F515B2521763600B4E384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = NextSunnyDay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		915F515C2521763600B4E384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = NextSunnyDay/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		915F515E2521763600B4E384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				INFOPLIST_FILE = NextSunnyDayTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/NextSunnyDay";
+			};
+			name = Debug;
+		};
+		915F515F2521763600B4E384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				INFOPLIST_FILE = NextSunnyDayTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/NextSunnyDay";
+			};
+			name = Release;
+		};
+		915F51612521763600B4E384 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				INFOPLIST_FILE = NextSunnyDayUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NextSunnyDay;
+			};
+			name = Debug;
+		};
+		915F51622521763600B4E384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				INFOPLIST_FILE = NextSunnyDayUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = NextSunnyDay;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		915F51302521763500B4E384 /* Build configuration list for PBXProject "NextSunnyDay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915F51582521763600B4E384 /* Debug */,
+				915F51592521763600B4E384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915F515B2521763600B4E384 /* Debug */,
+				915F515C2521763600B4E384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915F515D2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915F515E2521763600B4E384 /* Debug */,
+				915F515F2521763600B4E384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915F51602521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDayUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915F51612521763600B4E384 /* Debug */,
+				915F51622521763600B4E384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 915F512D2521763500B4E384 /* Project object */;
+}
