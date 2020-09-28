@@ -11,7 +11,7 @@ import SwiftUI
 struct NextSunnyDayApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NextSunnyDayView()
         }
     }
 }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51382521763500B4E384 /* NextSunnyDayApp.swift */; };
-		915F513B2521763500B4E384 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F513A2521763500B4E384 /* ContentView.swift */; };
+		915F513B2521763500B4E384 /* NextSunnyDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F513A2521763500B4E384 /* NextSunnyDayView.swift */; };
 		915F513D2521763600B4E384 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
 		915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513F2521763600B4E384 /* Preview Assets.xcassets */; };
 		915F514B2521763600B4E384 /* NextSunnyDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F514A2521763600B4E384 /* NextSunnyDayTests.swift */; };
@@ -35,7 +35,7 @@
 /* Begin PBXFileReference section */
 		915F51352521763500B4E384 /* NextSunnyDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915F51382521763500B4E384 /* NextSunnyDayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayApp.swift; sourceTree = "<group>"; };
-		915F513A2521763500B4E384 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		915F513A2521763500B4E384 /* NextSunnyDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayView.swift; sourceTree = "<group>"; };
 		915F513C2521763600B4E384 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		915F513F2521763600B4E384 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		915F51412521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,7 +96,12 @@
 			isa = PBXGroup;
 			children = (
 				915F51382521763500B4E384 /* NextSunnyDayApp.swift */,
-				915F513A2521763500B4E384 /* ContentView.swift */,
+				915F516A2521880800B4E384 /* API */,
+				915F516F2521883F00B4E384 /* Model */,
+				915F516E2521883600B4E384 /* View */,
+				915F516D2521882F00B4E384 /* ViewModel */,
+				915F516C2521882800B4E384 /* Protocol */,
+				915F516B2521881D00B4E384 /* Extension */,
 				915F513C2521763600B4E384 /* Assets.xcassets */,
 				915F51412521763600B4E384 /* Info.plist */,
 				915F513E2521763600B4E384 /* Preview Content */,
@@ -128,6 +133,57 @@
 				915F51572521763600B4E384 /* Info.plist */,
 			);
 			path = NextSunnyDayUITests;
+			sourceTree = "<group>";
+		};
+		915F516A2521880800B4E384 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		915F516B2521881D00B4E384 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		915F516C2521882800B4E384 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		915F516D2521882F00B4E384 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		915F516E2521883600B4E384 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				915F51702521884C00B4E384 /* NextSunnyDay */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		915F516F2521883F00B4E384 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		915F51702521884C00B4E384 /* NextSunnyDay */ = {
+			isa = PBXGroup;
+			children = (
+				915F513A2521763500B4E384 /* NextSunnyDayView.swift */,
+			);
+			path = NextSunnyDay;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				915F513B2521763500B4E384 /* ContentView.swift in Sources */,
+				915F513B2521763500B4E384 /* NextSunnyDayView.swift in Sources */,
 				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
