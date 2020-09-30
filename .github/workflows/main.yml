@@ -37,6 +37,7 @@ jobs:
           xcodebuild
           -sdk iphonesimulator
           -configuration Debug
+          -scheme NextSunnyDay
           build
           | xcpretty
 
