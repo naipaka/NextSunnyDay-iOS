@@ -21,6 +21,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install Mint
+        run: brew install mint
+
+      - name: Cache Mint packages
+        uses: actions/cache@v2
+        with:
+          path: mint
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+          estore-keys: |
+            ${{ runner.os }}-mint-
+
       - name: Xcode Build
         run: set -o pipefail &&
           xcodebuild
