@@ -194,9 +194,9 @@
 			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
 			buildPhases = (
 				915F51312521763500B4E384 /* Sources */,
+				917E40C82522D90600D77C3F /* SwiftLint */,
 				915F51322521763500B4E384 /* Frameworks */,
 				915F51332521763500B4E384 /* Resources */,
-				917E40C82522D90600D77C3F /* SwiftLint */,
 			);
 			buildRules = (
 			);
