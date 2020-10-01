@@ -1,5 +1,5 @@
 //
-//  Responses.swift
+//  WeeklyForecastResponse.swift
 //  NextSunnyDay
 //
 //  Created by rMac on 2020/10/01.
