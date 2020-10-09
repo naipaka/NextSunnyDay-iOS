@@ -15,6 +15,8 @@
 		915F51562521763600B4E384 /* NextSunnyDayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51552521763600B4E384 /* NextSunnyDayUITests.swift */; };
 		917E414E2525B13F00D77C3F /* WeeklyForecastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E414D2525B13F00D77C3F /* WeeklyForecastResponse.swift */; };
 		917E415F2525C85600D77C3F /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E415E2525C85600D77C3F /* WeatherError.swift */; };
+		917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E41632525CA5D00D77C3F /* AccessTokens.swift */; };
+		917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		915F51572521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		917E414D2525B13F00D77C3F /* WeeklyForecastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyForecastResponse.swift; sourceTree = "<group>"; };
 		917E415E2525C85600D77C3F /* WeatherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherError.swift; sourceTree = "<group>"; };
+		917E41632525CA5D00D77C3F /* AccessTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokens.swift; sourceTree = "<group>"; };
+		917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 		915F516A2521880800B4E384 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				917E41632525CA5D00D77C3F /* AccessTokens.swift */,
 				917E414C2525B11200D77C3F /* OpenWeatherAPI */,
 			);
 			path = API;
@@ -195,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				917E414D2525B13F00D77C3F /* WeeklyForecastResponse.swift */,
+				917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */,
 				917E415E2525C85600D77C3F /* WeatherError.swift */,
 			);
 			path = OpenWeatherAPI;
@@ -351,9 +357,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
 				917E414E2525B13F00D77C3F /* WeeklyForecastResponse.swift in Sources */,
 				915F513B2521763500B4E384 /* NextSunnyDayView.swift in Sources */,
 				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
+				917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */,
 				917E415F2525C85600D77C3F /* WeatherError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
