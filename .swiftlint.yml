@@ -25,6 +25,7 @@ disabled_rules:
   - explicit_top_level_acl # internalは省略できるため
   - force_unwrapping # 絶対nilにならないものもあるため
   - closure_body_length # 長く書かざるを得ない場合もあるため
+  - prefixed_toplevel_constant # kを書く習慣がないため
 
 # defaultルール以外にopt-inから採用するルール
 opt_in_rules:
@@ -79,7 +80,6 @@ opt_in_rules:
   - overridden_super_call
   - override_in_extension
   - pattern_matching_keywords
-  - prefixed_toplevel_constant
   - private_action
   - private_outlet
   - prohibited_super_call
@@ -144,6 +144,7 @@ type_name:
   max_length: 40
 
 identifier_name:
+  allowed_symbols: "_"
   min_length: # only min_length
     warning: 1
   reporter: "xcode"
