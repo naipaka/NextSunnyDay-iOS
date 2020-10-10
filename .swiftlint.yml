@@ -6,6 +6,7 @@ disabled_rules:
   - empty_enum_arguments # enumの引数を省略したいため
   - nesting # 可読性のあるネストもあるため
   - force_cast # 強制アンラップが適している場合もあるため
+  - force_try # 強制アンラップが適している場合もあるため
 
   # opt-inルールの中で無効にするルール
   - conditional_returns_on_newline # ガード文などは簡潔に一行で記述したいため
