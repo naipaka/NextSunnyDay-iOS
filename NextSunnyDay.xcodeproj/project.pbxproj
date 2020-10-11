@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		91500CB32533053400D5F47D /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91500CB22533053400D5F47D /* R.generated.swift */; };
 		91500CB9253306AC00D5F47D /* Rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 91500CB8253306AC00D5F47D /* Rswift */; };
+		91500CCF2533404300D5F47D /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91500CCE2533404300D5F47D /* R.generated.swift */; };
 		915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51382521763500B4E384 /* NextSunnyDayApp.swift */; };
 		915F513B2521763500B4E384 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F513A2521763500B4E384 /* HomeView.swift */; };
 		915F513D2521763600B4E384 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		91500CB22533053400D5F47D /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = NextSunnyDay/Resourece/R.generated.swift; sourceTree = SOURCE_ROOT; };
+		91500CCE2533404300D5F47D /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		915F51352521763500B4E384 /* NextSunnyDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915F51382521763500B4E384 /* NextSunnyDayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayApp.swift; sourceTree = "<group>"; };
 		915F513A2521763500B4E384 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -93,9 +93,16 @@
 		91500CBD2533074C00D5F47D /* Resourece */ = {
 			isa = PBXGroup;
 			children = (
-				91500CB22533053400D5F47D /* R.generated.swift */,
 			);
 			path = Resourece;
+			sourceTree = "<group>";
+		};
+		91500CCA25333FAD00D5F47D /* Script */ = {
+			isa = PBXGroup;
+			children = (
+				91500CCE2533404300D5F47D /* R.generated.swift */,
+			);
+			path = Script;
 			sourceTree = "<group>";
 		};
 		915F512C2521763500B4E384 = {
@@ -128,6 +135,7 @@
 				915F516D2521882F00B4E384 /* ViewModel */,
 				915F516C2521882800B4E384 /* Protocol */,
 				915F516B2521881D00B4E384 /* Extension */,
+				91500CCA25333FAD00D5F47D /* Script */,
 				91500CBD2533074C00D5F47D /* Resourece */,
 				915F513C2521763600B4E384 /* Assets.xcassets */,
 				915F51412521763600B4E384 /* Info.plist */,
@@ -368,11 +376,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				$SRCROOT/R.generated.swift,
+				$SRCROOT/NextSunnyDay/Script/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
+			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
 		};
 		917E40C82522D90600D77C3F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -402,7 +410,7 @@
 				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
 				917E414E2525B13F00D77C3F /* WeeklyForecastResponse.swift in Sources */,
 				915F513B2521763500B4E384 /* HomeView.swift in Sources */,
-				91500CB32533053400D5F47D /* R.generated.swift in Sources */,
+				91500CCF2533404300D5F47D /* R.generated.swift in Sources */,
 				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
 				917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */,
 				917E415F2525C85600D77C3F /* WeatherError.swift in Sources */,
