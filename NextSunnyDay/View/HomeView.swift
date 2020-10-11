@@ -9,8 +9,23 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            ZStack {
+                Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
+                VStack {}
+            }
+            .navigationBarTitle(R.string.home.navigationBarTitle())
+            .navigationBarItems(trailing: toSettingViewButton)
+        }
+    }
+}
+
+private extension HomeView {
+    var toSettingViewButton: some View {
+        Button(action: {}, label: {
+            Image(systemName: R.string.systemName.gearshapeFill())
+                .foregroundColor(.gray)
+        })
     }
 }
 
