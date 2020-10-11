@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91500CB32533053400D5F47D /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91500CB22533053400D5F47D /* R.generated.swift */; };
+		91500CB9253306AC00D5F47D /* Rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 91500CB8253306AC00D5F47D /* Rswift */; };
 		915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51382521763500B4E384 /* NextSunnyDayApp.swift */; };
 		915F513B2521763500B4E384 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F513A2521763500B4E384 /* HomeView.swift */; };
 		915F513D2521763600B4E384 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
@@ -40,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		91500CB22533053400D5F47D /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = NextSunnyDay/Resourece/R.generated.swift; sourceTree = SOURCE_ROOT; };
 		915F51352521763500B4E384 /* NextSunnyDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915F51382521763500B4E384 /* NextSunnyDayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayApp.swift; sourceTree = "<group>"; };
 		915F513A2521763500B4E384 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91500CB9253306AC00D5F47D /* Rswift in Frameworks */,
 				919EA78625304DAB008BC359 /* RealmSwift in Frameworks */,
 				919EA78425304DAB008BC359 /* Realm in Frameworks */,
 			);
@@ -86,6 +90,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		91500CBD2533074C00D5F47D /* Resourece */ = {
+			isa = PBXGroup;
+			children = (
+				91500CB22533053400D5F47D /* R.generated.swift */,
+			);
+			path = Resourece;
+			sourceTree = "<group>";
+		};
 		915F512C2521763500B4E384 = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +128,7 @@
 				915F516D2521882F00B4E384 /* ViewModel */,
 				915F516C2521882800B4E384 /* Protocol */,
 				915F516B2521881D00B4E384 /* Extension */,
+				91500CBD2533074C00D5F47D /* Resourece */,
 				915F513C2521763600B4E384 /* Assets.xcassets */,
 				915F51412521763600B4E384 /* Info.plist */,
 				915F513E2521763600B4E384 /* Preview Content */,
@@ -212,6 +225,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
 			buildPhases = (
+				91500CAE2533044C00D5F47D /* R.Swift */,
 				915F51312521763500B4E384 /* Sources */,
 				917E40C82522D90600D77C3F /* SwiftLint */,
 				915F51322521763500B4E384 /* Frameworks */,
@@ -225,6 +239,7 @@
 			packageProductDependencies = (
 				919EA78325304DAB008BC359 /* Realm */,
 				919EA78525304DAB008BC359 /* RealmSwift */,
+				91500CB8253306AC00D5F47D /* Rswift */,
 			);
 			productName = NextSunnyDay;
 			productReference = 915F51352521763500B4E384 /* NextSunnyDay.app */;
@@ -299,6 +314,7 @@
 			mainGroup = 915F512C2521763500B4E384;
 			packageReferences = (
 				919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */,
 			);
 			productRefGroup = 915F51362521763500B4E384 /* Products */;
 			projectDirPath = "";
@@ -338,6 +354,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		91500CAE2533044C00D5F47D /* R.Swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = R.Swift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
+		};
 		917E40C82522D90600D77C3F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,6 +402,7 @@
 				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
 				917E414E2525B13F00D77C3F /* WeeklyForecastResponse.swift in Sources */,
 				915F513B2521763500B4E384 /* HomeView.swift in Sources */,
+				91500CB32533053400D5F47D /* R.generated.swift in Sources */,
 				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
 				917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */,
 				917E415F2525C85600D77C3F /* WeatherError.swift in Sources */,
@@ -691,6 +728,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mac-cain13/R.swift.Library";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
 		919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa";
@@ -702,6 +747,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		91500CB8253306AC00D5F47D /* Rswift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */;
+			productName = Rswift;
+		};
 		919EA78325304DAB008BC359 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
