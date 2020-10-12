@@ -27,6 +27,18 @@ private extension HomeView {
                 .foregroundColor(.gray)
         })
     }
+
+    var emptyView: some View {
+        VStack {
+            Image(systemName: R.string.systemName.sunMinFill())
+                .resizable()
+                .frame(width: 160, height: 160, alignment: .center)
+                .padding()
+            Text(R.string.home.emptyText())
+            Spacer().frame(height: 60)
+        }
+        .foregroundColor(.gray)
+    }
 }
 
 struct HomeView_Previews: PreviewProvider {
