@@ -11,7 +11,8 @@ import SwiftUI
 struct NextSunnyDayApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            let viewModel = HomeViewModel()
+            HomeView(viewModel: viewModel)
         }
     }
 }
