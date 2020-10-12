@@ -24,6 +24,8 @@ private extension HomeView {
     var toSettingViewButton: some View {
         Button(action: {}, label: {
             Image(systemName: R.string.systemName.gearshapeFill())
+                .resizable()
+                .frame(width: 20, height: 20, alignment: .center)
                 .foregroundColor(.gray)
         })
     }
