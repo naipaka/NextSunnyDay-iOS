@@ -1,5 +1,5 @@
 //
-//  WeeklyForecastEntity.swift
+//  DailyWeatherForecastEntity.swift
 //  NextSunnyDay
 //
 //  Created by rMac on 2020/10/09.
@@ -8,8 +8,8 @@
 import Foundation
 import RealmSwift
 
-// MARK: - WeeklyForecastEntity
-class WeeklyForecastEntity: Object, Identifiable {
+// MARK: - DailyWeatherForecastEntity
+class DailyWeatherForecastEntity: Object, Identifiable {
     @objc dynamic var lat: Double = 0.0
     @objc dynamic var lon: Double = 0.0
     @objc dynamic var timezone: String = ""
@@ -63,10 +63,10 @@ class Weather: Object, Identifiable {
 }
 
 // MARK: - CRUD
-extension WeeklyForecastEntity {
+extension DailyWeatherForecastEntity {
     private static var realm = try! Realm()
 
-    static func all() -> Results<WeeklyForecastEntity> {
+    static func all() -> Results<DailyWeatherForecastEntity> {
         realm.objects(self)
     }
 
@@ -76,7 +76,7 @@ extension WeeklyForecastEntity {
         }
     }
 
-    static func create(with weeklyWeather: WeeklyForecastEntity) {
+    static func create(with weeklyWeather: DailyWeatherForecastEntity) {
         try! realm.write {
             realm.add(weeklyWeather)
         }

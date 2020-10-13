@@ -11,7 +11,7 @@ import Foundation
 protocol WeatherFetchable {
     func weeklyWeatherForecast(
         forLat lat: Double, forLon lon: Double
-    ) -> AnyPublisher<WeeklyForecastResponse, WeatherError>
+    ) -> AnyPublisher<DailyWeatherForecastResponse, WeatherError>
 }
 
 class WeatherFetcher {
@@ -68,7 +68,7 @@ private extension WeatherFetcher {
 extension WeatherFetcher: WeatherFetchable {
     func weeklyWeatherForecast(
         forLat lat: Double, forLon lon: Double
-    ) -> AnyPublisher<WeeklyForecastResponse, WeatherError> {
+    ) -> AnyPublisher<DailyWeatherForecastResponse, WeatherError> {
         forecast(with: makeWeeklyForecastComponents(withLat: lat, withLon: lon))
     }
 
