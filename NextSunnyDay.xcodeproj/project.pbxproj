@@ -17,6 +17,8 @@
 		915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513F2521763600B4E384 /* Preview Assets.xcassets */; };
 		915F514B2521763600B4E384 /* NextSunnyDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F514A2521763600B4E384 /* NextSunnyDayTests.swift */; };
 		915F51562521763600B4E384 /* NextSunnyDayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51552521763600B4E384 /* NextSunnyDayUITests.swift */; };
+		917094E82535423C00975181 /* NextSunnyDayMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094E72535423C00975181 /* NextSunnyDayMediumView.swift */; };
+		917094ED2535427000975181 /* NextSunnyDay.strings in Resources */ = {isa = PBXBuildFile; fileRef = 917094EC2535427000975181 /* NextSunnyDay.strings */; };
 		917E414E2525B13F00D77C3F /* DailyWeatherForecastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E414D2525B13F00D77C3F /* DailyWeatherForecastResponse.swift */; };
 		917E415F2525C85600D77C3F /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E415E2525C85600D77C3F /* WeatherError.swift */; };
 		917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E41632525CA5D00D77C3F /* AccessTokens.swift */; };
@@ -61,6 +63,8 @@
 		915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextSunnyDayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		915F51552521763600B4E384 /* NextSunnyDayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayUITests.swift; sourceTree = "<group>"; };
 		915F51572521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		917094E72535423C00975181 /* NextSunnyDayMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayMediumView.swift; sourceTree = "<group>"; };
+		917094EC2535427000975181 /* NextSunnyDay.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = NextSunnyDay.strings; sourceTree = "<group>"; };
 		917E414D2525B13F00D77C3F /* DailyWeatherForecastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherForecastResponse.swift; sourceTree = "<group>"; };
 		917E415E2525C85600D77C3F /* WeatherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherError.swift; sourceTree = "<group>"; };
 		917E41632525CA5D00D77C3F /* AccessTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokens.swift; sourceTree = "<group>"; };
@@ -119,6 +123,7 @@
 			children = (
 				91500CE12533497200D5F47D /* SystemName.strings */,
 				91500CD82533476F00D5F47D /* Home.strings */,
+				917094EC2535427000975181 /* NextSunnyDay.strings */,
 			);
 			path = strings;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				915F513A2521763500B4E384 /* HomeView.swift */,
+				917094E72535423C00975181 /* NextSunnyDayMediumView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */,
+				917094ED2535427000975181 /* NextSunnyDay.strings in Resources */,
 				915F513D2521763600B4E384 /* Assets.xcassets in Resources */,
 				91500CD92533476F00D5F47D /* Home.strings in Resources */,
 				91500CE22533497200D5F47D /* SystemName.strings in Resources */,
@@ -436,6 +443,7 @@
 				91500CCF2533404300D5F47D /* R.generated.swift in Sources */,
 				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
 				917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */,
+				917094E82535423C00975181 /* NextSunnyDayMediumView.swift in Sources */,
 				91A2960F2534369F00CCC7B2 /* ViewModelObject.swift in Sources */,
 				917E415F2525C85600D77C3F /* WeatherError.swift in Sources */,
 				919EA78B253051F1008BC359 /* DailyWeatherForecastEntity.swift in Sources */,
