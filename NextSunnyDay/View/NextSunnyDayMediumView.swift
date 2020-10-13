@@ -7,10 +7,16 @@
 
 import SwiftUI
 
-struct NextSunnyDayMediumView: View {
+struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
+    @ObservedObject private var viewModel: T
+
+    init(viewModel: T) {
+        self.viewModel = viewModel
+    }
+
     var body: some View {
         ZStack {
-            Color(R.color.nextSunnyDayBackgroudColor() ?? .black)
+            viewModel.output.backgroundColor
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
@@ -31,28 +37,25 @@ struct NextSunnyDayMediumView: View {
                     Spacer()
                         .frame(maxWidth: 20)
                     VStack(alignment: .leading) {
-                        // TODO: Published from ViewModel
-                        Text("東京都港区")
+                        Text(viewModel.output.cityName)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fixedSize()
                         Spacer()
                             .frame(maxHeight: 8)
-                        // TODO: Published from ViewModel
-                        Text("12/22 (火)")
+                        Text(viewModel.output.nextSunnyDay)
                             .font(.system(size: 40))
                             .fontWeight(.bold)
                             .fixedSize()
                     }
                     Spacer()
                         .frame(maxWidth: 40)
-                    VStack {
+                    VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
                             Text(R.string.nextSunnyDay.max())
-                                .font(.system(size: 10))
+                                .font(.system(size: 14))
                                 .fixedSize()
-                            // TODO: Published from ViewModel
-                            Text("28℃")
+                            Text(viewModel.output.maxTemperature)
                                 .font(.system(size: 18))
                                 .fontWeight(.semibold)
                                 .fixedSize()
@@ -61,10 +64,9 @@ struct NextSunnyDayMediumView: View {
                             .frame(maxHeight: 12)
                         VStack(alignment: .leading) {
                             Text(R.string.nextSunnyDay.min())
-                                .font(.system(size: 10))
+                                .font(.system(size: 14))
                                 .fixedSize()
-                            // TODO: Published from ViewModel
-                            Text("21℃")
+                            Text(viewModel.output.minTemperature)
                                 .font(.system(size: 18))
                                 .fontWeight(.semibold)
                                 .fixedSize()
@@ -84,7 +86,10 @@ struct NextSunnyDayMediumView: View {
 
 struct NextSunnyDayMediumView_Previews: PreviewProvider {
     static var contentView: some View {
-        NextSunnyDayMediumView()
+        Group {
+            NextSunnyDayMediumView(viewModel: MockViewModel(nextSunnyDay: "12/22 (火)", maxTemperature: "10.0℃", minTemperature: "2.0℃"))
+            NextSunnyDayMediumView(viewModel: MockViewModel(backgroundColor: Color(R.color.noSunnyDayBackgroundColor() ?? .gray)))
+        }
     }
 
     static var previews: some View {
@@ -108,6 +113,50 @@ struct NextSunnyDayMediumView_Previews: PreviewProvider {
             // 414pt × 896pt (iPhone XR/XS Max/11/11 Pro Max)
             contentView
                 .previewLayout(.fixed(width: 360.0, height: 169.0))
+        }
+    }
+}
+
+extension NextSunnyDayMediumView_Previews {
+    final class MockViewModel: NextSunnyDayViewModelObject {
+        final class Input: NextSunnyDayViewModelInputObject {}
+
+        final class Binding: NextSunnyDayViewModelBindingObject {}
+
+        final class Output: NextSunnyDayViewModelOutputObject {
+            @Published var backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+            @Published var cityName = ""
+            @Published var nextSunnyDay = ""
+            @Published var maxTemperature = ""
+            @Published var minTemperature = ""
+        }
+
+        var input: Input
+
+        var binding: Binding
+
+        var output: Output
+
+        init(
+            backgroundColor: Color = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange),
+            cityName: String = "東京都港区",
+            nextSunnyDay: String = R.string.nextSunnyDay.nextWeekOnwards(),
+            maxTemperature: String = R.string.nextSunnyDay.hyphen(),
+            minTemperature: String = R.string.nextSunnyDay.hyphen()
+        ) {
+            let input = Input()
+            let binding = Binding()
+            let output = Output()
+
+            output.cityName = cityName
+            output.nextSunnyDay = nextSunnyDay
+            output.backgroundColor = backgroundColor
+            output.maxTemperature = maxTemperature
+            output.minTemperature = minTemperature
+
+            self.input = input
+            self.binding = binding
+            self.output = output
         }
     }
 }
