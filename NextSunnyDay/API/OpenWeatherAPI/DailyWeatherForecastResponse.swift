@@ -1,5 +1,5 @@
 //
-//  WeeklyForecastResponse.swift
+//  DailyWeatherForecastResponse.swift
 //  NextSunnyDay
 //
 //  Created by rMac on 2020/10/01.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-// MARK: - WeeklyForecastResponse
-struct WeeklyForecastResponse: Codable {
+// MARK: - DailyWeatherForecastResponse
+struct DailyWeatherForecastResponse: Codable {
     let lat: Double
     let lon: Double
     let timezone: String
