@@ -7,10 +7,16 @@
 
 import SwiftUI
 
-struct NextSunnyDaySmallView: View {
+struct NextSunnyDaySmallView<T>: View where T: NextSunnyDayViewModelObject {
+    @ObservedObject private var viewModel: T
+
+    init(viewModel: T) {
+        self.viewModel = viewModel
+    }
+
     var body: some View {
         ZStack {
-            Color(R.color.nextSunnyDayBackgroudColor() ?? .black)
+            viewModel.output.backgroundColor
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
@@ -33,15 +39,13 @@ struct NextSunnyDaySmallView: View {
                     Spacer()
                         .frame(maxWidth: 20)
                     VStack(alignment: .leading) {
-                        // TODO: Published from ViewModel
-                        Text("東京都港区")
+                        Text(viewModel.output.cityName)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
                             .fixedSize()
                         Spacer()
                             .frame(maxHeight: 8)
-                        // TODO: Published from ViewModel
-                        Text("12/22 (火)")
+                        Text(viewModel.output.nextSunnyDay)
                             .font(.system(size: 28))
                             .fontWeight(.bold)
                             .fixedSize()
@@ -60,7 +64,10 @@ struct NextSunnyDaySmallView: View {
 
 struct NextSunnyDaySmallView_Previews: PreviewProvider {
     static var contentView: some View {
-        NextSunnyDaySmallView()
+        Group {
+            NextSunnyDaySmallView(viewModel: MockViewModel(nextSunnyDay: "12/22 (火)"))
+            NextSunnyDaySmallView(viewModel: MockViewModel(backgroundColor: Color(R.color.noSunnyDayBackgroundColor() ?? .gray)))
+        }
     }
 
     static var previews: some View {
@@ -84,6 +91,46 @@ struct NextSunnyDaySmallView_Previews: PreviewProvider {
             // 414pt × 896pt (iPhone XR/XS Max/11/11 Pro Max)
             contentView
                 .previewLayout(.fixed(width: 169.0, height: 169.0))
+        }
+    }
+}
+
+extension NextSunnyDaySmallView_Previews {
+    final class MockViewModel: NextSunnyDayViewModelObject {
+        final class Input: NextSunnyDayViewModelInputObject {}
+
+        final class Binding: NextSunnyDayViewModelBindingObject {}
+
+        final class Output: NextSunnyDayViewModelOutputObject {
+            @Published var backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+            @Published var cityName = ""
+            @Published var nextSunnyDay = ""
+            @Published var maxTemperature = ""
+            @Published var minTemperature = ""
+        }
+
+        var input: Input
+
+        var binding: Binding
+
+        var output: Output
+
+        init(
+            cityName: String = "東京都港区",
+            nextSunnyDay: String = R.string.nextSunnyDay.nextWeekOnwards(),
+            backgroundColor: Color = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+        ) {
+            let input = Input()
+            let binding = Binding()
+            let output = Output()
+
+            output.cityName = cityName
+            output.nextSunnyDay = nextSunnyDay
+            output.backgroundColor = backgroundColor
+
+            self.input = input
+            self.binding = binding
+            self.output = output
         }
     }
 }
