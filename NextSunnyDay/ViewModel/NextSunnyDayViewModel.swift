@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import RealmSwift
+import SwiftUI
 
 // MARK: - NextSunnyDayViewModelObject
 protocol NextSunnyDayViewModelObject: ViewModelObject where Input: NextSunnyDayViewModelInputObject, Binding: NextSunnyDayViewModelBindingObject, Output: NextSunnyDayViewModelOutputObject {
@@ -26,6 +27,7 @@ protocol NextSunnyDayViewModelBindingObject: BindingObject {
 
 // MARK: - NextSunnyDayViewModelOutputObject
 protocol NextSunnyDayViewModelOutputObject: OutputObject {
+    var backgroundColor: Color { get }
     var cityName: String { get }
     var nextSunnyDay: String { get }
     var maxTemperature: String { get }
@@ -39,6 +41,7 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
     final class Binding: NextSunnyDayViewModelBindingObject {}
 
     final class Output: NextSunnyDayViewModelOutputObject {
+        @Published var backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
         @Published var cityName = ""
         @Published var nextSunnyDay = ""
         @Published var maxTemperature = ""
@@ -62,12 +65,13 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
             let formatter = DateFormatter()
             formatter.dateFormat = "yMMMdE"
             let nextSunnyDay = formatter.string(from: Date(timeIntervalSince1970: Double(nearestSunnyDay.date)))
-            
+
             output.cityName = forecast.cityName
             output.nextSunnyDay = nextSunnyDay
             output.maxTemperature = String("\(nearestSunnyDay.temp?.max)")
             output.minTemperature = String("\(nearestSunnyDay.temp?.min)")
         } else {
+            output.backgroundColor = Color(R.color.noSunnyDayBackgroundColor() ?? .gray)
             output.cityName = forecast.cityName
             output.nextSunnyDay = R.string.nextSunnyDay.nextWeekOnwards()
             output.maxTemperature = R.string.nextSunnyDay.hyphen()
