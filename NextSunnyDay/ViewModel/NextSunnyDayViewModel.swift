@@ -41,11 +41,11 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
     final class Binding: NextSunnyDayViewModelBindingObject {}
 
     final class Output: NextSunnyDayViewModelOutputObject {
-        @Published var backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+        @Published var backgroundColor = Color(R.color.noSunnyDayBackgroundColor() ?? .gray)
         @Published var cityName = ""
-        @Published var nextSunnyDay = ""
-        @Published var maxTemperature = ""
-        @Published var minTemperature = ""
+        @Published var nextSunnyDay = R.string.nextSunnyDay.nextWeekOnwards()
+        @Published var maxTemperature = R.string.nextSunnyDay.hyphen()
+        @Published var minTemperature = R.string.nextSunnyDay.hyphen()
     }
 
     var input: Input
@@ -60,22 +60,14 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
         let output = Output()
 
         // output
+        output.cityName = forecast.cityName
         if let nearestSunnyDay = forecast.daily.filter({ sunnyCodes.contains($0.weather.first?.id ?? 0) }).min(by: { $0.date < $1.date }) {
-            // UNIX -> Date
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM/ddE"
-            let nextSunnyDay = formatter.string(from: Date(timeIntervalSince1970: Double(nearestSunnyDay.date)))
-
-            output.cityName = forecast.cityName
-            output.nextSunnyDay = nextSunnyDay
-            output.maxTemperature = String("\(nearestSunnyDay.temp?.max)℃")
-            output.minTemperature = String("\(nearestSunnyDay.temp?.min)℃")
-        } else {
-            output.backgroundColor = Color(R.color.noSunnyDayBackgroundColor() ?? .gray)
-            output.cityName = forecast.cityName
-            output.nextSunnyDay = R.string.nextSunnyDay.nextWeekOnwards()
-            output.maxTemperature = R.string.nextSunnyDay.hyphen()
-            output.minTemperature = R.string.nextSunnyDay.hyphen()
+            output.backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+            output.nextSunnyDay = Date(timeIntervalSince1970: Double(nearestSunnyDay.date)).format(text: "MM/dd (EEE)")
+            if let temp = nearestSunnyDay.temp {
+                output.maxTemperature = String("\(temp.max)℃")
+                output.minTemperature = String("\(temp.min)℃")
+            }
         }
 
         self.input = input
