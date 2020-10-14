@@ -20,7 +20,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 Spacer()
-                    .frame(minHeight: 16)
+                    .frame(idealHeight: 20)
                 HStack {
                     Spacer()
                         .frame(maxWidth: 16)
@@ -76,7 +76,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                         .frame(maxWidth: 20)
                 }
                 Spacer()
-                    .frame(maxHeight: 16)
+                    .frame(idealHeight: 20)
             }
         }
         .foregroundColor(.white)
