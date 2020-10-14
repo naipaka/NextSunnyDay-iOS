@@ -27,7 +27,7 @@ protocol DailyWeatherViewModelBindingObject: BindingObject {
 
 // MARK: - DailyWeatherViewModelOutputObject
 protocol DailyWeatherViewModelOutputObject: OutputObject {
-    var icon: Image { get }
+    var icon: WeatherIcon { get }
     var description: String { get }
     var date: String { get }
     var maxTemperature: String { get }
@@ -41,7 +41,7 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
     final class Binding: DailyWeatherViewModelBindingObject {}
 
     final class Output: DailyWeatherViewModelOutputObject {
-        @Published var icon = Image(systemName: R.string.systemName.gearshapeFill())
+        @Published var icon = WeatherIcon(code: 0)
         @Published var description: String = R.string.dailyWeather.hyphen()
         @Published var date: String = R.string.dailyWeather.hyphen()
         @Published var maxTemperature: String = R.string.dailyWeather.hyphen()
@@ -60,7 +60,7 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
         let output = Output()
 
         // output
-        output.icon = Image(systemName: WeatherConditionCode.iconSystemName(code: daily.weather.first?.id ?? 0))
+        output.icon = WeatherIcon(code: daily.weather.first?.id ?? 0)
         output.description = daily.weather.first?.description ?? R.string.dailyWeather.hyphen()
         output.date = Date(timeIntervalSince1970: Double(daily.date)).format(text: "MM/dd (EEE)")
         if let temp = daily.temp {

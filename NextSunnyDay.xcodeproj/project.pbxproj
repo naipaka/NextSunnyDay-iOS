@@ -34,6 +34,7 @@
 		91DDF1A2253699DC009F9A96 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A1253699DC009F9A96 /* Date+Extension.swift */; };
 		91DDF1A72536AC16009F9A96 /* DailyWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */; };
 		91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1AB2536C052009F9A96 /* DailyWeather.strings */; };
+		91DDF1D52536D6C0009F9A96 /* WeatherIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		91DDF1A1253699DC009F9A96 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherViewModel.swift; sourceTree = "<group>"; };
 		91DDF1AB2536C052009F9A96 /* DailyWeather.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = DailyWeather.strings; sourceTree = "<group>"; };
+		91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIcon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 				917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */,
 				917E415E2525C85600D77C3F /* WeatherError.swift */,
 				917094FE2535559000975181 /* WeatherConditionCode.swift */,
+				91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */,
 			);
 			path = OpenWeatherAPI;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */,
 				917094E82535423C00975181 /* NextSunnyDayMediumView.swift in Sources */,
 				917094F2253545DB00975181 /* NextSunnyDaySmallView.swift in Sources */,
+				91DDF1D52536D6C0009F9A96 /* WeatherIcon.swift in Sources */,
 				91A2960F2534369F00CCC7B2 /* ViewModelObject.swift in Sources */,
 				917E415F2525C85600D77C3F /* WeatherError.swift in Sources */,
 				919EA78B253051F1008BC359 /* DailyWeatherForecastEntity.swift in Sources */,
