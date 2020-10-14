@@ -1,0 +1,13 @@
+/*
+  NextSunnyDay.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/13.
+  
+*/
+
+"nextSunnyDay" = "次に晴れる日";
+"max" = "最高";
+"min" = "最低";
+"nextWeekOnwards" = "来週以降";
+"hyphen" = "-";

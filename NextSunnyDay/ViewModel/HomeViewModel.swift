@@ -24,7 +24,7 @@ protocol HomeViewModelBindingObject: BindingObject {
 
 // MARK: - HomeViewModelOutputObject
 protocol HomeViewModelOutputObject: OutputObject {
-    var dataSource: [Daily] { get }
+    var forecast: DailyWeatherForecastEntity { get }
 }
 
 // MARK: - HomeViewModel
@@ -34,7 +34,7 @@ class HomeViewModel: HomeViewModelObject {
     final class Binding: HomeViewModelBindingObject {}
 
     final class Output: HomeViewModelOutputObject {
-        @Published var dataSource: [Daily] = []
+        @Published var forecast = DailyWeatherForecastEntity()
     }
 
     var input: Input
