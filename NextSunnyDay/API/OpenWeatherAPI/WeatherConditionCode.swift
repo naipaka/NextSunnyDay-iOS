@@ -76,9 +76,10 @@ enum WeatherConditionCode: Int {
     case overcastClouds = 804
 }
 
-// MARK: - SunnyCodes
-let sunnyCodes = [
-    WeatherConditionCode.clearSky.rawValue,
-    WeatherConditionCode.fewClouds.rawValue,
-    WeatherConditionCode.scatteredClouds.rawValue
-]
+extension WeatherConditionCode {
+    static let sunnyCodes = [
+        Self.clearSky.rawValue,
+        Self.fewClouds.rawValue,
+        Self.scatteredClouds.rawValue
+    ]
+}

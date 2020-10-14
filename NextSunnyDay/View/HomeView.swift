@@ -25,7 +25,8 @@ struct HomeView<T>: View where T: HomeViewModelObject {
                         VStack {
                             Spacer().frame(height: 12)
                             nextSunnyDayView
-                            // TODO: Add WeeklyForecastView
+                            Spacer().frame(height: 36)
+                            dailyWeatherView
                         }
                     }
                 }
@@ -63,6 +64,25 @@ private extension HomeView {
             Spacer()
                 .frame(maxWidth: 18)
             NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(viewModel.output.forecast))
+            Spacer()
+                .frame(maxWidth: 18)
+        }
+    }
+
+    var dailyWeatherView: some View {
+        HStack {
+            Spacer()
+                .frame(maxWidth: 18)
+            VStack(alignment: .leading) {
+                Text(R.string.home.weeklyWeather())
+                    .font(.system(size: 24))
+                    .bold()
+                ForEach(viewModel.output.forecast.daily) {
+                    DailyWeatherView(viewModel: DailyWeatherViewModel($0))
+                        .frame(height: 82)
+                }
+                Spacer()
+            }
             Spacer()
                 .frame(maxWidth: 18)
         }
@@ -109,6 +129,19 @@ extension HomeView_Previews {
 
     private static func mockEntity() -> DailyWeatherForecastEntity {
         let mockEntity = DailyWeatherForecastEntity()
+        mockEntity.cityName = "東京都港区"
+        mockEntity.daily.append(mockDaily(date: 1_608_433_200, code: 300, description: "雨"))
+        mockEntity.daily.append(mockDaily(date: 1_608_519_600, code: 500, description: "天気雨"))
+        mockEntity.daily.append(mockDaily(date: 1_608_606_000, code: 800, description: "快晴"))
+        mockEntity.daily.append(mockDaily(date: 1_608_692_400, code: 803, description: "曇り"))
+        mockEntity.daily.append(mockDaily(date: 1_608_778_800, code: 801, description: "晴れ"))
+        mockEntity.daily.append(mockDaily(date: 1_608_865_200, code: 511, description: "雪"))
+        mockEntity.daily.append(mockDaily(date: 1_608_951_600, code: 804, description: "暑い雲"))
+        mockEntity.daily.append(mockDaily(date: 1_609_038_000, code: 200, description: "雷雨"))
+        return mockEntity
+    }
+
+    private static func mockDaily(date: Int, code: Int, description: String) -> Daily {
         let daily = Daily()
         let temp = Temp()
         let feelsLike = FeelsLike()
@@ -116,14 +149,12 @@ extension HomeView_Previews {
 
         temp.min = 2.0
         temp.max = 11.0
-        weather.id = 800
-        daily.date = 1_608_606_000
+        weather.id = code
+        weather.weatherDescription = description
+        daily.date = date
         daily.temp = temp
         daily.feelsLike = feelsLike
         daily.weather.append(weather)
-        mockEntity.cityName = "東京都港区"
-        mockEntity.daily.append(daily)
-
-        return mockEntity
+        return daily
     }
 }
