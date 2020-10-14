@@ -35,6 +35,7 @@
 		91DDF1A72536AC16009F9A96 /* DailyWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */; };
 		91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1AB2536C052009F9A96 /* DailyWeather.strings */; };
 		91DDF1D52536D6C0009F9A96 /* WeatherIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */; };
+		91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherViewModel.swift; sourceTree = "<group>"; };
 		91DDF1AB2536C052009F9A96 /* DailyWeather.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = DailyWeather.strings; sourceTree = "<group>"; };
 		91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIcon.swift; sourceTree = "<group>"; };
+		91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 				915F513A2521763500B4E384 /* HomeView.swift */,
 				917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */,
 				917094E72535423C00975181 /* NextSunnyDayMediumView.swift */,
+				91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
+				91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */,
 				917E414E2525B13F00D77C3F /* DailyWeatherForecastResponse.swift in Sources */,
 				917094FA253549DC00975181 /* NextSunnyDayViewModel.swift in Sources */,
 				915F513B2521763500B4E384 /* HomeView.swift in Sources */,
