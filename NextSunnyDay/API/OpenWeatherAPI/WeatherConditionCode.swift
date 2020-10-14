@@ -76,9 +76,90 @@ enum WeatherConditionCode: Int {
     case overcastClouds = 804
 }
 
-// MARK: - SunnyCodes
-let sunnyCodes = [
-    WeatherConditionCode.clearSky.rawValue,
-    WeatherConditionCode.fewClouds.rawValue,
-    WeatherConditionCode.scatteredClouds.rawValue
-]
+extension WeatherConditionCode {
+    static let sunnyCodes = [
+        Self.clearSky.rawValue,
+        Self.fewClouds.rawValue,
+        Self.scatteredClouds.rawValue
+    ]
+
+    static func iconSystemName(code: Int) -> String {
+        switch code {
+        case Self.clearSky.rawValue:
+            return R.string.systemName.sunMinFill()
+
+        case Self.fewClouds.rawValue,
+             Self.scatteredClouds.rawValue:
+            return R.string.systemName.cloudSunFill()
+
+        case Self.brokenClouds.rawValue:
+            return R.string.systemName.cloudFill()
+
+        case Self.overcastClouds.rawValue:
+            return R.string.systemName.smokeFill()
+
+        case Self.lightRain.rawValue,
+             Self.moderateRain.rawValue,
+             Self.heavyIntensityRain.rawValue,
+             Self.veryHeavyRain.rawValue,
+             Self.extremeRain.rawValue:
+            return R.string.systemName.cloudSunRainFill()
+
+        case Self.freezingRain.rawValue,
+             Self.lightSnow.rawValue,
+             Self.snow.rawValue,
+             Self.heavySnow.rawValue,
+             Self.sleet.rawValue,
+             Self.lightShowerSleet.rawValue,
+             Self.showerSleet.rawValue,
+             Self.lightRainAndSnow.rawValue,
+             Self.rainAndSnow.rawValue,
+             Self.lightShowerSnow.rawValue,
+             Self.showerSnow.rawValue,
+             Self.heavyShowerSnow.rawValue:
+            return R.string.systemName.cloudSnowFill()
+
+        case Self.lightIntensityDrizzle.rawValue,
+             Self.drizzle.rawValue,
+             Self.heavyIntensityDrizzle.rawValue,
+             Self.lightIntensityDrizzleRain.rawValue,
+             Self.drizzleRain.rawValue,
+             Self.heavyIntensityDrizzleRain.rawValue,
+             Self.showerRainAndDrizzle.rawValue,
+             Self.heavyShowerRainAndDrizzle.rawValue,
+             Self.showerDrizzle.rawValue,
+             Self.lightIntensityShowerRain.rawValue,
+             Self.showerRain.rawValue,
+             Self.heavyIntensityShowerRain.rawValue,
+             Self.raggedShowerRain.rawValue:
+            return R.string.systemName.cloudHeavyrainFill()
+
+        case Self.thunderstormWithLightRain.rawValue,
+             Self.thunderstormWithRain.rawValue,
+             Self.thunderstormWithHeavyRain.rawValue,
+             Self.lightThunderstorm.rawValue,
+             Self.thunderstorm.rawValue,
+             Self.heavyThunderstorm.rawValue,
+             Self.raggedThunderstorm.rawValue,
+             Self.thunderstormWithLightDrizzle.rawValue,
+             Self.thunderstormWithDrizzle.rawValue,
+             Self.thunderstormWithHeavyDrizzle.rawValue:
+            return R.string.systemName.cloudBoltRainFill()
+
+        case Self.mist.rawValue,
+             Self.smoke.rawValue,
+             Self.haze.rawValue,
+             Self.sandAmdDustWhirls.rawValue,
+             Self.fog.rawValue,
+             Self.sand.rawValue,
+             Self.dust.rawValue,
+             Self.volcanicAsh.rawValue,
+             Self.squalls.rawValue,
+             Self.tornado.rawValue:
+            return R.string.systemName.tornado()
+
+        default:
+            return R.string.systemName.questionmarkCircleFill()
+        }
+    }
+}

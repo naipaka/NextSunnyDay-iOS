@@ -61,7 +61,7 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
 
         // output
         output.cityName = forecast.cityName
-        if let nearestSunnyDay = forecast.daily.filter({ sunnyCodes.contains($0.weather.first?.id ?? 0) }).min(by: { $0.date < $1.date }) {
+        if let nearestSunnyDay = forecast.daily.filter({ WeatherConditionCode.sunnyCodes.contains($0.weather.first?.id ?? 0) }).min(by: { $0.date < $1.date }) {
             output.backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
             output.nextSunnyDay = Date(timeIntervalSince1970: Double(nearestSunnyDay.date)).format(text: "MM/dd (EEE)")
             if let temp = nearestSunnyDay.temp {
