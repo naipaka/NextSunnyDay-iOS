@@ -15,37 +15,41 @@ struct DailyWeatherView<T>: View where T: DailyWeatherViewModelObject {
     }
 
     var body: some View {
-        HStack {
-            Spacer()
-                .frame(width: 24)
-            VStack {
+        ZStack {
+            Color(.systemBackground).edgesIgnoringSafeArea(.all)
+            HStack {
                 Spacer()
-                    .frame(height: 14)
-                viewModel.output.icon.image
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                Text(viewModel.output.description)
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-            }
-            .foregroundColor(viewModel.output.icon.color)
-            Spacer()
-            Text(viewModel.output.date)
-                .font(.system(size: 24))
-                .fixedSize()
-            Spacer()
-            VStack {
-                Text(viewModel.output.maxTemperature)
-                    .font(.system(size: 14))
-                    .foregroundColor(.red)
+                    .frame(width: 24)
+                VStack {
+                    Spacer()
+                        .frame(height: 14)
+                    viewModel.output.icon.image
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(viewModel.output.icon.color)
+                    Text(viewModel.output.weatherDescription)
+                        .fontWeight(.semibold)
+                        .fixedSize()
+                }
+                .frame(width: 32)
+                Spacer().frame(maxWidth: 24)
+                Text(viewModel.output.date)
+                    .font(.system(size: 24))
+                    .fixedSize()
                 Spacer()
-                    .frame(height: 8)
-                Text(viewModel.output.minTemperature)
-                    .font(.system(size: 14))
-                    .foregroundColor(.blue)
+                VStack {
+                    Text(viewModel.output.maxTemperature)
+                        .font(.system(size: 14))
+                        .foregroundColor(.red)
+                    Spacer()
+                        .frame(height: 8)
+                    Text(viewModel.output.minTemperature)
+                        .font(.system(size: 14))
+                        .foregroundColor(.blue)
+                }
+                Spacer()
+                    .frame(width: 24)
             }
-            Spacer()
-                .frame(width: 24)
         }
         .cornerRadius(15)
     }
@@ -54,16 +58,16 @@ struct DailyWeatherView<T>: View where T: DailyWeatherViewModelObject {
 struct DailyWeatherView_Previews: PreviewProvider {
     static var contentView: some View {
         Group {
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 800), description: "快晴"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 801), description: "晴れ"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 803), description: "曇り"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 804), description: "暑い雲"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 500), description: "天気雨"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 511), description: "雪"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 300), description: "雨"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 200), description: "雷雨"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 701), description: "竜巻"))
-            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 0), description: "-"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 800), weatherDescription: "快晴"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 801), weatherDescription: "晴れ"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 803), weatherDescription: "曇り"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 804), weatherDescription: "暑い雲"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 500), weatherDescription: "天気雨"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 511), weatherDescription: "雪"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 300), weatherDescription: "雨"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 200), weatherDescription: "雷雨"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 701), weatherDescription: "竜巻"))
+            DailyWeatherView(viewModel: MockViewModel(icon: WeatherIcon(code: 0), weatherDescription: "-"))
         }
     }
 
@@ -100,7 +104,7 @@ extension DailyWeatherView_Previews {
 
         final class Output: DailyWeatherViewModelOutputObject {
             @Published var icon = WeatherIcon(code: 0)
-            @Published var description: String = R.string.dailyWeather.hyphen()
+            @Published var weatherDescription: String = R.string.dailyWeather.hyphen()
             @Published var date: String = R.string.dailyWeather.hyphen()
             @Published var maxTemperature: String = R.string.dailyWeather.hyphen()
             @Published var minTemperature: String = R.string.dailyWeather.hyphen()
@@ -112,14 +116,14 @@ extension DailyWeatherView_Previews {
 
         var output: Output
 
-        init(icon: WeatherIcon, description: String) {
+        init(icon: WeatherIcon, weatherDescription: String) {
             let input = Input()
             let binding = Binding()
             let output = Output()
 
             // output
             output.icon = icon
-            output.description = description
+            output.weatherDescription = weatherDescription
             output.date = "12/22 (火)"
             output.maxTemperature = "11.0℃"
             output.minTemperature = "2.0℃"
