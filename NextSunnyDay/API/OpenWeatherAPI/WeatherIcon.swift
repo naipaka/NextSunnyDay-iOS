@@ -80,7 +80,7 @@ struct WeatherIcon {
              WeatherConditionCode.thunderstormWithDrizzle.rawValue,
              WeatherConditionCode.thunderstormWithHeavyDrizzle.rawValue:
             image = Image(systemName: R.string.systemName.cloudBoltRainFill())
-            color = Color(.yellow)
+            color = Color(R.color.boltYelow() ?? .yellow)
 
         case WeatherConditionCode.mist.rawValue,
              WeatherConditionCode.smoke.rawValue,
