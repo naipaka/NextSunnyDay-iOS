@@ -7,7 +7,13 @@
 
 import SwiftUI
 
-struct SettingView: View {
+struct SettingView<T>: View where T: SettingViewModelObject {
+    @ObservedObject private var viewModel: T
+
+    init(viewModel: T) {
+        self.viewModel = viewModel
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -45,7 +51,7 @@ extension SettingView {
                     .frame(width: 16)
                 Text(R.string.setting.region())
                 Spacer()
-                Text("未設定")
+                Text(viewModel.output.cityName)
                     .foregroundColor(Color(.systemGray))
             }
             .onTapGesture {}
@@ -62,7 +68,7 @@ extension SettingView {
                     .frame(width: 16)
                 Text(R.string.setting.version())
                 Spacer()
-                Text("1.0.0")
+                Text(viewModel.output.version)
                     .foregroundColor(Color(.systemGray))
             }
             HStack {
@@ -73,7 +79,11 @@ extension SettingView {
                     .frame(width: 16)
                 Text(R.string.setting.review())
             }
-            .onTapGesture {}
+            .onTapGesture {
+                if let url = viewModel.output.reviewURL {
+                    UIApplication.shared.open(url)
+                }
+            }
             HStack {
                 Image(systemName: R.string.systemName.envelopeFill())
                     .foregroundColor(Color(.systemGray))
@@ -83,7 +93,7 @@ extension SettingView {
                 Text(R.string.setting.contactUs())
             }
             .onTapGesture {
-                if let url = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link") {
+                if let url = viewModel.output.contactUsPageURL {
                     UIApplication.shared.open(url)
                 }
             }
@@ -93,6 +103,46 @@ extension SettingView {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView()
+        SettingView(viewModel: MockViewModel())
+        SettingView(viewModel: MockViewModel(cityName: "東京都港区"))
+    }
+}
+
+extension SettingView_Previews {
+    final class MockViewModel: SettingViewModelObject {
+        final class Input: SettingViewModelInputObject {}
+
+        final class Binding: SettingViewModelBindingObject {}
+
+        final class Output: SettingViewModelOutputObject {
+            @Published var cityName: String = R.string.setting.unset()
+            @Published var version: String = R.string.setting.hyphen()
+            @Published var reviewURL: URL?
+            @Published var contactUsPageURL: URL?
+        }
+
+        var input: Input
+
+        var binding: Binding
+
+        var output: Output
+
+        init(cityName: String = "") {
+            let input = Input()
+            let binding = Binding()
+            let output = Output()
+
+            // output
+            if cityName != "" {
+                output.cityName = cityName
+            }
+            output.version = Bundle.main.object(forInfoDictionaryKey: R.string.setting.cfBundleShortVersionString()) as? String ?? R.string.setting.hyphen()
+            output.reviewURL = nil
+            output.contactUsPageURL = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link")
+
+            self.input = input
+            self.binding = binding
+            self.output = output
+        }
     }
 }
