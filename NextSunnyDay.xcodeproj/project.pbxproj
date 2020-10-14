@@ -38,6 +38,7 @@
 		91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */; };
 		91DDF1E825370381009F9A96 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1E725370381009F9A96 /* SettingViewModel.swift */; };
 		91DDF1ED25371C26009F9A96 /* Setting.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1EC25371C26009F9A96 /* Setting.strings */; };
+		91DDF1F225371D49009F9A96 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1F125371D49009F9A96 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherView.swift; sourceTree = "<group>"; };
 		91DDF1E725370381009F9A96 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		91DDF1EC25371C26009F9A96 /* Setting.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Setting.strings; sourceTree = "<group>"; };
+		91DDF1F125371D49009F9A96 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 				917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */,
 				917094E72535423C00975181 /* NextSunnyDayMediumView.swift */,
 				91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */,
+				91DDF1F125371D49009F9A96 /* SettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -469,6 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
+				91DDF1F225371D49009F9A96 /* SettingView.swift in Sources */,
 				91DDF1E825370381009F9A96 /* SettingViewModel.swift in Sources */,
 				91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */,
 				917E414E2525B13F00D77C3F /* DailyWeatherForecastResponse.swift in Sources */,

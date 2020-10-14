@@ -7,5 +7,12 @@
 */
 
 "CFBundleShortVersionString" = "CFBundleShortVersionString";
-"unset" = "未設定";
 "hyphen" = "-";
+"navigationBarTitle" = "設定";
+"appSetting" = "アプリの設定";
+"region" = "地域";
+"unset" = "未設定";
+"aboutApp" = "アプリについて";
+"version" = "バージョン";
+"review" = "レビューを書いて応援する";
+"contactUs" = "ご意見・ご要望を送る";
