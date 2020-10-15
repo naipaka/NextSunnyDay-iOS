@@ -1,0 +1,10 @@
+/* 
+  RegionSelectionView.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/15.
+  
+*/
+
+"selectRegion" = "地域を選択";
+"back" = "戻る";
