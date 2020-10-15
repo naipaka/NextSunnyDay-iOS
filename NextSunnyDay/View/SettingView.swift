@@ -58,7 +58,7 @@ extension SettingView {
                 Text(viewModel.output.cityName)
                     .foregroundColor(Color(.systemGray))
                     .frame(width: 150, alignment: .trailing)
-                Image(systemName: "chevron.right")
+                Image(systemName: R.string.systemName.chevronRight())
                     .foregroundColor(Color(.systemGray))
                 Button("", action: {})
             }
