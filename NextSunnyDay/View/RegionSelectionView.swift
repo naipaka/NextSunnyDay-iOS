@@ -11,48 +11,28 @@ import SwiftUI
 
 struct RegionSelectionView<T>: View where T: RegionSelectionViewModelObject {
     @ObservedObject private var viewModel: T
-    @Environment(\.presentationMode) var presentationMode
 
     init(viewModel: T) {
         self.viewModel = viewModel
     }
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
-                VStack {
-                    SearchBar(text: $viewModel.binding.cityName)
-                    List(viewModel.output.completions) { completion in
-                        VStack(alignment: .leading) {
-                            Text(completion.title)
-                            Text(completion.subtitle)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
+        ZStack {
+            Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
+            VStack {
+                SearchBar(text: $viewModel.binding.cityName)
+                List(viewModel.output.completions) { completion in
+                    VStack(alignment: .leading) {
+                        Text(completion.title)
+                        Text(completion.subtitle)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
                 }
+                .listStyle(GroupedListStyle())
             }
-            .navigationBarTitle(Text(R.string.regionSelectionView.selectRegion()))
-            .navigationBarItems(leading: backButton)
         }
-    }
-}
-
-extension RegionSelectionView {
-    var backButton: some View {
-        Button(
-            action: {
-                presentationMode.wrappedValue.dismiss()
-            },
-            label: {
-                HStack {
-                    Image(systemName: R.string.systemName.chevronLeft())
-                    Text(R.string.regionSelectionView.back())
-                }
-                .foregroundColor(Color(.systemGray))
-            }
-        )
+        .navigationBarTitle(Text(R.string.regionSelectionView.selectRegion()))
     }
 }
 
