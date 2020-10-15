@@ -17,14 +17,11 @@ struct SettingView<T>: View where T: SettingViewModelObject {
 
     var body: some View {
         NavigationView {
-            ZStack {
-                Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
-                Form {
-                    appSettingSection
-                    aboutAppSection
-                }
-                .font(.none)
+            Form {
+                appSettingSection
+                aboutAppSection
             }
+            .font(.none)
             .navigationBarTitle(R.string.setting.navigationBarTitle())
             .navigationBarItems(trailing: closeButton)
         }
@@ -50,8 +47,10 @@ extension SettingView {
         Section(header: Text(R.string.setting.appSetting())) {
             HStack {
                 Image(systemName: R.string.systemName.mappinAndEllipse())
+                    .resizable()
+                    .frame(width: 14, height: 14, alignment: .center)
+                    .fixedSize()
                     .foregroundColor(Color(.systemGray))
-                    .frame(width: 24, height: 24)
                 Spacer()
                     .frame(width: 16)
                 Text(R.string.setting.region())
@@ -59,17 +58,21 @@ extension SettingView {
                 Text(viewModel.output.cityName)
                     .foregroundColor(Color(.systemGray))
                     .frame(width: 150, alignment: .trailing)
+                Image(systemName: "chevron.right")
+                    .foregroundColor(Color(.systemGray))
+                Button("", action: {})
             }
-            .onTapGesture {}
         }
     }
 
     var aboutAppSection: some View {
         Section(header: Text(R.string.setting.aboutApp())) {
             HStack {
-                Image(systemName: R.string.systemName.appsIphone())
+                Image(systemName: R.string.systemName.tagFill())
+                    .resizable()
+                    .frame(width: 14, height: 14, alignment: .center)
+                    .fixedSize()
                     .foregroundColor(Color(.systemGray))
-                    .frame(width: 24, height: 24)
                 Spacer()
                     .frame(width: 16)
                 Text(R.string.setting.version())
@@ -79,29 +82,39 @@ extension SettingView {
             }
             HStack {
                 Image(systemName: R.string.systemName.starFill())
+                    .resizable()
+                    .frame(width: 14, height: 14, alignment: .center)
+                    .fixedSize()
                     .foregroundColor(Color(.systemGray))
-                    .frame(width: 24, height: 24)
                 Spacer()
                     .frame(width: 16)
                 Text(R.string.setting.review())
-            }
-            .onTapGesture {
-                if let url = viewModel.output.reviewURL {
-                    UIApplication.shared.open(url)
-                }
+                Button(
+                    "",
+                    action: {
+                        if let url = viewModel.output.reviewURL {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                )
             }
             HStack {
-                Image(systemName: R.string.systemName.envelopeFill())
+                Image(systemName: R.string.systemName.paperplaneFill())
+                    .resizable()
+                    .frame(width: 14, height: 14, alignment: .center)
+                    .fixedSize()
                     .foregroundColor(Color(.systemGray))
-                    .frame(width: 24, height: 24)
                 Spacer()
                     .frame(width: 16)
                 Text(R.string.setting.contactUs())
-            }
-            .onTapGesture {
-                if let url = viewModel.output.contactUsPageURL {
-                    UIApplication.shared.open(url)
-                }
+                Button(
+                    "",
+                    action: {
+                        if let url = viewModel.output.contactUsPageURL {
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                )
             }
         }
     }
