@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingView<T>: View where T: SettingViewModelObject {
     @ObservedObject private var viewModel: T
+    @Environment(\.presentationMode) var presentationMode
 
     init(viewModel: T) {
         self.viewModel = viewModel
@@ -18,12 +19,11 @@ struct SettingView<T>: View where T: SettingViewModelObject {
         NavigationView {
             ZStack {
                 Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
-                VStack {
-                    Form {
-                        appSettingSection
-                        aboutAppSection
-                    }
+                Form {
+                    appSettingSection
+                    aboutAppSection
                 }
+                .font(.none)
             }
             .navigationBarTitle(R.string.setting.navigationBarTitle())
             .navigationBarItems(trailing: closeButton)
@@ -33,12 +33,17 @@ struct SettingView<T>: View where T: SettingViewModelObject {
 
 extension SettingView {
     var closeButton: some View {
-        Button(action: {}, label: {
-            Image(systemName: R.string.systemName.xmark())
-                .resizable()
-                .frame(width: 20, height: 20, alignment: .center)
-                .foregroundColor(Color(.systemGray))
-        })
+        Button(
+            action: {
+                presentationMode.wrappedValue.dismiss()
+            },
+            label: {
+                Image(systemName: R.string.systemName.xmark())
+                    .resizable()
+                    .frame(width: 20, height: 20, alignment: .center)
+                    .foregroundColor(Color(.systemGray))
+            }
+        )
     }
 
     var appSettingSection: some View {
@@ -53,6 +58,7 @@ extension SettingView {
                 Spacer()
                 Text(viewModel.output.cityName)
                     .foregroundColor(Color(.systemGray))
+                    .frame(width: 150, alignment: .trailing)
             }
             .onTapGesture {}
         }

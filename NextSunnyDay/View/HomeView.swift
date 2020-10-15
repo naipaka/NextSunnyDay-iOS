@@ -5,6 +5,7 @@
 //  Created by rMac on 2020/09/28.
 //
 
+import Combine
 import SwiftUI
 
 struct HomeView<T>: View where T: HomeViewModelObject {
@@ -39,12 +40,20 @@ struct HomeView<T>: View where T: HomeViewModelObject {
 
 private extension HomeView {
     var toSettingViewButton: some View {
-        Button(action: {}, label: {
-            Image(systemName: R.string.systemName.gearshapeFill())
-                .resizable()
-                .frame(width: 20, height: 20, alignment: .center)
-                .foregroundColor(.gray)
-        })
+        Button(
+            action: {
+                viewModel.input.toSettingViewButtonTapped.send()
+            },
+            label: {
+                Image(systemName: R.string.systemName.gearshapeFill())
+                    .resizable()
+                    .frame(width: 20, height: 20, alignment: .center)
+                    .foregroundColor(.gray)
+            }
+        )
+        .sheet(isPresented: $viewModel.binding.isShowingSettingSheet) {
+            SettingView(viewModel: SettingViewModel(viewModel.output.forecast))
+        }
     }
 
     var emptyView: some View {
@@ -100,9 +109,13 @@ struct HomeView_Previews: PreviewProvider {
 
 extension HomeView_Previews {
     final class MockViewModel: HomeViewModelObject {
-        final class Input: HomeViewModelInputObject {}
+        final class Input: HomeViewModelInputObject {
+            var toSettingViewButtonTapped = PassthroughSubject<Void, Never>()
+        }
 
-        final class Binding: HomeViewModelBindingObject {}
+        final class Binding: HomeViewModelBindingObject {
+            @Published var isShowingSettingSheet: Bool = false
+        }
 
         final class Output: HomeViewModelOutputObject {
             @Published var forecast = DailyWeatherForecastEntity()
