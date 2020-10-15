@@ -10,16 +10,18 @@ import Combine
 // MARK: - HomeViewModelObject
 protocol HomeViewModelObject: ViewModelObject where Input: HomeViewModelInputObject, Binding: HomeViewModelBindingObject, Output: HomeViewModelOutputObject {
     var input: Input { get }
-    var binding: Binding { get }
+    var binding: Binding { get set }
     var output: Output { get }
 }
 
 // MARK: - HomeViewModelInputObject
 protocol HomeViewModelInputObject: InputObject {
+    var toSettingViewButtonTapped: PassthroughSubject<Void, Never> { get }
 }
 
 // MARK: - HomeViewModelBindingObject
 protocol HomeViewModelBindingObject: BindingObject {
+    var isShowingSettingSheet: Bool { get set }
 }
 
 // MARK: - HomeViewModelOutputObject
@@ -29,9 +31,13 @@ protocol HomeViewModelOutputObject: OutputObject {
 
 // MARK: - HomeViewModel
 class HomeViewModel: HomeViewModelObject {
-    final class Input: HomeViewModelInputObject {}
+    final class Input: HomeViewModelInputObject {
+        var toSettingViewButtonTapped: PassthroughSubject<Void, Never> = PassthroughSubject<Void, Never>()
+    }
 
-    final class Binding: HomeViewModelBindingObject {}
+    final class Binding: HomeViewModelBindingObject {
+        @Published var isShowingSettingSheet: Bool = false
+    }
 
     final class Output: HomeViewModelOutputObject {
         @Published var forecast = DailyWeatherForecastEntity()
@@ -43,10 +49,20 @@ class HomeViewModel: HomeViewModelObject {
 
     var output: Output
 
+    private var cancellables: [AnyCancellable] = []
+
     init() {
         let input = Input()
         let binding = Binding()
         let output = Output()
+
+        // input
+        input.toSettingViewButtonTapped.sink(
+            receiveValue: { _ in
+                binding.isShowingSettingSheet.toggle()
+            }
+        )
+        .store(in: &cancellables)
 
         self.input = input
         self.binding = binding

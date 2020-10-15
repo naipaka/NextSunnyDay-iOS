@@ -36,6 +36,9 @@
 		91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1AB2536C052009F9A96 /* DailyWeather.strings */; };
 		91DDF1D52536D6C0009F9A96 /* WeatherIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */; };
 		91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */; };
+		91DDF1E825370381009F9A96 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1E725370381009F9A96 /* SettingViewModel.swift */; };
+		91DDF1ED25371C26009F9A96 /* Setting.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1EC25371C26009F9A96 /* Setting.strings */; };
+		91DDF1F225371D49009F9A96 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1F125371D49009F9A96 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,9 @@
 		91DDF1AB2536C052009F9A96 /* DailyWeather.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = DailyWeather.strings; sourceTree = "<group>"; };
 		91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIcon.swift; sourceTree = "<group>"; };
 		91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherView.swift; sourceTree = "<group>"; };
+		91DDF1E725370381009F9A96 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		91DDF1EC25371C26009F9A96 /* Setting.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Setting.strings; sourceTree = "<group>"; };
+		91DDF1F125371D49009F9A96 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +147,7 @@
 				91500CD82533476F00D5F47D /* Home.strings */,
 				917094EC2535427000975181 /* NextSunnyDay.strings */,
 				91DDF1AB2536C052009F9A96 /* DailyWeather.strings */,
+				91DDF1EC25371C26009F9A96 /* Setting.strings */,
 			);
 			path = strings;
 			sourceTree = "<group>";
@@ -241,6 +248,7 @@
 				91A2961625344DB700CCC7B2 /* HomeViewModel.swift */,
 				917094F9253549DC00975181 /* NextSunnyDayViewModel.swift */,
 				91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */,
+				91DDF1E725370381009F9A96 /* SettingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -252,6 +260,7 @@
 				917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */,
 				917094E72535423C00975181 /* NextSunnyDayMediumView.swift */,
 				91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */,
+				91DDF1F125371D49009F9A96 /* SettingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -394,6 +403,7 @@
 				917094ED2535427000975181 /* NextSunnyDay.strings in Resources */,
 				915F513D2521763600B4E384 /* Assets.xcassets in Resources */,
 				91500CD92533476F00D5F47D /* Home.strings in Resources */,
+				91DDF1ED25371C26009F9A96 /* Setting.strings in Resources */,
 				91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */,
 				91500CE22533497200D5F47D /* SystemName.strings in Resources */,
 			);
@@ -462,6 +472,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
+				91DDF1F225371D49009F9A96 /* SettingView.swift in Sources */,
+				91DDF1E825370381009F9A96 /* SettingViewModel.swift in Sources */,
 				91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */,
 				917E414E2525B13F00D77C3F /* DailyWeatherForecastResponse.swift in Sources */,
 				917094FA253549DC00975181 /* NextSunnyDayViewModel.swift in Sources */,
