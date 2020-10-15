@@ -28,3 +28,5 @@ class LocalSearchService: NSObject, ObservableObject, MKLocalSearchCompleterDele
         completions = completer.results
     }
 }
+
+extension MKLocalSearchCompletion: Identifiable {}
