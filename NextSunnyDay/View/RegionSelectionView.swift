@@ -11,6 +11,7 @@ import SwiftUI
 
 struct RegionSelectionView<T>: View where T: RegionSelectionViewModelObject {
     @ObservedObject private var viewModel: T
+    @Environment(\.presentationMode) var presentationMode
 
     init(viewModel: T) {
         self.viewModel = viewModel
@@ -22,7 +23,6 @@ struct RegionSelectionView<T>: View where T: RegionSelectionViewModelObject {
             VStack {
                 SearchBar(text: $viewModel.binding.cityName, placeholder: R.string.regionSelectionView.searchBarPlaceholder())
                 completionList
-                Spacer()
             }
         }
         .font(.none)
@@ -38,6 +38,8 @@ extension RegionSelectionView {
                     Button(
                         action: {
                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                            viewModel.binding.selectedCompletion = completion
+                            viewModel.binding.isShowingAlert = true
                         },
                         label: {
                             VStack(alignment: .leading) {
@@ -53,6 +55,17 @@ extension RegionSelectionView {
             }
         }
         .listStyle(InsetGroupedListStyle())
+        .alert(isPresented: $viewModel.binding.isShowingAlert) {
+            Alert(
+                title: Text(R.string.regionSelectionView.setRegion()),
+                message: Text(R.string.regionSelectionView.alertText(viewModel.binding.selectedCompletion.title, preferredLanguages: nil)),
+                primaryButton: .cancel(Text(R.string.regionSelectionView.cancel())),
+                secondaryButton: .default(Text(R.string.regionSelectionView.ok()), action: {
+                    viewModel.input.regionSelected.send()
+                    presentationMode.wrappedValue.dismiss()
+                })
+            )
+        }
     }
 }
 
@@ -68,11 +81,13 @@ struct RegionSelectionView_Previews: PreviewProvider {
 extension RegionSelectionView_Previews {
     final class MockViewModel: RegionSelectionViewModelObject {
         final class Input: RegionSelectionViewModelInputObject {
-            var regionSelected = PassthroughSubject<MKLocalSearchCompletion, Never>()
+            var regionSelected = PassthroughSubject<Void, Never>()
         }
 
         final class Binding: RegionSelectionViewModelBindingObject {
             @Published var cityName: String = ""
+            @Published var selectedCompletion = MKLocalSearchCompletion()
+            @Published var isShowingAlert = false
         }
 
         final class Output: RegionSelectionViewModelOutputObject {
