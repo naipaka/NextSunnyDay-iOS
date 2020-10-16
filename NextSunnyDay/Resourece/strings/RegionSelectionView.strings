@@ -1,0 +1,14 @@
+/* 
+  RegionSelectionView.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/15.
+  
+*/
+
+"setRegion" = "地域を設定";
+"searchBarPlaceholder" = "住所や地名を入力してください";
+"searchResults" = "検索結果";
+"ok" = "OK";
+"cancel" = "キャンセル";
+"alertText" = "\"%@\"でよろしいですか？";

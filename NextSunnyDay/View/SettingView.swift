@@ -54,13 +54,11 @@ extension SettingView {
                 Spacer()
                     .frame(width: 16)
                 Text(R.string.setting.region())
-                Spacer()
-                Text(viewModel.output.cityName)
-                    .foregroundColor(Color(.systemGray))
-                    .frame(width: 150, alignment: .trailing)
-                Image(systemName: "chevron.right")
-                    .foregroundColor(Color(.systemGray))
-                Button("", action: {})
+                NavigationLink(destination: RegionSelectionView(viewModel: RegionSelectionViewModel(service: LocalSearchService()))) {
+                    Spacer()
+                    Text(viewModel.output.cityName)
+                        .foregroundColor(Color(.systemGray))
+                }
             }
         }
     }
@@ -157,7 +155,7 @@ extension SettingView_Previews {
             }
             output.version = Bundle.main.object(forInfoDictionaryKey: R.string.setting.cfBundleShortVersionString()) as? String ?? R.string.setting.hyphen()
             output.reviewURL = nil
-            output.contactUsPageURL = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link")
+            output.contactUsPageURL = nil
 
             self.input = input
             self.binding = binding
