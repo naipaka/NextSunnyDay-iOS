@@ -6,5 +6,6 @@
   
 */
 
-"selectRegion" = "地域を選択";
-"back" = "戻る";
+"setRegion" = "地域を設定";
+"searchBarPlaceholder" = "住所や地名を入力してください";
+"searchResults" = "検索結果";

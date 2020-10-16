@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SearchBar: UIViewRepresentable {
     @Binding var text: String
+    var placeholder: String
 
     class Coordinator: NSObject, UISearchBarDelegate {
         @Binding var text: String
@@ -17,8 +18,22 @@ struct SearchBar: UIViewRepresentable {
             _text = text
         }
 
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            text = searchText
+        func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+            searchBar.setShowsCancelButton(true, animated: true)
+        }
+
+        func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+            text = searchBar.text ?? ""
+        }
+
+        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.setShowsCancelButton(false, animated: true)
+            searchBar.endEditing(true)
+        }
+
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.setShowsCancelButton(false, animated: true)
+            searchBar.endEditing(true)
         }
     }
 
@@ -29,6 +44,8 @@ struct SearchBar: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.delegate = context.coordinator
+        searchBar.placeholder = placeholder
+        searchBar.becomeFirstResponder()
         searchBar.searchBarStyle = .minimal
         return searchBar
     }

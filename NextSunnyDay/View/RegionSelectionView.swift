@@ -20,19 +20,39 @@ struct RegionSelectionView<T>: View where T: RegionSelectionViewModelObject {
         ZStack {
             Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack {
-                SearchBar(text: $viewModel.binding.cityName)
-                List(viewModel.output.completions) { completion in
-                    VStack(alignment: .leading) {
-                        Text(completion.title)
-                        Text(completion.subtitle)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                }
-                .listStyle(GroupedListStyle())
+                SearchBar(text: $viewModel.binding.cityName, placeholder: R.string.regionSelectionView.searchBarPlaceholder())
+                completionList
+                Spacer()
             }
         }
-        .navigationBarTitle(Text(R.string.regionSelectionView.selectRegion()))
+        .font(.none)
+        .navigationBarTitle(Text(R.string.regionSelectionView.setRegion()))
+    }
+}
+
+extension RegionSelectionView {
+    private var completionList: some View {
+        List {
+            Section(header: Text(viewModel.output.completions.isEmpty ? "" : R.string.regionSelectionView.searchResults())) {
+                ForEach(viewModel.output.completions) { completion in
+                    Button(
+                        action: {
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        },
+                        label: {
+                            VStack(alignment: .leading) {
+                                Text(completion.title)
+                                    .foregroundColor(.black)
+                                Text(completion.subtitle)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                        }
+                    )
+                }
+            }
+        }
+        .listStyle(InsetGroupedListStyle())
     }
 }
 
@@ -65,12 +85,31 @@ extension RegionSelectionView_Previews {
 
         var output: Output
 
+        @ObservedObject private var localSearchService = LocalSearchService()
+
         private var cancellables: [AnyCancellable] = []
 
         init(cityName: String = "") {
             input = Input()
             binding = Binding()
             output = Output()
+
+            localSearchService.$completions
+                .assign(to: \.completions, on: output)
+                .store(in: &cancellables)
+
+            binding.$cityName
+                .receive(on: DispatchQueue.main)
+                .sink(
+                    receiveValue: { [weak self] in
+                        if $0.isEmpty {
+                            self?.output.completions = []
+                        } else {
+                            self?.localSearchService.searchQuery = $0
+                        }
+                    }
+                )
+                .store(in: &cancellables)
 
             binding.cityName = cityName
         }

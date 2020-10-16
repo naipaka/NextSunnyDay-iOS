@@ -9,7 +9,7 @@ import Combine
 import MapKit
 
 class LocalSearchService: NSObject, ObservableObject, MKLocalSearchCompleterDelegate {
-    var completer: MKLocalSearchCompleter
+    var completer = MKLocalSearchCompleter()
 
     @Published var searchQuery = ""
     @Published var completions: [MKLocalSearchCompletion] = []
@@ -17,11 +17,9 @@ class LocalSearchService: NSObject, ObservableObject, MKLocalSearchCompleterDele
     var cancellable: AnyCancellable?
 
     override init() {
-        completer = MKLocalSearchCompleter()
         super.init()
-
-        cancellable = $searchQuery.assign(to: \.queryFragment, on: completer)
         completer.delegate = self
+        cancellable = $searchQuery.assign(to: \.queryFragment, on: completer)
     }
 
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {

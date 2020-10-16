@@ -66,23 +66,17 @@ class RegionSelectionViewModel: RegionSelectionViewModelObject {
         // LocalSearchService
         localSearchService = service
         localSearchService.$completions
-            .sink(receiveValue: { [weak self] in self?.output.completions = $0 })
+            .assign(to: \.completions, on: output)
             .store(in: &cancellables)
 
         // input
         input.regionSelected
-            .sink(
-                receiveValue: { [weak self] in
-                    self?.geocoording(completion: $0)
-                }
-            )
+            .sink(receiveValue: { [weak self] in self?.geocoording(completion: $0) })
             .store(in: &cancellables)
 
         // binding
         binding.$cityName
-            .filter { !$0.isEmpty }
-            .debounce(for: .seconds(0.5), scheduler: DispatchQueue(label: "RegionSelectedViewModel"))
-            .sink(receiveValue: { [weak self] in self?.localSearchService.searchQuery = $0 })
+            .assign(to: \.searchQuery, on: localSearchService)
             .store(in: &cancellables)
     }
 
