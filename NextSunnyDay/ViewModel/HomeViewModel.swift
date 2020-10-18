@@ -22,6 +22,7 @@ protocol HomeViewModelInputObject: InputObject {
 // MARK: - HomeViewModelBindingObject
 protocol HomeViewModelBindingObject: BindingObject {
     var isShowingSettingSheet: Bool { get set }
+    var isLoading: Bool { get set }
 }
 
 // MARK: - HomeViewModelOutputObject
@@ -37,6 +38,7 @@ class HomeViewModel: HomeViewModelObject {
 
     final class Binding: HomeViewModelBindingObject {
         @Published var isShowingSettingSheet: Bool = false
+        @Published var isLoading: Bool = false
     }
 
     final class Output: HomeViewModelOutputObject {
