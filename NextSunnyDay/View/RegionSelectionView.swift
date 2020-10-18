@@ -21,19 +21,19 @@ struct RegionSelectionView<T>: View where T: RegionSelectionViewModelObject {
         ZStack {
             Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack {
-                SearchBar(text: $viewModel.binding.cityName, placeholder: R.string.regionSelectionView.searchBarPlaceholder())
+                SearchBar(text: $viewModel.binding.cityName, placeholder: R.string.regionSelection.searchBarPlaceholder())
                 completionList
             }
         }
         .font(.none)
-        .navigationBarTitle(Text(R.string.regionSelectionView.setRegion()))
+        .navigationBarTitle(Text(R.string.regionSelection.setRegion()))
     }
 }
 
 extension RegionSelectionView {
     private var completionList: some View {
         List {
-            Section(header: Text(viewModel.output.completions.isEmpty ? "" : R.string.regionSelectionView.searchResults())) {
+            Section(header: Text(viewModel.output.completions.isEmpty ? "" : R.string.regionSelection.searchResults())) {
                 ForEach(viewModel.output.completions) { completion in
                     Button(
                         action: {
@@ -57,10 +57,10 @@ extension RegionSelectionView {
         .listStyle(InsetGroupedListStyle())
         .alert(isPresented: $viewModel.binding.isShowingAlert) {
             Alert(
-                title: Text(R.string.regionSelectionView.setRegion()),
-                message: Text(R.string.regionSelectionView.alertText(viewModel.binding.selectedCompletion.title, preferredLanguages: nil)),
-                primaryButton: .cancel(Text(R.string.regionSelectionView.cancel())),
-                secondaryButton: .default(Text(R.string.regionSelectionView.ok()), action: {
+                title: Text(R.string.regionSelection.setRegion()),
+                message: Text(R.string.regionSelection.alertText(viewModel.binding.selectedCompletion.title, preferredLanguages: nil)),
+                primaryButton: .cancel(Text(R.string.regionSelection.cancel())),
+                secondaryButton: .default(Text(R.string.regionSelection.ok()), action: {
                     viewModel.input.regionSelected.send()
                     presentationMode.wrappedValue.dismiss()
                 })

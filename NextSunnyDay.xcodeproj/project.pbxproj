@@ -43,7 +43,7 @@
 		91DDF228253826AE009F9A96 /* LocalSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF227253826AE009F9A96 /* LocalSearchService.swift */; };
 		91DDF255253837BE009F9A96 /* RegionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF254253837BE009F9A96 /* RegionSelectionView.swift */; };
 		91DDF25B25383847009F9A96 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF25A25383847009F9A96 /* SearchBar.swift */; };
-		91DDF26325383C75009F9A96 /* RegionSelectionView.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF26225383C75009F9A96 /* RegionSelectionView.strings */; };
+		91DDF26325383C75009F9A96 /* RegionSelection.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF26225383C75009F9A96 /* RegionSelection.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,7 +103,7 @@
 		91DDF227253826AE009F9A96 /* LocalSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchService.swift; sourceTree = "<group>"; };
 		91DDF254253837BE009F9A96 /* RegionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSelectionView.swift; sourceTree = "<group>"; };
 		91DDF25A25383847009F9A96 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		91DDF26225383C75009F9A96 /* RegionSelectionView.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RegionSelectionView.strings; sourceTree = "<group>"; };
+		91DDF26225383C75009F9A96 /* RegionSelection.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RegionSelection.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +158,7 @@
 				917094EC2535427000975181 /* NextSunnyDay.strings */,
 				91DDF1AB2536C052009F9A96 /* DailyWeather.strings */,
 				91DDF1EC25371C26009F9A96 /* Setting.strings */,
-				91DDF26225383C75009F9A96 /* RegionSelectionView.strings */,
+				91DDF26225383C75009F9A96 /* RegionSelection.strings */,
 			);
 			path = strings;
 			sourceTree = "<group>";
@@ -430,7 +430,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91DDF26325383C75009F9A96 /* RegionSelectionView.strings in Resources */,
+				91DDF26325383C75009F9A96 /* RegionSelection.strings in Resources */,
 				915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */,
 				917094ED2535427000975181 /* NextSunnyDay.strings in Resources */,
 				915F513D2521763600B4E384 /* Assets.xcassets in Resources */,
