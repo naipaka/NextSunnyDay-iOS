@@ -34,7 +34,7 @@ struct DailyWeatherForecastResponse: Codable {
         let humidity: Int
         let dewPoint: Double
         let windSpeed: Double
-        let windGust: Double
+        let windGust: Double?
         let windDeg: Int
         let weather: [Weather]
         let clouds: Int
