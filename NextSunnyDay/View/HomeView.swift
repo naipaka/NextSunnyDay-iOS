@@ -16,24 +16,29 @@ struct HomeView<T>: View where T: HomeViewModelObject {
     }
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
-                if viewModel.output.forecast.daily.isEmpty {
-                    emptyView
-                } else {
-                    ScrollView {
-                        VStack {
-                            Spacer().frame(height: 12)
-                            nextSunnyDayView
-                            Spacer().frame(height: 36)
-                            dailyWeatherView
+        ZStack {
+            NavigationView {
+                ZStack {
+                    Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
+                    if viewModel.output.forecast.daily.isEmpty {
+                        emptyView
+                    } else {
+                        ScrollView {
+                            VStack {
+                                Spacer().frame(height: 12)
+                                nextSunnyDayView
+                                Spacer().frame(height: 36)
+                                dailyWeatherView
+                            }
                         }
                     }
                 }
+                .navigationBarTitle(R.string.home.navigationBarTitle())
+                .navigationBarItems(trailing: toSettingViewButton)
             }
-            .navigationBarTitle(R.string.home.navigationBarTitle())
-            .navigationBarItems(trailing: toSettingViewButton)
+            if viewModel.binding.isLoading {
+                LoadingView()
+            }
         }
     }
 }
@@ -115,6 +120,7 @@ extension HomeView_Previews {
 
         final class Binding: HomeViewModelBindingObject {
             @Published var isShowingSettingSheet: Bool = false
+            @Published var isLoading: Bool = false
         }
 
         final class Output: HomeViewModelOutputObject {
