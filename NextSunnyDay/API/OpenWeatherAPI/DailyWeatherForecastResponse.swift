@@ -30,13 +30,17 @@ struct DailyWeatherForecastResponse: Codable {
         let sunset: Int
         let temp: Temp
         let feelsLike: FeelsLike
-        let pressure, humidity: Int
-        let dewPoint, windSpeed: Double
+        let pressure: Int
+        let humidity: Int
+        let dewPoint: Double
+        let windSpeed: Double
+        let windGust: Double
         let windDeg: Int
         let weather: [Weather]
         let clouds: Int
         let pop: Double
         let rain: Double?
+        let snow: Double?
         let uvi: Double
 
         enum CodingKeys: String, CodingKey {
@@ -49,11 +53,13 @@ struct DailyWeatherForecastResponse: Codable {
             case humidity
             case dewPoint = "dew_point"
             case windSpeed = "wind_speed"
+            case windGust = "wind_gust"
             case windDeg = "wind_deg"
             case weather
             case clouds
             case pop
             case rain
+            case snow
             case uvi
         }
 
@@ -62,9 +68,9 @@ struct DailyWeatherForecastResponse: Codable {
             let day: Double
             let min: Double
             let max: Double
-            let  night: Double
+            let night: Double
             let eve: Double
-            let  morn: Double
+            let morn: Double
         }
 
         // MARK: - FeelsLike
