@@ -163,7 +163,6 @@ extension HomeView_Previews {
     private static func mockDaily(date: Int, code: Int, description: String) -> Daily {
         let daily = Daily()
         let temp = Temp()
-        let feelsLike = FeelsLike()
         let weather = Weather()
 
         temp.min = 2.0
@@ -172,7 +171,6 @@ extension HomeView_Previews {
         weather.weatherDescription = description
         daily.date = date
         daily.temp = temp
-        daily.feelsLike = feelsLike
         daily.weather.append(weather)
         return daily
     }
