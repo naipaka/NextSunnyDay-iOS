@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		9104405C253C3CF300A21F20 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9104405B253C3CF300A21F20 /* LoadingView.swift */; };
 		91044061253C3D1000A21F20 /* Loading.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91044060253C3D1000A21F20 /* Loading.strings */; };
+		91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044071253DDA9600A21F20 /* WidgetKit.framework */; };
+		91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044073253DDA9600A21F20 /* SwiftUI.framework */; };
+		91044077253DDA9600A21F20 /* NextSunnyDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */; };
+		91044079253DDA9700A21F20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91044078253DDA9700A21F20 /* Assets.xcassets */; };
+		9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		91500CB9253306AC00D5F47D /* Rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 91500CB8253306AC00D5F47D /* Rswift */; };
 		91500CCF2533404300D5F47D /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91500CCE2533404300D5F47D /* R.generated.swift */; };
 		91500CD92533476F00D5F47D /* Home.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91500CD82533476F00D5F47D /* Home.strings */; };
@@ -49,6 +54,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9104407B253DDA9700A21F20 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915F512D2521763500B4E384 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9104406E253DDA9600A21F20;
+			remoteInfo = NextSunnyDayWidgetExtension;
+		};
 		915F51472521763600B4E384 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 915F512D2521763500B4E384 /* Project object */;
@@ -65,9 +77,29 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		9104407E253DDA9700A21F20 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		9104405B253C3CF300A21F20 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		91044060253C3D1000A21F20 /* Loading.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Loading.strings; sourceTree = "<group>"; };
+		9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		91044071253DDA9600A21F20 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		91044073253DDA9600A21F20 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayWidget.swift; sourceTree = "<group>"; };
+		91044078253DDA9700A21F20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9104407A253DDA9700A21F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91500CCE2533404300D5F47D /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		91500CD82533476F00D5F47D /* Home.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Home.strings; sourceTree = "<group>"; };
 		91500CE12533497200D5F47D /* SystemName.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = SystemName.strings; sourceTree = "<group>"; };
@@ -111,6 +143,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9104406C253DDA9600A21F20 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
+				91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		915F51322521763500B4E384 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -138,6 +179,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		91044070253DDA9600A21F20 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91044071253DDA9600A21F20 /* WidgetKit.framework */,
+				91044073253DDA9600A21F20 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91044075253DDA9600A21F20 /* NextSunnyDayWidget */ = {
+			isa = PBXGroup;
+			children = (
+				91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */,
+				91044078253DDA9700A21F20 /* Assets.xcassets */,
+				9104407A253DDA9700A21F20 /* Info.plist */,
+			);
+			path = NextSunnyDayWidget;
+			sourceTree = "<group>";
+		};
 		91500CBD2533074C00D5F47D /* Resourece */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +234,8 @@
 				915F51372521763500B4E384 /* NextSunnyDay */,
 				915F51492521763600B4E384 /* NextSunnyDayTests */,
 				915F51542521763600B4E384 /* NextSunnyDayUITests */,
+				91044075253DDA9600A21F20 /* NextSunnyDayWidget */,
+				91044070253DDA9600A21F20 /* Frameworks */,
 				915F51362521763500B4E384 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -184,6 +246,7 @@
 				915F51352521763500B4E384 /* NextSunnyDay.app */,
 				915F51462521763600B4E384 /* NextSunnyDayTests.xctest */,
 				915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */,
+				9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -325,6 +388,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 91044081253DDA9700A21F20 /* Build configuration list for PBXNativeTarget "NextSunnyDayWidgetExtension" */;
+			buildPhases = (
+				9104406B253DDA9600A21F20 /* Sources */,
+				9104406C253DDA9600A21F20 /* Frameworks */,
+				9104406D253DDA9600A21F20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NextSunnyDayWidgetExtension;
+			productName = NextSunnyDayWidgetExtension;
+			productReference = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		915F51342521763500B4E384 /* NextSunnyDay */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
@@ -334,10 +414,12 @@
 				917E40C82522D90600D77C3F /* SwiftLint */,
 				915F51322521763500B4E384 /* Frameworks */,
 				915F51332521763500B4E384 /* Resources */,
+				9104407E253DDA9700A21F20 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9104407C253DDA9700A21F20 /* PBXTargetDependency */,
 			);
 			name = NextSunnyDay;
 			packageProductDependencies = (
@@ -394,6 +476,9 @@
 				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					9104406E253DDA9600A21F20 = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
 					915F51342521763500B4E384 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
@@ -427,11 +512,20 @@
 				915F51342521763500B4E384 /* NextSunnyDay */,
 				915F51452521763600B4E384 /* NextSunnyDayTests */,
 				915F51502521763600B4E384 /* NextSunnyDayUITests */,
+				9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9104406D253DDA9600A21F20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91044079253DDA9700A21F20 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		915F51332521763500B4E384 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -506,6 +600,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9104406B253DDA9600A21F20 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91044077253DDA9600A21F20 /* NextSunnyDayWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		915F51312521763500B4E384 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -557,6 +659,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9104407C253DDA9700A21F20 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
+			targetProxy = 9104407B253DDA9700A21F20 /* PBXContainerItemProxy */;
+		};
 		915F51482521763600B4E384 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 915F51342521763500B4E384 /* NextSunnyDay */;
@@ -570,6 +677,48 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		9104407F253DDA9700A21F20 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				INFOPLIST_FILE = NextSunnyDayWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.NextSunnyDayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		91044080253DDA9700A21F20 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				INFOPLIST_FILE = NextSunnyDayWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.NextSunnyDayWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		915F51582521763600B4E384 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -689,6 +838,7 @@
 		915F515B2521763600B4E384 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -711,6 +861,7 @@
 		915F515C2521763600B4E384 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -817,6 +968,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		91044081253DDA9700A21F20 /* Build configuration list for PBXNativeTarget "NextSunnyDayWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9104407F253DDA9700A21F20 /* Debug */,
+				91044080253DDA9700A21F20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		915F51302521763500B4E384 /* Build configuration list for PBXProject "NextSunnyDay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
