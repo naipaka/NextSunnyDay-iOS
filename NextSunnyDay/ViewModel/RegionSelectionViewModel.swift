@@ -90,13 +90,11 @@ class RegionSelectionViewModel: RegionSelectionViewModelObject {
         search.start { [weak self] response, _ in
             guard let coordinate = response?.mapItems[0].placemark.coordinate else { return }
 
-            DailyWeatherForecastEntity.deleteAll()
-
             let entity = DailyWeatherForecastEntity()
             entity.cityName = self?.binding.selectedCompletion.title ?? ""
             entity.lat = coordinate.latitude
             entity.lon = coordinate.longitude
-            DailyWeatherForecastEntity.create(with: entity)
+            DailyWeatherForecastEntity.update(with: entity)
         }
     }
 }

@@ -11,7 +11,8 @@ import SwiftUI
 struct NextSunnyDayApp: App {
     var body: some Scene {
         WindowGroup {
-            let viewModel = HomeViewModel()
+            let weatherFecther = WeatherFetcher()
+            let viewModel = HomeViewModel(weatherFetcher: weatherFecther)
             HomeView(viewModel: viewModel)
         }
     }
