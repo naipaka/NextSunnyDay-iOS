@@ -10,10 +10,15 @@ import RealmSwift
 
 // MARK: - DailyWeatherForecastEntity
 class DailyWeatherForecastEntity: Object, Identifiable {
+    @objc dynamic var id: Int = 0
     @objc dynamic var cityName: String = ""
     @objc dynamic var lat: Double = 0.0
     @objc dynamic var lon: Double = 0.0
     var daily = List<Daily>()
+
+    override static func primaryKey() -> String? {
+        "id"
+    }
 }
 
 // MARK: - Daily
@@ -54,15 +59,15 @@ extension DailyWeatherForecastEntity {
         realm.objects(self)
     }
 
-    static func deleteAll() {
-        try! realm.write {
-            realm.deleteAll()
-        }
-    }
-
     static func create(with weeklyWeather: DailyWeatherForecastEntity) {
         try! realm.write {
             realm.add(weeklyWeather)
+        }
+    }
+
+    static func update(with weeklyWeather: DailyWeatherForecastEntity) {
+        try! realm.write {
+            realm.create(DailyWeatherForecastEntity.self, value: weeklyWeather, update: .all)
         }
     }
 }
