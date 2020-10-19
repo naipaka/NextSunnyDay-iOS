@@ -66,7 +66,6 @@ class HomeViewModel: HomeViewModelObject {
         self.weatherFetcher = weatherFetcher
 
         observeDatasource()
-        print(Realm.Configuration.defaultConfiguration.fileURL ?? "")
 
         if !output.forecast.cityName.isEmpty {
             let now = Int(Date().timeIntervalSince1970)
