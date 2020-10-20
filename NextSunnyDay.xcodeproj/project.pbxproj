@@ -51,6 +51,20 @@
 		91DDF255253837BE009F9A96 /* RegionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF254253837BE009F9A96 /* RegionSelectionView.swift */; };
 		91DDF25B25383847009F9A96 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF25A25383847009F9A96 /* SearchBar.swift */; };
 		91DDF26325383C75009F9A96 /* RegionSelection.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF26225383C75009F9A96 /* RegionSelection.strings */; };
+		91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FB253EBF9E00E9D7B2 /* Realm */; };
+		91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */; };
+		91F6A200253EBF9E00E9D7B2 /* Rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FF253EBF9E00E9D7B2 /* Rswift */; };
+		91F6A20C253EC0B000E9D7B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
+		91F6A20D253EC0B000E9D7B2 /* NextSunnyDayMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094E72535423C00975181 /* NextSunnyDayMediumView.swift */; };
+		91F6A20E253EC0B000E9D7B2 /* ViewModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2960E2534369F00CCC7B2 /* ViewModelObject.swift */; };
+		91F6A20F253EC0B000E9D7B2 /* SystemName.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91500CE12533497200D5F47D /* SystemName.strings */; };
+		91F6A210253EC0B000E9D7B2 /* WeatherConditionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094FE2535559000975181 /* WeatherConditionCode.swift */; };
+		91F6A211253EC0B000E9D7B2 /* NextSunnyDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094F9253549DC00975181 /* NextSunnyDayViewModel.swift */; };
+		91F6A212253EC0B000E9D7B2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A1253699DC009F9A96 /* Date+Extension.swift */; };
+		91F6A213253EC0B000E9D7B2 /* NextSunnyDay.strings in Resources */ = {isa = PBXBuildFile; fileRef = 917094EC2535427000975181 /* NextSunnyDay.strings */; };
+		91F6A214253EC0B000E9D7B2 /* NextSunnyDaySmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */; };
+		91F6A215253EC0B000E9D7B2 /* DailyWeatherForecastEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919EA78A253051F1008BC359 /* DailyWeatherForecastEntity.swift */; };
+		91F6A21E253EC0D400E9D7B2 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6A206253EC08200E9D7B2 /* R.generated.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -140,6 +154,7 @@
 		91DDF254253837BE009F9A96 /* RegionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSelectionView.swift; sourceTree = "<group>"; };
 		91DDF25A25383847009F9A96 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		91DDF26225383C75009F9A96 /* RegionSelection.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RegionSelection.strings; sourceTree = "<group>"; };
+		91F6A206253EC08200E9D7B2 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +162,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F6A200253EBF9E00E9D7B2 /* Rswift in Frameworks */,
+				91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */,
+				91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */,
 				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
 				91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */,
 			);
@@ -192,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */,
+				91F6A206253EC08200E9D7B2 /* R.generated.swift */,
 				91044078253DDA9700A21F20 /* Assets.xcassets */,
 				9104407A253DDA9700A21F20 /* Info.plist */,
 			);
@@ -392,6 +411,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91044081253DDA9700A21F20 /* Build configuration list for PBXNativeTarget "NextSunnyDayWidgetExtension" */;
 			buildPhases = (
+				91F6A201253EBFAE00E9D7B2 /* R.swift */,
 				9104406B253DDA9600A21F20 /* Sources */,
 				9104406C253DDA9600A21F20 /* Frameworks */,
 				9104406D253DDA9600A21F20 /* Resources */,
@@ -401,6 +421,11 @@
 			dependencies = (
 			);
 			name = NextSunnyDayWidgetExtension;
+			packageProductDependencies = (
+				91F6A1FB253EBF9E00E9D7B2 /* Realm */,
+				91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */,
+				91F6A1FF253EBF9E00E9D7B2 /* Rswift */,
+			);
 			productName = NextSunnyDayWidgetExtension;
 			productReference = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -522,6 +547,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F6A20F253EC0B000E9D7B2 /* SystemName.strings in Resources */,
+				91F6A20C253EC0B000E9D7B2 /* Assets.xcassets in Resources */,
+				91F6A213253EC0B000E9D7B2 /* NextSunnyDay.strings in Resources */,
 				91044079253DDA9700A21F20 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -597,6 +625,26 @@
 			shellPath = /bin/sh;
 			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run swiftlint swiftlint autocorrect --format\n  mint run swiftlint swiftlint\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
+		91F6A201253EBFAE00E9D7B2 /* R.swift */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
+			);
+			name = R.swift;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/NextSunnyDayWidget/R.generated.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDayWidget/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -604,7 +652,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F6A20E253EC0B000E9D7B2 /* ViewModelObject.swift in Sources */,
 				91044077253DDA9600A21F20 /* NextSunnyDayWidget.swift in Sources */,
+				91F6A21E253EC0D400E9D7B2 /* R.generated.swift in Sources */,
+				91F6A211253EC0B000E9D7B2 /* NextSunnyDayViewModel.swift in Sources */,
+				91F6A20D253EC0B000E9D7B2 /* NextSunnyDayMediumView.swift in Sources */,
+				91F6A215253EC0B000E9D7B2 /* DailyWeatherForecastEntity.swift in Sources */,
+				91F6A210253EC0B000E9D7B2 /* WeatherConditionCode.swift in Sources */,
+				91F6A214253EC0B000E9D7B2 /* NextSunnyDaySmallView.swift in Sources */,
+				91F6A212253EC0B000E9D7B2 /* Date+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,6 +1105,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		91F6A1FB253EBF9E00E9D7B2 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		91F6A1FF253EBF9E00E9D7B2 /* Rswift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */;
+			productName = Rswift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
