@@ -204,4 +204,7 @@ AccessTokens.swift
 ### R.Swift ###
 *.generated.swift
 
+# Macintosh
+.DS_Store
+
 # End of https://www.toptal.com/developers/gitignore/api/xcode,swift,cocoapods,carthage,ruby,fastlane
