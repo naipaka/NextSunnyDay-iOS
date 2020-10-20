@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date())
+        SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity())
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date())
+        let entry = SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity())
         completion(entry)
     }
 
@@ -25,7 +25,7 @@ struct Provider: TimelineProvider {
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate)
+            let entry = SimpleEntry(date: entryDate, entity: DailyWeatherForecastEntity())
             entries.append(entry)
         }
 
@@ -36,32 +36,45 @@ struct Provider: TimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    let entity: DailyWeatherForecastEntity
 }
 
 struct NextSunnyDayWidgetEntryView : View {
     var entry: Provider.Entry
+    
+    @Environment(\.widgetFamily) var family
 
     var body: some View {
-        Text(entry.date, style: .time)
+        switch family {
+        case .systemSmall:
+            NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.entity))
+        default:
+            NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.entity))
+        }
     }
 }
 
 @main
 struct NextSunnyDayWidget: Widget {
-    let kind: String = "NextSunnyDayWidget"
+    let kind: String = R.string.widget.kind()
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             NextSunnyDayWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName(R.string.widget.displayName())
+        .description(R.string.widget.description())
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
 struct NextSunnyDayWidget_Previews: PreviewProvider {
     static var previews: some View {
-        NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        Group {
+            NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity()))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+            NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity()))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+        }
     }
 }

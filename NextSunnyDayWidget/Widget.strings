@@ -1,0 +1,11 @@
+/* 
+  Widget.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/20.
+  
+*/
+
+"kind" = "NextSunnyDayWidget";
+"displayName" = "次いつ晴れる？";
+"description" = "次に晴れる日を確認できます。";

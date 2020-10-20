@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9101E2DF253EC7C800F2313F /* Widget.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9101E2D1253EC66100F2313F /* Widget.strings */; };
 		9104405C253C3CF300A21F20 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9104405B253C3CF300A21F20 /* LoadingView.swift */; };
 		91044061253C3D1000A21F20 /* Loading.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91044060253C3D1000A21F20 /* Loading.strings */; };
 		91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044071253DDA9600A21F20 /* WidgetKit.framework */; };
@@ -106,6 +107,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9101E2D1253EC66100F2313F /* Widget.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Widget.strings; sourceTree = "<group>"; };
 		9104405B253C3CF300A21F20 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		91044060253C3D1000A21F20 /* Loading.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Loading.strings; sourceTree = "<group>"; };
 		9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +213,7 @@
 			children = (
 				91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */,
 				91F6A206253EC08200E9D7B2 /* R.generated.swift */,
+				9101E2D1253EC66100F2313F /* Widget.strings */,
 				91044078253DDA9700A21F20 /* Assets.xcassets */,
 				9104407A253DDA9700A21F20 /* Info.plist */,
 			);
@@ -548,6 +551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91F6A20F253EC0B000E9D7B2 /* SystemName.strings in Resources */,
+				9101E2DF253EC7C800F2313F /* Widget.strings in Resources */,
 				91F6A20C253EC0B000E9D7B2 /* Assets.xcassets in Resources */,
 				91F6A213253EC0B000E9D7B2 /* NextSunnyDay.strings in Resources */,
 				91044079253DDA9700A21F20 /* Assets.xcassets in Resources */,
