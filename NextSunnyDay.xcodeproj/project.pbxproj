@@ -108,6 +108,8 @@
 
 /* Begin PBXFileReference section */
 		9101E2D1253EC66100F2313F /* Widget.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Widget.strings; sourceTree = "<group>"; };
+		9101E2E4253ECFCC00F2313F /* NextSunnyDay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextSunnyDay.entitlements; sourceTree = "<group>"; };
+		9101E2E5253ED03900F2313F /* NextSunnyDayWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextSunnyDayWidgetExtension.entitlements; sourceTree = "<group>"; };
 		9104405B253C3CF300A21F20 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		91044060253C3D1000A21F20 /* Loading.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Loading.strings; sourceTree = "<group>"; };
 		9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +213,7 @@
 		91044075253DDA9600A21F20 /* NextSunnyDayWidget */ = {
 			isa = PBXGroup;
 			children = (
+				9101E2E5253ED03900F2313F /* NextSunnyDayWidgetExtension.entitlements */,
 				91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */,
 				91F6A206253EC08200E9D7B2 /* R.generated.swift */,
 				9101E2D1253EC66100F2313F /* Widget.strings */,
@@ -276,6 +279,7 @@
 		915F51372521763500B4E384 /* NextSunnyDay */ = {
 			isa = PBXGroup;
 			children = (
+				9101E2E4253ECFCC00F2313F /* NextSunnyDay.entitlements */,
 				915F51382521763500B4E384 /* NextSunnyDayApp.swift */,
 				915F516A2521880800B4E384 /* API */,
 				915F516F2521883F00B4E384 /* Model */,
@@ -742,6 +746,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWidget/NextSunnyDayWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				INFOPLIST_FILE = NextSunnyDayWidget/Info.plist;
@@ -763,6 +768,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWidget/NextSunnyDayWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				INFOPLIST_FILE = NextSunnyDayWidget/Info.plist;
@@ -901,6 +907,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDay/NextSunnyDay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
@@ -924,6 +931,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDay/NextSunnyDay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;

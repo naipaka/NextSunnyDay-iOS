@@ -53,7 +53,13 @@ class Weather: Object, Identifiable {
 
 // MARK: - CRUD
 extension DailyWeatherForecastEntity {
-    private static var realm = try! Realm()
+    private static var realm: Realm {
+        var config = Realm.Configuration()
+        let url = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.com.naipaka.NextSunnyDay")!
+        config.fileURL = url.appendingPathComponent("db.realm")
+        let realm = try! Realm(configuration: config)
+        return realm
+    }
 
     static func all() -> Results<DailyWeatherForecastEntity> {
         realm.objects(self)
