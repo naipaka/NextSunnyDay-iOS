@@ -10,24 +10,22 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity())
+        SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity.defaultEntity())
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity())
+        let results = DailyWeatherForecastEntity.all()
+        let entity = results.first ?? DailyWeatherForecastEntity()
+        let entry = SimpleEntry(date: Date(), entity: entity)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, entity: DailyWeatherForecastEntity())
-            entries.append(entry)
-        }
+        let results = DailyWeatherForecastEntity.all()
+        let entity = results.first ?? DailyWeatherForecastEntity()
+        let entry = SimpleEntry(date: Date(), entity: entity)
+        entries.append(entry)
 
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)

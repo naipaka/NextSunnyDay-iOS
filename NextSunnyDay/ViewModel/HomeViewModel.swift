@@ -8,6 +8,7 @@
 import Combine
 import Foundation
 import RealmSwift
+import WidgetKit
 
 // MARK: - HomeViewModelObject
 protocol HomeViewModelObject: ViewModelObject where Input: HomeViewModelInputObject, Binding: HomeViewModelBindingObject, Output: HomeViewModelOutputObject {
@@ -133,6 +134,7 @@ class HomeViewModel: HomeViewModelObject {
                     } else {
                         self.output.forecast = forecast
                     }
+                    WidgetCenter.shared.reloadAllTimelines()
 
                 case let .error(error):
                     print(error.localizedDescription)

@@ -77,3 +77,44 @@ extension DailyWeatherForecastEntity {
         }
     }
 }
+
+// MARK: - Default Data
+extension DailyWeatherForecastEntity {
+    static func defaultEntity() -> DailyWeatherForecastEntity {
+        let entity = DailyWeatherForecastEntity()
+        entity.cityName = "東京駅"
+        entity.lat = 35.680_959_1
+        entity.lon = 139.767_306_8
+
+        // Daily
+        let daily = Daily()
+        daily.date = Int(Date().timeIntervalSince1970) + 60 * 60 * 24
+        daily.humidity = 0
+        daily.pop = 0.0
+        daily.rain = 0.0
+        daily.snow = 0.0
+        daily.uvi = 0.0
+
+        // Temp
+        let temp = Temp()
+        temp.day = 20.0
+        temp.min = 15.0
+        temp.max = 20.0
+        temp.night = 15.0
+        temp.eve = 15.0
+        temp.morn = 15.0
+        daily.temp = temp
+
+        // Weather
+        let weather = Weather()
+        weather.id = 800
+        weather.main = "晴れ"
+        weather.weatherDescription = "晴天"
+        weather.icon = "01d"
+        daily.weather.append(weather)
+
+        entity.daily.append(daily)
+
+        return entity
+    }
+}
