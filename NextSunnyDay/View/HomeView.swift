@@ -78,6 +78,7 @@ private extension HomeView {
             Spacer()
                 .frame(maxWidth: 18)
             NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(viewModel.output.forecast))
+                .cornerRadius(20)
             Spacer()
                 .frame(maxWidth: 18)
         }
