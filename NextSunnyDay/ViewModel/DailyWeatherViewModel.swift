@@ -62,7 +62,7 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
         // output
         output.icon = WeatherIcon(code: daily.weather.first?.id ?? 0)
         output.weatherDescription = daily.weather.first?.weatherDescription ?? R.string.dailyWeather.hyphen()
-        output.date = Date(timeIntervalSince1970: Double(daily.date)).format(text: "MM/dd (EEE)")
+        output.date = Date(timeIntervalSince1970: Double(daily.date)).format(text: "M/d (EEE)")
         if let temp = daily.temp {
             output.maxTemperature = String("\(temp.max)℃")
             output.minTemperature = String("\(temp.min)℃")
