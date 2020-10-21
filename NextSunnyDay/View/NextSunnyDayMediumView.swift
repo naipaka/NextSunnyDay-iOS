@@ -80,7 +80,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
             }
         }
         .foregroundColor(.white)
-        .cornerRadius(30)
+        .clipShape(ContainerRelativeShape())
     }
 }
 
