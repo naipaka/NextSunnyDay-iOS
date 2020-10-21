@@ -110,7 +110,7 @@ class HomeViewModel: HomeViewModelObject {
                 },
                 receiveValue: { [weak self] forecast in
                     guard let self = self else { return }
-                    DailyWeatherForecastEntity.update(with: self.generateEntity(from: forecast))
+                    DailyWeatherForecastEntity.update(with: DailyWeatherForecastEntity.generateEntity(cityName: self.output.forecast.cityName, forecast: forecast))
                     self.binding.isLoading = false
                 }
             )
@@ -141,47 +141,5 @@ class HomeViewModel: HomeViewModelObject {
                 }
             }
         )
-    }
-
-    private func generateEntity(from forecast: DailyWeatherForecastResponse) -> DailyWeatherForecastEntity {
-        // WeeklyForecastEntity
-        let entity = DailyWeatherForecastEntity()
-        entity.cityName = output.forecast.cityName
-        entity.lat = forecast.lat
-        entity.lon = forecast.lon
-
-        // Daily
-        forecast.daily.forEach {
-            let daily = Daily()
-            daily.date = $0.date
-            daily.humidity = $0.humidity
-            daily.pop = $0.pop
-            daily.rain = $0.rain ?? 0.0
-            daily.snow = $0.snow ?? 0.0
-            daily.uvi = $0.uvi
-
-            // Temp
-            let temp = Temp()
-            temp.day = $0.temp.day
-            temp.min = $0.temp.min
-            temp.max = $0.temp.max
-            temp.night = $0.temp.night
-            temp.eve = $0.temp.eve
-            temp.morn = $0.temp.morn
-            daily.temp = temp
-
-            // Weather
-            $0.weather.forEach {
-                let weather = Weather()
-                weather.id = $0.id
-                weather.main = $0.main
-                weather.weatherDescription = $0.weatherDescription
-                weather.icon = $0.icon
-                daily.weather.append(weather)
-            }
-
-            entity.daily.append(daily)
-        }
-        return entity
     }
 }
