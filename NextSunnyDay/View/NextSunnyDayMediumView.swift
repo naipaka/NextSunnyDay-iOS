@@ -88,7 +88,7 @@ struct NextSunnyDayMediumView_Previews: PreviewProvider {
     static var contentView: some View {
         Group {
             NextSunnyDayMediumView(viewModel: MockViewModel(nextSunnyDay: "12/22 (火)", maxTemperature: "10.0℃", minTemperature: "2.0℃"))
-            NextSunnyDayMediumView(viewModel: MockViewModel(backgroundColor: Color(R.color.noSunnyDayBackgroundColor() ?? .gray)))
+            NextSunnyDayMediumView(viewModel: MockViewModel(backgroundColor: .noNextSunnyDayBackground))
         }
     }
 
@@ -124,7 +124,7 @@ extension NextSunnyDayMediumView_Previews {
         final class Binding: NextSunnyDayViewModelBindingObject {}
 
         final class Output: NextSunnyDayViewModelOutputObject {
-            @Published var backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+            @Published var backgroundColor: LinearGradient = .nextSunnyDayBackground
             @Published var cityName = ""
             @Published var nextSunnyDay = ""
             @Published var maxTemperature = ""
@@ -138,7 +138,7 @@ extension NextSunnyDayMediumView_Previews {
         var output: Output
 
         init(
-            backgroundColor: Color = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange),
+            backgroundColor: LinearGradient = .nextSunnyDayBackground,
             cityName: String = "東京都港区",
             nextSunnyDay: String = R.string.nextSunnyDay.nextWeekOnwards(),
             maxTemperature: String = R.string.nextSunnyDay.hyphen(),

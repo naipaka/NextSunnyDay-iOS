@@ -66,7 +66,7 @@ struct NextSunnyDaySmallView_Previews: PreviewProvider {
     static var contentView: some View {
         Group {
             NextSunnyDaySmallView(viewModel: MockViewModel(nextSunnyDay: "12/22 (火)"))
-            NextSunnyDaySmallView(viewModel: MockViewModel(backgroundColor: Color(R.color.noSunnyDayBackgroundColor() ?? .gray)))
+            NextSunnyDaySmallView(viewModel: MockViewModel(backgroundColor: .noNextSunnyDayBackground))
         }
     }
 
@@ -102,7 +102,7 @@ extension NextSunnyDaySmallView_Previews {
         final class Binding: NextSunnyDayViewModelBindingObject {}
 
         final class Output: NextSunnyDayViewModelOutputObject {
-            @Published var backgroundColor = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+            @Published var backgroundColor: LinearGradient = .nextSunnyDayBackground
             @Published var cityName = ""
             @Published var nextSunnyDay = ""
             @Published var maxTemperature = ""
@@ -118,7 +118,7 @@ extension NextSunnyDaySmallView_Previews {
         init(
             cityName: String = "東京都港区",
             nextSunnyDay: String = R.string.nextSunnyDay.nextWeekOnwards(),
-            backgroundColor: Color = Color(R.color.nextSunnyDayBackgroudColor() ?? .orange)
+            backgroundColor: LinearGradient = .nextSunnyDayBackground
         ) {
             let input = Input()
             let binding = Binding()
