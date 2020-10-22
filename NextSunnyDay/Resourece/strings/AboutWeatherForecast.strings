@@ -1,0 +1,12 @@
+/* 
+  AboutWeatherForecast.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/22.
+  
+*/
+
+"About Weather Forecast" = "天気予報について";
+"infoSource" = "このアプリはOpenWeather社の天気予報を元に情報を表示しています。";
+"termsOfUse" = "当アプリを利用するにあたって、天気予報情報が原因で発生した損失や損害については一切責任を負いかねますのでご了承願います。";
+"OpenWeather's Website" = "OpenWeather社のWebサイト";
