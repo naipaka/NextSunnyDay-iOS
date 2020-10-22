@@ -79,6 +79,17 @@ extension SettingView {
                     .foregroundColor(Color(.systemGray))
             }
             HStack {
+                Image(systemName: R.string.systemName.sunMaxFill())
+                    .resizable()
+                    .frame(width: 14, height: 14, alignment: .center)
+                    .fixedSize()
+                    .foregroundColor(Color(.systemGray))
+                Spacer()
+                    .frame(width: 16)
+                Text(R.string.setting.aboutWeatherForecast())
+                NavigationLink("", destination: AboutWeatherForecastView())
+            }
+            HStack {
                 Image(systemName: R.string.systemName.starFill())
                     .resizable()
                     .frame(width: 14, height: 14, alignment: .center)
