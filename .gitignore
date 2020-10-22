@@ -204,6 +204,12 @@ AccessTokens.swift
 ### R.Swift ###
 *.generated.swift
 
+
+### LicensePlist ###
+com.mono0926.LicensePlist/
+com.mono0926.LicensePlist.latest_result.txt
+com.mono0926.LicensePlist.plist
+
 # Macintosh
 .DS_Store
 
