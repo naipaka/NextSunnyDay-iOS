@@ -9,3 +9,5 @@
 "navigationBarTitle" = "次に晴れる日☀️";
 "emptyText" = "右上の設定ボタンから\n地域を設定しましょう";
 "weeklyWeather" = "週間天気（今日〜7日後）";
+"Data Fetching Error" = "データ取得エラー";
+"Failed to fetch weather data." = "天気予報のデータの取得に失敗しました。\n時間を置いてから再起動してください。";
