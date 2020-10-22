@@ -47,6 +47,7 @@
 		91AB3B1B25411BFE00914E7B /* LinearGradient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AB3B0D25411BDD00914E7B /* LinearGradient+Extension.swift */; };
 		91AB3B352541879D00914E7B /* AboutWeatherForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AB3B342541879D00914E7B /* AboutWeatherForecastView.swift */; };
 		91AB3B4B25418AD700914E7B /* AboutWeatherForecast.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91AB3B4A25418AD700914E7B /* AboutWeatherForecast.strings */; };
+		91AB3B8E2541C08300914E7B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91AB3B8D2541C08300914E7B /* Settings.bundle */; };
 		91DDF1A2253699DC009F9A96 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A1253699DC009F9A96 /* Date+Extension.swift */; };
 		91DDF1A72536AC16009F9A96 /* DailyWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */; };
 		91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1AB2536C052009F9A96 /* DailyWeather.strings */; };
@@ -156,6 +157,7 @@
 		91AB3B0D25411BDD00914E7B /* LinearGradient+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LinearGradient+Extension.swift"; sourceTree = "<group>"; };
 		91AB3B342541879D00914E7B /* AboutWeatherForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWeatherForecastView.swift; sourceTree = "<group>"; };
 		91AB3B4A25418AD700914E7B /* AboutWeatherForecast.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AboutWeatherForecast.strings; sourceTree = "<group>"; };
+		91AB3B8D2541C08300914E7B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		91DDF1A1253699DC009F9A96 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherViewModel.swift; sourceTree = "<group>"; };
 		91DDF1AB2536C052009F9A96 /* DailyWeather.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = DailyWeather.strings; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				915F513C2521763600B4E384 /* Assets.xcassets */,
 				915F51412521763600B4E384 /* Info.plist */,
 				915F513E2521763600B4E384 /* Preview Content */,
+				91AB3B8D2541C08300914E7B /* Settings.bundle */,
 			);
 			path = NextSunnyDay;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
 			buildPhases = (
+				91AB3B6825419B6F00914E7B /* LicensePlist */,
 				91500CAE2533044C00D5F47D /* R.Swift */,
 				915F51312521763500B4E384 /* Sources */,
 				917E40C82522D90600D77C3F /* SwiftLint */,
@@ -582,6 +586,7 @@
 			files = (
 				91DDF26325383C75009F9A96 /* RegionSelection.strings in Resources */,
 				915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */,
+				91AB3B8E2541C08300914E7B /* Settings.bundle in Resources */,
 				917094ED2535427000975181 /* NextSunnyDay.strings in Resources */,
 				915F513D2521763600B4E384 /* Assets.xcassets in Resources */,
 				91AB3B4B25418AD700914E7B /* AboutWeatherForecast.strings in Resources */,
@@ -647,6 +652,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run swiftlint swiftlint autocorrect --format\n  mint run swiftlint swiftlint\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
+		};
+		91AB3B6825419B6F00914E7B /* LicensePlist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = LicensePlist;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n  mint run LicensePlist license-plist --output-path NextSunnyDay/Settings.bundle --add-version-numbers\nfi\n";
 		};
 		91F6A201253EBFAE00E9D7B2 /* R.swift */ = {
 			isa = PBXShellScriptBuildPhase;
