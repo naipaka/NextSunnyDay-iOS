@@ -71,10 +71,31 @@ struct NextSunnyDayWidgetEntryView : View {
     var body: some View {
         switch family {
         case .systemSmall:
-            NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.entity))
+            if entry.entity.cityName.isEmpty {
+                NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(placeholderEntity(entry)))
+                    .redacted(reason: .placeholder)
+            } else {
+                NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.entity))
+            }
         default:
-            NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.entity))
+            if entry.entity.cityName.isEmpty {
+                NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(placeholderEntity(entry)))
+                    .redacted(reason: .placeholder)
+            } else {
+                NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.entity))
+            }
         }
+    }
+
+    private func placeholderEntity(_ entry: SimpleEntry) -> DailyWeatherForecastEntity {
+        let entity = entry.entity
+        let daily = Daily()
+        let weather = Weather()
+        weather.id = 800
+        daily.date = Int(Date().timeIntervalSince1970)
+        daily.weather.append(weather)
+        entity.daily.append(daily)
+        return entity
     }
 }
 
