@@ -60,8 +60,7 @@ class SettingViewModel: SettingViewModelObject {
             output.cityName = forecast.cityName
         }
         output.version = Bundle.main.object(forInfoDictionaryKey: R.string.setting.cfBundleShortVersionString()) as? String ?? R.string.setting.hyphen()
-        // TODO: set review url
-        output.reviewURL = nil
+        output.reviewURL = URL(string: "https://itunes.apple.com/app/id1537055268?action=write-review")
         output.contactUsPageURL = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link")
 
         self.input = input
