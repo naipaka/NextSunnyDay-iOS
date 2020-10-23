@@ -26,6 +26,7 @@ protocol HomeViewModelInputObject: InputObject {
 protocol HomeViewModelBindingObject: BindingObject {
     var isShowingSettingSheet: Bool { get set }
     var isLoading: Bool { get set }
+    var hasError: Bool { get set }
 }
 
 // MARK: - HomeViewModelOutputObject
@@ -42,6 +43,7 @@ class HomeViewModel: HomeViewModelObject {
     final class Binding: HomeViewModelBindingObject {
         @Published var isShowingSettingSheet: Bool = false
         @Published var isLoading: Bool = false
+        @Published var hasError = false
     }
 
     final class Output: HomeViewModelOutputObject {
@@ -99,8 +101,7 @@ class HomeViewModel: HomeViewModelObject {
 
                     switch value {
                     case .failure:
-                        // TODO: show error alert
-                        break
+                        self.binding.hasError.toggle()
 
                     case .finished:
                         break

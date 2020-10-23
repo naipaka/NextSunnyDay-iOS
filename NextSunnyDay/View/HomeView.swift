@@ -32,6 +32,9 @@ struct HomeView<T>: View where T: HomeViewModelObject {
                             }
                         }
                     }
+                    if viewModel.binding.hasError {
+                        errorView
+                    }
                 }
                 .navigationBarTitle(R.string.home.navigationBarTitle())
                 .navigationBarItems(trailing: toSettingViewButton)
@@ -102,6 +105,43 @@ private extension HomeView {
                 .frame(maxWidth: 18)
         }
     }
+
+    var errorView: some View {
+        VStack {
+            ZStack {
+                VStack {
+                    Spacer().frame(height: 20)
+                    Text(R.string.home.dataFetchingError())
+                        .font(.title3)
+                    Text(R.string.home.failedToFetchWeatherData())
+                        .padding()
+                }
+                HStack {
+                    Spacer()
+                    VStack {
+                        Button(
+                            action: {
+                                viewModel.binding.hasError.toggle()
+                            },
+                            label: {
+                                Image(systemName: R.string.systemName.xmark())
+                                    .resizable()
+                                    .frame(width: 14, height: 14, alignment: .center)
+                                    .foregroundColor(Color(.systemGray))
+                            }
+                        )
+                        .padding()
+                        Spacer()
+                    }
+                }
+            }
+            .background(Color(.systemBackground))
+            .cornerRadius(20)
+            .padding()
+            .fixedSize()
+            Spacer()
+        }
+    }
 }
 
 struct HomeView_Previews: PreviewProvider {
@@ -122,6 +162,7 @@ extension HomeView_Previews {
         final class Binding: HomeViewModelBindingObject {
             @Published var isShowingSettingSheet: Bool = false
             @Published var isLoading: Bool = false
+            @Published var hasError = false
         }
 
         final class Output: HomeViewModelOutputObject {
