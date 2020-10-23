@@ -24,6 +24,8 @@ struct AboutWeatherForecastView: View {
                     },
                     label: {
                         Text(R.string.aboutWeatherForecast.openWeatherSWebsite())
+                            .foregroundColor(.secondary)
+                            .underline()
                     }
                 )
                 .padding()
