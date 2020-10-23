@@ -41,7 +41,7 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
     final class Binding: NextSunnyDayViewModelBindingObject {}
 
     final class Output: NextSunnyDayViewModelOutputObject {
-        @Published var backgroundColor: LinearGradient = .nextSunnyDayBackground
+        @Published var backgroundColor: LinearGradient = .noNextSunnyDayBackground
         @Published var cityName = ""
         @Published var nextSunnyDay = R.string.nextSunnyDay.nextWeekOnwards()
         @Published var maxTemperature = R.string.nextSunnyDay.hyphen()
