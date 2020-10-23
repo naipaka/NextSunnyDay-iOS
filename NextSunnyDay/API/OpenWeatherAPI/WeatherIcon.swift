@@ -20,7 +20,7 @@ struct WeatherIcon {
         case WeatherConditionCode.fewClouds.rawValue,
              WeatherConditionCode.scatteredClouds.rawValue:
             image = Image(systemName: R.string.systemName.cloudSunFill())
-            color = Color(R.color.nextSunnyDayStartBackgroudColor() ?? .red)
+            color = Color(.orange)
 
         case WeatherConditionCode.brokenClouds.rawValue:
             image = Image(systemName: R.string.systemName.cloudFill())

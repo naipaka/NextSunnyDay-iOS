@@ -16,7 +16,7 @@ struct DailyWeatherView<T>: View where T: DailyWeatherViewModelObject {
 
     var body: some View {
         ZStack {
-            Color(.systemBackground).edgesIgnoringSafeArea(.all)
+            Color(.tertiarySystemBackground).edgesIgnoringSafeArea(.all)
             HStack {
                 Spacer()
                     .frame(width: 24)

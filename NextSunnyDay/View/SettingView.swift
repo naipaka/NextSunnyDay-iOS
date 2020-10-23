@@ -133,6 +133,10 @@ struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView(viewModel: MockViewModel())
         SettingView(viewModel: MockViewModel(cityName: "東京都港区"))
+        SettingView(viewModel: MockViewModel())
+            .environment(\.colorScheme, .dark)
+        SettingView(viewModel: MockViewModel(cityName: "東京都港区"))
+            .environment(\.colorScheme, .dark)
     }
 }
 
