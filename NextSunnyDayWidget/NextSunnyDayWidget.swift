@@ -15,7 +15,7 @@ struct Provider: TimelineProvider {
     private let weatherFetcher = WeatherFetcher()
 
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity.defaultEntity())
+        SimpleEntry(date: Date(), entity: .defaultEntity)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -71,24 +71,26 @@ struct NextSunnyDayWidgetEntryView : View {
     var body: some View {
         switch family {
         case .systemSmall:
-            if entry.entity.cityName.isEmpty {
-                NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(placeholderEntity(entry)))
+            if entry.entity.daily.isEmpty {
+                NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(placeholderEntity))
                     .redacted(reason: .placeholder)
             } else {
                 NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.entity))
             }
         default:
-            if entry.entity.cityName.isEmpty {
-                NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(placeholderEntity(entry)))
+            if entry.entity.daily.isEmpty {
+                NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(placeholderEntity))
                     .redacted(reason: .placeholder)
             } else {
                 NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.entity))
             }
         }
     }
+}
 
-    private func placeholderEntity(_ entry: SimpleEntry) -> DailyWeatherForecastEntity {
-        let entity = entry.entity
+extension NextSunnyDayWidgetEntryView {
+    private var placeholderEntity: DailyWeatherForecastEntity {
+        let entity = DailyWeatherForecastEntity()
         let daily = Daily()
         let weather = Weather()
         weather.id = 800
@@ -119,6 +121,10 @@ struct NextSunnyDayWidget_Previews: PreviewProvider {
             NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity()))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
             NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity()))
+                .previewContext(WidgetPreviewContext(family: .systemMedium))
+            NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: .defaultEntity))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+            NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: .defaultEntity))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
         }
     }

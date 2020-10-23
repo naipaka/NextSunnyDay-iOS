@@ -121,7 +121,7 @@ extension DailyWeatherForecastEntity {
         return entity
     }
 
-    static func defaultEntity() -> DailyWeatherForecastEntity {
+    static var defaultEntity: DailyWeatherForecastEntity {
         let entity = DailyWeatherForecastEntity()
         entity.cityName = "東京駅"
         entity.lat = 35.680_959_1

@@ -35,12 +35,12 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                     .frame(maxHeight: 32)
                 HStack {
                     Spacer()
-                        .frame(maxWidth: 20)
+                        .frame(idealWidth: 40)
                     VStack(alignment: .leading) {
                         Text(viewModel.output.cityName)
                             .font(.system(size: 16))
                             .fontWeight(.semibold)
-                            .fixedSize()
+                            .frame(minWidth: 200, maxWidth: .infinity, maxHeight: 16, alignment: .leading)
                         Spacer()
                             .frame(maxHeight: 8)
                         Text(viewModel.output.nextSunnyDay)
@@ -49,7 +49,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                             .fixedSize()
                     }
                     Spacer()
-                        .frame(maxWidth: 40)
+                        .frame(idealWidth: 40)
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
                             Text(R.string.nextSunnyDay.max())
@@ -73,7 +73,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                         }
                     }
                     Spacer()
-                        .frame(maxWidth: 20)
+                        .frame(idealWidth: 40)
                 }
                 Spacer()
                     .frame(idealHeight: 20)
