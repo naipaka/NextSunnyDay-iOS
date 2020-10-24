@@ -87,6 +87,8 @@ extension SettingView {
                 Spacer()
                     .frame(width: 16)
                 Text(R.string.setting.aboutWeatherForecast())
+                    .lineLimit(1)
+                    .fixedSize()
                 NavigationLink("", destination: AboutWeatherForecastView())
             }
             HStack {
