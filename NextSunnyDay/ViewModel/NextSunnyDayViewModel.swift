@@ -28,6 +28,7 @@ protocol NextSunnyDayViewModelBindingObject: BindingObject {
 // MARK: - NextSunnyDayViewModelOutputObject
 protocol NextSunnyDayViewModelOutputObject: OutputObject {
     var backgroundColor: LinearGradient { get }
+    var textColor: Color { get }
     var cityName: String { get }
     var nextSunnyDay: String { get }
     var maxTemperature: String { get }
@@ -42,6 +43,7 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
 
     final class Output: NextSunnyDayViewModelOutputObject {
         @Published var backgroundColor: LinearGradient = .noNextSunnyDayBackground
+        @Published var textColor: Color = .white
         @Published var cityName = ""
         @Published var nextSunnyDay = R.string.nextSunnyDay.nextWeekOnwards()
         @Published var maxTemperature = R.string.nextSunnyDay.hyphen()
@@ -63,6 +65,7 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
         output.cityName = forecast.cityName
         if let nearestSunnyDay = forecast.daily.filter({ WeatherConditionCode.sunnyCodes.contains($0.weather.first?.id ?? 0) }).min(by: { $0.date < $1.date }) {
             output.backgroundColor = .nextSunnyDayBackground
+            output.textColor = Color(R.color.nextSunnyDayText() ?? .white)
             output.nextSunnyDay = Date(timeIntervalSince1970: Double(nearestSunnyDay.date)).format(text: "M/d (EEE)")
             if let temp = nearestSunnyDay.temp {
                 output.maxTemperature = String("\(temp.max)℃")

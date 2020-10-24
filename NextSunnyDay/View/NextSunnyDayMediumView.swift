@@ -79,7 +79,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                     .frame(idealHeight: 20)
             }
         }
-        .foregroundColor(.white)
+        .foregroundColor(viewModel.output.textColor)
         .clipShape(ContainerRelativeShape())
     }
 }
@@ -125,6 +125,7 @@ extension NextSunnyDayMediumView_Previews {
 
         final class Output: NextSunnyDayViewModelOutputObject {
             @Published var backgroundColor: LinearGradient = .nextSunnyDayBackground
+            @Published var textColor: Color = .white
             @Published var cityName = ""
             @Published var nextSunnyDay = ""
             @Published var maxTemperature = ""

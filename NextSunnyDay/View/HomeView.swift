@@ -19,7 +19,7 @@ struct HomeView<T>: View where T: HomeViewModelObject {
         ZStack {
             NavigationView {
                 ZStack {
-                    Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
+                    Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all)
                     if viewModel.output.forecast.daily.isEmpty {
                         emptyView
                     } else {
@@ -149,6 +149,10 @@ struct HomeView_Previews: PreviewProvider {
         Group {
             HomeView(viewModel: MockViewModel())
             HomeView(viewModel: MockViewModel(forecast: mockEntity()))
+            HomeView(viewModel: MockViewModel())
+                .environment(\.colorScheme, .dark)
+            HomeView(viewModel: MockViewModel(forecast: mockEntity()))
+                .environment(\.colorScheme, .dark)
         }
     }
 }

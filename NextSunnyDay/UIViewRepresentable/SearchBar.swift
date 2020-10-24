@@ -47,6 +47,7 @@ struct SearchBar: UIViewRepresentable {
         searchBar.placeholder = placeholder
         searchBar.becomeFirstResponder()
         searchBar.searchBarStyle = .minimal
+        searchBar.tintColor = .secondaryLabel
         return searchBar
     }
 

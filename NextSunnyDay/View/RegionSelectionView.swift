@@ -44,10 +44,10 @@ extension RegionSelectionView {
                         label: {
                             VStack(alignment: .leading) {
                                 Text(completion.title)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(Color(.label))
                                 Text(completion.subtitle)
                                     .font(.subheadline)
-                                    .foregroundColor(.gray)
+                                    .foregroundColor(Color(.secondaryLabel))
                             }
                         }
                     )
@@ -60,10 +60,13 @@ extension RegionSelectionView {
                 title: Text(R.string.regionSelection.setRegion()),
                 message: Text(R.string.regionSelection.alertText(viewModel.binding.selectedCompletion.title, preferredLanguages: nil)),
                 primaryButton: .cancel(Text(R.string.regionSelection.cancel())),
-                secondaryButton: .default(Text(R.string.regionSelection.ok()), action: {
-                    viewModel.input.regionSelected.send()
-                    presentationMode.wrappedValue.dismiss()
-                })
+                secondaryButton: .default(
+                    Text(R.string.regionSelection.ok()),
+                    action: {
+                        viewModel.input.regionSelected.send()
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                )
             )
         }
     }
