@@ -1,0 +1,19 @@
+/* 
+  Setting.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/14.
+  
+*/
+
+"CFBundleShortVersionString" = "CFBundleShortVersionString";
+"hyphen" = "-";
+"navigationBarTitle" = "設定";
+"appSetting" = "アプリの設定";
+"region" = "地域";
+"unset" = "未設定";
+"aboutApp" = "アプリについて";
+"version" = "バージョン";
+"About Weather Forecast" = "天気予報について";
+"review" = "レビューを書いて応援する";
+"contactUs" = "ご意見・ご要望を送る";

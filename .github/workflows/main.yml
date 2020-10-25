@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths-ignore:
+      - README.md
+  pull_request:
+    branches:
+      - develop
+
+env:
+  DEVELOPER_DIR: /Applications/Xcode_12.app
+
+jobs:
+  build:
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Mint
+        run: brew install mint
+
+      - name: Cache Mint packages
+        uses: actions/cache@v2
+        with:
+          path: mint
+          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+          restore-keys: |
+            ${{ runner.os }}-mint-
+
+      - name: Mint bootstrap
+        run: mint bootstrap
+
+      - name: Inject Access Token
+        run: echo "let OPEN_WEATHER_API_KEY = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
+
+      - name: Xcode Build
+        run: set -o pipefail &&
+          xcodebuild
+          -sdk iphonesimulator
+          -configuration Debug
+          -scheme NextSunnyDay
+          build
+          | xcpretty
+
+      - name: Xcode Test
+        run: set -o pipefail &&
+          xcodebuild
+          -sdk iphonesimulator
+          -configuration Debug
+          -scheme NextSunnyDay
+          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
+          clean test
+          | xcpretty --report html
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: build/reports

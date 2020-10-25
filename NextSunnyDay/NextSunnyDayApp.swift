@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct NextSunnyDayApp: App {
+    init() {
+        UINavigationBar.appearance().tintColor = .secondaryLabel
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let weatherFecther = WeatherFetcher()
+            let viewModel = HomeViewModel(weatherFetcher: weatherFecther)
+            HomeView(viewModel: viewModel)
         }
     }
 }

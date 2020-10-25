@@ -1,0 +1,27 @@
+/* 
+  SystemName.strings
+  NextSunnyDay
+
+  Created by rMac on 2020/10/11.
+  
+*/
+
+"gearshape.fill" = "gearshape.fill";
+"questionmark.circle.fill" = "questionmark.circle.fill";
+"sun.min.fill" = "sun.min.fill";
+"sun.max.fill" = "sun.max.fill";
+"cloud.sun.fill" = "cloud.sun.fill";
+"cloud.fill" = "cloud.fill";
+"smoke.fill" = "smoke.fill";
+"cloud.heavyrain.fill" = "cloud.heavyrain.fill";
+"cloud.sun.rain.fill" = "cloud.sun.rain.fill";
+"cloud.bolt.rain.fill" = "cloud.bolt.rain.fill";
+"cloud.snow.fill" = "cloud.snow.fill";
+"tornado" = "tornado";
+"xmark" = "xmark";
+"mappin.and.ellipse" = "mappin.and.ellipse";
+"tag.fill" = "tag.fill";
+"star.fill" = "star.fill";
+"paperplane.fill" = "paperplane.fill";
+"chevron.left" = "chevron.left";
+"chevron.right" = "chevron.right";
