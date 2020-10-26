@@ -17,6 +17,9 @@ env:
 jobs:
   build:
     runs-on: macOS-latest
+    env:
+      MINT_PATH: mint/lib
+      MINT_LINK_PATH: mint/bin
 
     steps:
       - uses: actions/checkout@v2
