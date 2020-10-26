@@ -35,6 +35,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-mint-
 
+      - name: Mint bootstrap
+        run: mint bootstrap
+
       - name: Cache Swift Package Manager packages
         uses: actions/cache@v2
         with:
