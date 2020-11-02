@@ -24,6 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache Swift Package Manager packages
+        uses: actions/cache@v2
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+
       - name: Install Mint
         run: brew install mint
 
@@ -37,13 +44,6 @@ jobs:
 
       - name: Mint bootstrap
         run: mint bootstrap
-
-      - name: Cache Swift Package Manager packages
-        uses: actions/cache@v2
-        with:
-          path: .build
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
             ${{ runner.os }}-spm-
 
       - name: Inject Access Token
