@@ -34,7 +34,7 @@ struct Provider: TimelineProvider {
         let timeline = Timeline(entries: [SimpleEntry(date: currentDate, entity: entity)], policy: .after(entryDate))
 
         let latestDate = entity.daily.min(by: { $0.date < $1.date })?.date ?? 0
-        if !entity.cityName.isEmpty && latestDate + 60 * 60 * 24 < Int(currentDate.timeIntervalSince1970) {
+        if !entity.cityName.isEmpty && latestDate + 60 * 60 * 20 < Int(currentDate.timeIntervalSince1970) {
             weatherFetcher.weeklyWeatherForecast(forLat: entity.lat, forLon: entity.lon)
                 .receive(on: RunLoop.main)
                 .sink(
