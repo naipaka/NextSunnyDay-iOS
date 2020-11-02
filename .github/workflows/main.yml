@@ -30,6 +30,7 @@ jobs:
           path: .build
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
+            ${{ runner.os }}-spm-
 
       - name: Install Mint
         run: brew install mint
@@ -44,7 +45,6 @@ jobs:
 
       - name: Mint bootstrap
         run: mint bootstrap
-            ${{ runner.os }}-spm-
 
       - name: Inject Access Token
         run: echo "let OPEN_WEATHER_API_KEY = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
