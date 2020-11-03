@@ -638,7 +638,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\n";
+			shellScript = "unset SDKROOT\nmint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\n";
 		};
 		917E40C82522D90600D77C3F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -694,7 +694,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mint run R.swift rswift generate \"$SRCROOT/NextSunnyDayWidget/R.generated.swift\"\n";
+			shellScript = "unset SDKROOT\nmint run R.swift rswift generate \"$SRCROOT/NextSunnyDayWidget/R.generated.swift\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
