@@ -638,7 +638,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
+			shellScript = "mint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\n";
 		};
 		917E40C82522D90600D77C3F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
