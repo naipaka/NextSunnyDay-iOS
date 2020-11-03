@@ -16,7 +16,7 @@ env:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     env:
       MINT_PATH: mint/lib
       MINT_LINK_PATH: mint/bin
@@ -42,9 +42,6 @@ jobs:
           key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
           restore-keys: |
             ${{ runner.os }}-mint-
-
-      - name: Mint bootstrap
-        run: mint bootstrap
 
       - name: Inject Access Token
         run: echo "let OPEN_WEATHER_API_KEY = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
