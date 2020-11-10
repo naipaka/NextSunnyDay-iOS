@@ -16,13 +16,21 @@ env:
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-latest
     env:
       MINT_PATH: mint/lib
       MINT_LINK_PATH: mint/bin
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Cache Swift Package Manager packages
+        uses: actions/cache@v2
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
 
       - name: Install Mint
         run: brew install mint
@@ -34,17 +42,6 @@ jobs:
           key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
           restore-keys: |
             ${{ runner.os }}-mint-
-
-      - name: Mint bootstrap
-        run: mint bootstrap
-
-      - name: Cache Swift Package Manager packages
-        uses: actions/cache@v2
-        with:
-          path: .build
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-spm-
 
       - name: Inject Access Token
         run: echo "let OPEN_WEATHER_API_KEY = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift

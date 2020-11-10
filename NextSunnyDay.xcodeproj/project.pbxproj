@@ -438,9 +438,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91044081253DDA9700A21F20 /* Build configuration list for PBXNativeTarget "NextSunnyDayWidgetExtension" */;
 			buildPhases = (
+				9104406C253DDA9600A21F20 /* Frameworks */,
 				91F6A201253EBFAE00E9D7B2 /* R.swift */,
 				9104406B253DDA9600A21F20 /* Sources */,
-				9104406C253DDA9600A21F20 /* Frameworks */,
 				9104406D253DDA9600A21F20 /* Resources */,
 			);
 			buildRules = (
@@ -461,11 +461,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
 			buildPhases = (
+				915F51322521763500B4E384 /* Frameworks */,
 				91AB3B6825419B6F00914E7B /* LicensePlist */,
 				91500CAE2533044C00D5F47D /* R.Swift */,
 				915F51312521763500B4E384 /* Sources */,
 				917E40C82522D90600D77C3F /* SwiftLint */,
-				915F51322521763500B4E384 /* Frameworks */,
 				915F51332521763500B4E384 /* Resources */,
 				9104407E253DDA9700A21F20 /* Embed App Extensions */,
 			);
@@ -638,7 +638,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
+			shellScript = "if which mint >/dev/null; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDay/Script/R.generated.swift\"\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
 		917E40C82522D90600D77C3F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -694,7 +694,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if mint list | grep -q 'R.swift'; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDayWidget/R.generated.swift\"\nelse\n  echo \"error: R.swift not installed; run 'mint bootstrap' to install\"\n  return -1\nfi\n";
+			shellScript = "if which mint >/dev/null; then\n  mint run R.swift rswift generate \"$SRCROOT/NextSunnyDayWidget/R.generated.swift\"\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
