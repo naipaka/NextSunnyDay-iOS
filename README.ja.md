@@ -1,51 +1,50 @@
-# Next Sunny Day (次いつ晴れる？)
+# 次いつ晴れる？ (Next Sunny Day)
 
-[日本語](README.ja.md)
+[English](README.md)
 
 <img src="https://user-images.githubusercontent.com/45661924/97105071-d28d2580-16fb-11eb-8f8d-7ec79940db41.png" width="300">
 
 <img src="https://user-images.githubusercontent.com/45661924/97104876-7544a480-16fa-11eb-9bad-e1334d5ab2f8.png" height="300">
 
-An iOS widget that shows the next sunny day on your home screen.
-Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
-The app also shows the weekly forecast for today through seven days later.
-The app is available in Japanese only.
+次に晴れる日を、ホーム画面のウィジェットで確かめられる iOS アプリです。
+天気アプリのウィジェットには今日と明日の天気しか出ず、洗濯物をいつ外に干せるかがわかりにくかったため作りました。
+アプリでは、今日から 7 日後までの週間天気も見られます。
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 
-## Development
+## 開発
 
-### Environment
+### 環境
 
-| Tool  | Version          |
-| ----- | ---------------- |
-| Xcode | 12.0.1 (12A7300) |
-| Swift | 5.3              |
-| Mint  | 0.14.2           |
+| ツール | バージョン       |
+| ------ | ---------------- |
+| Xcode  | 12.0.1 (12A7300) |
+| Swift  | 5.3              |
+| Mint   | 0.14.2           |
 
-### Configuration
+### 構成
 
-| Configuration     | Model        |
-| ----------------- | ------------ |
-| UI implementation | SwiftUI      |
-| Widget            | WidgetKit    |
-| Architecture      | MVVM+Combine |
-| Local storage     | Realm        |
-| Branching model   | Git-flow     |
+| 項目               | 採用しているもの |
+| ------------------ | ---------------- |
+| UI                 | SwiftUI          |
+| ウィジェット       | WidgetKit        |
+| アーキテクチャ     | MVVM+Combine     |
+| ローカルの保存     | Realm            |
+| ブランチの運用     | Git-flow         |
 
-### How it works
+### 仕組み
 
-The app saves the forecast for the place you choose to Realm, in an App Group container that the widget can also read.
-The widget shows the saved forecast and refreshes every five hours. When the saved forecast is out of date, the widget fetches a new one from the OpenWeather API on its own.
-Places are searched with MapKit's `MKLocalSearchCompleter`.
+アプリは、選んだ場所の天気予報を Realm に保存します。保存先は、ウィジェットからも読める App Group のコンテナです。
+ウィジェットは保存された予報を表示し、5 時間ごとに更新します。保存された予報が古くなると、ウィジェット自身が OpenWeather の API から新しい予報を取得します。
+場所の検索には、MapKit の `MKLocalSearchCompleter` を使っています。
 
-### Directory Structure
+### ディレクトリ構成
 
 ```
 NextSunnyDay/
 ├── NextSunnyDayApp.swift
 ├── API/
-│   ├── AccessTokens.swift   # Created in Set up, not committed
+│   ├── AccessTokens.swift   # セットアップで作成する（コミットしない）
 │   ├── OpenWeatherAPI/
 │   └── LocalSearch/
 ├── Model/
@@ -65,42 +64,42 @@ NextSunnyDayWidget/
 └── NextSunnyDayWidget.swift
 ```
 
-## Set up
+## セットアップ
 
-### Clone the project
+### リポジトリを clone する
 
 ```sh
 $ git clone git@github.com:naipaka/NextSunnyDay-iOS.git
 $ cd NextSunnyDay-iOS
 ```
 
-### API key
+### API キー
 
-This app uses the OpenWeather API. Get an API key from the following page.
+このアプリは OpenWeather の API を使っています。次のページで API キーを取得してください。
 
 [How to start to work with Openweather API - OpenWeatherMap](https://openweathermap.org/appid)
 
-Then run the following command in the root directory to create `NextSunnyDay/API/AccessTokens.swift`.
+取得したら、ルートディレクトリで次のコマンドを実行し、`NextSunnyDay/API/AccessTokens.swift` を作成してください。
 
 ```sh
-$ echo "let OPEN_WEATHER_API_KEY = \"{YOUR_API_KEY}\"" > ./NextSunnyDay/API/AccessTokens.swift
+$ echo "let OPEN_WEATHER_API_KEY = \"{取得した API キー}\"" > ./NextSunnyDay/API/AccessTokens.swift
 ```
 
 ### Mint
 
-Install [Mint](https://github.com/yonaskolb/Mint) first, then install the tools in the `Mintfile` (SwiftLint, R.swift, and LicensePlist). The build phases use them.
+先に [Mint](https://github.com/yonaskolb/Mint) をインストールし、`Mintfile` にあるツール（SwiftLint、R.swift、LicensePlist）を入れてください。ビルドフェーズでこれらを使います。
 
 ```sh
 $ mint bootstrap
 ```
 
-### Build
+### ビルド
 
-Open `NextSunnyDay.xcodeproj` in Xcode, then build and run the app.
+`NextSunnyDay.xcodeproj` を Xcode で開き、アプリをビルドして実行してください。
 
-## Screenshots
+## スクリーンショット
 
-| Screen         | Light                                                                                                                        | Dark                                                                                                                         |
+| 画面           | Light                                                                                                                        | Dark                                                                                                                         |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Widget         | <img src="https://user-images.githubusercontent.com/45661924/97104984-4f6bcf80-16fb-11eb-8e4f-13f0b694cd4b.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105017-8e018a00-16fb-11eb-92ad-20fd0c67c0e0.png" width="300"> |
 | Home           | <img src="https://user-images.githubusercontent.com/45661924/97104990-54c91a00-16fb-11eb-9408-40ac76eb52ea.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105024-98bc1f00-16fb-11eb-8149-fbffd415dd3e.png" width="300"> |
