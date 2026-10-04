@@ -83,7 +83,7 @@ Single long-lived branch: `main` (default). There is no `develop`.
 
 - The owner commits and pushes directly to `main`; do not open PRs for their changes.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
-- CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It builds and runs `NextSunnyDayTests` on the `macos-26` runner with Xcode 26.4.1 and an iPhone 17 (iOS 26.4) simulator. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
+- CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It builds and runs `NextSunnyDayTests` on the `macos-26` runner with Xcode 26.4.1 and an iPhone 17 (iOS 26.4.1) simulator. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
 
 ## Known stale tooling
 
