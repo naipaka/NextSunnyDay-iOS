@@ -4,12 +4,11 @@ on:
   push:
     branches:
       - main
-      - develop
     paths-ignore:
       - README.md
   pull_request:
     branches:
-      - develop
+      - main
 
 env:
   DEVELOPER_DIR: /Applications/Xcode_12.app
