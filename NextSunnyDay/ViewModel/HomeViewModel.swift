@@ -124,11 +124,11 @@ class HomeViewModel: HomeViewModelObject {
                 guard let self = self else { return }
                 switch change {
                 case let .initial(results):
-                    guard let forecast = results.first ?? DailyWeatherForecastEntity() else { return }
+                    let forecast = results.first ?? DailyWeatherForecastEntity()
                     self.output.forecast = forecast
 
                 case let .update(results, _, _, _):
-                    guard let forecast = results.first ?? DailyWeatherForecastEntity() else { return }
+                    let forecast = results.first ?? DailyWeatherForecastEntity()
                     if forecast.daily.isEmpty {
                         self.output.forecast = forecast
                         self.fetchWeatherForecast()

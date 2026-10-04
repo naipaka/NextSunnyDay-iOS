@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Xcode 12.0.1 / Swift 5.3.
+NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 26.4.1 (Swift language mode 5, iOS deployment target 14.0).
 
 ## Setup
 
-1. `mint bootstrap` — installs pinned tools from `Mintfile` (SwiftLint, R.swift, LicensePlist).
+1. (Optional) `mint bootstrap` — installs pinned tools from `Mintfile` (SwiftLint, LicensePlist). Not required to build: the SwiftLint and LicensePlist build phases print a warning and skip when Mint is missing.
 2. Create `NextSunnyDay/API/AccessTokens.swift` containing your OpenWeather API key. This file is gitignored and required to build:
    ```sh
    echo "let OPEN_WEATHER_API_KEY = \"{your key}\"" > ./NextSunnyDay/API/AccessTokens.swift
@@ -17,16 +17,21 @@ NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the nex
 
 ## Common commands
 
-Build (matches CI):
+Build:
 ```sh
-xcodebuild -sdk iphonesimulator -configuration Debug -scheme NextSunnyDay build | xcpretty
+xcodebuild -scheme NextSunnyDay -configuration Debug \
+  -destination 'generic/platform=iOS Simulator' -skipPackagePluginValidation build
 ```
 
-Test (matches CI — iPhone 11 Pro Max simulator):
+Test:
 ```sh
-xcodebuild -sdk iphonesimulator -configuration Debug -scheme NextSunnyDay \
-  -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max' clean test | xcpretty
+xcodebuild -scheme NextSunnyDay -configuration Debug \
+  -destination 'platform=iOS Simulator,name=iPhone 17' -skipPackagePluginValidation test
 ```
+
+- Do not pass `-sdk iphonesimulator`: it forces the R.swift build-tool plugin to be built for the simulator, and the build fails with `execvp() of '.../Debug/rswift' failed`.
+- `-skipPackagePluginValidation` is needed on the command line because of the R.swift plugin. In the Xcode GUI, trust the plugin once when prompted.
+- `NextSunnyDayTests` / `NextSunnyDayUITests` contain only the Xcode template tests.
 
 Run a single test by appending `-only-testing:NextSunnyDayTests/<ClassName>/<testMethod>`.
 
@@ -61,7 +66,8 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 ### Localization & resources
 
 - Strings live under `NextSunnyDay/Resourece/strings/` (note the misspelling — keep it) and `NextSunnyDay/ja.lproj/`. Japanese is the only supported locale.
-- **R.swift** generates typed accessors. Reference resources as `R.string.widget.kind()` etc., not raw string keys. The generated file is excluded from SwiftLint (`NextSunnyDay/*/R.generated.swift`).
+- **R.swift 7** generates typed accessors via the `RswiftGenerateInternalResources` SPM build-tool plugin on both the app and widget targets; the generated file lives in DerivedData, not the repo. Reference resources as `R.string.widget.kind()`, `R.color.blue()` etc., not raw string keys. To pass a locale, use `R.string(preferredLanguages:)…` (the R.swift 5 `preferredLanguages:` argument on each accessor no longer exists).
+- SPM versions are pinned in `NextSunnyDay.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` (committed). Realm is still `realm-cocoa` 5.5.2; it builds and runs on Xcode 26 but is very old.
 
 ## SwiftLint
 
@@ -81,4 +87,4 @@ Single long-lived branch: `main` (default). There is no `develop`.
 
 ## Known stale tooling
 
-The project was dormant from 2020 and is being revived. CI still pins `/Applications/Xcode_12.app`, `actions/*@v2`, and an iPhone 11 Pro Max simulator, which current GitHub runners no longer provide, so CI is expected to fail until updated. Mint tool versions (SwiftLint 0.40.3, R.swift 5.2.2) are similarly old.
+The project was dormant from 2020 and is being revived. CI still pins `/Applications/Xcode_12.app`, `actions/*@v2`, `-sdk iphonesimulator`, and an iPhone 11 Pro Max simulator, which current GitHub runners no longer provide, so CI is expected to fail until updated. Mint tool versions (SwiftLint 0.40.3, LicensePlist 3.0.5) are similarly old.

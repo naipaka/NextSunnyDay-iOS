@@ -58,7 +58,7 @@ extension RegionSelectionView {
         .alert(isPresented: $viewModel.binding.isShowingAlert) {
             Alert(
                 title: Text(R.string.regionSelection.setRegion()),
-                message: Text(R.string.regionSelection.alertText(viewModel.binding.selectedCompletion.title, preferredLanguages: nil)),
+                message: Text(R.string.regionSelection.alertText(viewModel.binding.selectedCompletion.title)),
                 primaryButton: .cancel(Text(R.string.regionSelection.cancel())),
                 secondaryButton: .default(
                     Text(R.string.regionSelection.ok()),
