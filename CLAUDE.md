@@ -71,7 +71,7 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 
 ## SwiftLint
 
-Config in `.swiftlint.yml` is opinionated and enables many opt-in rules. Notable disabled rules include `force_unwrapping`, `force_cast`, `force_try` — force-unwrap when it's genuinely safe. `swiftlint.yml` workflow runs on PRs to `main` that touch Swift files.
+Config in `.swiftlint.yml` is opinionated and enables many opt-in rules. Notable disabled rules include `force_unwrapping`, `force_cast`, `force_try` — force-unwrap when it's genuinely safe. The `swiftlint.yml` workflow runs SwiftLint 0.62.2 (Linux binary) on pushes and PRs to `main` that touch Swift files; it fails only on errors, not warnings.
 
 ## Docs
 
@@ -83,8 +83,8 @@ Single long-lived branch: `main` (default). There is no `develop`.
 
 - The owner commits and pushes directly to `main`; do not open PRs for their changes.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
-- CI (`main.yml`) runs on pushes to `main` and PRs to `main`.
+- CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It builds and runs `NextSunnyDayTests` on the `macos-26` runner with Xcode 26.4.1 and an iPhone 17 (iOS 26.4) simulator. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
 
 ## Known stale tooling
 
-The project was dormant from 2020 and is being revived. CI still pins `/Applications/Xcode_12.app`, `actions/*@v2`, `-sdk iphonesimulator`, and an iPhone 11 Pro Max simulator, which current GitHub runners no longer provide, so CI is expected to fail until updated. Mint tool versions (SwiftLint 0.40.3, LicensePlist 3.0.5) are similarly old.
+The project was dormant from 2020 and is being revived. Mint tool versions (SwiftLint 0.40.3, LicensePlist 3.0.5) are old and may not build with current Swift; CI no longer uses Mint. Realm is `realm-cocoa` 5.5.2.

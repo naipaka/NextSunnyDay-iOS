@@ -5,42 +5,34 @@ on:
     branches:
       - main
     paths-ignore:
-      - README.md
+      - "**.md"
+      - "docs/**"
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
-  DEVELOPER_DIR: /Applications/Xcode_12.app
+  DEVELOPER_DIR: /Applications/Xcode_26.4.1.app
 
 jobs:
   build:
-    runs-on: macOS-latest
-    env:
-      MINT_PATH: mint/lib
-      MINT_LINK_PATH: mint/bin
+    runs-on: macos-26
+    timeout-minutes: 45
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Mint
-        run: brew install mint
-
-      - name: Cache Mint packages
-        uses: actions/cache@v2
-        with:
-          path: mint
-          key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
-          restore-keys: |
-            ${{ runner.os }}-mint-
-
-      - name: Mint bootstrap
-        run: mint bootstrap
+      - uses: actions/checkout@v7
 
       - name: Cache Swift Package Manager packages
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
-          path: .build
+          path: SourcePackages
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             ${{ runner.os }}-spm-
@@ -48,26 +40,21 @@ jobs:
       - name: Inject Access Token
         run: echo "let OPEN_WEATHER_API_KEY = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
 
-      - name: Xcode Build
-        run: set -o pipefail &&
+      - name: Build and Test
+        run: >
+          set -o pipefail &&
           xcodebuild
-          -sdk iphonesimulator
-          -configuration Debug
           -scheme NextSunnyDay
-          build
-          | xcpretty
-
-      - name: Xcode Test
-        run: set -o pipefail &&
-          xcodebuild
-          -sdk iphonesimulator
           -configuration Debug
-          -scheme NextSunnyDay
-          -destination 'platform=iOS Simulator,name=iPhone 11 Pro Max'
-          clean test
-          | xcpretty --report html
+          -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.4'
+          -clonedSourcePackagesDirPath SourcePackages
+          -skipPackagePluginValidation
+          -resultBundlePath TestResults.xcresult
+          -only-testing:NextSunnyDayTests
+          test
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v7
+        if: failure()
         with:
           name: test-results
-          path: build/reports
+          path: TestResults.xcresult
