@@ -85,6 +85,10 @@ Single long-lived branch: `main` (default). There is no `develop`.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
 - CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It builds and runs `NextSunnyDayTests` on the `macos-26` runner with Xcode 26.4.1 and an iPhone 17 (iOS 26.4.1) simulator. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
 
+## Revival roadmap
+
+The project is being revived via GitHub issue **#89** (tracking issue); each task is a sub-issue (#90–#100), worked on one chat per task. When the owner asks to continue without naming an issue ("next task", "次やって", "続きやって", …), follow the `/next-task` skill (`.claude/skills/next-task/SKILL.md`): pick the lowest-numbered open sub-issue whose dependencies are closed, brief the owner and confirm its Owner decisions before implementing. Talk to the owner in Japanese; write issues, commits and docs in English.
+
 ## Known stale tooling
 
 The project was dormant from 2020 and is being revived. Mint tool versions (SwiftLint 0.40.3, LicensePlist 3.0.5) are old and may not build with current Swift; CI no longer uses Mint. Realm is `realm-cocoa` 5.5.2.

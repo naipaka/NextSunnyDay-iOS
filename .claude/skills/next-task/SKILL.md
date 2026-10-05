@@ -1,0 +1,49 @@
+---
+name: next-task
+description: Pick up the next task of the NextSunnyDay revival roadmap (GitHub issue #89) and work on it. Use when the owner says "next task", "次のタスク", "次やって", "続きやって", "ロードマップ進めて" or similar without naming an issue.
+---
+
+# Next roadmap task
+
+The revival roadmap is GitHub issue **#89** in `naipaka/NextSunnyDay-iOS`. Each task is a sub-issue of #89. One task = one chat.
+
+## 1. Find the task
+
+1. List the sub-issues with their state:
+   ```sh
+   gh api repos/naipaka/NextSunnyDay-iOS/issues/89/sub_issues --jq '.[] | "\(.number)\t\(.state)\t\(.title)"'
+   ```
+2. If every sub-issue is closed, say the roadmap is finished and offer to close #89. Stop.
+3. Read the body of each open sub-issue in ascending number order (`gh issue view <n>`). Its first lines say `Depends on #X` (and sometimes "Can start any time after #X"). Pick the **lowest-numbered open issue whose dependencies are all closed**.
+   - If an open issue already has ticked checkboxes or progress comments, it is in progress — prefer resuming it over starting a new one.
+   - If the owner named an issue, use that one instead, but warn if its dependencies are still open.
+
+## 2. Brief the owner (in Japanese) and confirm
+
+Before changing anything, tell the owner:
+
+- Which issue was picked and why (one line on the dependency check).
+- The goal and the scope, summarized in a few bullets.
+- Any **Owner prerequisites** (manual steps such as Apple Developer portal settings) — ask whether they are done.
+- Every **Owner decision** listed in the issue, each with a recommendation. Use AskUserQuestion for these.
+
+Wait for the answers. Record the decisions as a comment on the issue (in English).
+
+## 3. Do the work
+
+- Read `CLAUDE.md` and the docs the issue links to first.
+- Follow the issue's Scope; respect Out of scope (mention, don't do).
+- Commit to `main` in small, focused steps and push directly (no PRs). Keep CI green: check `gh run list` after pushing and fix failures.
+- Tick checkboxes in the issue body as items are completed (`gh issue edit <n> --body-file …`), so a later chat can resume.
+- Issue comments, commit messages, docs and code comments are in English; talk to the owner in Japanese.
+
+## 4. Finish
+
+When every "Done when" item is met:
+
+1. Update `CLAUDE.md` and `docs/` so the next chat starts with accurate context.
+2. Post a short English summary comment on the issue (what changed, commits, anything deferred) and close it.
+3. Tick the task's checkbox in #89's body.
+4. Tell the owner in Japanese what was done, and that the next task can be started in a new chat with `/next-task`.
+
+If the task cannot be finished in this chat, leave a progress comment on the issue (done / remaining / blockers) instead of closing it.
