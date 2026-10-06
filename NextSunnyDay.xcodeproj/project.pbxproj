@@ -3,77 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9101E2DF253EC7C800F2313F /* Widget.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9101E2D1253EC66100F2313F /* Widget.strings */; };
-		9104405C253C3CF300A21F20 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9104405B253C3CF300A21F20 /* LoadingView.swift */; };
-		91044061253C3D1000A21F20 /* Loading.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91044060253C3D1000A21F20 /* Loading.strings */; };
 		91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044071253DDA9600A21F20 /* WidgetKit.framework */; };
 		91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044073253DDA9600A21F20 /* SwiftUI.framework */; };
-		91044077253DDA9600A21F20 /* NextSunnyDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */; };
-		91044079253DDA9700A21F20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91044078253DDA9700A21F20 /* Assets.xcassets */; };
-		9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		91500CB9253306AC00D5F47D /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 91500CB8253306AC00D5F47D /* RswiftLibrary */; };
-		91500CD92533476F00D5F47D /* Home.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91500CD82533476F00D5F47D /* Home.strings */; };
-		91500CE22533497200D5F47D /* SystemName.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91500CE12533497200D5F47D /* SystemName.strings */; };
-		915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51382521763500B4E384 /* NextSunnyDayApp.swift */; };
-		915F513B2521763500B4E384 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F513A2521763500B4E384 /* HomeView.swift */; };
-		915F513D2521763600B4E384 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
-		915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513F2521763600B4E384 /* Preview Assets.xcassets */; };
-		915F514B2521763600B4E384 /* NextSunnyDayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F514A2521763600B4E384 /* NextSunnyDayTests.swift */; };
-		915F51562521763600B4E384 /* NextSunnyDayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 915F51552521763600B4E384 /* NextSunnyDayUITests.swift */; };
-		917094E82535423C00975181 /* NextSunnyDayMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094E72535423C00975181 /* NextSunnyDayMediumView.swift */; };
-		917094ED2535427000975181 /* NextSunnyDay.strings in Resources */ = {isa = PBXBuildFile; fileRef = 917094EC2535427000975181 /* NextSunnyDay.strings */; };
-		917094F2253545DB00975181 /* NextSunnyDaySmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */; };
-		917094FA253549DC00975181 /* NextSunnyDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094F9253549DC00975181 /* NextSunnyDayViewModel.swift */; };
-		917094FF2535559000975181 /* WeatherConditionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094FE2535559000975181 /* WeatherConditionCode.swift */; };
-		917E414E2525B13F00D77C3F /* DailyWeatherForecastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E414D2525B13F00D77C3F /* DailyWeatherForecastResponse.swift */; };
-		917E415F2525C85600D77C3F /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E415E2525C85600D77C3F /* WeatherError.swift */; };
-		917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E41632525CA5D00D77C3F /* AccessTokens.swift */; };
-		917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */; };
-		9184E90A25443669005D7CD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9184E90C25443669005D7CD5 /* InfoPlist.strings */; };
 		919EA78425304DAB008BC359 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 919EA78325304DAB008BC359 /* Realm */; };
 		919EA78625304DAB008BC359 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 919EA78525304DAB008BC359 /* RealmSwift */; };
-		919EA78B253051F1008BC359 /* DailyWeatherForecastEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919EA78A253051F1008BC359 /* DailyWeatherForecastEntity.swift */; };
-		91A2960F2534369F00CCC7B2 /* ViewModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2960E2534369F00CCC7B2 /* ViewModelObject.swift */; };
-		91A2961725344DB700CCC7B2 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2961625344DB700CCC7B2 /* HomeViewModel.swift */; };
-		91AB3AEF25401D8800914E7B /* WeatherFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */; };
-		91AB3AF425401D8F00914E7B /* DailyWeatherForecastResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E414D2525B13F00D77C3F /* DailyWeatherForecastResponse.swift */; };
-		91AB3AF925401D9200914E7B /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E415E2525C85600D77C3F /* WeatherError.swift */; };
-		91AB3AFE25401D9800914E7B /* AccessTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E41632525CA5D00D77C3F /* AccessTokens.swift */; };
-		91AB3B0E25411BDD00914E7B /* LinearGradient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AB3B0D25411BDD00914E7B /* LinearGradient+Extension.swift */; };
-		91AB3B1B25411BFE00914E7B /* LinearGradient+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AB3B0D25411BDD00914E7B /* LinearGradient+Extension.swift */; };
-		91AB3B352541879D00914E7B /* AboutWeatherForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AB3B342541879D00914E7B /* AboutWeatherForecastView.swift */; };
-		91AB3B4B25418AD700914E7B /* AboutWeatherForecast.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91AB3B4A25418AD700914E7B /* AboutWeatherForecast.strings */; };
-		91AB3B8E2541C08300914E7B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91AB3B8D2541C08300914E7B /* Settings.bundle */; };
-		91DDF1A2253699DC009F9A96 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A1253699DC009F9A96 /* Date+Extension.swift */; };
-		91DDF1A72536AC16009F9A96 /* DailyWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */; };
-		91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1AB2536C052009F9A96 /* DailyWeather.strings */; };
-		91DDF1D52536D6C0009F9A96 /* WeatherIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */; };
-		91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */; };
-		91DDF1E825370381009F9A96 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1E725370381009F9A96 /* SettingViewModel.swift */; };
-		91DDF1ED25371C26009F9A96 /* Setting.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF1EC25371C26009F9A96 /* Setting.strings */; };
-		91DDF1F225371D49009F9A96 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1F125371D49009F9A96 /* SettingView.swift */; };
-		91DDF2212537F69D009F9A96 /* RegionSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF2202537F69D009F9A96 /* RegionSelectionViewModel.swift */; };
-		91DDF228253826AE009F9A96 /* LocalSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF227253826AE009F9A96 /* LocalSearchService.swift */; };
-		91DDF255253837BE009F9A96 /* RegionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF254253837BE009F9A96 /* RegionSelectionView.swift */; };
-		91DDF25B25383847009F9A96 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF25A25383847009F9A96 /* SearchBar.swift */; };
-		91DDF26325383C75009F9A96 /* RegionSelection.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91DDF26225383C75009F9A96 /* RegionSelection.strings */; };
 		91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FB253EBF9E00E9D7B2 /* Realm */; };
 		91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */; };
 		91F6A200253EBF9E00E9D7B2 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FF253EBF9E00E9D7B2 /* RswiftLibrary */; };
-		91F6A20C253EC0B000E9D7B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915F513C2521763600B4E384 /* Assets.xcassets */; };
-		91F6A20D253EC0B000E9D7B2 /* NextSunnyDayMediumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094E72535423C00975181 /* NextSunnyDayMediumView.swift */; };
-		91F6A20E253EC0B000E9D7B2 /* ViewModelObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A2960E2534369F00CCC7B2 /* ViewModelObject.swift */; };
-		91F6A20F253EC0B000E9D7B2 /* SystemName.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91500CE12533497200D5F47D /* SystemName.strings */; };
-		91F6A210253EC0B000E9D7B2 /* WeatherConditionCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094FE2535559000975181 /* WeatherConditionCode.swift */; };
-		91F6A211253EC0B000E9D7B2 /* NextSunnyDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094F9253549DC00975181 /* NextSunnyDayViewModel.swift */; };
-		91F6A212253EC0B000E9D7B2 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDF1A1253699DC009F9A96 /* Date+Extension.swift */; };
-		91F6A213253EC0B000E9D7B2 /* NextSunnyDay.strings in Resources */ = {isa = PBXBuildFile; fileRef = 917094EC2535427000975181 /* NextSunnyDay.strings */; };
-		91F6A214253EC0B000E9D7B2 /* NextSunnyDaySmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */; };
-		91F6A215253EC0B000E9D7B2 /* DailyWeatherForecastEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919EA78A253051F1008BC359 /* DailyWeatherForecastEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,86 +33,92 @@
 			remoteGlobalIDString = 915F51342521763500B4E384;
 			remoteInfo = NextSunnyDay;
 		};
-		915F51522521763600B4E384 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 915F512D2521763500B4E384 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 915F51342521763500B4E384;
-			remoteInfo = NextSunnyDay;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		9104407E253DDA9700A21F20 /* Embed App Extensions */ = {
+		9104407E253DDA9700A21F20 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed App Extensions */,
+				9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9101E2D1253EC66100F2313F /* Widget.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Widget.strings; sourceTree = "<group>"; };
-		9101E2E4253ECFCC00F2313F /* NextSunnyDay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextSunnyDay.entitlements; sourceTree = "<group>"; };
-		9101E2E5253ED03900F2313F /* NextSunnyDayWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NextSunnyDayWidgetExtension.entitlements; sourceTree = "<group>"; };
-		9104405B253C3CF300A21F20 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		91044060253C3D1000A21F20 /* Loading.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Loading.strings; sourceTree = "<group>"; };
 		9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		91044071253DDA9600A21F20 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		91044073253DDA9600A21F20 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayWidget.swift; sourceTree = "<group>"; };
-		91044078253DDA9700A21F20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9104407A253DDA9700A21F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		91500CD82533476F00D5F47D /* Home.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Home.strings; sourceTree = "<group>"; };
-		91500CE12533497200D5F47D /* SystemName.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = SystemName.strings; sourceTree = "<group>"; };
 		915F51352521763500B4E384 /* NextSunnyDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		915F51382521763500B4E384 /* NextSunnyDayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayApp.swift; sourceTree = "<group>"; };
-		915F513A2521763500B4E384 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		915F513C2521763600B4E384 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		915F513F2521763600B4E384 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		915F51412521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		915F51462521763600B4E384 /* NextSunnyDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextSunnyDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		915F514A2521763600B4E384 /* NextSunnyDayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayTests.swift; sourceTree = "<group>"; };
-		915F514C2521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextSunnyDayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		915F51552521763600B4E384 /* NextSunnyDayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayUITests.swift; sourceTree = "<group>"; };
-		915F51572521763600B4E384 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		917094E72535423C00975181 /* NextSunnyDayMediumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayMediumView.swift; sourceTree = "<group>"; };
-		917094EC2535427000975181 /* NextSunnyDay.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = NextSunnyDay.strings; sourceTree = "<group>"; };
-		917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDaySmallView.swift; sourceTree = "<group>"; };
-		917094F9253549DC00975181 /* NextSunnyDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextSunnyDayViewModel.swift; sourceTree = "<group>"; };
-		917094FE2535559000975181 /* WeatherConditionCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherConditionCode.swift; sourceTree = "<group>"; };
-		917E414D2525B13F00D77C3F /* DailyWeatherForecastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherForecastResponse.swift; sourceTree = "<group>"; };
-		917E415E2525C85600D77C3F /* WeatherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherError.swift; sourceTree = "<group>"; };
-		917E41632525CA5D00D77C3F /* AccessTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokens.swift; sourceTree = "<group>"; };
-		917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherFetcher.swift; sourceTree = "<group>"; };
-		9184E90B25443669005D7CD5 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		919EA78A253051F1008BC359 /* DailyWeatherForecastEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherForecastEntity.swift; sourceTree = "<group>"; };
-		91A2960E2534369F00CCC7B2 /* ViewModelObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelObject.swift; sourceTree = "<group>"; };
-		91A2961625344DB700CCC7B2 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		91AB3B0D25411BDD00914E7B /* LinearGradient+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LinearGradient+Extension.swift"; sourceTree = "<group>"; };
-		91AB3B342541879D00914E7B /* AboutWeatherForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWeatherForecastView.swift; sourceTree = "<group>"; };
-		91AB3B4A25418AD700914E7B /* AboutWeatherForecast.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = AboutWeatherForecast.strings; sourceTree = "<group>"; };
-		91AB3B8D2541C08300914E7B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		91DDF1A1253699DC009F9A96 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherViewModel.swift; sourceTree = "<group>"; };
-		91DDF1AB2536C052009F9A96 /* DailyWeather.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = DailyWeather.strings; sourceTree = "<group>"; };
-		91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIcon.swift; sourceTree = "<group>"; };
-		91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWeatherView.swift; sourceTree = "<group>"; };
-		91DDF1E725370381009F9A96 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
-		91DDF1EC25371C26009F9A96 /* Setting.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Setting.strings; sourceTree = "<group>"; };
-		91DDF1F125371D49009F9A96 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		91DDF2202537F69D009F9A96 /* RegionSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSelectionViewModel.swift; sourceTree = "<group>"; };
-		91DDF227253826AE009F9A96 /* LocalSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalSearchService.swift; sourceTree = "<group>"; };
-		91DDF254253837BE009F9A96 /* RegionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionSelectionView.swift; sourceTree = "<group>"; };
-		91DDF25A25383847009F9A96 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		91DDF26225383C75009F9A96 /* RegionSelection.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RegionSelection.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B10000000000000000000011 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDay" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 915F51342521763500B4E384 /* NextSunnyDay */;
+		};
+		B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				API/AccessTokens.swift,
+				API/OpenWeatherAPI/DailyWeatherForecastResponse.swift,
+				API/OpenWeatherAPI/WeatherConditionCode.swift,
+				API/OpenWeatherAPI/WeatherError.swift,
+				API/OpenWeatherAPI/WeatherFetcher.swift,
+				Assets.xcassets,
+				"Extension/Date+Extension.swift",
+				"Extension/LinearGradient+Extension.swift",
+				Model/DailyWeatherForecastEntity.swift,
+				Protocol/ViewModelObject.swift,
+				Resourece/strings/NextSunnyDay.strings,
+				Resourece/strings/SystemName.strings,
+				View/NextSunnyDayMediumView.swift,
+				View/NextSunnyDaySmallView.swift,
+				ViewModel/NextSunnyDayViewModel.swift,
+			);
+			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
+		};
+		B10000000000000000000021 /* Exceptions for "NextSunnyDayWidget" folder in "NextSunnyDayWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B10000000000000000000001 /* NextSunnyDay */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B10000000000000000000011 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDay" target */,
+				B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */,
+			);
+			path = NextSunnyDay;
+			sourceTree = "<group>";
+		};
+		B10000000000000000000002 /* NextSunnyDayWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B10000000000000000000021 /* Exceptions for "NextSunnyDayWidget" folder in "NextSunnyDayWidgetExtension" target */,
+			);
+			path = NextSunnyDayWidget;
+			sourceTree = "<group>";
+		};
+		B10000000000000000000003 /* NextSunnyDayTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NextSunnyDayTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		9104406C253DDA9600A21F20 /* Frameworks */ = {
@@ -202,13 +150,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		915F514E2521763600B4E384 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -221,55 +162,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		91044075253DDA9600A21F20 /* NextSunnyDayWidget */ = {
-			isa = PBXGroup;
-			children = (
-				9101E2E5253ED03900F2313F /* NextSunnyDayWidgetExtension.entitlements */,
-				91044076253DDA9600A21F20 /* NextSunnyDayWidget.swift */,
-				9101E2D1253EC66100F2313F /* Widget.strings */,
-				91044078253DDA9700A21F20 /* Assets.xcassets */,
-				9104407A253DDA9700A21F20 /* Info.plist */,
-			);
-			path = NextSunnyDayWidget;
-			sourceTree = "<group>";
-		};
-		91500CBD2533074C00D5F47D /* Resourece */ = {
-			isa = PBXGroup;
-			children = (
-				91500CD62533474700D5F47D /* strings */,
-			);
-			path = Resourece;
-			sourceTree = "<group>";
-		};
-		91500CCA25333FAD00D5F47D /* Script */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Script;
-			sourceTree = "<group>";
-		};
-		91500CD62533474700D5F47D /* strings */ = {
-			isa = PBXGroup;
-			children = (
-				91500CE12533497200D5F47D /* SystemName.strings */,
-				91500CD82533476F00D5F47D /* Home.strings */,
-				917094EC2535427000975181 /* NextSunnyDay.strings */,
-				91DDF1AB2536C052009F9A96 /* DailyWeather.strings */,
-				91DDF1EC25371C26009F9A96 /* Setting.strings */,
-				91DDF26225383C75009F9A96 /* RegionSelection.strings */,
-				91AB3B4A25418AD700914E7B /* AboutWeatherForecast.strings */,
-				91044060253C3D1000A21F20 /* Loading.strings */,
-			);
-			path = strings;
-			sourceTree = "<group>";
-		};
 		915F512C2521763500B4E384 = {
 			isa = PBXGroup;
 			children = (
-				915F51372521763500B4E384 /* NextSunnyDay */,
-				915F51492521763600B4E384 /* NextSunnyDayTests */,
-				915F51542521763600B4E384 /* NextSunnyDayUITests */,
-				91044075253DDA9600A21F20 /* NextSunnyDayWidget */,
+				B10000000000000000000001 /* NextSunnyDay */,
+				B10000000000000000000003 /* NextSunnyDayTests */,
+				B10000000000000000000002 /* NextSunnyDayWidget */,
 				91044070253DDA9600A21F20 /* Frameworks */,
 				915F51362521763500B4E384 /* Products */,
 			);
@@ -280,149 +178,9 @@
 			children = (
 				915F51352521763500B4E384 /* NextSunnyDay.app */,
 				915F51462521763600B4E384 /* NextSunnyDayTests.xctest */,
-				915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */,
 				9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		915F51372521763500B4E384 /* NextSunnyDay */ = {
-			isa = PBXGroup;
-			children = (
-				9101E2E4253ECFCC00F2313F /* NextSunnyDay.entitlements */,
-				915F51382521763500B4E384 /* NextSunnyDayApp.swift */,
-				915F516A2521880800B4E384 /* API */,
-				915F516F2521883F00B4E384 /* Model */,
-				915F516E2521883600B4E384 /* View */,
-				915F516D2521882F00B4E384 /* ViewModel */,
-				915F516C2521882800B4E384 /* Protocol */,
-				915F516B2521881D00B4E384 /* Extension */,
-				91DDF259253837E9009F9A96 /* UIViewRepresentable */,
-				91500CCA25333FAD00D5F47D /* Script */,
-				91500CBD2533074C00D5F47D /* Resourece */,
-				915F513C2521763600B4E384 /* Assets.xcassets */,
-				915F51412521763600B4E384 /* Info.plist */,
-				9184E90C25443669005D7CD5 /* InfoPlist.strings */,
-				915F513E2521763600B4E384 /* Preview Content */,
-				91AB3B8D2541C08300914E7B /* Settings.bundle */,
-			);
-			path = NextSunnyDay;
-			sourceTree = "<group>";
-		};
-		915F513E2521763600B4E384 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				915F513F2521763600B4E384 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		915F51492521763600B4E384 /* NextSunnyDayTests */ = {
-			isa = PBXGroup;
-			children = (
-				915F514A2521763600B4E384 /* NextSunnyDayTests.swift */,
-				915F514C2521763600B4E384 /* Info.plist */,
-			);
-			path = NextSunnyDayTests;
-			sourceTree = "<group>";
-		};
-		915F51542521763600B4E384 /* NextSunnyDayUITests */ = {
-			isa = PBXGroup;
-			children = (
-				915F51552521763600B4E384 /* NextSunnyDayUITests.swift */,
-				915F51572521763600B4E384 /* Info.plist */,
-			);
-			path = NextSunnyDayUITests;
-			sourceTree = "<group>";
-		};
-		915F516A2521880800B4E384 /* API */ = {
-			isa = PBXGroup;
-			children = (
-				917E41632525CA5D00D77C3F /* AccessTokens.swift */,
-				917E414C2525B11200D77C3F /* OpenWeatherAPI */,
-				91DDF2262538266C009F9A96 /* LocalSearch */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
-		915F516B2521881D00B4E384 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				91DDF1A1253699DC009F9A96 /* Date+Extension.swift */,
-				91AB3B0D25411BDD00914E7B /* LinearGradient+Extension.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
-		915F516C2521882800B4E384 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				91A2960E2534369F00CCC7B2 /* ViewModelObject.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		915F516D2521882F00B4E384 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				91A2961625344DB700CCC7B2 /* HomeViewModel.swift */,
-				917094F9253549DC00975181 /* NextSunnyDayViewModel.swift */,
-				91DDF1A62536AC16009F9A96 /* DailyWeatherViewModel.swift */,
-				91DDF1E725370381009F9A96 /* SettingViewModel.swift */,
-				91DDF2202537F69D009F9A96 /* RegionSelectionViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		915F516E2521883600B4E384 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				915F513A2521763500B4E384 /* HomeView.swift */,
-				917094F1253545DB00975181 /* NextSunnyDaySmallView.swift */,
-				917094E72535423C00975181 /* NextSunnyDayMediumView.swift */,
-				91DDF1DC2536DCE3009F9A96 /* DailyWeatherView.swift */,
-				91DDF1F125371D49009F9A96 /* SettingView.swift */,
-				91DDF254253837BE009F9A96 /* RegionSelectionView.swift */,
-				91AB3B342541879D00914E7B /* AboutWeatherForecastView.swift */,
-				9104405B253C3CF300A21F20 /* LoadingView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		915F516F2521883F00B4E384 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				919EA78A253051F1008BC359 /* DailyWeatherForecastEntity.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		917E414C2525B11200D77C3F /* OpenWeatherAPI */ = {
-			isa = PBXGroup;
-			children = (
-				917E414D2525B13F00D77C3F /* DailyWeatherForecastResponse.swift */,
-				917E416B2525CE6C00D77C3F /* WeatherFetcher.swift */,
-				917E415E2525C85600D77C3F /* WeatherError.swift */,
-				917094FE2535559000975181 /* WeatherConditionCode.swift */,
-				91DDF1D42536D6C0009F9A96 /* WeatherIcon.swift */,
-			);
-			path = OpenWeatherAPI;
-			sourceTree = "<group>";
-		};
-		91DDF2262538266C009F9A96 /* LocalSearch */ = {
-			isa = PBXGroup;
-			children = (
-				91DDF227253826AE009F9A96 /* LocalSearchService.swift */,
-			);
-			path = LocalSearch;
-			sourceTree = "<group>";
-		};
-		91DDF259253837E9009F9A96 /* UIViewRepresentable */ = {
-			isa = PBXGroup;
-			children = (
-				91DDF25A25383847009F9A96 /* SearchBar.swift */,
-			);
-			path = UIViewRepresentable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,6 +198,9 @@
 			);
 			dependencies = (
 				A1B2C3D4E5F6A7B8C9D0E104 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B10000000000000000000002 /* NextSunnyDayWidget */,
 			);
 			name = NextSunnyDayWidgetExtension;
 			packageProductDependencies = (
@@ -460,13 +221,16 @@
 				917E40C82522D90600D77C3F /* SwiftLint */,
 				915F51322521763500B4E384 /* Frameworks */,
 				915F51332521763500B4E384 /* Resources */,
-				9104407E253DDA9700A21F20 /* Embed App Extensions */,
+				9104407E253DDA9700A21F20 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				A1B2C3D4E5F6A7B8C9D0E102 /* PBXTargetDependency */,
 				9104407C253DDA9700A21F20 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B10000000000000000000001 /* NextSunnyDay */,
 			);
 			name = NextSunnyDay;
 			packageProductDependencies = (
@@ -491,28 +255,13 @@
 			dependencies = (
 				915F51482521763600B4E384 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				B10000000000000000000003 /* NextSunnyDayTests */,
+			);
 			name = NextSunnyDayTests;
 			productName = NextSunnyDayTests;
 			productReference = 915F51462521763600B4E384 /* NextSunnyDayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		915F51502521763600B4E384 /* NextSunnyDayUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 915F51602521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDayUITests" */;
-			buildPhases = (
-				915F514D2521763600B4E384 /* Sources */,
-				915F514E2521763600B4E384 /* Frameworks */,
-				915F514F2521763600B4E384 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				915F51532521763600B4E384 /* PBXTargetDependency */,
-			);
-			name = NextSunnyDayUITests;
-			productName = NextSunnyDayUITests;
-			productReference = 915F51512521763600B4E384 /* NextSunnyDayUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -520,8 +269,9 @@
 		915F512D2521763500B4E384 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					9104406E253DDA9600A21F20 = {
 						CreatedOnToolsVersion = 12.0.1;
@@ -533,14 +283,9 @@
 						CreatedOnToolsVersion = 12.0.1;
 						TestTargetID = 915F51342521763500B4E384;
 					};
-					915F51502521763600B4E384 = {
-						CreatedOnToolsVersion = 12.0.1;
-						TestTargetID = 915F51342521763500B4E384;
-					};
 				};
 			};
 			buildConfigurationList = 915F51302521763500B4E384 /* Build configuration list for PBXProject "NextSunnyDay" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -549,17 +294,18 @@
 				ja,
 			);
 			mainGroup = 915F512C2521763500B4E384;
+			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-				91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */,
+				91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 915F51362521763500B4E384 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				915F51342521763500B4E384 /* NextSunnyDay */,
 				915F51452521763600B4E384 /* NextSunnyDayTests */,
-				915F51502521763600B4E384 /* NextSunnyDayUITests */,
 				9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */,
 			);
 		};
@@ -570,11 +316,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F6A20F253EC0B000E9D7B2 /* SystemName.strings in Resources */,
-				9101E2DF253EC7C800F2313F /* Widget.strings in Resources */,
-				91F6A20C253EC0B000E9D7B2 /* Assets.xcassets in Resources */,
-				91F6A213253EC0B000E9D7B2 /* NextSunnyDay.strings in Resources */,
-				91044079253DDA9700A21F20 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,29 +323,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91DDF26325383C75009F9A96 /* RegionSelection.strings in Resources */,
-				9184E90A25443669005D7CD5 /* InfoPlist.strings in Resources */,
-				915F51402521763600B4E384 /* Preview Assets.xcassets in Resources */,
-				91AB3B8E2541C08300914E7B /* Settings.bundle in Resources */,
-				917094ED2535427000975181 /* NextSunnyDay.strings in Resources */,
-				915F513D2521763600B4E384 /* Assets.xcassets in Resources */,
-				91AB3B4B25418AD700914E7B /* AboutWeatherForecast.strings in Resources */,
-				91500CD92533476F00D5F47D /* Home.strings in Resources */,
-				91044061253C3D1000A21F20 /* Loading.strings in Resources */,
-				91DDF1ED25371C26009F9A96 /* Setting.strings in Resources */,
-				91DDF1AC2536C052009F9A96 /* DailyWeather.strings in Resources */,
-				91500CE22533497200D5F47D /* SystemName.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		915F51442521763600B4E384 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		915F514F2521763600B4E384 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -616,6 +338,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		917E40C82522D90600D77C3F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -634,6 +357,7 @@
 		};
 		91AB3B6825419B6F00914E7B /* LicensePlist */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -657,19 +381,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91AB3AF425401D8F00914E7B /* DailyWeatherForecastResponse.swift in Sources */,
-				91AB3B1B25411BFE00914E7B /* LinearGradient+Extension.swift in Sources */,
-				91F6A20E253EC0B000E9D7B2 /* ViewModelObject.swift in Sources */,
-				91044077253DDA9600A21F20 /* NextSunnyDayWidget.swift in Sources */,
-				91F6A211253EC0B000E9D7B2 /* NextSunnyDayViewModel.swift in Sources */,
-				91F6A20D253EC0B000E9D7B2 /* NextSunnyDayMediumView.swift in Sources */,
-				91F6A215253EC0B000E9D7B2 /* DailyWeatherForecastEntity.swift in Sources */,
-				91AB3AF925401D9200914E7B /* WeatherError.swift in Sources */,
-				91AB3AEF25401D8800914E7B /* WeatherFetcher.swift in Sources */,
-				91AB3AFE25401D9800914E7B /* AccessTokens.swift in Sources */,
-				91F6A210253EC0B000E9D7B2 /* WeatherConditionCode.swift in Sources */,
-				91F6A214253EC0B000E9D7B2 /* NextSunnyDaySmallView.swift in Sources */,
-				91F6A212253EC0B000E9D7B2 /* Date+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,32 +388,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				917E416C2525CE6C00D77C3F /* WeatherFetcher.swift in Sources */,
-				91DDF1F225371D49009F9A96 /* SettingView.swift in Sources */,
-				91DDF1E825370381009F9A96 /* SettingViewModel.swift in Sources */,
-				91DDF1DD2536DCE3009F9A96 /* DailyWeatherView.swift in Sources */,
-				917E414E2525B13F00D77C3F /* DailyWeatherForecastResponse.swift in Sources */,
-				91AB3B0E25411BDD00914E7B /* LinearGradient+Extension.swift in Sources */,
-				91DDF25B25383847009F9A96 /* SearchBar.swift in Sources */,
-				91AB3B352541879D00914E7B /* AboutWeatherForecastView.swift in Sources */,
-				917094FA253549DC00975181 /* NextSunnyDayViewModel.swift in Sources */,
-				91DDF255253837BE009F9A96 /* RegionSelectionView.swift in Sources */,
-				915F513B2521763500B4E384 /* HomeView.swift in Sources */,
-				91A2961725344DB700CCC7B2 /* HomeViewModel.swift in Sources */,
-				91DDF1A72536AC16009F9A96 /* DailyWeatherViewModel.swift in Sources */,
-				91DDF1A2253699DC009F9A96 /* Date+Extension.swift in Sources */,
-				915F51392521763500B4E384 /* NextSunnyDayApp.swift in Sources */,
-				917E41642525CA5D00D77C3F /* AccessTokens.swift in Sources */,
-				917094E82535423C00975181 /* NextSunnyDayMediumView.swift in Sources */,
-				917094F2253545DB00975181 /* NextSunnyDaySmallView.swift in Sources */,
-				91DDF2212537F69D009F9A96 /* RegionSelectionViewModel.swift in Sources */,
-				9104405C253C3CF300A21F20 /* LoadingView.swift in Sources */,
-				91DDF1D52536D6C0009F9A96 /* WeatherIcon.swift in Sources */,
-				91A2960F2534369F00CCC7B2 /* ViewModelObject.swift in Sources */,
-				917E415F2525C85600D77C3F /* WeatherError.swift in Sources */,
-				91DDF228253826AE009F9A96 /* LocalSearchService.swift in Sources */,
-				919EA78B253051F1008BC359 /* DailyWeatherForecastEntity.swift in Sources */,
-				917094FF2535559000975181 /* WeatherConditionCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,15 +395,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				915F514B2521763600B4E384 /* NextSunnyDayTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		915F514D2521763600B4E384 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				915F51562521763600B4E384 /* NextSunnyDayUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,31 +411,15 @@
 			target = 915F51342521763500B4E384 /* NextSunnyDay */;
 			targetProxy = 915F51472521763600B4E384 /* PBXContainerItemProxy */;
 		};
-		915F51532521763600B4E384 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 915F51342521763500B4E384 /* NextSunnyDay */;
-			targetProxy = 915F51522521763600B4E384 /* PBXContainerItemProxy */;
-		};
 		A1B2C3D4E5F6A7B8C9D0E102 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = A1B2C3D4E5F6A7B8C9D0E101 /* plugin:RswiftGenerateInternalResources */;
+			productRef = A1B2C3D4E5F6A7B8C9D0E101 /* RswiftGenerateInternalResources */;
 		};
 		A1B2C3D4E5F6A7B8C9D0E104 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = A1B2C3D4E5F6A7B8C9D0E103 /* plugin:RswiftGenerateInternalResources */;
+			productRef = A1B2C3D4E5F6A7B8C9D0E103 /* RswiftGenerateInternalResources */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		9184E90C25443669005D7CD5 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9184E90B25443669005D7CD5 /* ja */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9104407F253DDA9700A21F20 /* Debug */ = {
@@ -781,6 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.NextSunnyDayWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -805,6 +466,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.NextSunnyDayWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -816,8 +478,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -847,7 +508,8 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -861,12 +523,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -877,8 +540,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -908,7 +570,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -916,12 +579,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -929,7 +592,6 @@
 		915F515B2521763600B4E384 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NextSunnyDay/NextSunnyDay.entitlements;
@@ -938,8 +600,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = NextSunnyDay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -947,6 +609,7 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -955,7 +618,6 @@
 		915F515C2521763600B4E384 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = NextSunnyDay/NextSunnyDay.entitlements;
@@ -964,8 +626,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = NextSunnyDay/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -973,6 +635,7 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -981,84 +644,32 @@
 		915F515E2521763600B4E384 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
-				INFOPLIST_FILE = NextSunnyDayTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/NextSunnyDay";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NextSunnyDay";
 			};
 			name = Debug;
 		};
 		915F515F2521763600B4E384 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
-				INFOPLIST_FILE = NextSunnyDayTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/NextSunnyDay";
-			};
-			name = Release;
-		};
-		915F51612521763600B4E384 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NA4GG5YL9W;
-				INFOPLIST_FILE = NextSunnyDayUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = NextSunnyDay;
-			};
-			name = Debug;
-		};
-		915F51622521763600B4E384 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NA4GG5YL9W;
-				INFOPLIST_FILE = NextSunnyDayUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = NextSunnyDay;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NextSunnyDay";
 			};
 			name = Release;
 		};
@@ -1101,19 +712,10 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		915F51602521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDayUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				915F51612521763600B4E384 /* Debug */,
-				915F51622521763600B4E384 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */ = {
+		91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mac-cain13/R.swift";
 			requirement = {
@@ -1134,7 +736,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		91500CB8253306AC00D5F47D /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */;
+			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
 			productName = RswiftLibrary;
 		};
 		919EA78325304DAB008BC359 /* Realm */ = {
@@ -1159,17 +761,17 @@
 		};
 		91F6A1FF253EBF9E00E9D7B2 /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */;
+			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
 			productName = RswiftLibrary;
 		};
-		A1B2C3D4E5F6A7B8C9D0E101 /* plugin:RswiftGenerateInternalResources */ = {
+		A1B2C3D4E5F6A7B8C9D0E101 /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */;
+			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
 		};
-		A1B2C3D4E5F6A7B8C9D0E103 /* plugin:RswiftGenerateInternalResources */ = {
+		A1B2C3D4E5F6A7B8C9D0E103 /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R.swift" */;
+			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
 		};
 /* End XCSwiftPackageProductDependency section */
