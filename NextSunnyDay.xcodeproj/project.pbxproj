@@ -10,12 +10,10 @@
 		91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044071253DDA9600A21F20 /* WidgetKit.framework */; };
 		91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044073253DDA9600A21F20 /* SwiftUI.framework */; };
 		9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		91500CB9253306AC00D5F47D /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 91500CB8253306AC00D5F47D /* RswiftLibrary */; };
 		919EA78425304DAB008BC359 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 919EA78325304DAB008BC359 /* Realm */; };
 		919EA78625304DAB008BC359 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 919EA78525304DAB008BC359 /* RealmSwift */; };
 		91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FB253EBF9E00E9D7B2 /* Realm */; };
 		91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */; };
-		91F6A200253EBF9E00E9D7B2 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FF253EBF9E00E9D7B2 /* RswiftLibrary */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +122,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F6A200253EBF9E00E9D7B2 /* RswiftLibrary in Frameworks */,
 				91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */,
 				91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */,
 				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
@@ -136,7 +133,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91500CB9253306AC00D5F47D /* RswiftLibrary in Frameworks */,
 				919EA78625304DAB008BC359 /* RealmSwift in Frameworks */,
 				919EA78425304DAB008BC359 /* Realm in Frameworks */,
 			);
@@ -196,7 +192,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A1B2C3D4E5F6A7B8C9D0E104 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B10000000000000000000002 /* NextSunnyDayWidget */,
@@ -205,7 +200,6 @@
 			packageProductDependencies = (
 				91F6A1FB253EBF9E00E9D7B2 /* Realm */,
 				91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */,
-				91F6A1FF253EBF9E00E9D7B2 /* RswiftLibrary */,
 			);
 			productName = NextSunnyDayWidgetExtension;
 			productReference = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */;
@@ -225,7 +219,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A1B2C3D4E5F6A7B8C9D0E102 /* PBXTargetDependency */,
 				9104407C253DDA9700A21F20 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -235,7 +228,6 @@
 			packageProductDependencies = (
 				919EA78325304DAB008BC359 /* Realm */,
 				919EA78525304DAB008BC359 /* RealmSwift */,
-				91500CB8253306AC00D5F47D /* RswiftLibrary */,
 			);
 			productName = NextSunnyDay;
 			productReference = 915F51352521763500B4E384 /* NextSunnyDay.app */;
@@ -296,7 +288,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-				91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 915F51362521763500B4E384 /* Products */;
@@ -409,14 +400,6 @@
 			isa = PBXTargetDependency;
 			target = 915F51342521763500B4E384 /* NextSunnyDay */;
 			targetProxy = 915F51472521763600B4E384 /* PBXContainerItemProxy */;
-		};
-		A1B2C3D4E5F6A7B8C9D0E102 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = A1B2C3D4E5F6A7B8C9D0E101 /* RswiftGenerateInternalResources */;
-		};
-		A1B2C3D4E5F6A7B8C9D0E104 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = A1B2C3D4E5F6A7B8C9D0E103 /* RswiftGenerateInternalResources */;
 		};
 /* End PBXTargetDependency section */
 
@@ -714,14 +697,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mac-cain13/R.swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.8.0;
-			};
-		};
 		919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa";
@@ -733,11 +708,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		91500CB8253306AC00D5F47D /* RswiftLibrary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
-			productName = RswiftLibrary;
-		};
 		919EA78325304DAB008BC359 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
@@ -757,21 +727,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
-		};
-		91F6A1FF253EBF9E00E9D7B2 /* RswiftLibrary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
-			productName = RswiftLibrary;
-		};
-		A1B2C3D4E5F6A7B8C9D0E101 /* RswiftGenerateInternalResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
-			productName = "plugin:RswiftGenerateInternalResources";
-		};
-		A1B2C3D4E5F6A7B8C9D0E103 /* RswiftGenerateInternalResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 91500CB7253306AC00D5F47D /* XCRemoteSwiftPackageReference "R" */;
-			productName = "plugin:RswiftGenerateInternalResources";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
