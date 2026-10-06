@@ -9,10 +9,14 @@ import Combine
 import Foundation
 
 // MARK: - SettingViewModelObject
-protocol SettingViewModelObject: ViewModelObject where Input: SettingViewModelInputObject, Binding: SettingViewModelBindingObject, Output: SettingViewModelOutputObject {
-    var input: Input { get }
-    var binding: Binding { get }
-    var output: Output { get }
+protocol SettingViewModelObject: ViewModelObject
+where
+  Input: SettingViewModelInputObject, Binding: SettingViewModelBindingObject,
+  Output: SettingViewModelOutputObject
+{
+  var input: Input { get }
+  var binding: Binding { get }
+  var output: Output { get }
 }
 
 // MARK: - SettingViewModelInputObject
@@ -25,46 +29,50 @@ protocol SettingViewModelBindingObject: BindingObject {
 
 // MARK: - SettingViewModelOutputObject
 protocol SettingViewModelOutputObject: OutputObject {
-    var cityName: String { get }
-    var version: String { get }
-    var reviewURL: URL? { get }
-    var contactUsPageURL: URL? { get }
+  var cityName: String { get }
+  var version: String { get }
+  var reviewURL: URL? { get }
+  var contactUsPageURL: URL? { get }
 }
 
 // MARK: - SettingViewModel
 class SettingViewModel: SettingViewModelObject {
-    final class Input: SettingViewModelInputObject {}
+  final class Input: SettingViewModelInputObject {}
 
-    final class Binding: SettingViewModelBindingObject {}
+  final class Binding: SettingViewModelBindingObject {}
 
-    final class Output: SettingViewModelOutputObject {
-        @Published var cityName: String = String(localized: "Not Set")
-        @Published var version: String = "-"
-        @Published var reviewURL: URL?
-        @Published var contactUsPageURL: URL?
+  final class Output: SettingViewModelOutputObject {
+    @Published var cityName: String = String(localized: "Not Set")
+    @Published var version: String = "-"
+    @Published var reviewURL: URL?
+    @Published var contactUsPageURL: URL?
+  }
+
+  var input: Input
+
+  var binding: Binding
+
+  var output: Output
+
+  init(_ forecast: DailyWeatherForecastEntity) {
+    let input = Input()
+    let binding = Binding()
+    let output = Output()
+
+    // output
+    if forecast.cityName != "" {
+      output.cityName = forecast.cityName
     }
+    output.version =
+      Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"
+    output.reviewURL = URL(string: "https://itunes.apple.com/app/id1537055268?action=write-review")
+    output.contactUsPageURL = URL(
+      string:
+        "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link"
+    )
 
-    var input: Input
-
-    var binding: Binding
-
-    var output: Output
-
-    init(_ forecast: DailyWeatherForecastEntity) {
-        let input = Input()
-        let binding = Binding()
-        let output = Output()
-
-        // output
-        if forecast.cityName != "" {
-            output.cityName = forecast.cityName
-        }
-        output.version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"
-        output.reviewURL = URL(string: "https://itunes.apple.com/app/id1537055268?action=write-review")
-        output.contactUsPageURL = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link")
-
-        self.input = input
-        self.binding = binding
-        self.output = output
-    }
+    self.input = input
+    self.binding = binding
+    self.output = output
+  }
 }
