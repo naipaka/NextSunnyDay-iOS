@@ -209,9 +209,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 915F515A2521763600B4E384 /* Build configuration list for PBXNativeTarget "NextSunnyDay" */;
 			buildPhases = (
-				91AB3B6825419B6F00914E7B /* LicensePlist */,
 				915F51312521763500B4E384 /* Sources */,
-				917E40C82522D90600D77C3F /* SwiftLint */,
 				915F51322521763500B4E384 /* Frameworks */,
 				915F51332521763500B4E384 /* Resources */,
 				9104407E253DDA9700A21F20 /* Embed Foundation Extensions */,
@@ -324,47 +322,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		917E40C82522D90600D77C3F /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "unset SDKROOT\nif which mint >/dev/null; then\n  mint run swiftlint swiftlint autocorrect --format\n  mint run swiftlint swiftlint\nelse\n  echo \"warning: Mint not installed, download from https://github.com/yonaskolb/Mint\"\nfi\n";
-		};
-		91AB3B6825419B6F00914E7B /* LicensePlist */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = LicensePlist;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ $CONFIGURATION = \"Debug\" ]; then\n  if which mint >/dev/null; then\n    mint run LicensePlist license-plist --output-path NextSunnyDay/Settings.bundle --add-version-numbers\n  else\n    echo \"warning: Mint not installed, skipping LicensePlist. Run 'mint bootstrap' to regenerate licenses.\"\n  fi\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9104406B253DDA9600A21F20 /* Sources */ = {
@@ -582,7 +539,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = NextSunnyDay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -608,7 +564,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = NextSunnyDay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
