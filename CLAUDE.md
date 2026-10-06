@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 26.4.1 (Swift language mode 5, iOS deployment target 14.0).
+NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 26.4.1 (Swift language mode 5, iOS deployment target 26.0).
 
 ## Setup
 
@@ -31,9 +31,9 @@ xcodebuild -scheme NextSunnyDay -configuration Debug \
 
 - Do not pass `-sdk iphonesimulator`: it forces the R.swift build-tool plugin to be built for the simulator, and the build fails with `execvp() of '.../Debug/rswift' failed`.
 - `-skipPackagePluginValidation` is needed on the command line because of the R.swift plugin. In the Xcode GUI, trust the plugin once when prompted.
-- `NextSunnyDayTests` / `NextSunnyDayUITests` contain only the Xcode template tests.
+- Tests use **Swift Testing** (`import Testing`, `@Test`, `#expect`) in the `NextSunnyDayTests` target. There is no UI test target.
 
-Run a single test by appending `-only-testing:NextSunnyDayTests/<ClassName>/<testMethod>`.
+Run a single test by appending `-only-testing:NextSunnyDayTests/<SuiteName>/<testFunction>()`.
 
 Lint locally:
 ```sh
@@ -58,6 +58,13 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 - **Realm** is the single source of truth on-device. `DailyWeatherForecastEntity` (`Model/`) is a Realm `Object` plus a CRUD extension. The Realm file lives in the App Group container `group.com.naipaka.NextSunnyDay` so the Widget can read the same DB.
 - ViewModels observe Realm `Results` via `NotificationToken`, push updates into `output`, and call `WidgetCenter.shared.reloadAllTimelines()` after writes so the Widget refreshes.
 - Forecast staleness check: a fetch is triggered when the earliest stored daily entry is older than ~24h (app) / ~20h (widget). Full flowcharts: `docs/architecture/weather-fetch-flow.md` — keep them in sync when changing fetch logic.
+
+### Xcode project format
+
+`NextSunnyDay.xcodeproj` uses **folder-synchronized groups** (objectVersion 77): `NextSunnyDay/`, `NextSunnyDayWidget/` and `NextSunnyDayTests/` are synced to their targets, so adding, moving or deleting a file in those folders needs no `project.pbxproj` change. Exceptions live in `PBXFileSystemSynchronizedBuildFileExceptionSet` entries:
+
+- Each target's `Info.plist` is excluded from its own target (it is used via `INFOPLIST_FILE`, not copied as a resource).
+- Files under `NextSunnyDay/` that the widget also compiles or bundles are listed as membership exceptions for `NextSunnyDayWidgetExtension`. When the widget needs another app file, add its path there (or tick the widget in Xcode's Target Membership).
 
 ### Widget target
 
