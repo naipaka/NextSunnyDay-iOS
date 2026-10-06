@@ -8,37 +8,36 @@ NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the nex
 
 ## Setup
 
-1. (Optional) `mint bootstrap` — installs pinned tools from `Mintfile` (SwiftLint, LicensePlist). Not required to build: the SwiftLint and LicensePlist build phases print a warning and skip when Mint is missing.
-2. Create `NextSunnyDay/API/AccessTokens.swift` containing your OpenWeather API key. This file is gitignored and required to build:
-   ```sh
-   echo "let openWeatherAPIKey = \"{your key}\"" > ./NextSunnyDay/API/AccessTokens.swift
-   ```
-   CI injects this from the `OPEN_WEATHER_API_KEY` secret (see `.github/workflows/main.yml`).
+Create `NextSunnyDay/API/AccessTokens.swift` containing your OpenWeather API key. This file is gitignored and required to build:
+```sh
+echo "let openWeatherAPIKey = \"{your key}\"" > ./NextSunnyDay/API/AccessTokens.swift
+```
+CI injects this from the `OPEN_WEATHER_API_KEY` secret (see `.github/workflows/main.yml`).
 
 ## Common commands
 
 Build:
 ```sh
 xcodebuild -scheme NextSunnyDay -configuration Debug \
-  -destination 'generic/platform=iOS Simulator' -skipPackagePluginValidation build
+  -destination 'generic/platform=iOS Simulator' build
 ```
 
 Test:
 ```sh
 xcodebuild -scheme NextSunnyDay -configuration Debug \
-  -destination 'platform=iOS Simulator,name=iPhone 17' -skipPackagePluginValidation test
+  -destination 'platform=iOS Simulator,name=iPhone 17' test
 ```
 
-- Do not pass `-sdk iphonesimulator`: it forces the R.swift build-tool plugin to be built for the simulator, and the build fails with `execvp() of '.../Debug/rswift' failed`.
-- `-skipPackagePluginValidation` is needed on the command line because of the R.swift plugin. In the Xcode GUI, trust the plugin once when prompted.
 - Tests use **Swift Testing** (`import Testing`, `@Test`, `#expect`) in the `NextSunnyDayTests` target. There is no UI test target.
 
 Run a single test by appending `-only-testing:NextSunnyDayTests/<SuiteName>/<testFunction>()`.
 
-Lint locally:
+Format and lint (the `swift-format` bundled with Xcode, config in `.swift-format` = the tool's defaults: 2-space indent, 100 columns):
 ```sh
-mint run swiftlint
+xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
 ```
+CI runs the strict lint before building, so any warning fails CI. Format before committing.
 
 ## Architecture
 
@@ -72,17 +71,16 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 
 ### Localization & resources
 
-- Strings live under `NextSunnyDay/Resourece/strings/` (note the misspelling — keep it) and `NextSunnyDay/ja.lproj/`. Japanese is the only supported locale.
-- **R.swift 7** generates typed accessors via the `RswiftGenerateInternalResources` SPM build-tool plugin on both the app and widget targets; the generated file lives in DerivedData, not the repo. Reference resources as `R.string.widget.kind()`, `R.color.blue()` etc., not raw string keys. To pass a locale, use `R.string(preferredLanguages:)…` (the R.swift 5 `preferredLanguages:` argument on each accessor no longer exists).
+- **String Catalogs**, auto-extracted. Write UI text in **English** in code: `Text("Settings")`, `.navigationBarTitle("…")` and other `LocalizedStringKey` APIs for literals in views, `String(localized: "…")` where a `String` is needed (ViewModel outputs, `@Published` defaults). Xcode adds the keys to `NextSunnyDay/Resources/Localizable.xcstrings`; the Japanese copy is the `ja` translation there. English is the source/development language, Japanese the only translation (#98 reviews the English copy).
+- `Localizable.xcstrings` is a member of both the app and the widget (membership exception), so there is one catalog for both. `InfoPlist.xcstrings` localizes `CFBundleDisplayName` (`NextSunnyDay` / `次いつ晴れる？`).
+- Non-UI values stay plain literals in code and out of the catalog: SF Symbol names (`Image(systemName: "xmark")`), the `"-"` placeholder, the widget `kind`.
+- **Colors** come from `Assets.xcassets` via Xcode's generated asset symbols: `Color(.nextSunnyDayText)`. The `Blue` asset collides with `UIColor.blue`, so write `Color(ColorResource.blue)`.
+- There are no third-party resource generators, build-tool plugins or script build phases.
 - SPM versions are pinned in `NextSunnyDay.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` (committed). Realm is still `realm-cocoa` 5.5.2; it builds and runs on Xcode 26 but is very old.
-
-## SwiftLint
-
-Config in `.swiftlint.yml` is opinionated and enables many opt-in rules. Notable disabled rules include `force_unwrapping`, `force_cast`, `force_try` — force-unwrap when it's genuinely safe. The `swiftlint.yml` workflow runs SwiftLint 0.62.2 (Linux binary) on pushes and PRs to `main` that touch Swift files; it fails only on errors, not warnings.
 
 ## Docs
 
-`docs/` holds design docs (`architecture/`, Mermaid diagrams) and the app icon master (`design/app-icon-1024.png`). See `docs/README.md` for the index. This is an OSS repo: write docs, code comments, and commit messages in English (UI strings stay Japanese).
+`docs/` holds design docs (`architecture/`, Mermaid diagrams) and the app icon master (`design/app-icon-1024.png`). See `docs/README.md` for the index. This is an OSS repo: write docs, code comments, and commit messages in English (UI text in code is English source strings; Japanese lives in the String Catalog).
 
 ## Branching
 
@@ -90,8 +88,8 @@ Single long-lived branch: `main` (default). There is no `develop`.
 
 - The owner commits and pushes directly to `main`; do not open PRs for their changes.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
-- CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It builds and runs `NextSunnyDayTests` on the `macos-26` runner with Xcode 26.4.1 and an iPhone 17 (iOS 26.4.1) simulator. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
+- CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It lints with `swift-format --strict`, then builds and runs `NextSunnyDayTests` on the `macos-26` runner with Xcode 26.4.1 and an iPhone 17 (iOS 26.4.1) simulator. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
 
-## Known stale tooling
+## Known stale dependencies
 
-The project was dormant from 2020 and is being revived. Mint tool versions (SwiftLint 0.40.3, LicensePlist 3.0.5) are old and may not build with current Swift; CI no longer uses Mint. Realm is `realm-cocoa` 5.5.2.
+The project was dormant from 2020 and is being revived. Realm (`realm-cocoa` 5.5.2) is the only third-party dependency left and is very old.

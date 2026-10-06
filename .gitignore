@@ -202,10 +202,6 @@ iOSInjectionProject/
 AccessTokens.swift
 
 
-### R.Swift ###
-*.generated.swift
-
-
 # Macintosh
 .DS_Store
 

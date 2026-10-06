@@ -18,9 +18,8 @@
 
 | ツール | バージョン       |
 | ------ | ---------------- |
-| Xcode  | 12.0.1 (12A7300) |
-| Swift  | 5.3              |
-| Mint   | 0.14.2           |
+| Xcode  | 26.4.1           |
+| Swift  | 6.3 (Swift 5 モード) |
 
 ### 構成
 
@@ -53,9 +52,7 @@ NextSunnyDay/
 ├── Protocol/
 ├── Extension/
 ├── UIViewRepresentable/
-├── Resourece/
-│   └── strings/
-├── Settings.bundle
+├── Resources/            # String Catalogs (.xcstrings)
 ├── Assets.xcassets
 ├── Info.plist
 └── Preview Content/
@@ -85,12 +82,13 @@ $ cd NextSunnyDay-iOS
 $ echo "let openWeatherAPIKey = \"{取得した API キー}\"" > ./NextSunnyDay/API/AccessTokens.swift
 ```
 
-### Mint
+### フォーマット
 
-先に [Mint](https://github.com/yonaskolb/Mint) をインストールし、`Mintfile` にあるツール（SwiftLint、R.swift、LicensePlist）を入れてください。ビルドフェーズでこれらを使います。
+コードのフォーマットと lint には、Xcode 同梱の `swift-format` を `.swift-format` の設定で使います。CI では lint の警告があると失敗します。
 
 ```sh
-$ mint bootstrap
+$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
 ```
 
 ### ビルド

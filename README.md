@@ -19,9 +19,8 @@ The app is available in Japanese only.
 
 | Tool  | Version          |
 | ----- | ---------------- |
-| Xcode | 12.0.1 (12A7300) |
-| Swift | 5.3              |
-| Mint  | 0.14.2           |
+| Xcode | 26.4.1           |
+| Swift | 6.3 (Swift 5 mode) |
 
 ### Configuration
 
@@ -54,9 +53,7 @@ NextSunnyDay/
 ├── Protocol/
 ├── Extension/
 ├── UIViewRepresentable/
-├── Resourece/
-│   └── strings/
-├── Settings.bundle
+├── Resources/            # String Catalogs (.xcstrings)
 ├── Assets.xcassets
 ├── Info.plist
 └── Preview Content/
@@ -86,12 +83,13 @@ Then run the following command in the root directory to create `NextSunnyDay/API
 $ echo "let openWeatherAPIKey = \"{YOUR_API_KEY}\"" > ./NextSunnyDay/API/AccessTokens.swift
 ```
 
-### Mint
+### Formatting
 
-Install [Mint](https://github.com/yonaskolb/Mint) first, then install the tools in the `Mintfile` (SwiftLint, R.swift, and LicensePlist). The build phases use them.
+Code is formatted and linted with the `swift-format` bundled with Xcode, using `.swift-format`. CI fails on lint warnings.
 
 ```sh
-$ mint bootstrap
+$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
 ```
 
 ### Build
