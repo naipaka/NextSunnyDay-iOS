@@ -29,6 +29,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Lint
+        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+
       - name: Cache Swift Package Manager packages
         uses: actions/cache@v6
         with:
