@@ -10,14 +10,14 @@ import SwiftUI
 extension LinearGradient {
     static let nextSunnyDayBackground =
         LinearGradient(
-            gradient: Gradient(colors: [Color(R.color.nextSunnyDayBackgroundStart() ?? .orange), Color(R.color.nextSunnyDayBackgroundEnd() ?? .orange)]),
+            gradient: Gradient(colors: [Color(.nextSunnyDayBackgroundStart), Color(.nextSunnyDayBackgroundEnd)]),
             startPoint: .top,
             endPoint: .bottom
         )
 
     static let noNextSunnyDayBackground =
         LinearGradient(
-            gradient: Gradient(colors: [Color(R.color.noNextSunnyDayBackgroundStart() ?? .gray), Color(R.color.noNextSunnyDayBackgroundEnd() ?? .gray)]),
+            gradient: Gradient(colors: [Color(.noNextSunnyDayBackgroundStart), Color(.noNextSunnyDayBackgroundEnd)]),
             startPoint: .top,
             endPoint: .bottom
         )

@@ -36,7 +36,7 @@ struct WeatherIcon {
              WeatherConditionCode.veryHeavyRain.rawValue,
              WeatherConditionCode.extremeRain.rawValue:
             image = Image(systemName: "cloud.sun.rain.fill")
-            color = Color(R.color.blue() ?? .blue)
+            color = Color(ColorResource.blue)  // the "Blue" asset, not UIColor.blue
 
         case WeatherConditionCode.freezingRain.rawValue,
              WeatherConditionCode.lightSnow.rawValue,
@@ -51,7 +51,7 @@ struct WeatherIcon {
              WeatherConditionCode.showerSnow.rawValue,
              WeatherConditionCode.heavyShowerSnow.rawValue:
             image = Image(systemName: "cloud.snow.fill")
-            color = Color(R.color.lightBlue() ?? .blue)
+            color = Color(.lightBlue)
 
         case WeatherConditionCode.lightIntensityDrizzle.rawValue,
              WeatherConditionCode.drizzle.rawValue,
@@ -67,7 +67,7 @@ struct WeatherIcon {
              WeatherConditionCode.heavyIntensityShowerRain.rawValue,
              WeatherConditionCode.raggedShowerRain.rawValue:
             image = Image(systemName: "cloud.heavyrain.fill")
-            color = Color(R.color.darkBlue() ?? .blue)
+            color = Color(.darkBlue)
 
         case WeatherConditionCode.thunderstormWithLightRain.rawValue,
              WeatherConditionCode.thunderstormWithRain.rawValue,
@@ -80,7 +80,7 @@ struct WeatherIcon {
              WeatherConditionCode.thunderstormWithDrizzle.rawValue,
              WeatherConditionCode.thunderstormWithHeavyDrizzle.rawValue:
             image = Image(systemName: "cloud.bolt.rain.fill")
-            color = Color(R.color.boltYelow() ?? .yellow)
+            color = Color(.boltYellow)
 
         case WeatherConditionCode.mist.rawValue,
              WeatherConditionCode.smoke.rawValue,
