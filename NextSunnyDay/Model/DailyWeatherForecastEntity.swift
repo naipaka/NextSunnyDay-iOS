@@ -90,32 +90,32 @@ extension DailyWeatherForecastEntity {
     entity.lon = forecast.lon
 
     // Daily
-    forecast.daily.forEach {
+    for day in forecast.daily {
       let daily = Daily()
-      daily.date = $0.date
-      daily.humidity = $0.humidity
-      daily.pop = $0.pop
-      daily.rain = $0.rain ?? 0.0
-      daily.snow = $0.snow ?? 0.0
-      daily.uvi = $0.uvi
+      daily.date = day.date
+      daily.humidity = day.humidity
+      daily.pop = day.pop
+      daily.rain = day.rain ?? 0.0
+      daily.snow = day.snow ?? 0.0
+      daily.uvi = day.uvi
 
       // Temp
       let temp = Temp()
-      temp.day = $0.temp.day
-      temp.min = $0.temp.min
-      temp.max = $0.temp.max
-      temp.night = $0.temp.night
-      temp.eve = $0.temp.eve
-      temp.morn = $0.temp.morn
+      temp.day = day.temp.day
+      temp.min = day.temp.min
+      temp.max = day.temp.max
+      temp.night = day.temp.night
+      temp.eve = day.temp.eve
+      temp.morn = day.temp.morn
       daily.temp = temp
 
       // Weather
-      $0.weather.forEach {
+      for condition in day.weather {
         let weather = Weather()
-        weather.id = $0.id
-        weather.main = $0.main
-        weather.weatherDescription = $0.weatherDescription
-        weather.icon = $0.icon
+        weather.id = condition.id
+        weather.main = condition.main
+        weather.weatherDescription = condition.weatherDescription
+        weather.icon = condition.icon
         daily.weather.append(weather)
       }
 

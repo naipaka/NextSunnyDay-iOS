@@ -92,7 +92,9 @@ class HomeViewModel: HomeViewModelObject {
   }
 
   deinit {
-    notificationTokens.forEach { $0.invalidate() }
+    for token in notificationTokens {
+      token.invalidate()
+    }
   }
 
   private func fetchWeatherForecast() {
