@@ -43,7 +43,21 @@ jobs:
       - name: Inject Access Token
         run: echo "let openWeatherAPIKey = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
 
+      # Pushes to main only check that the app builds (no simulator boot).
+      # The owner runs tests locally before pushing; PRs run the full suite.
+      - name: Build
+        if: github.event_name == 'push'
+        run: >
+          set -o pipefail &&
+          xcodebuild
+          -scheme NextSunnyDay
+          -configuration Debug
+          -destination 'generic/platform=iOS Simulator'
+          -clonedSourcePackagesDirPath SourcePackages
+          build
+
       - name: Build and Test
+        if: github.event_name == 'pull_request'
         run: >
           set -o pipefail &&
           xcodebuild
@@ -56,7 +70,7 @@ jobs:
           test
 
       - uses: actions/upload-artifact@v7
-        if: failure()
+        if: failure() && github.event_name == 'pull_request'
         with:
           name: test-results
           path: TestResults.xcresult
