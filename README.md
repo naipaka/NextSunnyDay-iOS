@@ -35,7 +35,7 @@ The app is available in Japanese only.
 ### How it works
 
 The app saves the forecast for the place you choose to Realm, in an App Group container that the widget can also read.
-The widget shows the saved forecast and refreshes every five hours. When the saved forecast is out of date, the widget fetches a new one from the OpenWeather API on its own.
+The widget shows the saved forecast and refreshes every five hours. When the saved forecast is out of date, the widget fetches a new one from WeatherKit on its own.
 Places are searched with MapKit's `MKLocalSearchCompleter`.
 
 ### Directory Structure
@@ -44,8 +44,7 @@ Places are searched with MapKit's `MKLocalSearchCompleter`.
 NextSunnyDay/
 ├── NextSunnyDayApp.swift
 ├── API/
-│   ├── AccessTokens.swift   # Created in Set up, not committed
-│   ├── OpenWeatherAPI/
+│   ├── Weather/          # WeatherKit
 │   └── LocalSearch/
 ├── Model/
 ├── View/
@@ -71,17 +70,10 @@ $ git clone git@github.com:naipaka/NextSunnyDay-iOS.git
 $ cd NextSunnyDay-iOS
 ```
 
-### API key
+### Weather data
 
-This app uses the OpenWeather API. Get an API key from the following page.
-
-[How to start to work with Openweather API - OpenWeatherMap](https://openweathermap.org/appid)
-
-Then run the following command in the root directory to create `NextSunnyDay/API/AccessTokens.swift`.
-
-```sh
-$ echo "let openWeatherAPIKey = \"{YOUR_API_KEY}\"" > ./NextSunnyDay/API/AccessTokens.swift
-```
+Forecasts come from [WeatherKit](https://developer.apple.com/weatherkit/). No API key is needed to build.
+To fetch real forecasts, the app and widget App IDs need the WeatherKit capability, and the team needs the WeatherKit App Service, both enabled in Certificates, Identifiers & Profiles. If you build with your own team, change the bundle identifiers and enable them for your App IDs.
 
 ### Formatting
 

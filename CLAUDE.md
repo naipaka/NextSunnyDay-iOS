@@ -8,11 +8,7 @@ NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the nex
 
 ## Setup
 
-Create `NextSunnyDay/API/AccessTokens.swift` containing your OpenWeather API key. This file is gitignored and required to build:
-```sh
-echo "let openWeatherAPIKey = \"{your key}\"" > ./NextSunnyDay/API/AccessTokens.swift
-```
-CI injects this from the `OPEN_WEATHER_API_KEY` secret (see `.github/workflows/main.yml`).
+No API key is needed. Weather data comes from **WeatherKit**: both targets carry the `com.apple.developer.weatherkit` entitlement, and the App IDs (`com.naipaka.NextSunnyDay`, `com.naipaka.NextSunnyDay.NextSunnyDayWidget`) plus the team's WeatherKit App Service are enabled in the Developer portal. Without that, builds succeed but fetches fail at runtime.
 
 ## Common commands
 
@@ -53,7 +49,10 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 
 ### Data flow
 
-- **OpenWeatherMap One Call API** is fetched by `WeatherFetcher` (`API/OpenWeatherAPI/`) returning a `Combine` publisher of `DailyWeatherForecastResponse`. The protocol `WeatherFetchable` is the seam — inject mocks in tests/previews via this protocol (see how `HomeViewModel` is constructed in `NextSunnyDayApp.swift`).
+- **WeatherKit** is fetched by `WeatherKitProvider` (`API/Weather/WeatherProviding.swift`), which returns the 10-day daily forecast as the domain model `[DailyForecast]` (`Model/DailyForecast.swift`; `ForecastLocation` is the place). The async protocol `WeatherProviding` is the seam — inject fakes in tests/previews via this protocol (see how `HomeViewModel` is constructed in `NextSunnyDayApp.swift`).
+- "Sunny" is `WeatherCondition.isSunny` (`.clear`, `.mostlyClear`); the next sunny day is `[DailyForecast].nextSunnyDay`. Both are unit-tested.
+- **Realm bridge** (`Model/DailyWeatherForecastEntity+DailyForecast.swift`): maps `DailyForecast` into the Realm entity (`Weather.main` = condition raw value, `Weather.icon` = SF Symbol name, temperatures in °C) and back, so the existing UI reads domain values. Days saved by v1 (OpenWeather) don't map and are skipped.
+- **Apple Weather attribution** (mark + legal link from `WeatherService.shared.attribution`) is shown in `AboutWeatherForecastView`.
 - **Realm** is the single source of truth on-device. `DailyWeatherForecastEntity` (`Model/`) is a Realm `Object` plus a CRUD extension. The Realm file lives in the App Group container `group.com.naipaka.NextSunnyDay` so the Widget can read the same DB.
 - ViewModels observe Realm `Results` via `NotificationToken`, push updates into `output`, and call `WidgetCenter.shared.reloadAllTimelines()` after writes so the Widget refreshes.
 - Forecast staleness check: a fetch is triggered when the earliest stored daily entry is older than ~24h (app) / ~20h (widget). Full flowcharts: `docs/architecture/weather-fetch-flow.md` — keep them in sync when changing fetch logic.

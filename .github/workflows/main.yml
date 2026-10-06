@@ -40,9 +40,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-spm-
 
-      - name: Inject Access Token
-        run: echo "let openWeatherAPIKey = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
-
       # Pushes to main only check that the app builds (no simulator boot).
       # The owner runs tests locally before pushing; PRs run the full suite.
       - name: Build

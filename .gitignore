@@ -198,9 +198,6 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 
-### AccessToken ###
-AccessTokens.swift
-
 
 # Macintosh
 .DS_Store

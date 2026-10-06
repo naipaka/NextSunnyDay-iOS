@@ -34,7 +34,7 @@
 ### 仕組み
 
 アプリは、選んだ場所の天気予報を Realm に保存します。保存先は、ウィジェットからも読める App Group のコンテナです。
-ウィジェットは保存された予報を表示し、5 時間ごとに更新します。保存された予報が古くなると、ウィジェット自身が OpenWeather の API から新しい予報を取得します。
+ウィジェットは保存された予報を表示し、5 時間ごとに更新します。保存された予報が古くなると、ウィジェット自身が WeatherKit から新しい予報を取得します。
 場所の検索には、MapKit の `MKLocalSearchCompleter` を使っています。
 
 ### ディレクトリ構成
@@ -43,8 +43,7 @@
 NextSunnyDay/
 ├── NextSunnyDayApp.swift
 ├── API/
-│   ├── AccessTokens.swift   # セットアップで作成する（コミットしない）
-│   ├── OpenWeatherAPI/
+│   ├── Weather/          # WeatherKit
 │   └── LocalSearch/
 ├── Model/
 ├── View/
@@ -70,17 +69,10 @@ $ git clone git@github.com:naipaka/NextSunnyDay-iOS.git
 $ cd NextSunnyDay-iOS
 ```
 
-### API キー
+### 天気データ
 
-このアプリは OpenWeather の API を使っています。次のページで API キーを取得してください。
-
-[How to start to work with Openweather API - OpenWeatherMap](https://openweathermap.org/appid)
-
-取得したら、ルートディレクトリで次のコマンドを実行し、`NextSunnyDay/API/AccessTokens.swift` を作成してください。
-
-```sh
-$ echo "let openWeatherAPIKey = \"{取得した API キー}\"" > ./NextSunnyDay/API/AccessTokens.swift
-```
+天気予報は [WeatherKit](https://developer.apple.com/weatherkit/) から取得します。ビルドに API キーは要りません。
+実際の予報を取得するには、Certificates, Identifiers & Profiles で、アプリとウィジェットの App ID に WeatherKit の capability を、チームに WeatherKit の App Service を有効にしておく必要があります。自分のチームでビルドする場合は、バンドル ID を変えて、自分の App ID で有効にしてください。
 
 ### フォーマット
 
