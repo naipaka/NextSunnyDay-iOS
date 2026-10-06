@@ -45,9 +45,9 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
         @Published var backgroundColor: LinearGradient = .noNextSunnyDayBackground
         @Published var textColor: Color = .white
         @Published var cityName = ""
-        @Published var nextSunnyDay = R.string.nextSunnyDay.nextWeekOnwards()
-        @Published var maxTemperature = R.string.nextSunnyDay.hyphen()
-        @Published var minTemperature = R.string.nextSunnyDay.hyphen()
+        @Published var nextSunnyDay = String(localized: "Next Week or Later")
+        @Published var maxTemperature = "-"
+        @Published var minTemperature = "-"
     }
 
     var input: Input

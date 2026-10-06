@@ -36,7 +36,7 @@ struct HomeView<T>: View where T: HomeViewModelObject {
                         errorView
                     }
                 }
-                .navigationBarTitle(R.string.home.navigationBarTitle())
+                .navigationBarTitle("Next Sunny Day ☀️")
                 .navigationBarItems(trailing: toSettingViewButton)
             }
             if viewModel.binding.isLoading {
@@ -53,7 +53,7 @@ private extension HomeView {
                 viewModel.input.toSettingViewButtonTapped.send()
             },
             label: {
-                Image(systemName: R.string.systemName.gearshapeFill())
+                Image(systemName: "gearshape.fill")
                     .resizable()
                     .frame(width: 20, height: 20, alignment: .center)
                     .foregroundColor(.gray)
@@ -66,11 +66,11 @@ private extension HomeView {
 
     var emptyView: some View {
         VStack {
-            Image(systemName: R.string.systemName.sunMinFill())
+            Image(systemName: "sun.min.fill")
                 .resizable()
                 .frame(width: 160, height: 160, alignment: .center)
                 .padding()
-            Text(R.string.home.emptyText())
+            Text("Set your region with the\nsettings button at the top right")
             Spacer().frame(height: 60)
         }
         .foregroundColor(.gray)
@@ -92,7 +92,7 @@ private extension HomeView {
             Spacer()
                 .frame(maxWidth: 18)
             VStack(alignment: .leading) {
-                Text(R.string.home.weeklyWeather())
+                Text("Weekly Forecast (Today – 7 Days Ahead)")
                     .font(.system(size: 24))
                     .bold()
                 ForEach(viewModel.output.forecast.daily) {
@@ -111,9 +111,9 @@ private extension HomeView {
             ZStack {
                 VStack {
                     Spacer().frame(height: 20)
-                    Text(R.string.home.dataFetchingError())
+                    Text("Data Fetching Error")
                         .font(.title3)
-                    Text(R.string.home.failedToFetchWeatherData())
+                    Text("Failed to fetch weather data.\nPlease wait a while and restart the app.")
                         .padding()
                 }
                 HStack {
@@ -124,7 +124,7 @@ private extension HomeView {
                                 viewModel.binding.hasError.toggle()
                             },
                             label: {
-                                Image(systemName: R.string.systemName.xmark())
+                                Image(systemName: "xmark")
                                     .resizable()
                                     .frame(width: 14, height: 14, alignment: .center)
                                     .foregroundColor(Color(.systemGray))

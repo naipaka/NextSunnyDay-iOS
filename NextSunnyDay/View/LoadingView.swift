@@ -13,7 +13,7 @@ struct LoadingView: View {
             Color(.systemBackground)
                 .opacity(0.9)
                 .edgesIgnoringSafeArea(.all)
-            ProgressView(R.string.loading.loadingLabel())
+            ProgressView("Fetching data…")
         }
     }
 }

@@ -42,10 +42,10 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
 
     final class Output: DailyWeatherViewModelOutputObject {
         @Published var icon = WeatherIcon(code: 0)
-        @Published var weatherDescription: String = R.string.dailyWeather.hyphen()
-        @Published var date: String = R.string.dailyWeather.hyphen()
-        @Published var maxTemperature: String = R.string.dailyWeather.hyphen()
-        @Published var minTemperature: String = R.string.dailyWeather.hyphen()
+        @Published var weatherDescription: String = "-"
+        @Published var date: String = "-"
+        @Published var maxTemperature: String = "-"
+        @Published var minTemperature: String = "-"
     }
 
     var input: Input
@@ -61,7 +61,7 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
 
         // output
         output.icon = WeatherIcon(code: daily.weather.first?.id ?? 0)
-        output.weatherDescription = daily.weather.first?.weatherDescription ?? R.string.dailyWeather.hyphen()
+        output.weatherDescription = daily.weather.first?.weatherDescription ?? "-"
         output.date = Date(timeIntervalSince1970: Double(daily.date)).format(text: "M/d (EEE)")
         if let temp = daily.temp {
             output.maxTemperature = String("\(temp.max)℃")

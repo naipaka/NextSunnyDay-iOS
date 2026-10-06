@@ -14,20 +14,20 @@ struct WeatherIcon {
     init(code: Int) {
         switch code {
         case WeatherConditionCode.clearSky.rawValue:
-            image = Image(systemName: R.string.systemName.sunMinFill())
+            image = Image(systemName: "sun.min.fill")
             color = Color(.orange)
 
         case WeatherConditionCode.fewClouds.rawValue,
              WeatherConditionCode.scatteredClouds.rawValue:
-            image = Image(systemName: R.string.systemName.cloudSunFill())
+            image = Image(systemName: "cloud.sun.fill")
             color = Color(.orange)
 
         case WeatherConditionCode.brokenClouds.rawValue:
-            image = Image(systemName: R.string.systemName.cloudFill())
+            image = Image(systemName: "cloud.fill")
             color = Color(.gray)
 
         case WeatherConditionCode.overcastClouds.rawValue:
-            image = Image(systemName: R.string.systemName.smokeFill())
+            image = Image(systemName: "smoke.fill")
             color = Color(.darkGray)
 
         case WeatherConditionCode.lightRain.rawValue,
@@ -35,7 +35,7 @@ struct WeatherIcon {
              WeatherConditionCode.heavyIntensityRain.rawValue,
              WeatherConditionCode.veryHeavyRain.rawValue,
              WeatherConditionCode.extremeRain.rawValue:
-            image = Image(systemName: R.string.systemName.cloudSunRainFill())
+            image = Image(systemName: "cloud.sun.rain.fill")
             color = Color(R.color.blue() ?? .blue)
 
         case WeatherConditionCode.freezingRain.rawValue,
@@ -50,7 +50,7 @@ struct WeatherIcon {
              WeatherConditionCode.lightShowerSnow.rawValue,
              WeatherConditionCode.showerSnow.rawValue,
              WeatherConditionCode.heavyShowerSnow.rawValue:
-            image = Image(systemName: R.string.systemName.cloudSnowFill())
+            image = Image(systemName: "cloud.snow.fill")
             color = Color(R.color.lightBlue() ?? .blue)
 
         case WeatherConditionCode.lightIntensityDrizzle.rawValue,
@@ -66,7 +66,7 @@ struct WeatherIcon {
              WeatherConditionCode.showerRain.rawValue,
              WeatherConditionCode.heavyIntensityShowerRain.rawValue,
              WeatherConditionCode.raggedShowerRain.rawValue:
-            image = Image(systemName: R.string.systemName.cloudHeavyrainFill())
+            image = Image(systemName: "cloud.heavyrain.fill")
             color = Color(R.color.darkBlue() ?? .blue)
 
         case WeatherConditionCode.thunderstormWithLightRain.rawValue,
@@ -79,7 +79,7 @@ struct WeatherIcon {
              WeatherConditionCode.thunderstormWithLightDrizzle.rawValue,
              WeatherConditionCode.thunderstormWithDrizzle.rawValue,
              WeatherConditionCode.thunderstormWithHeavyDrizzle.rawValue:
-            image = Image(systemName: R.string.systemName.cloudBoltRainFill())
+            image = Image(systemName: "cloud.bolt.rain.fill")
             color = Color(R.color.boltYelow() ?? .yellow)
 
         case WeatherConditionCode.mist.rawValue,
@@ -92,11 +92,11 @@ struct WeatherIcon {
              WeatherConditionCode.volcanicAsh.rawValue,
              WeatherConditionCode.squalls.rawValue,
              WeatherConditionCode.tornado.rawValue:
-            image = Image(systemName: R.string.systemName.tornado())
+            image = Image(systemName: "tornado")
             color = Color(.brown)
 
         default:
-            image = Image(systemName: R.string.systemName.questionmarkCircleFill())
+            image = Image(systemName: "questionmark.circle.fill")
             color = Color(.black)
         }
     }

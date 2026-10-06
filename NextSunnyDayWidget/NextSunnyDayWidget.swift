@@ -103,14 +103,14 @@ extension NextSunnyDayWidgetEntryView {
 
 @main
 struct NextSunnyDayWidget: Widget {
-    let kind: String = R.string.widget.kind()
+    let kind: String = "NextSunnyDayWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             NextSunnyDayWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName(R.string.widget.displayName())
-        .description(R.string.widget.description())
+        .configurationDisplayName("NextSunnyDay")
+        .description("See when the next sunny day is.")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

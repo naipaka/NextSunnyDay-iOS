@@ -12,9 +12,9 @@ struct AboutWeatherForecastView: View {
         ZStack {
             Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack(alignment: .leading) {
-                Text(R.string.aboutWeatherForecast.infoSource())
+                Text("This app shows information based on weather forecasts from OpenWeather.")
                     .padding()
-                Text(R.string.aboutWeatherForecast.termsOfUse())
+                Text("We accept no responsibility for any loss or damage caused by the weather forecast information in this app.")
                     .padding()
                 Button(
                     action: {
@@ -23,7 +23,7 @@ struct AboutWeatherForecastView: View {
                         }
                     },
                     label: {
-                        Text(R.string.aboutWeatherForecast.openWeatherSWebsite())
+                        Text("OpenWeather Website")
                             .foregroundColor(.secondary)
                             .underline()
                     }
@@ -33,7 +33,7 @@ struct AboutWeatherForecastView: View {
             }
         }
         .font(.none)
-        .navigationBarTitle(R.string.aboutWeatherForecast.aboutWeatherForecast())
+        .navigationBarTitle("About Weather Forecast")
     }
 }
 

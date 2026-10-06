@@ -21,19 +21,19 @@ struct RegionSelectionView<T>: View where T: RegionSelectionViewModelObject {
         ZStack {
             Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
             VStack {
-                SearchBar(text: $viewModel.binding.cityName, placeholder: R.string.regionSelection.searchBarPlaceholder())
+                SearchBar(text: $viewModel.binding.cityName, placeholder: String(localized: "Enter an address or place name"))
                 completionList
             }
         }
         .font(.none)
-        .navigationBarTitle(Text(R.string.regionSelection.setRegion()))
+        .navigationBarTitle(Text("Set Region"))
     }
 }
 
 extension RegionSelectionView {
     private var completionList: some View {
         List {
-            Section(header: Text(viewModel.output.completions.isEmpty ? "" : R.string.regionSelection.searchResults())) {
+            Section(header: Text(viewModel.output.completions.isEmpty ? "" : String(localized: "Search Results"))) {
                 ForEach(viewModel.output.completions) { completion in
                     Button(
                         action: {
@@ -57,11 +57,11 @@ extension RegionSelectionView {
         .listStyle(InsetGroupedListStyle())
         .alert(isPresented: $viewModel.binding.isShowingAlert) {
             Alert(
-                title: Text(R.string.regionSelection.setRegion()),
-                message: Text(R.string.regionSelection.alertText(viewModel.binding.selectedCompletion.title)),
-                primaryButton: .cancel(Text(R.string.regionSelection.cancel())),
+                title: Text("Set Region"),
+                message: Text("Set region to “\(viewModel.binding.selectedCompletion.title)”?"),
+                primaryButton: .cancel(Text("Cancel")),
                 secondaryButton: .default(
-                    Text(R.string.regionSelection.ok()),
+                    Text("OK"),
                     action: {
                         viewModel.input.regionSelected.send()
                         presentationMode.wrappedValue.dismiss()

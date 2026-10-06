@@ -38,8 +38,8 @@ class SettingViewModel: SettingViewModelObject {
     final class Binding: SettingViewModelBindingObject {}
 
     final class Output: SettingViewModelOutputObject {
-        @Published var cityName: String = R.string.setting.unset()
-        @Published var version: String = R.string.setting.hyphen()
+        @Published var cityName: String = String(localized: "Not Set")
+        @Published var version: String = "-"
         @Published var reviewURL: URL?
         @Published var contactUsPageURL: URL?
     }
@@ -59,7 +59,7 @@ class SettingViewModel: SettingViewModelObject {
         if forecast.cityName != "" {
             output.cityName = forecast.cityName
         }
-        output.version = Bundle.main.object(forInfoDictionaryKey: R.string.setting.cfBundleShortVersionString()) as? String ?? R.string.setting.hyphen()
+        output.version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"
         output.reviewURL = URL(string: "https://itunes.apple.com/app/id1537055268?action=write-review")
         output.contactUsPageURL = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdOw2aW3VP6OYI1jNO4xZtDmkKzJ33otOQLmBxhcKQejuniAQ/viewform?usp=sf_link")
 

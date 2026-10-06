@@ -103,10 +103,10 @@ extension DailyWeatherView_Previews {
 
         final class Output: DailyWeatherViewModelOutputObject {
             @Published var icon = WeatherIcon(code: 0)
-            @Published var weatherDescription: String = R.string.dailyWeather.hyphen()
-            @Published var date: String = R.string.dailyWeather.hyphen()
-            @Published var maxTemperature: String = R.string.dailyWeather.hyphen()
-            @Published var minTemperature: String = R.string.dailyWeather.hyphen()
+            @Published var weatherDescription: String = "-"
+            @Published var date: String = "-"
+            @Published var maxTemperature: String = "-"
+            @Published var minTemperature: String = "-"
         }
 
         var input: Input

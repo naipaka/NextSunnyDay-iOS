@@ -24,8 +24,8 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                 HStack {
                     Spacer()
                         .frame(maxWidth: 16)
-                    Image(systemName: R.string.systemName.sunMinFill())
-                    Text(R.string.nextSunnyDay.nextSunnyDay())
+                    Image(systemName: "sun.min.fill")
+                    Text("Next Sunny Day")
                         .font(.system(size: 18))
                         .fontWeight(.semibold)
                         .fixedSize()
@@ -52,7 +52,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                         .frame(idealWidth: 40)
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
-                            Text(R.string.nextSunnyDay.max())
+                            Text("High")
                                 .font(.system(size: 14))
                                 .fixedSize()
                             Text(viewModel.output.maxTemperature)
@@ -63,7 +63,7 @@ struct NextSunnyDayMediumView<T>: View where T: NextSunnyDayViewModelObject {
                         Spacer()
                             .frame(maxHeight: 12)
                         VStack(alignment: .leading) {
-                            Text(R.string.nextSunnyDay.min())
+                            Text("Low")
                                 .font(.system(size: 14))
                                 .fixedSize()
                             Text(viewModel.output.minTemperature)
@@ -141,9 +141,9 @@ extension NextSunnyDayMediumView_Previews {
         init(
             backgroundColor: LinearGradient = .nextSunnyDayBackground,
             cityName: String = "東京都港区",
-            nextSunnyDay: String = R.string.nextSunnyDay.nextWeekOnwards(),
-            maxTemperature: String = R.string.nextSunnyDay.hyphen(),
-            minTemperature: String = R.string.nextSunnyDay.hyphen()
+            nextSunnyDay: String = String(localized: "Next Week or Later"),
+            maxTemperature: String = "-",
+            minTemperature: String = "-"
         ) {
             let input = Input()
             let binding = Binding()

@@ -24,10 +24,10 @@ struct NextSunnyDaySmallView<T>: View where T: NextSunnyDayViewModelObject {
                 HStack {
                     Spacer()
                         .frame(maxWidth: 12)
-                    Image(systemName: R.string.systemName.sunMinFill())
+                    Image(systemName: "sun.min.fill")
                         .resizable()
                         .frame(width: 14, height: 14)
-                    Text(R.string.nextSunnyDay.nextSunnyDay())
+                    Text("Next Sunny Day")
                         .font(.system(size: 14))
                         .fontWeight(.semibold)
                         .fixedSize()
@@ -118,7 +118,7 @@ extension NextSunnyDaySmallView_Previews {
 
         init(
             cityName: String = "東京都港区",
-            nextSunnyDay: String = R.string.nextSunnyDay.nextWeekOnwards(),
+            nextSunnyDay: String = String(localized: "Next Week or Later"),
             backgroundColor: LinearGradient = .nextSunnyDayBackground
         ) {
             let input = Input()

@@ -22,7 +22,7 @@ struct SettingView<T>: View where T: SettingViewModelObject {
                 aboutAppSection
             }
             .font(.none)
-            .navigationBarTitle(R.string.setting.navigationBarTitle())
+            .navigationBarTitle("Settings")
             .navigationBarItems(trailing: closeButton)
         }
     }
@@ -35,7 +35,7 @@ extension SettingView {
                 presentationMode.wrappedValue.dismiss()
             },
             label: {
-                Image(systemName: R.string.systemName.xmark())
+                Image(systemName: "xmark")
                     .resizable()
                     .frame(width: 20, height: 20, alignment: .center)
                     .foregroundColor(Color(.systemGray))
@@ -44,16 +44,16 @@ extension SettingView {
     }
 
     var appSettingSection: some View {
-        Section(header: Text(R.string.setting.appSetting())) {
+        Section(header: Text("App Settings")) {
             HStack {
-                Image(systemName: R.string.systemName.mappinAndEllipse())
+                Image(systemName: "mappin.and.ellipse")
                     .resizable()
                     .frame(width: 14, height: 14, alignment: .center)
                     .fixedSize()
                     .foregroundColor(Color(.systemGray))
                 Spacer()
                     .frame(width: 16)
-                Text(R.string.setting.region())
+                Text("Region")
                 NavigationLink(destination: RegionSelectionView(viewModel: RegionSelectionViewModel(service: LocalSearchService()))) {
                     Spacer()
                     Text(viewModel.output.cityName)
@@ -64,42 +64,42 @@ extension SettingView {
     }
 
     var aboutAppSection: some View {
-        Section(header: Text(R.string.setting.aboutApp())) {
+        Section(header: Text("About This App")) {
             HStack {
-                Image(systemName: R.string.systemName.tagFill())
+                Image(systemName: "tag.fill")
                     .resizable()
                     .frame(width: 14, height: 14, alignment: .center)
                     .fixedSize()
                     .foregroundColor(Color(.systemGray))
                 Spacer()
                     .frame(width: 16)
-                Text(R.string.setting.version())
+                Text("Version")
                 Spacer()
                 Text(viewModel.output.version)
                     .foregroundColor(Color(.systemGray))
             }
             HStack {
-                Image(systemName: R.string.systemName.sunMaxFill())
+                Image(systemName: "sun.max.fill")
                     .resizable()
                     .frame(width: 14, height: 14, alignment: .center)
                     .fixedSize()
                     .foregroundColor(Color(.systemGray))
                 Spacer()
                     .frame(width: 16)
-                Text(R.string.setting.aboutWeatherForecast())
+                Text("About Weather Forecast")
                     .lineLimit(1)
                     .fixedSize()
                 NavigationLink("", destination: AboutWeatherForecastView())
             }
             HStack {
-                Image(systemName: R.string.systemName.starFill())
+                Image(systemName: "star.fill")
                     .resizable()
                     .frame(width: 14, height: 14, alignment: .center)
                     .fixedSize()
                     .foregroundColor(Color(.systemGray))
                 Spacer()
                     .frame(width: 16)
-                Text(R.string.setting.review())
+                Text("Write a Review")
                 Button(
                     "",
                     action: {
@@ -110,14 +110,14 @@ extension SettingView {
                 )
             }
             HStack {
-                Image(systemName: R.string.systemName.paperplaneFill())
+                Image(systemName: "paperplane.fill")
                     .resizable()
                     .frame(width: 14, height: 14, alignment: .center)
                     .fixedSize()
                     .foregroundColor(Color(.systemGray))
                 Spacer()
                     .frame(width: 16)
-                Text(R.string.setting.contactUs())
+                Text("Send Feedback")
                 Button(
                     "",
                     action: {
@@ -149,8 +149,8 @@ extension SettingView_Previews {
         final class Binding: SettingViewModelBindingObject {}
 
         final class Output: SettingViewModelOutputObject {
-            @Published var cityName: String = R.string.setting.unset()
-            @Published var version: String = R.string.setting.hyphen()
+            @Published var cityName: String = String(localized: "Not Set")
+            @Published var version: String = "-"
             @Published var reviewURL: URL?
             @Published var contactUsPageURL: URL?
         }
@@ -170,7 +170,7 @@ extension SettingView_Previews {
             if cityName != "" {
                 output.cityName = cityName
             }
-            output.version = Bundle.main.object(forInfoDictionaryKey: R.string.setting.cfBundleShortVersionString()) as? String ?? R.string.setting.hyphen()
+            output.version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"
             output.reviewURL = nil
             output.contactUsPageURL = nil
 
