@@ -11,7 +11,7 @@ NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the nex
 1. (Optional) `mint bootstrap` — installs pinned tools from `Mintfile` (SwiftLint, LicensePlist). Not required to build: the SwiftLint and LicensePlist build phases print a warning and skip when Mint is missing.
 2. Create `NextSunnyDay/API/AccessTokens.swift` containing your OpenWeather API key. This file is gitignored and required to build:
    ```sh
-   echo "let OPEN_WEATHER_API_KEY = \"{your key}\"" > ./NextSunnyDay/API/AccessTokens.swift
+   echo "let openWeatherAPIKey = \"{your key}\"" > ./NextSunnyDay/API/AccessTokens.swift
    ```
    CI injects this from the `OPEN_WEATHER_API_KEY` secret (see `.github/workflows/main.yml`).
 

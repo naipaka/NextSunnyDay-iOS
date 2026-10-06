@@ -38,7 +38,7 @@ jobs:
             ${{ runner.os }}-spm-
 
       - name: Inject Access Token
-        run: echo "let OPEN_WEATHER_API_KEY = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
+        run: echo "let openWeatherAPIKey = \"${{ secrets.OPEN_WEATHER_API_KEY }}\"" > ./NextSunnyDay/API/AccessTokens.swift
 
       - name: Build and Test
         run: >

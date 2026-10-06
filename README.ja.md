@@ -82,7 +82,7 @@ $ cd NextSunnyDay-iOS
 取得したら、ルートディレクトリで次のコマンドを実行し、`NextSunnyDay/API/AccessTokens.swift` を作成してください。
 
 ```sh
-$ echo "let OPEN_WEATHER_API_KEY = \"{取得した API キー}\"" > ./NextSunnyDay/API/AccessTokens.swift
+$ echo "let openWeatherAPIKey = \"{取得した API キー}\"" > ./NextSunnyDay/API/AccessTokens.swift
 ```
 
 ### Mint

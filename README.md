@@ -83,7 +83,7 @@ This app uses the OpenWeather API. Get an API key from the following page.
 Then run the following command in the root directory to create `NextSunnyDay/API/AccessTokens.swift`.
 
 ```sh
-$ echo "let OPEN_WEATHER_API_KEY = \"{YOUR_API_KEY}\"" > ./NextSunnyDay/API/AccessTokens.swift
+$ echo "let openWeatherAPIKey = \"{YOUR_API_KEY}\"" > ./NextSunnyDay/API/AccessTokens.swift
 ```
 
 ### Mint
