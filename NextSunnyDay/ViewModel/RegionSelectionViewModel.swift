@@ -88,7 +88,7 @@ class RegionSelectionViewModel: RegionSelectionViewModelObject {
         let searchRequest = MKLocalSearch.Request(completion: binding.selectedCompletion)
         let search = MKLocalSearch(request: searchRequest)
         search.start { [weak self] response, _ in
-            guard let coordinate = response?.mapItems[0].placemark.coordinate else { return }
+            guard let coordinate = response?.mapItems[0].location.coordinate else { return }
 
             let entity = DailyWeatherForecastEntity()
             entity.cityName = self?.binding.selectedCompletion.title ?? ""
