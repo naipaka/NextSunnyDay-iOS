@@ -62,17 +62,17 @@ class HomeViewModel: HomeViewModelObject {
 
   var output: Output
 
-  private let weatherFetcher: WeatherFetchable
+  private let weatherProvider: WeatherProviding
   private let results = DailyWeatherForecastEntity.all()
   private var notificationTokens: [NotificationToken] = []
   private var cancellables: [AnyCancellable] = []
 
-  init(weatherFetcher: WeatherFetchable) {
+  init(weatherProvider: WeatherProviding) {
     input = Input()
     binding = Binding()
     output = Output()
     output.forecast = results.first ?? DailyWeatherForecastEntity()
-    self.weatherFetcher = weatherFetcher
+    self.weatherProvider = weatherProvider
 
     observeDatasource()
 
@@ -99,33 +99,18 @@ class HomeViewModel: HomeViewModelObject {
 
   private func fetchWeatherForecast() {
     binding.isLoading = true
+    let location = output.forecast.location
 
-    // Weather Fetcher
-    weatherFetcher.weeklyWeatherForecast(forLat: output.forecast.lat, forLon: output.forecast.lon)
-      .receive(on: DispatchQueue.main)
-      .sink(
-        receiveCompletion: { [weak self] value in
-          guard let self = self else { return }
-
-          switch value {
-          case .failure:
-            self.binding.hasError.toggle()
-
-          case .finished:
-            break
-          }
-
-          self.binding.isLoading = false
-        },
-        receiveValue: { [weak self] forecast in
-          guard let self = self else { return }
-          DailyWeatherForecastEntity.update(
-            with: DailyWeatherForecastEntity.generateEntity(
-              cityName: self.output.forecast.cityName, forecast: forecast))
-          self.binding.isLoading = false
-        }
-      )
-      .store(in: &cancellables)
+    Task { @MainActor in
+      do {
+        let forecasts = try await weatherProvider.dailyForecast(for: location)
+        DailyWeatherForecastEntity.update(
+          with: DailyWeatherForecastEntity(location: location, forecasts: forecasts))
+      } catch {
+        binding.hasError = true
+      }
+      binding.isLoading = false
+    }
   }
 
   private func observeDatasource() {

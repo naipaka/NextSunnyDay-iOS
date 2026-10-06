@@ -15,8 +15,7 @@ struct NextSunnyDayApp: App {
 
   var body: some Scene {
     WindowGroup {
-      let weatherFecther = WeatherFetcher()
-      let viewModel = HomeViewModel(weatherFetcher: weatherFecther)
+      let viewModel = HomeViewModel(weatherProvider: WeatherKitProvider())
       HomeView(viewModel: viewModel)
     }
   }

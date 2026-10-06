@@ -5,14 +5,11 @@
 //  Created by rMac on 2020/10/19.
 //
 
-import Combine
 import SwiftUI
 import WidgetKit
 
-private var cancellables = Set<AnyCancellable>()
-
 struct Provider: TimelineProvider {
-  private let weatherFetcher = WeatherFetcher()
+  private let weatherProvider: WeatherProviding = WeatherKitProvider()
 
   func placeholder(in context: Context) -> SimpleEntry {
     SimpleEntry(date: Date(), entity: .defaultEntity)
@@ -40,25 +37,14 @@ struct Provider: TimelineProvider {
     if !entity.cityName.isEmpty
       && latestDate + 60 * 60 * 20 < Int(currentDate.timeIntervalSince1970)
     {
-      weatherFetcher.weeklyWeatherForecast(forLat: entity.lat, forLon: entity.lon)
-        .receive(on: RunLoop.main)
-        .sink(
-          receiveCompletion: { value in
-            switch value {
-            case .failure:
-              completion(timeline)
-            case .finished:
-              break
-            }
-          },
-          receiveValue: { forecast in
-            DailyWeatherForecastEntity.update(
-              with: DailyWeatherForecastEntity.generateEntity(
-                cityName: entity.cityName, forecast: forecast))
-            completion(timeline)
-          }
-        )
-        .store(in: &cancellables)
+      let location = entity.location
+      Task { @MainActor in
+        if let forecasts = try? await weatherProvider.dailyForecast(for: location) {
+          DailyWeatherForecastEntity.update(
+            with: DailyWeatherForecastEntity(location: location, forecasts: forecasts))
+        }
+        completion(timeline)
+      }
     } else {
       completion(timeline)
     }
@@ -97,14 +83,10 @@ struct NextSunnyDayWidgetEntryView: View {
 
 extension NextSunnyDayWidgetEntryView {
   private var placeholderEntity: DailyWeatherForecastEntity {
-    let entity = DailyWeatherForecastEntity()
-    let daily = Daily()
-    let weather = Weather()
-    weather.id = 800
-    daily.date = Int(Date().timeIntervalSince1970)
-    daily.weather.append(weather)
-    entity.daily.append(daily)
-    return entity
+    DailyWeatherForecastEntity(
+      location: ForecastLocation(name: "", latitude: 0, longitude: 0),
+      forecasts: [.sample(date: Date(), condition: .clear)]
+    )
   }
 }
 

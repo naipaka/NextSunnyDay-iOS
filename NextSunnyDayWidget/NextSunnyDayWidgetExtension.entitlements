@@ -6,5 +6,7 @@
 	<array>
 		<string>group.com.naipaka.NextSunnyDay</string>
 	</array>
+	<key>com.apple.developer.weatherkit</key>
+	<true/>
 </dict>
 </plist>

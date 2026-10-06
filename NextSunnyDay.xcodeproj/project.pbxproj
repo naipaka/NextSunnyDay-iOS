@@ -66,15 +66,15 @@
 		B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				API/AccessTokens.swift,
-				API/OpenWeatherAPI/DailyWeatherForecastResponse.swift,
-				API/OpenWeatherAPI/WeatherConditionCode.swift,
-				API/OpenWeatherAPI/WeatherError.swift,
-				API/OpenWeatherAPI/WeatherFetcher.swift,
+				API/Weather/WeatherProviding.swift,
 				Assets.xcassets,
 				"Extension/Date+Extension.swift",
 				"Extension/LinearGradient+Extension.swift",
+				"Extension/Measurement+Extension.swift",
+				Model/DailyForecast.swift,
 				Model/DailyWeatherForecastEntity.swift,
+				"Model/DailyWeatherForecastEntity+DailyForecast.swift",
+				"Model/WeatherCondition+Sunny.swift",
 				Protocol/ViewModelObject.swift,
 				Resources/Localizable.xcstrings,
 				View/NextSunnyDayMediumView.swift,

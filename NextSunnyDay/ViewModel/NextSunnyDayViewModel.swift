@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import RealmSwift
 import SwiftUI
 
 // MARK: - NextSunnyDayViewModelObject
@@ -67,17 +66,12 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
 
     // output
     output.cityName = forecast.cityName
-    if let nearestSunnyDay = forecast.daily.filter({
-      WeatherConditionCode.sunnyCodes.contains($0.weather.first?.id ?? 0)
-    }).min(by: { $0.date < $1.date }) {
+    if let nextSunnyDay = forecast.dailyForecasts.nextSunnyDay {
       output.backgroundColor = .nextSunnyDayBackground
       output.textColor = Color(.nextSunnyDayText)
-      output.nextSunnyDay = Date(timeIntervalSince1970: Double(nearestSunnyDay.date)).format(
-        text: "M/d (EEE)")
-      if let temp = nearestSunnyDay.temp {
-        output.maxTemperature = String("\(temp.max)℃")
-        output.minTemperature = String("\(temp.min)℃")
-      }
+      output.nextSunnyDay = nextSunnyDay.date.format(text: "M/d (EEE)")
+      output.maxTemperature = nextSunnyDay.highTemperature.celsiusText
+      output.minTemperature = nextSunnyDay.lowTemperature.celsiusText
     }
 
     self.input = input

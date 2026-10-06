@@ -7,7 +7,6 @@
 
 import Combine
 import Foundation
-import RealmSwift
 import SwiftUI
 
 // MARK: - DailyWeatherViewModelObject
@@ -45,7 +44,7 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
   final class Binding: DailyWeatherViewModelBindingObject {}
 
   final class Output: DailyWeatherViewModelOutputObject {
-    @Published var icon = WeatherIcon(code: 0)
+    @Published var icon = WeatherIcon.unknown
     @Published var weatherDescription: String = "-"
     @Published var date: String = "-"
     @Published var maxTemperature: String = "-"
@@ -58,19 +57,17 @@ class DailyWeatherViewModel: DailyWeatherViewModelObject {
 
   var output: Output
 
-  init(_ daily: Daily) {
+  init(_ forecast: DailyForecast) {
     let input = Input()
     let binding = Binding()
     let output = Output()
 
     // output
-    output.icon = WeatherIcon(code: daily.weather.first?.id ?? 0)
-    output.weatherDescription = daily.weather.first?.weatherDescription ?? "-"
-    output.date = Date(timeIntervalSince1970: Double(daily.date)).format(text: "M/d (EEE)")
-    if let temp = daily.temp {
-      output.maxTemperature = String("\(temp.max)℃")
-      output.minTemperature = String("\(temp.min)℃")
-    }
+    output.icon = WeatherIcon(forecast)
+    output.weatherDescription = forecast.condition.description
+    output.date = forecast.date.format(text: "M/d (EEE)")
+    output.maxTemperature = forecast.highTemperature.celsiusText
+    output.minTemperature = forecast.lowTemperature.celsiusText
 
     self.input = input
     self.binding = binding

@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "10-Day Forecast" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10日間の天気予報"
+          }
+        }
+      }
+    },
     "About This App" : {
       "localizations" : {
         "ja" : {
@@ -161,12 +171,12 @@
         }
       }
     },
-    "OpenWeather Website" : {
+    "Other data sources" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenWeather社のWebサイト"
+            "value" : "その他のデータソース"
           }
         }
       }
@@ -251,12 +261,12 @@
         }
       }
     },
-    "This app shows information based on weather forecasts from OpenWeather." : {
+    "This app shows information based on weather forecasts from Apple Weather." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このアプリはOpenWeather社の天気予報を元に情報を表示しています。"
+            "value" : "このアプリはApple Weatherの天気予報を元に情報を表示しています。"
           }
         }
       }
@@ -277,16 +287,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "当アプリを利用するにあたって、天気予報情報が原因で発生した損失や損害については一切責任を負いかねますのでご了承願います。"
-          }
-        }
-      }
-    },
-    "Weekly Forecast (Today – 7 Days Ahead)" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "週間天気（今日〜7日後）"
           }
         }
       }

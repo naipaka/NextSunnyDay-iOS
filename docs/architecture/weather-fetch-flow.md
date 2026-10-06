@@ -2,6 +2,8 @@
 
 The forecast is stored in Realm (`DailyWeatherForecastEntity`) inside the App Group container, so the app and the widget read the same data. Views never read the API response directly: every fetch writes to Realm, and the UI updates from the Realm change notification.
 
+Forecasts come from WeatherKit through `WeatherProviding` (`WeatherKitProvider`), which returns the 10-day daily forecast as `[DailyForecast]`. The Realm bridge (`DailyWeatherForecastEntity+DailyForecast.swift`) converts it into the entity before saving, and back into `[DailyForecast]` for the views. A failed fetch leaves the stored forecast as is.
+
 ## App launch
 
 `HomeViewModel.init` decides whether the stored forecast is stale.
@@ -13,8 +15,8 @@ flowchart TD
     C -- Yes --> D[Show empty view<br/>prompting region setup]
     C -- No --> E{Oldest daily entry is<br/>more than 24h old?}
     E -- No --> H[Show home screen]
-    E -- Yes --> F[Show loading indicator<br/>and call One Call API]
-    F --> G[Save response to Realm]
+    E -- Yes --> F[Show loading indicator<br/>and fetch the daily forecast from WeatherKit]
+    F --> G[Save forecast to Realm]
     G --> G2[Realm change notification<br/>updates output.forecast]
     G2 --> G3[Hide loading indicator<br/>and reload widget timelines]
     G3 --> H
@@ -30,8 +32,8 @@ flowchart TD
     B --> C[Save cityName, lat, lon to Realm<br/>with empty daily forecast]
     C --> D[HomeViewModel receives<br/>Realm change notification]
     D --> E{daily is empty?}
-    E -- Yes --> F[Show loading indicator<br/>and call One Call API with lat/lon]
-    F --> G[Save response to Realm]
+    E -- Yes --> F[Show loading indicator<br/>and fetch the daily forecast<br/>from WeatherKit for lat/lon]
+    F --> G[Save forecast to Realm]
     G --> H[Realm change notification<br/>updates UI and reloads widget timelines]
     E -- No --> H
 ```
@@ -45,6 +47,6 @@ flowchart TD
     A([getTimeline]) --> B[Load forecast from Realm]
     B --> C{cityName is set and<br/>oldest daily entry is<br/>more than 20h old?}
     C -- No --> E[Return timeline<br/>next refresh in 5h]
-    C -- Yes --> D[Call One Call API<br/>and save response to Realm]
+    C -- Yes --> D[Fetch the daily forecast from WeatherKit<br/>and save it to Realm]
     D --> E
 ```

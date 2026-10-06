@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WeatherKit
 
 struct DailyWeatherView<T>: View where T: DailyWeatherViewModelObject {
   @ObservedObject private var viewModel: T
@@ -25,6 +26,7 @@ struct DailyWeatherView<T>: View where T: DailyWeatherViewModelObject {
             .frame(height: 14)
           viewModel.output.icon.image
             .resizable()
+            .symbolVariant(.fill)
             .frame(width: 30, height: 30)
             .foregroundColor(viewModel.output.icon.color)
           Text(viewModel.output.weatherDescription)
@@ -55,28 +57,26 @@ struct DailyWeatherView<T>: View where T: DailyWeatherViewModelObject {
 }
 
 struct DailyWeatherView_Previews: PreviewProvider {
+  private static let samples: [(WeatherCondition, String)] = [
+    (.clear, "sun.max"),
+    (.mostlyClear, "sun.min"),
+    (.mostlyCloudy, "cloud.sun"),
+    (.cloudy, "cloud"),
+    (.rain, "cloud.rain"),
+    (.snow, "cloud.snow"),
+    (.drizzle, "cloud.drizzle"),
+    (.thunderstorms, "cloud.bolt.rain"),
+    (.foggy, "cloud.fog"),
+  ]
+
   static var contentView: some View {
     Group {
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 800), weatherDescription: "快晴"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 801), weatherDescription: "晴れ"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 803), weatherDescription: "曇り"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 804), weatherDescription: "暑い雲"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 500), weatherDescription: "天気雨"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 511), weatherDescription: "雪"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 300), weatherDescription: "雨"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 200), weatherDescription: "雷雨"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 701), weatherDescription: "竜巻"))
-      DailyWeatherView(
-        viewModel: MockViewModel(icon: WeatherIcon(code: 0), weatherDescription: "-"))
+      ForEach(samples, id: \.0) { condition, symbolName in
+        DailyWeatherView(
+          viewModel: MockViewModel(
+            forecast: .sample(date: Date(), condition: condition, symbolName: symbolName)))
+      }
+      DailyWeatherView(viewModel: MockViewModel(icon: .unknown, weatherDescription: "-"))
     }
   }
 
@@ -112,7 +112,7 @@ extension DailyWeatherView_Previews {
     final class Binding: DailyWeatherViewModelBindingObject {}
 
     final class Output: DailyWeatherViewModelOutputObject {
-      @Published var icon = WeatherIcon(code: 0)
+      @Published var icon = WeatherIcon.unknown
       @Published var weatherDescription: String = "-"
       @Published var date: String = "-"
       @Published var maxTemperature: String = "-"
@@ -124,6 +124,10 @@ extension DailyWeatherView_Previews {
     var binding: Binding
 
     var output: Output
+
+    convenience init(forecast: DailyForecast) {
+      self.init(icon: WeatherIcon(forecast), weatherDescription: forecast.condition.description)
+    }
 
     init(icon: WeatherIcon, weatherDescription: String) {
       let input = Input()
