@@ -32,7 +32,7 @@ This app's graph is shallow, but the setup should hold for deeper graphs in late
 1. **Import check.** For every package, `swift package describe --type json` gives each target's direct dependencies and source files; every `import` of a repository module must be among them. For the Xcode targets, `project.pbxproj` gives each target's linked package products (`packageProductDependencies`) and synced folders, read with Foundation's `PropertyListSerialization`; their imports are checked the same way. This catches the transitive case and does not depend on the build system.
 2. **Each package built and tested on its own** (`swift test` in the package folder). This backs up the import check (for example `@_exported import`) and runs the package's tests.
 
-**The check is a Swift executable in its own tools package** (`swift run --package-path <tools> …`), Foundation only. It can be split into files, has Swift Testing tests, and can be copied to another app as one folder.
+**The check is a Swift executable in its own tools package** (`swift run --package-path <tools> …`), Foundation only. It can be split into files, has Swift Testing tests, and can be copied to another app as one folder. It lives under `Tools/`, outside `Packages/`, because it is not part of the app.
 
 On pull requests, only changed packages and the packages that depend on them need testing; all packages after merging. The exact CI layout is part of #99.
 

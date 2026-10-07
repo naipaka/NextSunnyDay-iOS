@@ -81,4 +81,12 @@ The usual costs of splitting are mechanical: a manifest per module with repeated
 - Seven packages, each with its own manifest and tests. Repeated manifest settings are accepted (see "Why fine-grained modules").
 - SwiftPM does not fully enforce declared dependencies, so CI has to check them: see [0002](0002-dependency-checks-in-ci.md).
 - The app layer (models, injection, Swift 6 settings for the targets) is still open and gets its own record.
-- Open: the folder that holds the packages (for example `Packages/`).
+- The packages live under `Packages/`, one folder per layer, so the layer is visible in the path:
+
+  ```
+  Packages/
+    Core/       Weather/, Location/, PlaceSearch/, AppGroup/
+    Features/   Region/, Forecast/, SunnyDay/
+  ```
+
+  `Packages/` is the most common name among SwiftUI apps with local packages (Ice Cubes, IcySky) and says what the folders contain; NetNewsWire uses `Modules/` and DuckDuckGo `LocalPackages/`.
