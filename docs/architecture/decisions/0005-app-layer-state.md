@@ -1,4 +1,4 @@
-# 5. The app layer keeps state in Observation-based state holders, not per-screen view models
+# 5. The app layer keeps state where SwiftUI expects it, without per-screen view models
 
 - Status: Draft (#95). Sections marked *Open* are not decided yet.
 - Builds on [0001](0001-modules-in-local-packages.md): the app and the widget assemble the modules; this record covers how their screens hold state and reach the features.
@@ -7,47 +7,84 @@
 
 Version 1 used MVVM with Combine: every screen had a view model conforming to `ViewModelObject`, split into Input, Binding and Output objects. 2.0 moves to Observation (`@Observable`), Swift Concurrency and the Swift 6 language mode.
 
-With Observation, SwiftUI tracks each property that `body` reads, per instance. `@State`, `@Environment` and `@Bindable` replace `@StateObject`, `@EnvironmentObject` and `@ObservedObject`. SwiftUI's environment is scoped to the view tree, so a value placed on a subtree is visible only inside it.
+With Observation, SwiftUI tracks each property that `body` reads, per instance; a view is not updated when a property it does not read changes. `@State`, `@Environment` and `@Bindable` replace `@StateObject`, `@EnvironmentObject` and `@ObservedObject`.
 
-The app needs rules for where each kind of state lives, so that every piece of data has a single source of truth and screens stay thin.
+In SwiftUI, state belongs to the view that creates it: a `@State` value lives as long as that view, and is visible only to the views below it. Reacting to changes is also done by views: `body` is re-evaluated when the state it reads changes, and `task(id:)` cancels and restarts its work when its `id` changes. Observation notifies views; it is not meant to wire state holders to each other.
+
+The goal is to follow these SwiftUI conventions as they are, keep a single source of truth for every piece of data, and keep logic out of views so it can be tested.
 
 ## Decision
 
-### Kinds of state
+### Where state lives
 
-| Kind | Lives in | Example |
-| --- | --- | --- |
-| **Shared state**, used by several screens | An `@Observable` class placed in the environment | The regions, their forecasts, the sunny level |
-| **Ephemeral view state**, owned by one view | `@State` with plain values, or a plain struct when several values belong together | The search text, whether a sheet is shown |
-| **Screen-scoped state with I/O**, owned by one screen | An `@Observable` class the screen creates with `@State` | The search results while typing a region name |
+**State lives in the least common ancestor of the views that use it**, as Apple's documentation puts it ([Managing user interface state](https://developer.apple.com/documentation/swiftui/managing-user-interface-state), [State](https://developer.apple.com/documentation/swiftui/state)). Its place also sets its lifetime: state at the app root lives as long as the app; state in a pushed screen goes away when the screen is closed.
 
-- **Views never call features directly.** They read state from, and send actions to, a state holder; the state holder calls the features.
-- A screen-scoped state holder is created **only when a screen-local concern has both state and I/O**. It holds **one concern**, and **never copies shared data**: it reads shared state from the shared state holder instead.
-- A screen-scoped state holder lives in the app target, in the folder of its area (for example `Region/`), next to the screen that uses it. It does not go into a feature package: it exists for that screen, and features know nothing about screens.
+- **What it holds:** a plain value, or the instance of an `@Observable` class (see below). Either way it is held with `@State` by the view that owns it.
+- **How it reaches the views below:** as an argument, or a `Binding` when the child changes it. When it would have to be passed through views that do not use it, or many views use it, it goes into the environment.
+- **When more views need it later,** it moves up to their new common ancestor.
+
+State whose common ancestor is the app root is called **shared state**. In 2.0 that is:
+
+| Shared state | Used by |
+| --- | --- |
+| The selected region | Launch (onboarding or Home), Onboarding, Home, Settings, Region |
+| The sunny level | Home (next sunny day), Settings, Sunny level, About |
+| The forecast of the selected region and its fetch status | Home; the day detail gets the day it shows as a value |
+
+Everything else (search text and results, sheet visibility, …) is `@State` in the screen that uses it.
+
+### A value or a class
+
+A screen keeps its state as **plain values** when every update replaces a value with user input or the result of one call.
+
+It uses an **`@Observable` class**, held with `@State`, when updating the state is logic:
+
+- an update depends on the current state (appending a page, merging results, counting retries), or
+- one operation has to change several values consistently, or
+- several operations of the screen work on the same state.
+
+That logic then lives in the class and is tested there. Shared state always lives in `@Observable` classes, which are created at the app root and put into the environment.
+
+### State holders do not depend on each other
+
+The `@Observable` classes that hold state are called **state holders** (the term from Android's architecture guide; Apple has no specific term and calls any `@Observable` type a "model").
+
+- Each state holder holds its state and the operations on it, and does not reference other state holders. There is no object that gathers all shared state.
+- **The view that needs two pieces of state combines them.** For example, Home reads the selected region and the forecast, and asks the forecast for the next sunny day at the current sunny level.
+- **Views say when work happens:** `task(id:)` for work that depends on a value (fetching when the selected region changes), `refreshable` for pull to refresh. How the work is done (freshness, fetching, failures) is in the state holder or the feature.
+
+### Views and features
+
+- Features and core services reach views through the environment, so previews and tests can replace them.
+- **Views contain no logic.** A view decides when something happens and where the result goes. Decisions, conversions and error policies live in features and state holders.
+- For shared state, a view calls the state holder. For state that only one screen uses, a view may call one feature function and put the result into its `@State`.
+- The region search follows that rule: the text and the results are `@State` in the Region screen. `task(id:)` on the text cancels the previous search, waits briefly to debounce, and calls the `Region` feature's search function. Rules such as a minimum length and turning completions into region candidates are in the feature.
 
 ### Naming
 
-- The role is called a **state holder** (the term from Android's architecture guide; Apple has no specific term and calls any `@Observable` type a "model").
-- State holders are **named after their role, with no common suffix** (Swift API Design Guidelines: name things according to their roles):
-  - when the role is a thing or a piece of state, a noun for it;
-  - when the role is one job, a word for that job.
-- What a state holder contains is told by its property names (`searcher.results`), not by its type name. Its place in the app target tells that it is a state holder.
-- The region search state holder is `RegionSearcher`.
+State holders are **named after their role, with no common suffix** (Swift API Design Guidelines: name things according to their roles):
+
+- when the role is a thing or a piece of state, a noun for it;
+- when the role is one job, a word for that job.
+
+What a state holder contains is told by its property names, not by its type name.
 
 ### Open
 
-- How shared state is split into state holders (one or several) and their names.
-- How features are injected (environment), including fakes for previews and tests.
-- Where screen-scoped state holders are created and how long they live; debouncing the search (`.task(id:)` with `Task.sleep`, or `Observations` on a query property).
+- The names of the three shared state holders.
+- Where the next sunny day is computed (a method of the forecast state holder that takes the sunny level, or elsewhere).
+- Which views trigger fetching (the selected region changing, the app becoming active, pull to refresh).
+- How features are put into the environment, including fakes for previews and tests.
 - Swift 6 settings for the app and widget targets (main actor default isolation, approachable concurrency).
 
 ## Considered options
 
 **Where state lives**
 
-- *A view model per screen (MVVM).* Each screen copies the shared data it shows into its own object, so the same data exists in several places and has to be kept in sync. Rejected for the single source of truth.
-- *Views calling features directly*, keeping results in `@State`. Apple's MapKit sample (Interacting with nearby points of interest) does this for search completions. Rejected: views would hold I/O and its error handling, and the logic could not be tested without the view.
-- *The search state holder in the `Region` feature package.* Rejected: it exists for one screen, and features do not know about screens.
+- *A view model per screen (MVVM).* Each screen copies the shared data it shows into its own object, so the same data exists in several places and has to be kept in sync.
+- *One object for all shared state.* Apple's small samples do this (`ModelData` in Landmarks). It grows with every feature and makes every test set up everything. Larger apps split shared state by concern (Ice Cubes puts more than ten objects into the environment).
+- *State holders that depend on each other*, each observing the state holders it needs (for example the forecast observing the selected region with `Observations`) or a parent object owning and wiring them (Point-Free's SyncUps). This rebuilds a dependency graph next to the one SwiftUI already has in the view tree. Apple's samples and Ice Cubes react to changes in views with `task(id:)` instead (Food Truck refetches the weather with `task(id: city.id)`).
+- *A state holder for every screen-local concern with I/O*, such as a class for the region search. For a search that only replaces its results, `@State` and `task(id:)` do the same with less code. Apple's MapKit sample (Interacting with nearby points of interest) keeps search completions in `@State` too.
 
 **Naming**
 
@@ -55,11 +92,11 @@ The app needs rules for where each kind of state lives, so that every piece of d
 - *`…Model`*: Apple's samples use it (`FoodTruckModel`, `MapModel`, `PlayerModel`), and so do Point-Free's SyncUps (`SyncUpDetailModel`) and Flutter's docs (`CartModel`). But Apple also calls plain data types "models" (`Book`), so the suffix does not tell a state holder from a data type.
 - *`…Store`*: clashes with the features' role names (`RegionStore`).
 - *`…State`*: Jetpack Compose's convention for state holders (`LazyListState`), but easy to confuse with SwiftUI's `@State`.
-- *Named after the owning screen plus a suffix* (`SyncUpDetailModel`, `NewsViewModel`, `LazyListState`). This gives uniform names in designs with one state holder per screen; this app creates state holders per concern, not per screen.
-- *Named after the state it holds* (`RegionSuggestions`). Says what the screen reads, but looks like a collection value type.
+- *Named after the owning screen plus a suffix* (`SyncUpDetailModel`, `NewsViewModel`, `LazyListState`). This gives uniform names in designs with one state holder per screen; here state holders follow the state, not the screens.
 
 The surveyed code that does not use MVVM (Apple's recent samples, Ice Cubes) has no common suffix either. It names each state holder by what it is or does: `LocationFinder`, `ItineraryPlanner`, `LocationLookup`, `AccountStatusesFetcher`, `CurrentAccount`, `Library`.
 
 ## Consequences
 
+- Fetching when the selected region changes is declared in a view, so it is checked in the running app and previews, not by unit tests. The fetching itself is unit-tested in the state holder and the feature.
 - State holder names do not share a suffix, so they cannot be listed by name pattern. They are found by their place in the app target.
