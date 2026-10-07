@@ -57,7 +57,7 @@ The `@Observable` classes that hold state are called **state holders** (the term
 
 ### Views and features
 
-Features and core services reach views through the environment, so previews and tests can replace them.
+See *Dependencies and test doubles* below for how views and state holders get the features.
 
 **Views contain no logic.** Decisions, conversions and error policies live in features and state holders. A view only reads state, says when something happens and where the result goes:
 
@@ -97,6 +97,36 @@ What the view does with a result depends on who owns it:
 - The region can change from the Settings sheet; Home stays in the view tree under the sheet and reacts to the change.
 - **`RegionForecast` does not treat cancellation as a failure.** Moving the app to the background cancels a running fetch, and the fetch starts again when the app becomes active; showing the error banner for that would be wrong.
 
+### Dependencies and test doubles
+
+**How parts get what they use**
+
+| Who | Gets | How |
+| --- | --- | --- |
+| A state holder | The features it calls | Its initializer. State holders are created at the app root, where the features are created too |
+| A view | A shared state holder | `.environment(_:)`, read with `@Environment(Type.self)` (only `@Observable` classes can be put into the environment by type) |
+| A view | A feature it calls directly (the region search) | An `EnvironmentValues` entry declared with `@Entry`, read with `@Environment(\.key)` |
+| A view | A function without side effects (the next sunny day) | Nothing: it imports the feature and calls the function |
+
+- A view gets something through the environment when passing it as an argument would go through views that do not use it; otherwise as an argument.
+- No singletons (`.shared`): they cannot be replaced in previews and tests. No dependency injection library: the repository has no third-party dependencies, and initializers plus the environment cover what the app needs.
+
+**Test doubles only at the core boundary**
+
+The outside world (WeatherKit, Core Location, MapKit) is the only thing replaced in tests and previews. Every layer above it runs its real code.
+
+| Tests of | Run with |
+| --- | --- |
+| Core | Their own logic only, such as turning WeatherKit's values into the module's types. Talking to the real services is checked in the running app |
+| Features | Fakes of the core modules; real `UserDefaults` with a test suite and real files in a temporary directory ([0001](0001-modules-in-local-packages.md)) |
+| State holders | Real features built on fakes of the core modules |
+| Previews | The same: real features and state holders on fakes of the core modules, assembled in one place |
+
+- Each test checks only what its part promises; the parts below just run. A defect in a feature is caught by the feature's own tests, which point at it even when a state holder's tests fail too.
+- Fakes are lightweight working implementations, not mocks that check which calls were made: interaction checks tie tests to implementation details.
+- Each core package provides the fake of its module, so whoever changes the real module sees the fake next to it.
+- **Fakes of the outside world use recorded data.** WeatherKit's types (`Weather`, `DayWeather`, `HourWeather`, `Forecast`) are `Codable`, so responses are fetched once on a device, saved as JSON and decoded in tests. Whether MapKit search results and Core Location values can be recorded the same way is checked when implementing those modules.
+
 ### Naming
 
 State holders are **named after their role, with no common suffix** (Swift API Design Guidelines: name things according to their roles):
@@ -111,7 +141,6 @@ What a state holder contains is told by its property names, not by its type name
 
 ### Open
 
-- How features are put into the environment, including fakes for previews and tests.
 - Swift 6 settings for the app and widget targets (main actor default isolation, approachable concurrency).
 
 ## Considered options
@@ -139,6 +168,11 @@ What a state holder contains is told by its property names, not by its type name
 - *A separate `onChange(of: scenePhase)` starting a `Task`.* The task is not tied to the view, so it is not cancelled when the region changes or the app leaves the foreground, and two fetches can overlap.
 - *A timer to notice midnight.* The system already posts a notification for a new day.
 - *Fetching from the app root instead of Home.* Only Home shows the forecast; before a region is chosen there is nothing to fetch.
+
+**Test doubles**
+
+- *Fakes at every boundary,* including a fake of each feature for state holder tests. A state holder test then checks the state holder alone, and a failure points at it directly. But every feature needs a fake, kept in a module of its own, and tests that run the real feature and its fake against the same promises so the fake does not drift from the real one. All of that buys only faster locating of a failure, which the feature's own tests already give. Android's guide fakes the layer below a view model this way ([Use test doubles](https://developer.android.com/training/testing/fundamentals/test-doubles)); Google's [Software Engineering at Google](https://abseil.io/resources/swe-book/html/ch13.html) prefers real implementations when they are fast, deterministic and simple to build, which the features are on fakes of the core modules.
+- *Hand-written sample data for the outside world.* It encodes a guess of what the services return; if the guess is wrong, every test above it is wrong too.
 
 **Debouncing the search**
 
