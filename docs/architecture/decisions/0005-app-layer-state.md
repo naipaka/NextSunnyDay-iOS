@@ -111,9 +111,11 @@ What the view does with a result depends on who owns it:
 - A view gets something through the environment when passing it as an argument would go through views that do not use it; otherwise as an argument.
 - No singletons (`.shared`): they cannot be replaced in previews and tests. No dependency injection library: the repository has no third-party dependencies, and initializers plus the environment cover what the app needs.
 
-**Test doubles only at the core boundary**
+**Test doubles: real implementations unless they are slow, nondeterministic or hard to build**
 
-The outside world (WeatherKit, Core Location, MapKit) is the only thing replaced in tests and previews. Every layer above it runs its real code.
+Tests use the real implementation of what a part depends on, and a test double only where the real one is not fast, not deterministic or not simple to build. This is the rule of Google's [Software Engineering at Google](https://abseil.io/resources/swe-book/html/ch13.html) ("prefer realism over isolation"). It decides where doubles go in any app, not only this one.
+
+Here, only the outside world (WeatherKit, Core Location, MapKit) fails those conditions: it needs the network, permissions and entitlements, and its answers change. So the core modules are the only thing replaced in tests and previews. The features are fast, deterministic and simple to build on fakes of the core modules, so every layer above the core runs its real code. If a feature stops meeting the conditions, that feature gets a fake.
 
 | Tests of | Run with |
 | --- | --- |
