@@ -62,9 +62,12 @@ class RegionSelectionViewModel: RegionSelectionViewModelObject {
 
   @ObservedObject private var localSearchService: LocalSearchService
 
+  private let settings: SettingsStore
+
   private var cancellables: [AnyCancellable] = []
 
-  init(service: LocalSearchService) {
+  init(service: LocalSearchService, settings: SettingsStore = SettingsStore()) {
+    self.settings = settings
     input = Input()
     binding = Binding()
     output = Output()
@@ -90,13 +93,17 @@ class RegionSelectionViewModel: RegionSelectionViewModelObject {
     let searchRequest = MKLocalSearch.Request(completion: binding.selectedCompletion)
     let search = MKLocalSearch(request: searchRequest)
     search.start { [weak self] response, _ in
-      guard let coordinate = response?.mapItems[0].location.coordinate else { return }
+      guard let self, let coordinate = response?.mapItems.first?.location.coordinate else { return }
 
-      let entity = DailyWeatherForecastEntity()
-      entity.cityName = self?.binding.selectedCompletion.title ?? ""
-      entity.lat = coordinate.latitude
-      entity.lon = coordinate.longitude
-      DailyWeatherForecastEntity.update(with: entity)
+      // `HomeViewModel` sees the change in `UserDefaults` and fetches the forecast.
+      // The app keeps one region for now, so the new one replaces it.
+      settings.regions = [
+        .place(
+          ForecastLocation(
+            name: binding.selectedCompletion.title,
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude))
+      ]
     }
   }
 }

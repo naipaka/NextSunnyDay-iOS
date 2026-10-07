@@ -11,6 +11,7 @@ import WeatherKit
 
 struct HomeView<T>: View where T: HomeViewModelObject {
   @ObservedObject private var viewModel: T
+  @Environment(\.scenePhase) private var scenePhase
 
   init(viewModel: T) {
     self.viewModel = viewModel
@@ -21,7 +22,7 @@ struct HomeView<T>: View where T: HomeViewModelObject {
       NavigationView {
         ZStack {
           Color(.secondarySystemBackground).edgesIgnoringSafeArea(.all)
-          if viewModel.output.forecast.daily.isEmpty {
+          if viewModel.output.forecast?.daily.isEmpty ?? true {
             emptyView
           } else {
             ScrollView {
@@ -39,6 +40,11 @@ struct HomeView<T>: View where T: HomeViewModelObject {
         }
         .navigationBarTitle("Next Sunny Day ☀️")
         .navigationBarItems(trailing: toSettingViewButton)
+      }
+      .onChange(of: scenePhase, initial: true) {
+        if scenePhase == .active {
+          viewModel.input.sceneBecameActive.send()
+        }
       }
       if viewModel.binding.isLoading {
         LoadingView()
@@ -61,7 +67,7 @@ extension HomeView {
       }
     )
     .sheet(isPresented: $viewModel.binding.isShowingSettingSheet) {
-      SettingView(viewModel: SettingViewModel(viewModel.output.forecast))
+      SettingView(viewModel: SettingViewModel(regionName: viewModel.output.regionName))
     }
   }
 
@@ -96,7 +102,7 @@ extension HomeView {
         Text("10-Day Forecast")
           .font(.system(size: 24))
           .bold()
-        ForEach(viewModel.output.forecast.dailyForecasts, id: \.date) {
+        ForEach(viewModel.output.forecast?.daily ?? [], id: \.date) {
           DailyWeatherView(viewModel: DailyWeatherViewModel($0))
             .frame(height: 82)
         }
@@ -149,10 +155,10 @@ struct HomeView_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       HomeView(viewModel: MockViewModel())
-      HomeView(viewModel: MockViewModel(forecast: mockEntity()))
+      HomeView(viewModel: MockViewModel(forecast: mockForecast()))
       HomeView(viewModel: MockViewModel())
         .environment(\.colorScheme, .dark)
-      HomeView(viewModel: MockViewModel(forecast: mockEntity()))
+      HomeView(viewModel: MockViewModel(forecast: mockForecast()))
         .environment(\.colorScheme, .dark)
     }
   }
@@ -162,6 +168,7 @@ extension HomeView_Previews {
   final class MockViewModel: HomeViewModelObject {
     final class Input: HomeViewModelInputObject {
       var toSettingViewButtonTapped = PassthroughSubject<Void, Never>()
+      var sceneBecameActive = PassthroughSubject<Void, Never>()
     }
 
     final class Binding: HomeViewModelBindingObject {
@@ -171,7 +178,8 @@ extension HomeView_Previews {
     }
 
     final class Output: HomeViewModelOutputObject {
-      @Published var forecast = DailyWeatherForecastEntity()
+      @Published var region: Region?
+      @Published var forecast: ForecastSnapshot?
     }
 
     var input: Input
@@ -180,11 +188,12 @@ extension HomeView_Previews {
 
     var output: Output
 
-    init(forecast: DailyWeatherForecastEntity = DailyWeatherForecastEntity()) {
+    init(forecast: ForecastSnapshot? = nil) {
       let input = Input()
       let binding = Binding()
       let output = Output()
 
+      output.region = forecast.map { .place($0.location) }
       output.forecast = forecast
 
       self.input = input
@@ -193,7 +202,7 @@ extension HomeView_Previews {
     }
   }
 
-  private static func mockEntity() -> DailyWeatherForecastEntity {
+  private static func mockForecast() -> ForecastSnapshot {
     let day: TimeInterval = 60 * 60 * 24
     let start = Date()
     let conditions: [(WeatherCondition, String)] = [
@@ -201,13 +210,15 @@ extension HomeView_Previews {
       (.mostlyCloudy, "cloud.sun"), (.mostlyClear, "sun.min"), (.snow, "cloud.snow"),
       (.cloudy, "cloud"), (.thunderstorms, "cloud.bolt.rain"),
     ]
-    return DailyWeatherForecastEntity(
+    return ForecastSnapshot(
       location: ForecastLocation(name: "東京都港区", latitude: 35.658, longitude: 139.751),
-      forecasts: conditions.enumerated().map { offset, sample in
+      fetchedAt: start,
+      daily: conditions.enumerated().map { offset, sample in
         .sample(
           date: start.addingTimeInterval(day * Double(offset)), condition: sample.0,
           symbolName: sample.1)
-      }
+      },
+      hourly: []
     )
   }
 }

@@ -9,51 +9,59 @@ import SwiftUI
 import WidgetKit
 
 struct Provider: TimelineProvider {
+  /// Fetch again once the earliest stored day started more than this long ago.
+  private static let maxForecastAge: TimeInterval = 60 * 60 * 20
+
   private let weatherProvider: WeatherProviding = WeatherKitProvider()
+  private let settings = SettingsStore()
+  private let cache: ForecastCaching = ForecastCache()
 
   func placeholder(in context: Context) -> SimpleEntry {
-    SimpleEntry(date: Date(), entity: .defaultEntity)
+    SimpleEntry(date: Date(), forecast: .sample())
   }
 
   func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-    let results = DailyWeatherForecastEntity.all()
-    let entity = results.first ?? DailyWeatherForecastEntity()
-    let entry = SimpleEntry(date: Date(), entity: entity)
-    completion(entry)
+    Task {
+      completion(SimpleEntry(date: Date(), forecast: await cachedForecast()))
+    }
   }
 
   func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-    let currentDate = Date()
-    let results = DailyWeatherForecastEntity.all()
-    let entity = results.first ?? DailyWeatherForecastEntity()
+    Task {
+      let currentDate = Date()
+      var forecast = await cachedForecast()
 
-    guard let entryDate = Calendar.current.date(byAdding: .hour, value: 5, to: currentDate) else {
-      return
-    }
-    let timeline = Timeline(
-      entries: [SimpleEntry(date: currentDate, entity: entity)], policy: .after(entryDate))
-
-    let latestDate = entity.daily.min(by: { $0.date < $1.date })?.date ?? 0
-    if !entity.cityName.isEmpty
-      && latestDate + 60 * 60 * 20 < Int(currentDate.timeIntervalSince1970)
-    {
-      let location = entity.location
-      Task { @MainActor in
-        if let forecasts = try? await weatherProvider.dailyForecast(for: location) {
-          DailyWeatherForecastEntity.update(
-            with: DailyWeatherForecastEntity(location: location, forecasts: forecasts))
-        }
-        completion(timeline)
+      // The current location is resolved with Core Location in #95/#96; until then the widget
+      // only refreshes a searched place.
+      if let region = settings.regions.first, let location = region.location,
+        forecast?.needsRefresh(for: location, now: currentDate, maxAge: Self.maxForecastAge)
+          ?? true,
+        let fetched = try? await weatherProvider.forecast(for: location)
+      {
+        try? await cache.save(fetched, for: region.id)
+        forecast = fetched
       }
-    } else {
-      completion(timeline)
+
+      let nextUpdate = currentDate.addingTimeInterval(5 * 60 * 60)
+      completion(
+        Timeline(
+          entries: [SimpleEntry(date: currentDate, forecast: forecast)], policy: .after(nextUpdate)
+        ))
     }
+  }
+
+  /// The cached forecast of the region shown, which is the only one for now.
+  private func cachedForecast() async -> ForecastSnapshot? {
+    guard let region = settings.regions.first, let cached = await cache.load(for: region.id),
+      region.matches(cached)
+    else { return nil }
+    return cached
   }
 }
 
 struct SimpleEntry: TimelineEntry {
   let date: Date
-  let entity: DailyWeatherForecastEntity
+  let forecast: ForecastSnapshot?
 }
 
 struct NextSunnyDayWidgetEntryView: View {
@@ -64,29 +72,20 @@ struct NextSunnyDayWidgetEntryView: View {
   var body: some View {
     switch family {
     case .systemSmall:
-      if entry.entity.daily.isEmpty {
-        NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(placeholderEntity))
+      if entry.forecast?.daily.isEmpty ?? true {
+        NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(.sample()))
           .redacted(reason: .placeholder)
       } else {
-        NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.entity))
+        NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.forecast))
       }
     default:
-      if entry.entity.daily.isEmpty {
-        NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(placeholderEntity))
+      if entry.forecast?.daily.isEmpty ?? true {
+        NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(.sample()))
           .redacted(reason: .placeholder)
       } else {
-        NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.entity))
+        NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.forecast))
       }
     }
-  }
-}
-
-extension NextSunnyDayWidgetEntryView {
-  private var placeholderEntity: DailyWeatherForecastEntity {
-    DailyWeatherForecastEntity(
-      location: ForecastLocation(name: "", latitude: 0, longitude: 0),
-      forecasts: [.sample(date: Date(), condition: .clear)]
-    )
   }
 }
 
@@ -108,16 +107,16 @@ struct NextSunnyDayWidget_Previews: PreviewProvider {
   static var previews: some View {
     Group {
       NextSunnyDayWidgetEntryView(
-        entry: SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity())
+        entry: SimpleEntry(date: Date(), forecast: nil)
       )
       .previewContext(WidgetPreviewContext(family: .systemSmall))
       NextSunnyDayWidgetEntryView(
-        entry: SimpleEntry(date: Date(), entity: DailyWeatherForecastEntity())
+        entry: SimpleEntry(date: Date(), forecast: nil)
       )
       .previewContext(WidgetPreviewContext(family: .systemMedium))
-      NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: .defaultEntity))
+      NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), forecast: .sample()))
         .previewContext(WidgetPreviewContext(family: .systemSmall))
-      NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), entity: .defaultEntity))
+      NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), forecast: .sample()))
         .previewContext(WidgetPreviewContext(family: .systemMedium))
     }
   }

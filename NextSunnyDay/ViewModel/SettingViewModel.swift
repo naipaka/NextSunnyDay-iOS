@@ -54,14 +54,14 @@ class SettingViewModel: SettingViewModelObject {
 
   var output: Output
 
-  init(_ forecast: DailyWeatherForecastEntity) {
+  init(regionName: String?) {
     let input = Input()
     let binding = Binding()
     let output = Output()
 
     // output
-    if forecast.cityName != "" {
-      output.cityName = forecast.cityName
+    if let regionName {
+      output.cityName = regionName
     }
     output.version =
       Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "-"

@@ -10,10 +10,6 @@
 		91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044071253DDA9600A21F20 /* WidgetKit.framework */; };
 		91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044073253DDA9600A21F20 /* SwiftUI.framework */; };
 		9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		919EA78425304DAB008BC359 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 919EA78325304DAB008BC359 /* Realm */; };
-		919EA78625304DAB008BC359 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 919EA78525304DAB008BC359 /* RealmSwift */; };
-		91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FB253EBF9E00E9D7B2 /* Realm */; };
-		91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,11 +68,15 @@
 				"Extension/LinearGradient+Extension.swift",
 				"Extension/Measurement+Extension.swift",
 				Model/DailyForecast.swift,
-				Model/DailyWeatherForecastEntity.swift,
-				"Model/DailyWeatherForecastEntity+DailyForecast.swift",
+				Model/ForecastSnapshot.swift,
+				Model/HourlyForecast.swift,
+				Model/Region.swift,
 				"Model/WeatherCondition+Sunny.swift",
 				Protocol/ViewModelObject.swift,
 				Resources/Localizable.xcstrings,
+				Storage/AppGroup.swift,
+				Storage/ForecastCache.swift,
+				Storage/SettingsStore.swift,
 				View/NextSunnyDayMediumView.swift,
 				View/NextSunnyDaySmallView.swift,
 				ViewModel/NextSunnyDayViewModel.swift,
@@ -122,8 +122,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F6A1FE253EBF9E00E9D7B2 /* RealmSwift in Frameworks */,
-				91F6A1FC253EBF9E00E9D7B2 /* Realm in Frameworks */,
 				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
 				91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */,
 			);
@@ -133,8 +131,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				919EA78625304DAB008BC359 /* RealmSwift in Frameworks */,
-				919EA78425304DAB008BC359 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,10 +193,6 @@
 				B10000000000000000000002 /* NextSunnyDayWidget */,
 			);
 			name = NextSunnyDayWidgetExtension;
-			packageProductDependencies = (
-				91F6A1FB253EBF9E00E9D7B2 /* Realm */,
-				91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */,
-			);
 			productName = NextSunnyDayWidgetExtension;
 			productReference = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -223,10 +215,6 @@
 				B10000000000000000000001 /* NextSunnyDay */,
 			);
 			name = NextSunnyDay;
-			packageProductDependencies = (
-				919EA78325304DAB008BC359 /* Realm */,
-				919EA78525304DAB008BC359 /* RealmSwift */,
-			);
 			productName = NextSunnyDay;
 			productReference = 915F51352521763500B4E384 /* NextSunnyDay.app */;
 			productType = "com.apple.product-type.application";
@@ -284,9 +272,6 @@
 			);
 			mainGroup = 915F512C2521763500B4E384;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 915F51362521763500B4E384 /* Products */;
 			projectDirPath = "";
@@ -650,40 +635,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-cocoa";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.5.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		919EA78325304DAB008BC359 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		919EA78525304DAB008BC359 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
-		};
-		91F6A1FB253EBF9E00E9D7B2 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		91F6A1FD253EBF9E00E9D7B2 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 919EA78225304DAB008BC359 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 915F512D2521763500B4E384 /* Project object */;
 }

@@ -59,14 +59,14 @@ class NextSunnyDayViewModel: NextSunnyDayViewModelObject {
 
   var output: Output
 
-  init(_ forecast: DailyWeatherForecastEntity) {
+  init(_ forecast: ForecastSnapshot?) {
     let input = Input()
     let binding = Binding()
     let output = Output()
 
     // output
-    output.cityName = forecast.cityName
-    if let nextSunnyDay = forecast.dailyForecasts.nextSunnyDay {
+    output.cityName = forecast?.location.name ?? ""
+    if let nextSunnyDay = forecast?.daily.nextSunnyDay {
       output.backgroundColor = .nextSunnyDayBackground
       output.textColor = Color(.nextSunnyDayText)
       output.nextSunnyDay = nextSunnyDay.date.format(text: "M/d (EEE)")

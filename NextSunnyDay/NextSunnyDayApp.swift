@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct NextSunnyDayApp: App {
   init() {
+    LegacyRealmCleanup.run()
     UINavigationBar.appearance().tintColor = .secondaryLabel
   }
 
