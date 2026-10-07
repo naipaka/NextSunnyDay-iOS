@@ -1,6 +1,6 @@
 # 5. The app layer keeps state where SwiftUI expects it, without per-screen view models
 
-- Status: Draft (#95). Sections marked *Open* are not decided yet.
+- Status: Draft (#95)
 - Builds on [0001](0001-modules-in-local-packages.md): the app and the widget assemble the modules; this record covers how their screens hold state and reach the features.
 
 ## Context
@@ -129,6 +129,22 @@ Here, only the outside world (WeatherKit, Core Location, MapKit) fails those con
 - Each core package provides the fake of its module in a separate module named `…Testing` (for example `WeatherTesting` in the `Weather` package), so whoever changes the real module sees the fake next to it, and the app does not ship the fake. Apple's own packages do the same (`InMemoryLogging` in swift-log, `MetricsTestKit` in swift-metrics, `NIOEmbedded` in swift-nio), as do Vapor (`VaporTesting`) and Wikipedia's `WMFData` package (`WMFDataMocks`).
 - **Fakes of the outside world use recorded data.** WeatherKit's types (`Weather`, `DayWeather`, `HourWeather`, `Forecast`) are `Codable`, so responses are fetched once on a device, saved as JSON and decoded in tests. Whether MapKit search results and Core Location values can be recorded the same way is checked when implementing those modules.
 
+### Swift settings
+
+The targets follow Xcode 26's new-project template, except for the language mode:
+
+| Target | Language mode | Default isolation | Approachable Concurrency | Member Import Visibility |
+| --- | --- | --- | --- | --- |
+| App | Swift 6 | `MainActor` | Yes | Yes |
+| Widget extension | Swift 6 | nonisolated | Yes | Yes |
+| App tests | Swift 6 | nonisolated | Yes | Yes |
+| Packages ([0001](0001-modules-in-local-packages.md)) | Swift 6 (the default for tools version 6.2) | nonisolated | `NonisolatedNonsendingByDefault` and `InferIsolatedConformances` | `MemberImportVisibility` |
+
+- The template (checked in Xcode 26.4.1) sets `MainActor` default isolation for app targets only, and Approachable Concurrency and Member Import Visibility for every target. It still sets Swift 5; Swift 6 is what this issue moves to, and Apple's recent samples (Landmarks, the Foundation Models trip planner, the MapKit points of interest sample) use it too.
+- In Swift 6 mode, Approachable Concurrency adds two features over the language mode: `NonisolatedNonsendingByDefault` (SE-0461: nonisolated async functions run on the caller's actor) and `InferIsolatedConformances` (SE-0470). Packages enable the same two, so async code behaves the same in the app and in the packages.
+- Member Import Visibility (SE-0444) makes members of a module usable only where that module is imported, which matches the rule that every used module is a declared, imported dependency ([0002](0002-dependency-checks-in-ci.md)).
+- Tests of `MainActor` state holders are marked `@MainActor`.
+
 ### Naming
 
 State holders are **named after their role, with no common suffix** (Swift API Design Guidelines: name things according to their roles):
@@ -141,9 +157,6 @@ What a state holder contains is told by its property names, not by its type name
 - `RegionSelection` and `SunnyLevelSelection` both hold a choice the user made and the app stores, so they share the word *Selection*: the same role gets the same word. `SelectedRegion` would read like the region value itself, and *current* is avoided because the user can pick the current location.
 - `RegionForecast` holds the forecast of the selected region and its fetch status. It is named after what screens read from it, not after fetching: caching, freshness and fetching are done by the `Forecast` feature.
 
-### Open
-
-- Swift 6 settings for the app and widget targets (main actor default isolation, approachable concurrency).
 
 ## Considered options
 
@@ -175,6 +188,12 @@ What a state holder contains is told by its property names, not by its type name
 
 - *Fakes at every boundary,* including a fake of each feature for state holder tests. A state holder test then checks the state holder alone, and a failure points at it directly. But every feature needs a fake, kept in a module of its own, and tests that run the real feature and its fake against the same promises so the fake does not drift from the real one. All of that buys only faster locating of a failure, which the feature's own tests already give. Android's guide fakes the layer below a view model this way ([Use test doubles](https://developer.android.com/training/testing/fundamentals/test-doubles)); Google's [Software Engineering at Google](https://abseil.io/resources/swe-book/html/ch13.html) prefers real implementations when they are fast, deterministic and simple to build, which the features are on fakes of the core modules.
 - *Hand-written sample data for the outside world.* It encodes a guess of what the services return; if the guess is wrong, every test above it is wrong too.
+
+**Swift settings**
+
+- *Swift 5 mode, as in the template.* Large existing apps stay on it to avoid the migration (Wikipedia and WordPress even pin their Swift 6 tools packages to `.v5`); this app is rewritten for 2.0, and moving to Swift 6 is the point of this work.
+- *`MainActor` default isolation for the widget extension too.* Both compile (a `TimelineProvider` and a `Widget` type-check either way with the iOS 26 SDK), and the widget's code is small; the template leaves extensions nonisolated. Revisit in #96 if the widget needs it.
+- *`MainActor` default isolation for the packages.* Core and feature modules have no UI; [0001](0001-modules-in-local-packages.md) keeps them nonisolated.
 
 **Debouncing the search**
 
