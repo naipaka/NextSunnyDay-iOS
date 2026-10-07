@@ -25,11 +25,11 @@ The goal is to follow these SwiftUI conventions as they are, keep a single sourc
 
 State whose common ancestor is the app root is called **shared state**. In 2.0 that is:
 
-| Shared state | Used by |
-| --- | --- |
-| The selected region | Launch (onboarding or Home), Onboarding, Home, Settings, Region |
-| The sunny level | Home (next sunny day), Settings, Sunny level, About |
-| The forecast of the selected region and its fetch status | Home; the day detail gets the day it shows as a value |
+| Shared state | State holder | Used by |
+| --- | --- | --- |
+| The selected region | `RegionSelection` | Launch (onboarding or Home), Onboarding, Home, Settings, Region |
+| The sunny level | `SunnyLevelSelection` | Home (next sunny day), Settings, Sunny level, About |
+| The forecast of the selected region and its fetch status | `RegionForecast` | Home; the day detail gets the day it shows as a value |
 
 Only Home uses the forecast directly, but Home is the root screen, shown for as long as the app runs, and the selected region can change from the Settings sheet on top of it. Keeping the forecast and its fetch status at the root keeps them across that change, next to the selected region they depend on.
 
@@ -71,9 +71,11 @@ State holders are **named after their role, with no common suffix** (Swift API D
 
 What a state holder contains is told by its property names, not by its type name.
 
+- `RegionSelection` and `SunnyLevelSelection` both hold a choice the user made and the app stores, so they share the word *Selection*: the same role gets the same word. `SelectedRegion` would read like the region value itself, and *current* is avoided because the user can pick the current location.
+- `RegionForecast` holds the forecast of the selected region and its fetch status. It is named after what screens read from it, not after fetching: caching, freshness and fetching are done by the `Forecast` feature.
+
 ### Open
 
-- The names of the three shared state holders.
 - Where the next sunny day is computed (a method of the forecast state holder that takes the sunny level, or elsewhere).
 - Which views trigger fetching (the selected region changing, the app becoming active, pull to refresh).
 - How features are put into the environment, including fakes for previews and tests.
