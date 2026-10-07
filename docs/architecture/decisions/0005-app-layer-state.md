@@ -75,6 +75,28 @@ What the view does with a result depends on who owns it:
 - **The region search:** the text and the results are `@State` in the Region screen. `task(id:)` on the text cancels the previous search, waits briefly to debounce, and calls the `Region` feature's search function. Rules such as a minimum length and turning completions into region candidates are in the feature.
 - **The next sunny day:** Home computes it in `body` from `RegionForecast` and `SunnyLevelSelection` with the `SunnyDay` feature's function, which holds the sunny rules (including the 30 % rule) and is tested there. It is not stored. `body` is re-evaluated only when the forecast or the sunny level changes, and the computation looks at ten days. The widget calls the same function.
 
+### When the forecast is fetched
+
+[0003](0003-forecast-freshness-and-current-location.md) decides when a cached forecast is stale. Only Home shows the forecast, so Home starts every fetch:
+
+| When | Call | In Home |
+| --- | --- | --- |
+| Home first appears, the selected region changes, the app becomes active, the date changes | Fetch if stale | One `task(id:)` |
+| Pull to refresh | Always fetch | `refreshable` |
+| Retry and "try again" buttons | Always fetch | The button's action |
+
+```swift
+.task(id: RefreshKey(region: regionSelection.region, isActive: scenePhase == .active, day: today)) {
+  guard scenePhase == .active, let region = regionSelection.region else { return }
+  await regionForecast.refreshIfNeeded(for: region)
+}
+```
+
+- One `task(id:)` states the rule in one place: when the region, the scene being active or the day changes, fetch if stale. SwiftUI cancels the running work and starts again whenever the key changes.
+- Whether the app is active comes from `scenePhase`. `today` is updated on [`significantTimeChangeNotification`](https://developer.apple.com/documentation/uikit/uiapplication/significanttimechangenotification), which the system posts at midnight, so a forecast stays right when the app is left open across midnight.
+- The region can change from the Settings sheet; Home stays in the view tree under the sheet and reacts to the change.
+- **`RegionForecast` does not treat cancellation as a failure.** Moving the app to the background cancels a running fetch, and the fetch starts again when the app becomes active; showing the error banner for that would be wrong.
+
 ### Naming
 
 State holders are **named after their role, with no common suffix** (Swift API Design Guidelines: name things according to their roles):
@@ -89,7 +111,6 @@ What a state holder contains is told by its property names, not by its type name
 
 ### Open
 
-- Which views trigger fetching (the selected region changing, the app becoming active, pull to refresh).
 - How features are put into the environment, including fakes for previews and tests.
 - Swift 6 settings for the app and widget targets (main actor default isolation, approachable concurrency).
 
@@ -113,6 +134,12 @@ What a state holder contains is told by its property names, not by its type name
 - *A method of `RegionForecast` taking the sunny level*, or *of `SunnyLevelSelection` taking the forecast.* Either is a thin wrapper around the feature's function and makes one state holder know about the other's concern.
 - *A state holder of its own.* There is no state to hold.
 
+**Starting fetches**
+
+- *A separate `onChange(of: scenePhase)` starting a `Task`.* The task is not tied to the view, so it is not cancelled when the region changes or the app leaves the foreground, and two fetches can overlap.
+- *A timer to notice midnight.* The system already posts a notification for a new day.
+- *Fetching from the app root instead of Home.* Only Home shows the forecast; before a region is chosen there is nothing to fetch.
+
 **Debouncing the search**
 
 - *The search text in a state holder, observed with `Observations`*, or *Combine's `debounce`* as in version 1. Both need code to cancel the previous search; `task(id:)` cancels it when the text changes, so waiting with `Task.sleep` at its start is enough.
@@ -128,6 +155,8 @@ What a state holder contains is told by its property names, not by its type name
 The surveyed code that does not use MVVM (Apple's recent samples, Ice Cubes) has no common suffix either. It names each state holder by what it is or does: `LocationFinder`, `ItineraryPlanner`, `LocationLookup`, `AccountStatusesFetcher`, `CurrentAccount`, `Library`.
 
 ## Consequences
+
+- Not yet checked on a device: that `task(id:)` in Home keeps reacting while the Settings sheet covers it. If it does not, the trigger for a region changed in the sheet is revisited when implementing Home.
 
 - Fetching when the selected region changes is declared in a view, so it is checked in the running app and previews, not by unit tests. The fetching itself is unit-tested in the state holder and the feature.
 - State holder names do not share a suffix, so they cannot be listed by name pattern. They are found by their place in the app target.
