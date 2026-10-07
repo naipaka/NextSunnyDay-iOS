@@ -126,7 +126,7 @@ Here, only the outside world (WeatherKit, Core Location, MapKit) fails those con
 
 - Each test checks only what its part promises; the parts below just run. A defect in a feature is caught by the feature's own tests, which point at it even when a state holder's tests fail too.
 - Fakes are lightweight working implementations, not mocks that check which calls were made: interaction checks tie tests to implementation details.
-- Each core package provides the fake of its module, so whoever changes the real module sees the fake next to it.
+- Each core package provides the fake of its module in a separate module named `…Testing` (for example `WeatherTesting` in the `Weather` package), so whoever changes the real module sees the fake next to it, and the app does not ship the fake. Apple's own packages do the same (`InMemoryLogging` in swift-log, `MetricsTestKit` in swift-metrics, `NIOEmbedded` in swift-nio), as do Vapor (`VaporTesting`) and Wikipedia's `WMFData` package (`WMFDataMocks`).
 - **Fakes of the outside world use recorded data.** WeatherKit's types (`Weather`, `DayWeather`, `HourWeather`, `Forecast`) are `Codable`, so responses are fetched once on a device, saved as JSON and decoded in tests. Whether MapKit search results and Core Location values can be recorded the same way is checked when implementing those modules.
 
 ### Naming
