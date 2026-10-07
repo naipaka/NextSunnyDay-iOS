@@ -1,6 +1,6 @@
 # 5. The app layer keeps state in Observation-based state holders, not per-screen view models
 
-- Status: Draft (in discussion, #95). Sections marked *Open* are not decided yet.
+- Status: Draft (#95). Sections marked *Open* are not decided yet.
 - Builds on [0001](0001-modules-in-local-packages.md): the app and the widget assemble the modules; this record covers how their screens hold state and reach the features.
 
 ## Context
