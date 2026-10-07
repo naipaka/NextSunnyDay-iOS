@@ -1,6 +1,6 @@
 # NextSunnyDay 2.0 design spec
 
-Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 build from this document. The screenshots come from a throwaway SwiftUI prototype run on an iPhone 17 (iOS 26.4) simulator, so they show real SF Symbols, Liquid Glass and system colors. Each image puts light on the left and dark on the right. Sample data: Minato, Tokyo, on Wed 7 Oct, with the next sunny day on Sat 10 Oct.
+Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 build from this document. The screenshots were taken on an iPhone 17 (iOS 26.4) simulator, so they show real SF Symbols, Liquid Glass and system colors. The screenshots and the values in this document are the source of truth. Each image puts light on the left and dark on the right. Sample data: Minato, Tokyo, on Wed 7 Oct, with the next sunny day on Sat 10 Oct.
 
 ## Decisions
 
@@ -14,7 +14,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
 | Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header. |
 | Japanese tone | Friendly and casual, matching the app name 次いつ晴れる？ (e.g. 「次の晴れは あと3日」, 「まだ先かも」). |
-| App icon | Keep the v1 sun lion and split it into three Icon Composer layers. The dark look is option A. See [App icon](#app-icon). |
+| App icon | Keep the v1 sun lion and split it into three Icon Composer layers. The dark look inverts the light one. See [App icon](#app-icon). |
 
 ## Visual language
 
@@ -187,7 +187,7 @@ The three layers live in [`app-icon/`](app-icon/). They were traced as SVG from 
 | 2 | `layer-2-mane.svg` | White sun-shaped mane and the ears |
 | 3 | `layer-3-face.svg` | Eyes, nose, mouth, whiskers, whisker dots and the bolt on the forehead (strokes slightly thicker than v1 so they survive small sizes) |
 
-| Light | Dark (option A) | Tinted |
+| Light | Dark | Tinted |
 | --- | --- | --- |
 | ![Light](app-icon/preview-light.svg) | ![Dark](app-icon/preview-dark.svg) | ![Tinted](app-icon/preview-tinted.svg) |
 
@@ -215,10 +215,6 @@ The three layers live in [`app-icon/`](app-icon/). They were traced as SVG from 
 - **#97 Visuals**
   - The layered header and sheet: overlap, corner radius, shadow, fade and parallax values as above.
   - The SF Symbols palette mapping, system colors with only the orange accent, and glass on controls only.
-  - The Icon Composer icon from the three layers, with dark option A.
+  - The Icon Composer icon from the three layers, with the dark and tinted looks above.
 - **#98 English**
   - Every string in this spec gets an English source string. The Japanese above is the `ja` translation.
-
-## Prototype
-
-The screenshots came from a single-file SwiftUI prototype. It was built with `swiftc` for the simulator and is not part of the repository. Treat the screenshots and the values in this document as the source of truth.

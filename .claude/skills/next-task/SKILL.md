@@ -27,7 +27,7 @@ Before changing anything, tell the owner:
 - Any **Owner prerequisites** (manual steps such as Apple Developer portal settings) — ask whether they are done.
 - Every **Owner decision** listed in the issue, each with a recommendation. Use AskUserQuestion for these.
 
-Wait for the answers. Record the decisions as a comment on the issue (in English).
+Wait for the answers. Record the decisions as one comment on the issue (in English), following [Writing on GitHub](#writing-on-github).
 
 ## 3. Do the work
 
@@ -36,14 +36,24 @@ Wait for the answers. Record the decisions as a comment on the issue (in English
 - Commit to `main` in small, focused steps and push directly (no PRs). Keep CI green: check `gh run list` after pushing and fix failures.
 - Tick checkboxes in the issue body as items are completed (`gh issue edit <n> --body-file …`), so a later chat can resume.
 - Issue comments, commit messages, docs and code comments are in English; talk to the owner in Japanese.
+- Everything written to GitHub, commits and docs follows [Writing on GitHub](#writing-on-github).
 
 ## 4. Finish
 
 When every "Done when" item is met:
 
 1. Update `CLAUDE.md` and `docs/` so the next chat starts with accurate context.
-2. Post a short English summary comment on the issue (what changed, commits, anything deferred) and close it.
+2. Post a short English summary comment on the issue (what changed, commits, anything deferred) and close it. Don't post kick-off or play-by-play progress comments before this.
 3. Tick the task's checkbox in #89's body.
 4. Tell the owner in Japanese what was done, and that the next task can be started in a new chat with `/next-task`.
 
 If the task cannot be finished in this chat, leave a progress comment on the issue (done / remaining / blockers) instead of closing it.
+
+## Writing on GitHub
+
+The repository is public and everything is posted from the owner's account. Write issue comments, issue bodies, commit messages and docs as if the owner wrote them:
+
+- State what was decided and why, in the first person or with no subject. Don't write "owner decision", "the owner chose / felt / added", or mention Claude or the chat.
+- Don't record the conversation: options shown in chat, drafts the owner turned down, their reactions, revisions made during the discussion, "under review". Record only the final decision; mention a rejected alternative only when it explains the decision, and then on technical grounds.
+- Only refer to things a reader can see in the repository or on GitHub. No chat mockups, prototypes outside the repo, artifact links, or option labels such as "option A"; describe the thing itself.
+- Don't edit a posted comment, because GitHub keeps the earlier text in its edit history. Delete it and post a new one.
