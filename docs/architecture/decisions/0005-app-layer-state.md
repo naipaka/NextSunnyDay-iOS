@@ -52,15 +52,28 @@ That logic then lives in the class and is tested there. Shared state always live
 The `@Observable` classes that hold state are called **state holders** (the term from Android's architecture guide; Apple has no specific term and calls any `@Observable` type a "model").
 
 - Each state holder holds its state and the operations on it, and does not reference other state holders. There is no object that gathers all shared state.
-- **The view that needs two pieces of state combines them.** For example, Home reads the selected region and the forecast, and asks the forecast for the next sunny day at the current sunny level.
+- **The view that needs two pieces of state combines them.** For example, Home reads the forecast and the sunny level and passes both to the `SunnyDay` feature to get the next sunny day.
 - **Views say when work happens:** `task(id:)` for work that depends on a value (fetching when the selected region changes), `refreshable` for pull to refresh. How the work is done (freshness, fetching, failures) is in the state holder or the feature.
 
 ### Views and features
 
-- Features and core services reach views through the environment, so previews and tests can replace them.
-- **Views contain no logic.** A view decides when something happens and where the result goes. Decisions, conversions and error policies live in features and state holders.
-- For shared state, a view calls the state holder. For state that only one screen uses, a view may call one feature function and put the result into its `@State`.
-- The region search follows that rule: the text and the results are `@State` in the Region screen. `task(id:)` on the text cancels the previous search, waits briefly to debounce, and calls the `Region` feature's search function. Rules such as a minimum length and turning completions into region candidates are in the feature.
+Features and core services reach views through the environment, so previews and tests can replace them.
+
+**Views contain no logic.** Decisions, conversions and error policies live in features and state holders. A view only reads state, says when something happens and where the result goes:
+
+- **In `body`, a view only reads state and computes without side effects.** `body` can run at any time and any number of times.
+- **Side effects go only in event and lifecycle closures:** button actions, `task` / `task(id:)`, `refreshable`, `onChange`.
+
+What the view does with a result depends on who owns it:
+
+| To | Where | The view |
+| --- | --- | --- |
+| Change shared state | An event or lifecycle closure | Calls the state holder, which calls the features and updates its state. Selecting a region: `regionSelection.select(…)` |
+| Change the screen's own state | An event or lifecycle closure | Calls a feature and puts the result into its `@State`. The region search: `results = await search(query)` in `task(id: query)` |
+| Compute a value from state | `body` | Passes the state it reads to a feature's function without side effects and uses the result. The next sunny day |
+
+- **The region search:** the text and the results are `@State` in the Region screen. `task(id:)` on the text cancels the previous search, waits briefly to debounce, and calls the `Region` feature's search function. Rules such as a minimum length and turning completions into region candidates are in the feature.
+- **The next sunny day:** Home computes it in `body` from `RegionForecast` and `SunnyLevelSelection` with the `SunnyDay` feature's function, which holds the sunny rules (including the 30 % rule) and is tested there. It is not stored. `body` is re-evaluated only when the forecast or the sunny level changes, and the computation looks at ten days. The widget calls the same function.
 
 ### Naming
 
@@ -76,7 +89,6 @@ What a state holder contains is told by its property names, not by its type name
 
 ### Open
 
-- Where the next sunny day is computed (a method of the forecast state holder that takes the sunny level, or elsewhere).
 - Which views trigger fetching (the selected region changing, the app becoming active, pull to refresh).
 - How features are put into the environment, including fakes for previews and tests.
 - Swift 6 settings for the app and widget targets (main actor default isolation, approachable concurrency).
@@ -95,6 +107,11 @@ What a state holder contains is told by its property names, not by its type name
 
 - *Views never call features; every call goes through a state holder.* SwiftUI's own pattern is that a view starts asynchronous work and keeps the result in its state: [`task(id:)`](https://developer.apple.com/documentation/swiftui/view/task(id:priority:_:)) restarts the work when a value changes, Food Truck fetches the weather in its city view with `task(id: city.id)`, and the MapKit sample keeps search completions in `@State`. Requiring a state holder for every call would add a class where SwiftUI needs none. What has to stay out of views is logic, not calls.
 - *Views calling core services directly*, as Apple's samples call `WeatherService` and MapKit. Core modules are used by features ([0001](0001-modules-in-local-packages.md)), and rules such as a minimum search length belong in a feature, where they are tested.
+
+**Computing the next sunny day**
+
+- *A method of `RegionForecast` taking the sunny level*, or *of `SunnyLevelSelection` taking the forecast.* Either is a thin wrapper around the feature's function and makes one state holder know about the other's concern.
+- *A state holder of its own.* There is no state to hold.
 
 **Debouncing the search**
 
