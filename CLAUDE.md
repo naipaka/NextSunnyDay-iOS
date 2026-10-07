@@ -79,7 +79,7 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 
 ## Docs
 
-`docs/` holds design docs (`architecture/`, Mermaid diagrams) and the app icon master (`design/app-icon-1024.png`). See `docs/README.md` for the index. This is an OSS repo: write docs, code comments, and commit messages in English (UI text in code is English source strings; Japanese lives in the String Catalog).
+`docs/` holds design docs (`architecture/`, Mermaid diagrams), the approved 2.0 design spec (`design/spec.md`, the source of truth for screens, states, copy and the sunny-level rules) and the app icon master (`design/app-icon-1024.png`, plus layered SVGs in `design/app-icon/`). See `docs/README.md` for the index. This is an OSS repo: write docs, code comments, and commit messages in English (UI text in code is English source strings; Japanese lives in the String Catalog).
 
 ## Branching
 
