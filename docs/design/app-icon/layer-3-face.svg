@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs><linearGradient id="o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F37E4F"/><stop offset="1" stop-color="#F89A35"/></linearGradient></defs>
+  <path d="M425 322 L520 217 L506 336 L600 234" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="22"/>
+  <circle cx="357" cy="440" r="36" fill="url(#o)"/>
+  <circle cx="667" cy="440" r="36" fill="url(#o)"/>
+  <path d="M458 516 Q512 506 566 516 L566 548 Q566 590 512 592 Q458 590 458 548 Z" fill="url(#o)"/>
+  <path d="M512 590 L512 658" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+  <path d="M286 657 C300 728 352 748 398 744 C448 740 488 704 512 662 C536 704 576 740 626 744 C672 748 724 728 738 657" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="17"/>
+  <path d="M212 527 Q262 512 310 551" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <path d="M812 527 Q762 512 714 551" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <path d="M210 580 Q262 568 312 584" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <path d="M814 580 Q762 568 712 584" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <path d="M218 652 Q255 605 305 600" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <path d="M806 652 Q769 605 719 600" fill="none" stroke="url(#o)" stroke-linecap="round" stroke-linejoin="round" stroke-width="18"/>
+  <circle cx="358" cy="607" r="9.5" fill="url(#o)"/>
+  <circle cx="666" cy="607" r="9.5" fill="url(#o)"/>
+  <circle cx="393" cy="607" r="9.5" fill="url(#o)"/>
+  <circle cx="631" cy="607" r="9.5" fill="url(#o)"/>
+  <circle cx="428" cy="607" r="9.5" fill="url(#o)"/>
+  <circle cx="596" cy="607" r="9.5" fill="url(#o)"/>
+  <circle cx="378" cy="638" r="9.5" fill="url(#o)"/>
+  <circle cx="646" cy="638" r="9.5" fill="url(#o)"/>
+  <circle cx="408" cy="638" r="9.5" fill="url(#o)"/>
+  <circle cx="616" cy="638" r="9.5" fill="url(#o)"/>
+</svg>
