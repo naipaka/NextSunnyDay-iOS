@@ -1,10 +1,3 @@
-//
-//  NextSunnyDaySmallView.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/13.
-//
-
 import SwiftUI
 
 struct NextSunnyDaySmallView<T>: View where T: NextSunnyDayViewModelObject {

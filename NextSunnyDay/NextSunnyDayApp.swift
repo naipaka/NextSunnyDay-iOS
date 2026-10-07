@@ -1,10 +1,3 @@
-//
-//  NextSunnyDayApp.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/09/28.
-//
-
 import SwiftUI
 
 @main

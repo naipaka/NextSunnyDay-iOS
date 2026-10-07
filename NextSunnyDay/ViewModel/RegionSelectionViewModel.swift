@@ -1,10 +1,3 @@
-//
-//  RegionSelectionViewModel.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/15.
-//
-
 import Combine
 import MapKit
 import SwiftUI

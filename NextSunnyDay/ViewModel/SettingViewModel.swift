@@ -1,10 +1,3 @@
-//
-//  SettingViewModel.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/14.
-//
-
 import Combine
 import Foundation
 

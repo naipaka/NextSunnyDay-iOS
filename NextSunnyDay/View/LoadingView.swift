@@ -1,10 +1,3 @@
-//
-//  LoadingView.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/18.
-//
-
 import SwiftUI
 
 struct LoadingView: View {

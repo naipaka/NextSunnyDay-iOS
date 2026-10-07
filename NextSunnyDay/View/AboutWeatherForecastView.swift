@@ -1,10 +1,3 @@
-//
-//  AboutWeatherForecastView.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/22.
-//
-
 import SwiftUI
 import WeatherKit
 

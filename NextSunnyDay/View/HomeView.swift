@@ -1,10 +1,3 @@
-//
-//  HomeView.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/09/28.
-//
-
 import Combine
 import SwiftUI
 import WeatherKit

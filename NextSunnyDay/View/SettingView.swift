@@ -1,10 +1,3 @@
-//
-//  SettingView.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/14.
-//
-
 import SwiftUI
 
 struct SettingView<T>: View where T: SettingViewModelObject {

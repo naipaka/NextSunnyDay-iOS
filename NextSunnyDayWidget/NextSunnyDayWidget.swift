@@ -1,10 +1,3 @@
-//
-//  NextSunnyDayWidget.swift
-//  NextSunnyDayWidget
-//
-//  Created by rMac on 2020/10/19.
-//
-
 import SwiftUI
 import WidgetKit
 

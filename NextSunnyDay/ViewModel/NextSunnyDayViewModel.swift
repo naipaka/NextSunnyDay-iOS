@@ -1,10 +1,3 @@
-//
-//  NextSunnyDayViewModel.swift
-//  NextSunnyDay
-//
-//  Created by rMac on 2020/10/13.
-//
-
 import Combine
 import Foundation
 import SwiftUI
