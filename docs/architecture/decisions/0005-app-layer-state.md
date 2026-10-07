@@ -31,6 +31,8 @@ State whose common ancestor is the app root is called **shared state**. In 2.0 t
 | The sunny level | Home (next sunny day), Settings, Sunny level, About |
 | The forecast of the selected region and its fetch status | Home; the day detail gets the day it shows as a value |
 
+Only Home uses the forecast directly, but Home is the root screen, shown for as long as the app runs, and the selected region can change from the Settings sheet on top of it. Keeping the forecast and its fetch status at the root keeps them across that change, next to the selected region they depend on.
+
 Everything else (search text and results, sheet visibility, …) is `@State` in the screen that uses it.
 
 ### A value or a class
@@ -81,10 +83,20 @@ What a state holder contains is told by its property names, not by its type name
 
 **Where state lives**
 
+- *All state at the app root, handed out through the environment.* Then every piece of state lives as long as the app, and state that only one screen uses is shared with every screen. Placing state at the common ancestor gives each piece the scope and lifetime it needs.
 - *A view model per screen (MVVM).* Each screen copies the shared data it shows into its own object, so the same data exists in several places and has to be kept in sync.
 - *One object for all shared state.* Apple's small samples do this (`ModelData` in Landmarks). It grows with every feature and makes every test set up everything. Larger apps split shared state by concern (Ice Cubes puts more than ten objects into the environment).
 - *State holders that depend on each other*, each observing the state holders it needs (for example the forecast observing the selected region with `Observations`) or a parent object owning and wiring them (Point-Free's SyncUps). This rebuilds a dependency graph next to the one SwiftUI already has in the view tree. Apple's samples and Ice Cubes react to changes in views with `task(id:)` instead (Food Truck refetches the weather with `task(id: city.id)`).
 - *A state holder for every screen-local concern with I/O*, such as a class for the region search. For a search that only replaces its results, `@State` and `task(id:)` do the same with less code. Apple's MapKit sample (Interacting with nearby points of interest) keeps search completions in `@State` too.
+
+**Views and features**
+
+- *Views never call features; every call goes through a state holder.* SwiftUI's own pattern is that a view starts asynchronous work and keeps the result in its state: [`task(id:)`](https://developer.apple.com/documentation/swiftui/view/task(id:priority:_:)) restarts the work when a value changes, Food Truck fetches the weather in its city view with `task(id: city.id)`, and the MapKit sample keeps search completions in `@State`. Requiring a state holder for every call would add a class where SwiftUI needs none. What has to stay out of views is logic, not calls.
+- *Views calling core services directly*, as Apple's samples call `WeatherService` and MapKit. Core modules are used by features ([0001](0001-modules-in-local-packages.md)), and rules such as a minimum search length belong in a feature, where they are tested.
+
+**Debouncing the search**
+
+- *The search text in a state holder, observed with `Observations`*, or *Combine's `debounce`* as in version 1. Both need code to cancel the previous search; `task(id:)` cancels it when the text changes, so waiting with `Task.sleep` at its start is enough.
 
 **Naming**
 
