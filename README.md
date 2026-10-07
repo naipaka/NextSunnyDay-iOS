@@ -29,12 +29,12 @@ The app is available in Japanese only.
 | UI implementation | SwiftUI      |
 | Widget            | WidgetKit    |
 | Architecture      | MVVM+Combine |
-| Local storage     | Realm        |
+| Local storage     | UserDefaults + JSON files |
 | Branching model   | Git-flow     |
 
 ### How it works
 
-The app saves the forecast for the place you choose to Realm, in an App Group container that the widget can also read.
+The app keeps the place you choose in `UserDefaults` and the fetched forecast as a JSON file, both in an App Group container that the widget can also read. There are no third-party dependencies.
 The widget shows the saved forecast and refreshes every five hours. When the saved forecast is out of date, the widget fetches a new one from WeatherKit on its own.
 Places are searched with MapKit's `MKLocalSearchCompleter`.
 
@@ -47,6 +47,7 @@ NextSunnyDay/
 │   ├── Weather/          # WeatherKit
 │   └── LocalSearch/
 ├── Model/
+├── Storage/            # Settings and the forecast cache
 ├── View/
 ├── ViewModel/
 ├── Protocol/

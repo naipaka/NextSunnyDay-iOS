@@ -49,12 +49,14 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 
 ### Data flow
 
-- **WeatherKit** is fetched by `WeatherKitProvider` (`API/Weather/WeatherProviding.swift`), which returns the 10-day daily forecast as the domain model `[DailyForecast]` (`Model/DailyForecast.swift`; `ForecastLocation` is the place). The async protocol `WeatherProviding` is the seam — inject fakes in tests/previews via this protocol (see how `HomeViewModel` is constructed in `NextSunnyDayApp.swift`).
+- **WeatherKit** is fetched by `WeatherKitProvider` (`API/Weather/WeatherProviding.swift`), which returns a `ForecastSnapshot` (`Model/`): the `ForecastLocation`, the fetch time, the 10-day `[DailyForecast]` and the `[HourlyForecast]` for the same days. The async protocol `WeatherProviding` is the seam — inject fakes in tests/previews via this protocol (see how `HomeViewModel` is constructed in `NextSunnyDayApp.swift`).
 - "Sunny" is `WeatherCondition.isSunny` (`.clear`, `.mostlyClear`); the next sunny day is `[DailyForecast].nextSunnyDay`. Both are unit-tested.
-- **Realm bridge** (`Model/DailyWeatherForecastEntity+DailyForecast.swift`): maps `DailyForecast` into the Realm entity (`Weather.main` = condition raw value, `Weather.icon` = SF Symbol name, temperatures in °C) and back, so the existing UI reads domain values. Days saved by v1 (OpenWeather) don't map and are skipped.
 - **Apple Weather attribution** (mark + legal link from `WeatherService.shared.attribution`) is shown in `AboutWeatherForecastView`.
-- **Realm** is the single source of truth on-device. `DailyWeatherForecastEntity` (`Model/`) is a Realm `Object` plus a CRUD extension. The Realm file lives in the App Group container `group.com.naipaka.NextSunnyDay` so the Widget can read the same DB.
-- ViewModels observe Realm `Results` via `NotificationToken`, push updates into `output`, and call `WidgetCenter.shared.reloadAllTimelines()` after writes so the Widget refreshes.
+- **Storage** (`Storage/`, no database) lives in the App Group `group.com.naipaka.NextSunnyDay` (`AppGroup`), shared with the widget:
+  - `SettingsStore`: `regions: [Region]` (one entry for now) and `sunnyLevel` in App Group `UserDefaults`. **Never migrated** — keep the stored format readable by later versions; `SettingsStoreTests` pins it. Each `Region` has an `id` fixed when added (UUID; `current-location` for the device location).
+  - `ForecastCache` (actor, protocol `ForecastCaching`): one `ForecastSnapshot` per region in `Library/Caches/forecasts/<region id>.json`, written atomically. Disposable: undecodable files or another `formatVersion` are deleted and re-fetched; files of removed regions are deleted.
+  - `LegacyRealmCleanup` deletes v1's `db.realm*` files at launch; v1 data is not migrated.
+- `HomeViewModel` refreshes when the scene becomes active and when `UserDefaults.didChangeNotification` shows a new region, then calls `WidgetCenter.shared.reloadAllTimelines()` after saving a fetch.
 - Forecast staleness check: a fetch is triggered when the earliest stored daily entry is older than ~24h (app) / ~20h (widget). Full flowcharts: `docs/architecture/weather-fetch-flow.md` — keep them in sync when changing fetch logic.
 
 ### Xcode project format
@@ -66,7 +68,7 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 
 ### Widget target
 
-`NextSunnyDayWidget/` is a separate target sharing source with the app (Model, API, ViewModels for the widget views). Its `Provider.getTimeline` directly reads the shared Realm and may also call `WeatherFetcher`. Supported families: `.systemSmall`, `.systemMedium`.
+`NextSunnyDayWidget/` is a separate target sharing source with the app (Model, API, ViewModels for the widget views). Its `Provider.getTimeline` reads `SettingsStore` and `ForecastCache`, and may fetch through `WeatherKitProvider` before building the entry. Supported families: `.systemSmall`, `.systemMedium`.
 
 ### Localization & resources
 
@@ -75,7 +77,7 @@ The protocol merges `binding` and `output` `objectWillChange` publishers so View
 - Non-UI values stay plain literals in code and out of the catalog: SF Symbol names (`Image(systemName: "xmark")`), the `"-"` placeholder, the widget `kind`.
 - **Colors** come from `Assets.xcassets` via Xcode's generated asset symbols: `Color(.nextSunnyDayText)`. The `Blue` asset collides with `UIColor.blue`, so write `Color(ColorResource.blue)`.
 - There are no third-party resource generators, build-tool plugins or script build phases.
-- SPM versions are pinned in `NextSunnyDay.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved` (committed). Realm is still `realm-cocoa` 5.5.2; it builds and runs on Xcode 26 but is very old.
+- There are no Swift packages or other third-party dependencies; keep it that way unless there is a strong reason.
 
 ## Docs
 
@@ -88,7 +90,3 @@ Single long-lived branch: `main` (default). There is no `develop`.
 - The owner commits and pushes directly to `main`; do not open PRs for their changes.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
 - CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It lints with `swift-format --strict` on the `macos-26` runner with Xcode 26.4.1. On pushes to `main` it then only builds for `generic/platform=iOS Simulator` (no simulator boot, a few minutes); on PRs it runs `NextSunnyDayTests` on an iPhone 17 (iOS 26.4.1) simulator. Because pushes don't run tests, **run the tests locally before pushing to `main`**. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
-
-## Known stale dependencies
-
-The project was dormant from 2020 and is being revived. Realm (`realm-cocoa` 5.5.2) is the only third-party dependency left and is very old.

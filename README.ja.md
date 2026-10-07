@@ -28,12 +28,12 @@
 | UI                 | SwiftUI          |
 | ウィジェット       | WidgetKit        |
 | アーキテクチャ     | MVVM+Combine     |
-| ローカルの保存     | Realm            |
+| ローカルの保存     | UserDefaults + JSON ファイル |
 | ブランチの運用     | Git-flow         |
 
 ### 仕組み
 
-アプリは、選んだ場所の天気予報を Realm に保存します。保存先は、ウィジェットからも読める App Group のコンテナです。
+アプリは、選んだ場所を `UserDefaults` に、取得した天気予報を JSON ファイルに保存します。保存先はどちらも、ウィジェットからも読める App Group のコンテナです。サードパーティのライブラリは使っていません。
 ウィジェットは保存された予報を表示し、5 時間ごとに更新します。保存された予報が古くなると、ウィジェット自身が WeatherKit から新しい予報を取得します。
 場所の検索には、MapKit の `MKLocalSearchCompleter` を使っています。
 
@@ -46,6 +46,7 @@ NextSunnyDay/
 │   ├── Weather/          # WeatherKit
 │   └── LocalSearch/
 ├── Model/
+├── Storage/            # 設定と予報のキャッシュ
 ├── View/
 ├── ViewModel/
 ├── Protocol/
