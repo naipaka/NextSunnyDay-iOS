@@ -1,6 +1,6 @@
 # 5. The app layer keeps state where SwiftUI expects it, without per-screen view models
 
-- Status: Draft (#95)
+- Status: Accepted (2026-10-08, #95)
 - Builds on [0001](0001-modules-in-local-packages.md): the app and the widget assemble the modules; this record covers how their screens hold state and reach the features.
 
 ## Context
