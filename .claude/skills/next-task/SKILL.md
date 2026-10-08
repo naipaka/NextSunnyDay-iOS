@@ -44,9 +44,10 @@ Wait for the answers. Record the decisions as one comment on the issue (in Engli
 When every "Done when" item is met:
 
 1. Update `CLAUDE.md` and `docs/` so the next chat starts with accurate context.
-2. Post a short English summary comment on the issue (what changed, commits, anything deferred) and close it. Don't post kick-off or play-by-play progress comments before this.
-3. Tick the task's checkbox in #89's body (tasks of a group are listed there too).
-4. Tell the owner in Japanese what was done, and that the next task can be started in a new chat with `/next-task`.
+2. Put anything deferred into the body of the issue that will do it (a Scope checkbox with enough detail to act on); a later chat reads only the body of its own task, not comments on other issues. Mention it in the summary too.
+3. Post a short English summary comment on the issue (what changed, commits, anything deferred) and close it. Don't post kick-off or play-by-play progress comments before this.
+4. Tick the task's checkbox in #89's body (tasks of a group are listed there too).
+5. Tell the owner in Japanese what was done, and that the next task can be started in a new chat with `/next-task`.
 
 If the task cannot be finished in this chat, leave a progress comment on the issue (done / remaining / blockers) instead of closing it.
 
