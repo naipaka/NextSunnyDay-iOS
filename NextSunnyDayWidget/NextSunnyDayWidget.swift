@@ -1,83 +1,112 @@
+import CoreLocation
+import Forecast
+import Region
+import SunnyDay
 import SwiftUI
+import Weather
 import WidgetKit
 
+/// Reads the region and its cached forecast from the App Group, and fetches when the forecast is
+/// stale. The widget doesn't use Core Location: for the current location it fetches for the
+/// coordinate of the last cached forecast (ADR 0003). Its schedule is decided in #96.
 struct Provider: TimelineProvider {
-  /// Fetch again once the earliest stored day started more than this long ago.
-  private static let maxForecastAge: TimeInterval = 60 * 60 * 20
-
-  private let weatherProvider: WeatherProviding = WeatherKitProvider()
-  private let settings = SettingsStore()
-  private let cache: ForecastCaching = ForecastCache()
-
-  func placeholder(in context: Context) -> SimpleEntry {
-    SimpleEntry(date: Date(), forecast: .sample())
+  func placeholder(in context: Context) -> SunnyEntry {
+    SunnyEntry(date: .now, placeName: nil, forecast: nil, level: .default)
   }
 
-  func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> Void) {
+  func getSnapshot(in context: Context, completion: @escaping @Sendable (SunnyEntry) -> Void) {
     Task {
-      completion(SimpleEntry(date: Date(), forecast: await cachedForecast()))
+      completion(await entry(fetchingIfStale: false))
     }
   }
 
-  func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+  func getTimeline(
+    in context: Context, completion: @escaping @Sendable (Timeline<SunnyEntry>) -> Void
+  ) {
     Task {
-      let currentDate = Date()
-      var forecast = await cachedForecast()
-
-      // The current location is resolved with Core Location in #95/#96; until then the widget
-      // only refreshes a searched place.
-      if let region = settings.regions.first, let location = region.location,
-        forecast?.needsRefresh(for: location, now: currentDate, maxAge: Self.maxForecastAge)
-          ?? true,
-        let fetched = try? await weatherProvider.forecast(for: location)
-      {
-        try? await cache.save(fetched, for: region.id)
-        forecast = fetched
-      }
-
-      let nextUpdate = currentDate.addingTimeInterval(5 * 60 * 60)
+      let entry = await entry(fetchingIfStale: true)
       completion(
-        Timeline(
-          entries: [SimpleEntry(date: currentDate, forecast: forecast)], policy: .after(nextUpdate)
-        ))
+        Timeline(entries: [entry], policy: .after(entry.date.addingTimeInterval(5 * 60 * 60))))
     }
   }
 
-  /// The cached forecast of the region shown, which is the only one for now.
-  private func cachedForecast() async -> ForecastSnapshot? {
-    guard let region = settings.regions.first, let cached = await cache.load(for: region.id),
-      region.matches(cached)
-    else { return nil }
-    return cached
+  private func entry(fetchingIfStale: Bool) async -> SunnyEntry {
+    let level = SunnyLevelStore().load()
+    guard let region = RegionStore().load().first else {
+      return SunnyEntry(date: .now, placeName: nil, forecast: nil, level: level)
+    }
+    let updater = ForecastUpdater()
+    var cached = await updater.cached(regionID: region.id)
+    if fetchingIfStale, cached.map({ !updater.isFresh($0) }) ?? true,
+      let coordinate = region.coordinate ?? cached?.coordinate,
+      let fetched = try? await updater.fetch(
+        regionID: region.id, placeName: region.placeName ?? cached?.placeName,
+        coordinate: coordinate)
+    {
+      cached = fetched
+    }
+    return SunnyEntry(
+      date: .now, placeName: region.placeName ?? cached?.placeName,
+      forecast: cached?.forecast, level: level)
   }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct SunnyEntry: TimelineEntry {
   let date: Date
-  let forecast: ForecastSnapshot?
+  let placeName: String?
+  let forecast: WeatherForecast?
+  let level: SunnyLevel
+
+  var nextSunnyDay: NextSunnyDay? {
+    forecast.flatMap { level.nextSunnyDay(in: $0.daily, now: date) }
+  }
 }
 
 struct NextSunnyDayWidgetEntryView: View {
-  var entry: Provider.Entry
+  var entry: SunnyEntry
 
-  @Environment(\.widgetFamily) var family
+  @Environment(\.widgetFamily) private var family
 
   var body: some View {
-    switch family {
-    case .systemSmall:
-      if entry.forecast?.daily.isEmpty ?? true {
-        NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(.sample()))
-          .redacted(reason: .placeholder)
-      } else {
-        NextSunnyDaySmallView(viewModel: NextSunnyDayViewModel(entry.forecast))
+    VStack(alignment: .leading, spacing: 0) {
+      HStack(alignment: .top) {
+        Text("Next Sunny Day")
+          .font(.caption.weight(.semibold))
+        Spacer()
+        Image(systemName: entry.nextSunnyDay == nil ? "cloud.fill" : "sun.max.fill")
+          .font(.title3)
       }
-    default:
-      if entry.forecast?.daily.isEmpty ?? true {
-        NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(.sample()))
-          .redacted(reason: .placeholder)
-      } else {
-        NextSunnyDayMediumView(viewModel: NextSunnyDayViewModel(entry.forecast))
+      Spacer()
+      headline
+        .font(.system(size: family == .systemSmall ? 30 : 34, weight: .bold))
+        .minimumScaleFactor(0.6)
+        .lineLimit(1)
+      if let next = entry.nextSunnyDay {
+        Text(
+          verbatim:
+            "\(next.day.date.formatted(.dateTime.month(.defaultDigits).day().weekday(.abbreviated))) \(next.day.condition.localizedName)"
+        )
+        .font(.caption.weight(.semibold))
       }
+      if let placeName = entry.placeName {
+        Text(verbatim: placeName)
+          .font(.caption2)
+          .opacity(0.85)
+      }
+    }
+    .foregroundStyle(.white)
+    .redacted(reason: entry.forecast == nil ? .placeholder : [])
+  }
+
+  @ViewBuilder private var headline: some View {
+    if let next = entry.nextSunnyDay {
+      switch next.daysAway {
+      case 0: Text("Today")
+      case 1: Text("Tomorrow")
+      default: Text("In \(next.daysAway) days")
+      }
+    } else {
+      Text("Maybe not for a while")
     }
   }
 }
@@ -89,6 +118,9 @@ struct NextSunnyDayWidget: Widget {
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: kind, provider: Provider()) { entry in
       NextSunnyDayWidgetEntryView(entry: entry)
+        .containerBackground(for: .widget) {
+          entry.nextSunnyDay == nil ? Color(.systemGray) : Color.orange
+        }
     }
     .configurationDisplayName("NextSunnyDay")
     .description("See when the next sunny day is.")
@@ -96,21 +128,13 @@ struct NextSunnyDayWidget: Widget {
   }
 }
 
-struct NextSunnyDayWidget_Previews: PreviewProvider {
-  static var previews: some View {
-    Group {
-      NextSunnyDayWidgetEntryView(
-        entry: SimpleEntry(date: Date(), forecast: nil)
-      )
-      .previewContext(WidgetPreviewContext(family: .systemSmall))
-      NextSunnyDayWidgetEntryView(
-        entry: SimpleEntry(date: Date(), forecast: nil)
-      )
-      .previewContext(WidgetPreviewContext(family: .systemMedium))
-      NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), forecast: .sample()))
-        .previewContext(WidgetPreviewContext(family: .systemSmall))
-      NextSunnyDayWidgetEntryView(entry: SimpleEntry(date: Date(), forecast: .sample()))
-        .previewContext(WidgetPreviewContext(family: .systemMedium))
+extension SavedRegion {
+  /// The coordinate of a searched place; `nil` for the current location.
+  fileprivate var coordinate: CLLocationCoordinate2D? {
+    if case .place(_, let latitude, let longitude) = kind {
+      CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    } else {
+      nil
     }
   }
 }

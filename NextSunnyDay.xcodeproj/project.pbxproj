@@ -10,6 +10,25 @@
 		91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044071253DDA9600A21F20 /* WidgetKit.framework */; };
 		91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91044073253DDA9600A21F20 /* SwiftUI.framework */; };
 		9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C3A000000000000000000002 /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000001 /* Region */; };
+		C3A000000000000000000004 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000003 /* Forecast */; };
+		C3A000000000000000000006 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000005 /* SunnyDay */; };
+		C3A000000000000000000008 /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000007 /* Weather */; };
+		C3A00000000000000000000A /* AppGroup in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000009 /* AppGroup */; };
+		C3A00000000000000000000C /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000B /* WeatherTesting */; };
+		C3A00000000000000000000E /* LocationTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000D /* LocationTesting */; };
+		C3A000000000000000000010 /* PlaceSearchTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000F /* PlaceSearchTesting */; };
+		C3B000000000000000000012 /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000011 /* Region */; };
+		C3B000000000000000000014 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000013 /* Forecast */; };
+		C3B000000000000000000016 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000015 /* SunnyDay */; };
+		C3B000000000000000000018 /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000017 /* Weather */; };
+		C3C00000000000000000001A /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000019 /* Region */; };
+		C3C00000000000000000001C /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001B /* Forecast */; };
+		C3C00000000000000000001E /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001D /* SunnyDay */; };
+		C3C000000000000000000020 /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001F /* Weather */; };
+		C3C000000000000000000022 /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000021 /* WeatherTesting */; };
+		C3C000000000000000000024 /* LocationTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000023 /* LocationTesting */; };
+		C3C000000000000000000026 /* PlaceSearchTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000025 /* PlaceSearchTesting */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,24 +81,8 @@
 		B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				API/Weather/WeatherProviding.swift,
 				Assets.xcassets,
-				"Extension/Date+Extension.swift",
-				"Extension/LinearGradient+Extension.swift",
-				"Extension/Measurement+Extension.swift",
-				Model/DailyForecast.swift,
-				Model/ForecastSnapshot.swift,
-				Model/HourlyForecast.swift,
-				Model/Region.swift,
-				"Model/WeatherCondition+Sunny.swift",
-				Protocol/ViewModelObject.swift,
 				Resources/Localizable.xcstrings,
-				Storage/AppGroup.swift,
-				Storage/ForecastCache.swift,
-				Storage/SettingsStore.swift,
-				View/NextSunnyDayMediumView.swift,
-				View/NextSunnyDaySmallView.swift,
-				ViewModel/NextSunnyDayViewModel.swift,
 			);
 			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
 		};
@@ -122,6 +125,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3B000000000000000000012 /* Region in Frameworks */,
+				C3B000000000000000000014 /* Forecast in Frameworks */,
+				C3B000000000000000000016 /* SunnyDay in Frameworks */,
+				C3B000000000000000000018 /* Weather in Frameworks */,
 				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
 				91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */,
 			);
@@ -131,6 +138,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3A000000000000000000002 /* Region in Frameworks */,
+				C3A000000000000000000004 /* Forecast in Frameworks */,
+				C3A000000000000000000006 /* SunnyDay in Frameworks */,
+				C3A000000000000000000008 /* Weather in Frameworks */,
+				C3A00000000000000000000A /* AppGroup in Frameworks */,
+				C3A00000000000000000000C /* WeatherTesting in Frameworks */,
+				C3A00000000000000000000E /* LocationTesting in Frameworks */,
+				C3A000000000000000000010 /* PlaceSearchTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +153,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3C00000000000000000001A /* Region in Frameworks */,
+				C3C00000000000000000001C /* Forecast in Frameworks */,
+				C3C00000000000000000001E /* SunnyDay in Frameworks */,
+				C3C000000000000000000020 /* Weather in Frameworks */,
+				C3C000000000000000000022 /* WeatherTesting in Frameworks */,
+				C3C000000000000000000024 /* LocationTesting in Frameworks */,
+				C3C000000000000000000026 /* PlaceSearchTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +215,12 @@
 				B10000000000000000000002 /* NextSunnyDayWidget */,
 			);
 			name = NextSunnyDayWidgetExtension;
+			packageProductDependencies = (
+				C2B000000000000000000011 /* Region */,
+				C2B000000000000000000013 /* Forecast */,
+				C2B000000000000000000015 /* SunnyDay */,
+				C2B000000000000000000017 /* Weather */,
+			);
 			productName = NextSunnyDayWidgetExtension;
 			productReference = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -215,6 +243,16 @@
 				B10000000000000000000001 /* NextSunnyDay */,
 			);
 			name = NextSunnyDay;
+			packageProductDependencies = (
+				C2A000000000000000000001 /* Region */,
+				C2A000000000000000000003 /* Forecast */,
+				C2A000000000000000000005 /* SunnyDay */,
+				C2A000000000000000000007 /* Weather */,
+				C2A000000000000000000009 /* AppGroup */,
+				C2A00000000000000000000B /* WeatherTesting */,
+				C2A00000000000000000000D /* LocationTesting */,
+				C2A00000000000000000000F /* PlaceSearchTesting */,
+			);
 			productName = NextSunnyDay;
 			productReference = 915F51352521763500B4E384 /* NextSunnyDay.app */;
 			productType = "com.apple.product-type.application";
@@ -236,6 +274,15 @@
 				B10000000000000000000003 /* NextSunnyDayTests */,
 			);
 			name = NextSunnyDayTests;
+			packageProductDependencies = (
+				C2C000000000000000000019 /* Region */,
+				C2C00000000000000000001B /* Forecast */,
+				C2C00000000000000000001D /* SunnyDay */,
+				C2C00000000000000000001F /* Weather */,
+				C2C000000000000000000021 /* WeatherTesting */,
+				C2C000000000000000000023 /* LocationTesting */,
+				C2C000000000000000000025 /* PlaceSearchTesting */,
+			);
 			productName = NextSunnyDayTests;
 			productReference = 915F51462521763600B4E384 /* NextSunnyDayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -272,6 +319,15 @@
 			);
 			mainGroup = 915F512C2521763500B4E384;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */,
+				C10000000000000000000002 /* XCLocalSwiftPackageReference "Packages/Core/Location" */,
+				C10000000000000000000003 /* XCLocalSwiftPackageReference "Packages/Core/PlaceSearch" */,
+				C10000000000000000000004 /* XCLocalSwiftPackageReference "Packages/Core/AppGroup" */,
+				C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */,
+				C10000000000000000000006 /* XCLocalSwiftPackageReference "Packages/Features/Forecast" */,
+				C10000000000000000000007 /* XCLocalSwiftPackageReference "Packages/Features/SunnyDay" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 915F51362521763500B4E384 /* Products */;
 			projectDirPath = "";
@@ -365,8 +421,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.NextSunnyDayWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -390,8 +448,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.NextSunnyDayWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -532,8 +592,11 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -557,8 +620,11 @@
 				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -572,8 +638,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NextSunnyDay";
 			};
@@ -588,8 +656,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NextSunnyDay";
 			};
@@ -635,6 +705,135 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Core/Weather;
+		};
+		C10000000000000000000002 /* XCLocalSwiftPackageReference "Packages/Core/Location" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Core/Location;
+		};
+		C10000000000000000000003 /* XCLocalSwiftPackageReference "Packages/Core/PlaceSearch" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Core/PlaceSearch;
+		};
+		C10000000000000000000004 /* XCLocalSwiftPackageReference "Packages/Core/AppGroup" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Core/AppGroup;
+		};
+		C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Features/Region;
+		};
+		C10000000000000000000006 /* XCLocalSwiftPackageReference "Packages/Features/Forecast" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Features/Forecast;
+		};
+		C10000000000000000000007 /* XCLocalSwiftPackageReference "Packages/Features/SunnyDay" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Features/SunnyDay;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C2A000000000000000000001 /* Region */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
+			productName = Region;
+		};
+		C2A000000000000000000003 /* Forecast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000006 /* XCLocalSwiftPackageReference "Packages/Features/Forecast" */;
+			productName = Forecast;
+		};
+		C2A000000000000000000005 /* SunnyDay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000007 /* XCLocalSwiftPackageReference "Packages/Features/SunnyDay" */;
+			productName = SunnyDay;
+		};
+		C2A000000000000000000007 /* Weather */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
+			productName = Weather;
+		};
+		C2A000000000000000000009 /* AppGroup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000004 /* XCLocalSwiftPackageReference "Packages/Core/AppGroup" */;
+			productName = AppGroup;
+		};
+		C2A00000000000000000000B /* WeatherTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
+			productName = WeatherTesting;
+		};
+		C2A00000000000000000000D /* LocationTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000002 /* XCLocalSwiftPackageReference "Packages/Core/Location" */;
+			productName = LocationTesting;
+		};
+		C2A00000000000000000000F /* PlaceSearchTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000003 /* XCLocalSwiftPackageReference "Packages/Core/PlaceSearch" */;
+			productName = PlaceSearchTesting;
+		};
+		C2B000000000000000000011 /* Region */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
+			productName = Region;
+		};
+		C2B000000000000000000013 /* Forecast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000006 /* XCLocalSwiftPackageReference "Packages/Features/Forecast" */;
+			productName = Forecast;
+		};
+		C2B000000000000000000015 /* SunnyDay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000007 /* XCLocalSwiftPackageReference "Packages/Features/SunnyDay" */;
+			productName = SunnyDay;
+		};
+		C2B000000000000000000017 /* Weather */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
+			productName = Weather;
+		};
+		C2C000000000000000000019 /* Region */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
+			productName = Region;
+		};
+		C2C00000000000000000001B /* Forecast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000006 /* XCLocalSwiftPackageReference "Packages/Features/Forecast" */;
+			productName = Forecast;
+		};
+		C2C00000000000000000001D /* SunnyDay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000007 /* XCLocalSwiftPackageReference "Packages/Features/SunnyDay" */;
+			productName = SunnyDay;
+		};
+		C2C00000000000000000001F /* Weather */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
+			productName = Weather;
+		};
+		C2C000000000000000000021 /* WeatherTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
+			productName = WeatherTesting;
+		};
+		C2C000000000000000000023 /* LocationTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000002 /* XCLocalSwiftPackageReference "Packages/Core/Location" */;
+			productName = LocationTesting;
+		};
+		C2C000000000000000000025 /* PlaceSearchTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000003 /* XCLocalSwiftPackageReference "Packages/Core/PlaceSearch" */;
+			productName = PlaceSearchTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 915F512D2521763500B4E384 /* Project object */;
 }

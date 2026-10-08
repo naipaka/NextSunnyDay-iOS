@@ -1,112 +1,312 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
     "10-Day Forecast" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "10日間の天気予報"
+            "value" : "10日間の天気"
           }
         }
       }
     },
-    "About This App" : {
+    "About Weather Data" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリについて"
+            "value" : "天気データについて"
           }
         }
       }
     },
-    "About Weather Forecast" : {
+    "Allow location access in Settings, or search for a region instead." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "天気予報について"
+            "value" : "設定アプリで位置情報の利用を許可するか、地域を検索してね。"
           }
         }
       }
     },
-    "App Settings" : {
+    "Choose a region to see when it will be sunny next." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリの設定"
+            "value" : "地域を決めると、次に晴れる日がわかるよ。"
           }
         }
       }
     },
-    "Cancel" : {
+    "Choose which kinds of days count as sunny." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "キャンセル"
+            "value" : "どんな天気の日を「晴れ」として数えるかを選べるよ。"
           }
         }
       }
     },
-    "Data Fetching Error" : {
+    "Clear and mostly clear" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "データ取得エラー"
+            "value" : "快晴・晴れ"
           }
         }
       }
     },
-    "Enter an address or place name" : {
+    "Clear only" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "住所や地名を入力してください"
+            "value" : "快晴だけ"
           }
         }
       }
     },
-    "Failed to fetch weather data.\nPlease wait a while and restart the app." : {
+    "Clear, mostly clear and partly cloudy" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "天気予報のデータの取得に失敗しました。\n時間を置いてから再起動してください。"
+            "value" : "快晴・晴れ・晴れ時々くもり"
           }
         }
       }
     },
-    "Fetching data…" : {
+    "Cloudy days too, with a chance of rain under 30%" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "情報を取得しています…"
+            "value" : "くもりも含む（降水確率 30% 未満の日）"
           }
         }
       }
     },
-    "High" : {
+    "Couldn't find this place" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最高"
+            "value" : "この場所が見つからなかったよ"
           }
         }
       }
     },
-    "Low" : {
+    "Couldn't find where you are" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最低"
+            "value" : "今いる場所がわからなかったよ"
+          }
+        }
+      }
+    },
+    "Couldn't get the weather" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天気を取得できなかったよ"
+          }
+        }
+      }
+    },
+    "Couldn't update the weather" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天気を更新できなかったよ"
+          }
+        }
+      }
+    },
+    "Current Location" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在地"
+          }
+        }
+      }
+    },
+    "Current Settings" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "いまの設定"
+          }
+        }
+      }
+    },
+    "Data Sources" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データソース"
+          }
+        }
+      }
+    },
+    "Data Sources and Legal Information" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データソースと法的情報"
+          }
+        }
+      }
+    },
+    "Days with almost no clouds" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雲がほとんどない日だけ"
+          }
+        }
+      }
+    },
+    "East" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "東"
+          }
+        }
+      }
+    },
+    "Getting the weather…" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天気を取得中…"
+          }
+        }
+      }
+    },
+    "High %@ Low %@ Rain %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高 %1$@ 最低 %2$@ 降水 %3$@"
+          }
+        }
+      }
+    },
+    "Hourly" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時間ごと"
+          }
+        }
+      }
+    },
+    "In %lld days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あと%lld日"
+          }
+        }
+      }
+    },
+    "In ? days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あと？日"
+          }
+        }
+      }
+    },
+    "It shows up here when the forecast changes" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予報が変わったらここに出るよ"
+          }
+        }
+      }
+    },
+    "Location access is off" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位置情報がオフになっているよ"
+          }
+        }
+      }
+    },
+    "Lower levels are looser. Looking for a day to dry the laundry? Try “No rain is fine”." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下に行くほどゆるい基準です。洗濯物を干したい日を探すなら「雨が降らなければOK」がおすすめ。"
+          }
+        }
+      }
+    },
+    "Maybe not for a while" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだ先かも"
+          }
+        }
+      }
+    },
+    "More" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "その他"
+          }
+        }
+      }
+    },
+    "Next Day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の日"
           }
         }
       }
@@ -116,27 +316,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "次に晴れる日"
-          }
-        }
-      }
-    },
-    "Next Sunny Day ☀️" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次に晴れる日☀️"
-          }
-        }
-      }
-    },
-    "Next Week or Later" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "来週以降"
+            "value" : "次の晴れ"
           }
         }
       }
@@ -151,12 +331,82 @@
         }
       }
     },
-    "Not Set" : {
+    "NextSunnyDay version %@" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未設定"
+            "value" : "次いつ晴れる？ バージョン %@"
+          }
+        }
+      }
+    },
+    "No Forecast" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "予報がありません"
+          }
+        }
+      }
+    },
+    "No rain is fine" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雨が降らなければOK"
+          }
+        }
+      }
+    },
+    "No sunny day in the next 10 days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10日先まで晴れの予報なし"
+          }
+        }
+      }
+    },
+    "North" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北"
+          }
+        }
+      }
+    },
+    "Northeast" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北東"
+          }
+        }
+      }
+    },
+    "Northwest" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "北西"
+          }
+        }
+      }
+    },
+    "Now" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今"
           }
         }
       }
@@ -171,12 +421,22 @@
         }
       }
     },
-    "Other data sources" : {
+    "Open Settings" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "その他のデータソース"
+            "value" : "設定を開く"
+          }
+        }
+      }
+    },
+    "Previous Day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前の日"
           }
         }
       }
@@ -191,12 +451,42 @@
         }
       }
     },
+    "Retry" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再試行"
+          }
+        }
+      }
+    },
     "Search Results" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "検索結果"
+          }
+        }
+      }
+    },
+    "Search cities" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "市区町村を検索"
+          }
+        }
+      }
+    },
+    "Search for a Region" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地域を検索"
           }
         }
       }
@@ -211,46 +501,6 @@
         }
       }
     },
-    "Send Feedback" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ご意見・ご要望を送る"
-          }
-        }
-      }
-    },
-    "Set Region" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "地域を設定"
-          }
-        }
-      }
-    },
-    "Set region to “%@”?" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\"%@\"でよろしいですか？"
-          }
-        }
-      }
-    },
-    "Set your region with the\nsettings button at the top right" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "右上の設定ボタンから\n地域を設定しましょう"
-          }
-        }
-      }
-    },
     "Settings" : {
       "localizations" : {
         "ja" : {
@@ -261,42 +511,272 @@
         }
       }
     },
-    "This app shows information based on weather forecasts from Apple Weather." : {
+    "Showing the forecast from %@" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "このアプリはApple Weatherの天気予報を元に情報を表示しています。"
+            "value" : "前回 %@ の予報を表示しています"
           }
         }
       }
     },
-    "Version" : {
+    "Shows the weather where you are" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "バージョン"
+            "value" : "今いる場所の天気を表示します"
           }
         }
       }
     },
-    "We accept no responsibility for any loss or damage caused by the weather forecast information in this app." : {
+    "South" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "当アプリを利用するにあたって、天気予報情報が原因で発生した損失や損害については一切責任を負いかねますのでご了承願います。"
+            "value" : "南"
           }
         }
       }
     },
-    "Write a Review" : {
+    "Southeast" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "レビューを書いて応援する"
+            "value" : "南東"
+          }
+        }
+      }
+    },
+    "Southwest" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "南西"
+          }
+        }
+      }
+    },
+    "Sunny" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れ"
+          }
+        }
+      }
+    },
+    "Sunrise" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日の出"
+          }
+        }
+      }
+    },
+    "Sunset" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日の入り"
+          }
+        }
+      }
+    },
+    "The app couldn't connect to the internet or get the weather from Apple Weather. Wait a moment, or pull down on the screen to update." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インターネットに接続できないか、Apple Weather から天気を受け取れませんでした。少し時間をおいて、画面を下に引っぱっても更新できます。"
+          }
+        }
+      }
+    },
+    "The forecast uses data from Apple Weather. It is updated when the data expires, about every hour, and you can update it yourself by pulling down on the home screen." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天気予報は Apple Weather のデータを使っています。予報はデータの期限が切れるころ（およそ1時間ごと）に新しくなり、ホーム画面を下に引っぱると手動でも更新できます。"
+          }
+        }
+      }
+    },
+    "The next sunny day is" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れは"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        }
+      }
+    },
+    "Today's Hours" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日の時間ごと"
+          }
+        }
+      }
+    },
+    "Tomorrow" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あした"
+          }
+        }
+      }
+    },
+    "Try Again" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "もう一度試す"
+          }
+        }
+      }
+    },
+    "Try again in a moment, or search for a region instead." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "少し待ってもう一度試すか、地域を検索してね。"
+          }
+        }
+      }
+    },
+    "Try again where you have a connection" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通信できる場所で、もう一度試してね"
+          }
+        }
+      }
+    },
+    "UV Index" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UV指数"
+          }
+        }
+      }
+    },
+    "Up to partly cloudy" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れ時々くもりまで"
+          }
+        }
+      }
+    },
+    "Updated at %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@に更新"
+          }
+        }
+      }
+    },
+    "Use Current Location" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "現在地を使う"
+          }
+        }
+      }
+    },
+    "Weather That Counts" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れに数える天気"
+          }
+        }
+      }
+    },
+    "West" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "西"
+          }
+        }
+      }
+    },
+    "What Counts as Sunny" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れの基準"
+          }
+        }
+      }
+    },
+    "Where should I check the weather?" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どこの天気を調べる？"
+          }
+        }
+      }
+    },
+    "Wind" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "風"
+          }
+        }
+      }
+    },
+    "You can change what counts as sunny in Settings." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れの基準は設定で変えられます。"
           }
         }
       }
