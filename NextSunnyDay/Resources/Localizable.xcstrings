@@ -361,26 +361,6 @@
         }
       }
     },
-    "Next Sunny Day %@" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次の晴れ %@"
-          }
-        }
-      }
-    },
-    "Next Sunny Day %@ (%@)" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次の晴れ %1$@（%2$@）"
-          }
-        }
-      }
-    },
     "NextSunnyDay" : {
       "comment" : "The app's name. The key has no spaces because \"Next Sunny Day\" is the key of the widget's label.",
       "localizations" : {
@@ -440,6 +420,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "10日先まで晴れの予報なし"
+          }
+        }
+      }
+    },
+    "No sunny day soon" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ まだ先かも"
           }
         }
       }
@@ -650,6 +640,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "晴れ"
+          }
+        }
+      }
+    },
+    "Sunny in %lld days (%@)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ あと%1$lld日（%2$@）"
+          }
+        }
+      }
+    },
+    "Sunny in ? days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ あと？日"
+          }
+        }
+      }
+    },
+    "Sunny today" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ 今日"
+          }
+        }
+      }
+    },
+    "Sunny tomorrow" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ あした"
           }
         }
       }

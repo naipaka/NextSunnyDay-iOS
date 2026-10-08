@@ -3,20 +3,26 @@ import SwiftUI
 import Weather
 import WidgetKit
 
-/// 「☀ 次の晴れ あと3日（土）」 above the clock; 「☀ 次の晴れ あした」 without the weekday.
+/// 「☀ 次の晴れ あと3日（土）」 ("Sunny in 3 days (Sat)") above the clock; 「☀ 次の晴れ あした」
+/// without the weekday.
 struct InlineWidgetView: View {
   let entry: SunnyEntry
 
   var body: some View {
     Label {
+      // One sentence per state, short enough for the line above the clock in English too.
       switch entry.state {
       // 「今日」 and 「あした」 need no weekday.
       case .sunny(let next) where next.daysAway > 1:
-        Text("Next Sunny Day \(Text(daysAway: next.daysAway)) (\(next.day.date.weekday))")
-      case .sunny(let next):
-        Text("Next Sunny Day \(Text(daysAway: next.daysAway))")
-      default:
-        Text("Next Sunny Day \(entry.state.headline)")
+        Text("Sunny in \(next.daysAway) days (\(next.day.date.weekday))")
+      case .sunny(let next) where next.daysAway == 1:
+        Text("Sunny tomorrow")
+      case .sunny:
+        Text("Sunny today")
+      case .noneInRange:
+        Text("No sunny day soon")
+      case .noData, .noRegion:
+        Text("Sunny in ? days")
       }
     } icon: {
       Image(systemName: entry.state.symbolName)

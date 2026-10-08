@@ -173,7 +173,7 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
   - None in range: 「まだ先かも」 / 「10日先まで晴れなし」. The medium widget still lists five days.
   - No data: 「あと？日」 / 「天気を取得できなかったよ」. The small widget adds 「タップして更新」; the medium widget adds the last update time.
 - **Lock Screen:**
-  - inline: 「☀ 次の晴れ あと3日（土）」; 「今日」 and 「あした」 go without the weekday
+  - inline: 「☀ 次の晴れ あと3日（土）」; 「今日」 and 「あした」 go without the weekday. In English each state is its own short sentence to fit the line above the clock: "Sunny in 3 days (Sat)", "Sunny today", "Sunny tomorrow", "No sunny day soon", "Sunny in ? days".
   - circular: the symbol over 「3日」
   - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/10（土）快晴」
   The system draws these in monochrome.
@@ -221,3 +221,4 @@ The three layers live in [`app-icon/`](app-icon/). They were traced as SVG from 
   - The Icon Composer icon from the three layers, with the dark and tinted looks above.
 - **#98 English**
   - Every string in this spec gets an English source string. The Japanese above is the `ja` translation.
+  - The English app name is "Next Sunny Day" (home screen, widget gallery, Settings).
