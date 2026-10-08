@@ -51,6 +51,16 @@
         }
       }
     },
+    "Chance of rain %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降水確率 %@"
+          }
+        }
+      }
+    },
     "Choose a region in the app" : {
       "localizations" : {
         "ja" : {
@@ -207,6 +217,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "天気を取得中…"
+          }
+        }
+      }
+    },
+    "High %@ Low %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高 %1$@ 最低 %2$@"
           }
         }
       }

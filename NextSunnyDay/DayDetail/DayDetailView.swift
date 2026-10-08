@@ -85,6 +85,7 @@ private struct HoursCard: View {
       VStack(spacing: 0) {
         ForEach(Array(hours.enumerated()), id: \.element.date) { index, hour in
           row(hour)
+            .accessibilityElement(children: .combine)
             .padding(.horizontal, 16)
             .padding(.vertical, 11)
           if index != hours.count - 1 {
@@ -142,6 +143,7 @@ private struct HoursCard: View {
       Text(verbatim: hour.precipitationChance.percent)
         .font(.footnote.weight(.semibold))
         .foregroundStyle(.cyan)
+        .accessibilityLabel(Text("Chance of rain \(hour.precipitationChance.percent)"))
     }
   }
 

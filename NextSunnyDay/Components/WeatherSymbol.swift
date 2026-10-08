@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// A weather SF Symbol in the palette colors of the design: gray or white clouds, a yellow sun
-/// and moon, cyan rain.
+/// and moon, cyan rain. VoiceOver skips it; the condition is always said in words.
 struct WeatherSymbol: View {
   /// The symbol name; WeatherKit's names are used with their filled variant.
   let name: String
@@ -15,6 +15,10 @@ struct WeatherSymbol: View {
   }
 
   var body: some View {
+    symbol.accessibilityHidden(true)
+  }
+
+  @ViewBuilder private var symbol: some View {
     let image = Image(systemName: filledName).symbolRenderingMode(.palette)
     if filledName.hasPrefix("sun") || filledName.hasPrefix("moon") {
       image.foregroundStyle(.yellow, .yellow)

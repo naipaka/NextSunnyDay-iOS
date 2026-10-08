@@ -42,12 +42,32 @@ struct NextHoursCard: View {
               Text(verbatim: hour.temperature.degrees)
             }
             .frame(width: cellWidth)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(Text(verbatim: spokenHour(hour, isNow: index == 0)))
           }
         }
         .padding(.vertical, 14)
         .padding(.horizontal, 8)
       }
     }
+  }
+
+  /// What VoiceOver says for a cell, with the condition the symbol shows.
+  private func spokenHour(_ hour: HourForecast, isNow: Bool) -> String {
+    let time =
+      if isNow {
+        String(localized: "Now")
+      } else if Calendar.current.component(.hour, from: hour.date) == 0 {
+        "\(hour.date.dayWithWeekday) \(hour.date.hour)"
+      } else {
+        hour.date.hour
+      }
+    var parts = [time, hour.condition.localizedName]
+    if hour.precipitationChance.isShownAsPrecipitation {
+      parts.append(String(localized: "Chance of rain \(hour.precipitationChance.percent)"))
+    }
+    parts.append(hour.temperature.degrees)
+    return parts.joined(separator: ", ")
   }
 }
 
@@ -92,6 +112,7 @@ struct DayRow: View {
           Text(verbatim: day.precipitationChance.percent)
             .font(.caption2.weight(.semibold))
             .foregroundStyle(.cyan)
+            .accessibilityLabel(Text("Chance of rain \(day.precipitationChance.percent)"))
         }
       }
       .frame(width: symbolWidth)
@@ -131,6 +152,9 @@ struct DayRow: View {
       Text(verbatim: day.lowTemperature.degrees).foregroundStyle(.secondary)
     }
     .font(.body.monospacedDigit())
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel(
+      Text("High \(day.highTemperature.degrees) Low \(day.lowTemperature.degrees)"))
   }
 }
 

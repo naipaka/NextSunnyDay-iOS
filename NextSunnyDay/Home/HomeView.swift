@@ -123,6 +123,8 @@ struct HomeView: View {
         }
         .padding(.horizontal, 4)
       }
+      .accessibilityLabel(Text("Region"))
+      .accessibilityValue(regionName)
     }
     ToolbarItem(placement: .topBarTrailing) {
       Button("Settings", systemImage: "gearshape") {
