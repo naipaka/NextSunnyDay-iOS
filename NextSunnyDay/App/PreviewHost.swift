@@ -93,10 +93,11 @@ extension AppFeatures {
 
     let cache = ForecastCache(directory: cacheDirectory)
     if scenario == .refreshFailed {
-      // Fetched at 14:05 yesterday, before the last 4:00, so Home fetches again (ADR 0006).
+      // Fetched at 3:00 yesterday, before the last 4:00 at any time of day, so Home fetches
+      // again (ADR 0006).
       let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
       let fetchedAt = Calendar.current.date(
-        bySettingHour: 14, minute: 5, second: 0, of: yesterday)!
+        bySettingHour: 3, minute: 0, second: 0, of: yesterday)!
       let stale = CachedForecast(
         regionID: place.id, placeName: "港区", coordinate: minato, fetchedAt: fetchedAt,
         forecast: WeatherRecording.tokyo.forecast(expiringAt: fetchedAt.addingTimeInterval(3600)))
