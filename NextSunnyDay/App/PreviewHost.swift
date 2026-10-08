@@ -12,7 +12,7 @@ import WeatherTesting
 /// Shows a view with the real state holders and features on fakes of the outside world, in one
 /// of the situations the screens handle.
 struct PreviewHost<Content: View>: View {
-  enum Scenario {
+  enum Scenario: String {
     /// Tokyo's recording: a sunny day ahead.
     case tokyo
     /// Singapore's recording: no sunny day in ten days.
@@ -93,8 +93,10 @@ extension AppFeatures {
 
     let cache = ForecastCache(directory: cacheDirectory)
     if scenario == .refreshFailed {
-      // Fetched at 9:00 today, and expired since.
-      let fetchedAt = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: .now)!
+      // Fetched at 14:05 yesterday, before the last 4:00, so Home fetches again (ADR 0006).
+      let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
+      let fetchedAt = Calendar.current.date(
+        bySettingHour: 14, minute: 5, second: 0, of: yesterday)!
       let stale = CachedForecast(
         regionID: place.id, placeName: "港区", coordinate: minato, fetchedAt: fetchedAt,
         forecast: WeatherRecording.tokyo.forecast(expiringAt: fetchedAt.addingTimeInterval(3600)))
@@ -113,3 +115,15 @@ extension AppFeatures {
     )
   }
 }
+
+#if DEBUG
+  extension AppFeatures {
+    /// The features of a preview scenario when the app is launched with
+    /// `-PreviewScenario <name>`, to look at a state in the simulator.
+    static var launchScenario: AppFeatures? {
+      UserDefaults.standard.string(forKey: "PreviewScenario")
+        .flatMap(PreviewHost<EmptyView>.Scenario.init(rawValue:))
+        .map(preview)
+    }
+  }
+#endif

@@ -9,7 +9,11 @@ struct NextSunnyDayApp: App {
 
   init() {
     LegacyRealmCleanup.run()
-    let features = AppFeatures.live
+    #if DEBUG
+      let features = AppFeatures.launchScenario ?? .live
+    #else
+      let features = AppFeatures.live
+    #endif
     self.features = features
     _regionSelection = State(
       initialValue: RegionSelection(store: features.regionStore, search: features.regionSearch))
