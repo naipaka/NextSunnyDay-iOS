@@ -9,6 +9,7 @@
 次に晴れる日を、ホーム画面のウィジェットで確かめられる iOS アプリです。
 天気アプリのウィジェットには今日と明日の天気しか出ず、洗濯物をいつ外に干せるかがわかりにくかったため作りました。
 アプリでは、次の晴れの日に加えて、24 時間先までと 10 日間の天気を見られます。何を「晴れ」と数えるかも選べます。
+日本語と英語に対応しています。
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 

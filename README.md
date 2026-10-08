@@ -9,7 +9,7 @@
 An iOS widget that shows the next sunny day on your home screen.
 Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
 The app shows when the next sunny day is, the next 24 hours and ten days, and lets you choose what counts as sunny.
-The app is available in Japanese only.
+The app is available in English and Japanese.
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 
