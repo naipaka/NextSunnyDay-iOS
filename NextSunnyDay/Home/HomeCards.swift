@@ -5,6 +5,8 @@ import Weather
 /// The next 24 hours, starting with the current one. The first hour of a day shows its date.
 struct NextHoursCard: View {
   let hours: [HourForecast]
+  @ScaledMetric private var cellWidth: CGFloat = 56
+  @ScaledMetric private var symbolHeight: CGFloat = 28
 
   private var shownHours: [HourForecast] {
     let thisHour = Calendar.current.dateInterval(of: .hour, for: .now)?.start ?? .now
@@ -30,7 +32,7 @@ struct NextHoursCard: View {
               .foregroundStyle(.secondary)
               WeatherSymbol(name: hour.symbolName)
                 .font(.title2)
-                .frame(height: 28)
+                .frame(height: symbolHeight)
               Text(
                 verbatim: hour.precipitationChance.isShownAsPrecipitation
                   ? hour.precipitationChance.percent : " "
@@ -39,7 +41,7 @@ struct NextHoursCard: View {
               .foregroundStyle(.cyan)
               Text(verbatim: hour.temperature.degrees)
             }
-            .frame(width: 56)
+            .frame(width: cellWidth)
           }
         }
         .padding(.vertical, 14)
@@ -76,32 +78,35 @@ struct DayRow: View {
   let day: DayForecast
   let isToday: Bool
   let isSunny: Bool
+  @ScaledMetric private var symbolWidth: CGFloat = 36
+  @ScaledMetric private var symbolHeight: CGFloat = 28
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   var body: some View {
     HStack(spacing: 14) {
       VStack(spacing: 2) {
         WeatherSymbol(name: day.symbolName)
           .font(.title2)
-          .frame(height: 28)
+          .frame(height: symbolHeight)
         if day.precipitationChance.isShownAsPrecipitation {
           Text(verbatim: day.precipitationChance.percent)
             .font(.caption2.weight(.semibold))
             .foregroundStyle(.cyan)
         }
       }
-      .frame(width: 36)
-      VStack(alignment: .leading, spacing: 2) {
-        if isToday { Text("Today") } else { Text(verbatim: day.date.dayWithWeekday) }
-        Text(verbatim: day.condition.localizedName)
-          .font(.subheadline)
-          .foregroundStyle(isSunny ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
+      .frame(width: symbolWidth)
+      // At accessibility sizes the temperatures go under the day, which needs the whole width.
+      if dynamicTypeSize.isAccessibilitySize {
+        VStack(alignment: .leading, spacing: 2) {
+          titles
+          temperatures
+        }
+        Spacer(minLength: 8)
+      } else {
+        titles
+        Spacer(minLength: 8)
+        temperatures
       }
-      Spacer(minLength: 8)
-      HStack(spacing: 6) {
-        Text(verbatim: day.highTemperature.degrees)
-        Text(verbatim: day.lowTemperature.degrees).foregroundStyle(.secondary)
-      }
-      .font(.body.monospacedDigit())
       Image(systemName: "chevron.right")
         .font(.footnote.weight(.semibold))
         .foregroundStyle(.tertiary)
@@ -110,15 +115,38 @@ struct DayRow: View {
     .padding(.vertical, 10)
     .contentShape(Rectangle())
   }
+
+  private var titles: some View {
+    VStack(alignment: .leading, spacing: 2) {
+      if isToday { Text("Today") } else { Text(verbatim: day.date.dayWithWeekday) }
+      Text(verbatim: day.condition.localizedName)
+        .font(.subheadline)
+        .foregroundStyle(isSunny ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
+    }
+  }
+
+  private var temperatures: some View {
+    HStack(spacing: 6) {
+      Text(verbatim: day.highTemperature.degrees)
+      Text(verbatim: day.lowTemperature.degrees).foregroundStyle(.secondary)
+    }
+    .font(.body.monospacedDigit())
+  }
 }
 
 /// Shown above the cached forecast when a refresh failed.
 struct RefreshFailedBanner: View {
   let fetchedAt: Date
   let retry: () -> Void
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   var body: some View {
-    HStack(alignment: .top, spacing: 12) {
+    // At accessibility sizes the button goes under the text, which needs the whole width.
+    let layout =
+      dynamicTypeSize.isAccessibilitySize
+      ? AnyLayout(VStackLayout(alignment: .leading, spacing: 12))
+      : AnyLayout(HStackLayout(alignment: .top, spacing: 12))
+    layout {
       Image(systemName: "exclamationmark.icloud.fill")
         .font(.title2)
         .foregroundStyle(.red)
@@ -134,6 +162,7 @@ struct RefreshFailedBanner: View {
         .buttonStyle(.glass)
         .controlSize(.small)
     }
+    .frame(maxWidth: .infinity, alignment: .leading)
     .padding(16)
     .background(
       Color(.secondarySystemGroupedBackground),

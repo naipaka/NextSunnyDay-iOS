@@ -75,32 +75,18 @@ struct DayDetailView: View {
 /// One row per hour of the day.
 private struct HoursCard: View {
   let hours: [HourForecast]
+  @ScaledMetric private var timeWidth: CGFloat = 44
+  @ScaledMetric private var symbolWidth: CGFloat = 32
+  @ScaledMetric private var temperatureWidth: CGFloat = 40
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   var body: some View {
     CardSection(title: "Hourly") {
       VStack(spacing: 0) {
         ForEach(Array(hours.enumerated()), id: \.element.date) { index, hour in
-          HStack(spacing: 14) {
-            Text(verbatim: hour.date.hour)
-              .monospacedDigit()
-              .frame(width: 44, alignment: .leading)
-            WeatherSymbol(name: hour.symbolName)
-              .font(.title3)
-              .frame(width: 32)
-            Text(verbatim: hour.condition.localizedName)
-              .foregroundStyle(.secondary)
-            Spacer()
-            if hour.precipitationChance.isShownAsPrecipitation {
-              Text(verbatim: hour.precipitationChance.percent)
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(.cyan)
-            }
-            Text(verbatim: hour.temperature.degrees)
-              .monospacedDigit()
-              .frame(width: 40, alignment: .trailing)
-          }
-          .padding(.horizontal, 16)
-          .padding(.vertical, 11)
+          row(hour)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 11)
           if index != hours.count - 1 {
             Divider().padding(.leading, 16)
           }
@@ -109,11 +95,67 @@ private struct HoursCard: View {
       .padding(.vertical, 4)
     }
   }
+
+  /// At accessibility sizes the condition and the chance of rain go on a second line.
+  @ViewBuilder private func row(_ hour: HourForecast) -> some View {
+    if dynamicTypeSize.isAccessibilitySize {
+      VStack(alignment: .leading, spacing: 4) {
+        HStack(spacing: 14) {
+          time(hour)
+          Spacer()
+          temperature(hour)
+        }
+        HStack(spacing: 14) {
+          condition(hour)
+          precipitation(hour)
+        }
+      }
+    } else {
+      HStack(spacing: 14) {
+        time(hour)
+        condition(hour)
+        Spacer()
+        precipitation(hour)
+        temperature(hour)
+      }
+    }
+  }
+
+  private func time(_ hour: HourForecast) -> some View {
+    HStack(spacing: 14) {
+      Text(verbatim: hour.date.hour)
+        .monospacedDigit()
+        .frame(minWidth: timeWidth, alignment: .leading)
+      WeatherSymbol(name: hour.symbolName)
+        .font(.title3)
+        .frame(width: symbolWidth)
+    }
+  }
+
+  private func condition(_ hour: HourForecast) -> some View {
+    Text(verbatim: hour.condition.localizedName)
+      .foregroundStyle(.secondary)
+  }
+
+  @ViewBuilder private func precipitation(_ hour: HourForecast) -> some View {
+    if hour.precipitationChance.isShownAsPrecipitation {
+      Text(verbatim: hour.precipitationChance.percent)
+        .font(.footnote.weight(.semibold))
+        .foregroundStyle(.cyan)
+    }
+  }
+
+  private func temperature(_ hour: HourForecast) -> some View {
+    Text(verbatim: hour.temperature.degrees)
+      .monospacedDigit()
+      .frame(minWidth: temperatureWidth, alignment: .trailing)
+  }
 }
 
 /// Sunrise, sunset, UV index and wind.
 private struct MoreCard: View {
   let day: DayForecast
+  @ScaledMetric private var symbolWidth: CGFloat = 28
 
   var body: some View {
     CardSection(title: "More") {
@@ -143,7 +185,7 @@ private struct MoreCard: View {
       Image(systemName: symbol)
         .symbolRenderingMode(.multicolor)
         .font(.title3)
-        .frame(width: 28)
+        .frame(width: symbolWidth)
       Text(title)
       Spacer()
       value.foregroundStyle(.secondary)

@@ -5,6 +5,7 @@ import Weather
 /// Chooses which days count as sunny.
 struct SunnyLevelView: View {
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
+  @ScaledMetric private var symbolWidth: CGFloat = 34
 
   var body: some View {
     List {
@@ -16,7 +17,7 @@ struct SunnyLevelView: View {
             HStack(spacing: 14) {
               WeatherSymbol(name: level.symbolName)
                 .font(.title2)
-                .frame(width: 34)
+                .frame(width: symbolWidth)
               VStack(alignment: .leading, spacing: 2) {
                 Text(level.title)
                   .foregroundStyle(.primary)
