@@ -18,6 +18,7 @@ struct HomeHeader: View {
     VStack(alignment: .leading, spacing: 4) {
       Text("The next sunny day is")
         .font(.headline)
+        .redacted(reason: isLoading ? .placeholder : [])
       switch state {
       case .loading:
         HStack(spacing: 12) {
@@ -25,6 +26,15 @@ struct HomeHeader: View {
           Text("Getting the weather…").font(.title2.weight(.semibold))
         }
         .frame(height: 86, alignment: .leading)
+        Group {
+          Text(verbatim: "October 00 (Sat) Clear")
+            .font(.title3.weight(.semibold))
+            .padding(.top, 6)
+          Text(verbatim: "High 00° Low 00° Rain 0%")
+            .font(.subheadline)
+        }
+        .redacted(reason: .placeholder)
+        .accessibilityHidden(true)
       case .noData:
         bigText(Text("In ? days"))
         Text("Couldn't get the weather")
@@ -68,6 +78,10 @@ struct HomeHeader: View {
           .accessibilityHidden(true)
       }
     }
+  }
+
+  private var isLoading: Bool {
+    if case .loading = state { true } else { false }
   }
 
   private var symbol: String? {

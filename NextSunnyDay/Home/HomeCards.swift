@@ -180,18 +180,49 @@ struct NoDataCard: View {
   }
 }
 
-/// Gray rows in the shape of the cards while the first forecast loads.
+/// The cards in gray while the first forecast loads.
 struct LoadingPlaceholder: View {
   var body: some View {
-    CardSection(title: "10-Day Forecast") {
-      VStack(alignment: .leading, spacing: 0) {
-        ForEach(0..<6, id: \.self) { _ in
-          Text(verbatim: "Placeholder day row")
-            .padding(.horizontal, 16)
-            .padding(.vertical, 14)
+    Group {
+      CardSection(title: "Today's Hours") {
+        HStack(spacing: 0) {
+          ForEach(0..<6, id: \.self) { _ in
+            VStack(spacing: 8) {
+              Text(verbatim: "00").font(.footnote)
+              Image(systemName: "cloud.fill").font(.title2).frame(height: 28)
+              Text(verbatim: "00%").font(.caption2)
+              Text(verbatim: "00°")
+            }
+            .frame(width: 56)
+          }
         }
+        .padding(.vertical, 14)
+        .padding(.horizontal, 8)
+      }
+      CardSection(title: "10-Day Forecast") {
+        VStack(spacing: 0) {
+          ForEach(0..<6, id: \.self) { index in
+            HStack(spacing: 14) {
+              Image(systemName: "cloud.fill").font(.title2).frame(height: 28)
+                .frame(width: 36)
+              VStack(alignment: .leading, spacing: 2) {
+                Text(verbatim: "October 00 (Sat)")
+                Text(verbatim: "Clear").font(.subheadline)
+              }
+              Spacer(minLength: 8)
+              Text(verbatim: "00° 00°")
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            if index != 5 {
+              Divider().padding(.leading, 66)
+            }
+          }
+        }
+        .padding(.vertical, 4)
       }
     }
     .redacted(reason: .placeholder)
+    .accessibilityHidden(true)
   }
 }
