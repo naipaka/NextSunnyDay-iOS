@@ -25,6 +25,11 @@ extension Date {
     formatted(.dateTime.month(.abbreviated).day().weekday(.abbreviated))
   }
 
+  /// The month and day in digits, such as `10/9`.
+  var monthDay: String {
+    formatted(.dateTime.month(.defaultDigits).day())
+  }
+
   /// The hour, such as 「15時」 in Japanese.
   var hour: String {
     formatted(.dateTime.hour())

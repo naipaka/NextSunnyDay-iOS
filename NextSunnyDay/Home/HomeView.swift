@@ -4,7 +4,7 @@ import SunnyDay
 import SwiftUI
 import Weather
 
-/// The next sunny day, today's hours and ten days for the selected region.
+/// The next sunny day, the next 24 hours and ten days for the selected region.
 struct HomeView: View {
   let region: SavedRegion
 
@@ -100,7 +100,7 @@ struct HomeView: View {
           Task { await regionForecast.refresh(for: region) }
         }
       }
-      TodayHoursCard(hours: cached.forecast.hourly, today: today)
+      NextHoursCard(hours: cached.forecast.hourly)
       DaysCard(days: cached.forecast.days(from: today), level: sunnyLevelSelection.level)
       AttributionFooter(fetchedAt: cached.fetchedAt)
     } else if let failure = regionForecast.failure {

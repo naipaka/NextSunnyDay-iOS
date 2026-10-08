@@ -8,7 +8,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | --- | --- |
 | Regions | A single region. The user picks it by search, or chooses "use current location" (Core Location). No list of saved regions. |
 | Sunny definition | A user setting with four levels; the default matches v1. See [Sunny levels](#sunny-levels). |
-| Hourly forecast | Home shows today's hours as a horizontal strip. Each day's hours are in the day detail screen, which opens from a row in the 10-day list. |
+| Hourly forecast | Home shows the next 24 hours as a horizontal strip, so the strip stays useful in the evening. Each day's hours are in the day detail screen, which opens from a row in the 10-day list. |
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
 | Manual refresh | Pull to refresh on Home. |
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
@@ -55,7 +55,7 @@ Settings is a sheet with its own navigation stack. The day detail screen is push
   - The sheet starts 34 pt above the bottom of the header and has 34 pt top corners and a soft upward shadow (black at 18 %, radius 18, y −4).
   - While it scrolls, the header fades out over 70 % of its height and moves up at 0.3× the scroll speed (parallax).
   - Pulling down past the top shows more of the header color.
-- **今日の時間ごと** card: a horizontal strip with time, symbol, precipitation chance and temperature. The first cell is 「今」.
+- **時間ごとの予報** card: a horizontal strip of the next 24 hours with time, symbol, precipitation chance and temperature. The first cell is 「今」; the first hour of the next day shows its date (「10/9」) instead of 「0時」. The screenshots predate this and show 「今日の時間ごと」 with today's hours only.
 - **10日間の天気** card. Each row shows:
   - the symbol, with the precipitation chance under it
   - the date (「今日」, then 「10月8日（木）」…)

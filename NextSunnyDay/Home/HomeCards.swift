@@ -2,25 +2,29 @@ import SunnyDay
 import SwiftUI
 import Weather
 
-/// The hours left today, starting with the current one.
-struct TodayHoursCard: View {
+/// The next 24 hours, starting with the current one. The first hour of a day shows its date.
+struct NextHoursCard: View {
   let hours: [HourForecast]
-  let today: Date
 
   private var shownHours: [HourForecast] {
-    let calendar = Calendar.current
-    let thisHour = calendar.dateInterval(of: .hour, for: .now)?.start ?? .now
-    return hours.filter { $0.date >= thisHour && calendar.isDate($0.date, inSameDayAs: today) }
+    let thisHour = Calendar.current.dateInterval(of: .hour, for: .now)?.start ?? .now
+    return Array(hours.filter { $0.date >= thisHour }.prefix(24))
   }
 
   var body: some View {
-    CardSection(title: "Today's Hours") {
+    CardSection(title: "Hourly Forecast") {
       ScrollView(.horizontal, showsIndicators: false) {
         HStack(spacing: 0) {
           ForEach(Array(shownHours.enumerated()), id: \.element.date) { index, hour in
             VStack(spacing: 8) {
               Group {
-                if index == 0 { Text("Now") } else { Text(verbatim: hour.date.hour) }
+                if index == 0 {
+                  Text("Now")
+                } else if Calendar.current.component(.hour, from: hour.date) == 0 {
+                  Text(verbatim: hour.date.monthDay).fontWeight(.semibold)
+                } else {
+                  Text(verbatim: hour.date.hour)
+                }
               }
               .font(.footnote)
               .foregroundStyle(.secondary)
@@ -184,7 +188,7 @@ struct NoDataCard: View {
 struct LoadingPlaceholder: View {
   var body: some View {
     Group {
-      CardSection(title: "Today's Hours") {
+      CardSection(title: "Hourly Forecast") {
         HStack(spacing: 0) {
           ForEach(0..<6, id: \.self) { _ in
             VStack(spacing: 8) {

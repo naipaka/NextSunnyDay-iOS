@@ -261,6 +261,16 @@
         }
       }
     },
+    "Hourly Forecast" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時間ごとの予報"
+          }
+        }
+      }
+    },
     "In %lld days" : {
       "localizations" : {
         "ja" : {
@@ -707,16 +717,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日"
-          }
-        }
-      }
-    },
-    "Today's Hours" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "今日の時間ごと"
           }
         }
       }
