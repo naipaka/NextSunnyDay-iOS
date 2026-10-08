@@ -40,13 +40,15 @@ extension Date {
     formatted(date: .omitted, time: .shortened)
   }
 
-  /// When a forecast was fetched: the time today, 「昨日 14:05」 yesterday, and the date with the
-  /// time before that, such as 「10月6日 14:05」.
+  /// When a forecast was fetched, in the middle of a sentence, with the relative day the system
+  /// uses for the language, such as 「昨日 14:05」 or "yesterday at 2:05 PM".
   var fetchTime: String {
-    let calendar = Calendar.current
-    if calendar.isDateInToday(self) { return time }
-    if calendar.isDateInYesterday(self) { return String(localized: "yesterday at \(time)") }
-    return formatted(.dateTime.month(.abbreviated).day().hour().minute())
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .short
+    formatter.doesRelativeDateFormatting = true
+    formatter.formattingContext = .middleOfSentence
+    return formatter.string(from: self)
   }
 }
 

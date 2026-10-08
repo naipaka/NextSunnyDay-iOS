@@ -860,16 +860,6 @@
           }
         }
       }
-    },
-    "yesterday at %@" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "昨日 %@"
-          }
-        }
-      }
     }
   },
   "version" : "1.0"
