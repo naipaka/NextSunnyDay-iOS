@@ -146,6 +146,7 @@ Fog, smoke, blowing dust, every kind of precipitation and every storm never coun
 - The first row is 「現在地を使う」 (`location.fill` in blue, subtitle 「今いる場所の天気を表示します」).
 - Below it is a 「検索結果」 section that updates while the user types (#28). Each result shows a place name and a gray subtitle, and the current region has an orange checkmark.
 - Search uses `.searchable`; on iOS 26 the field sits at the bottom.
+- Results are areas only: prefectures, cities, wards and towns (「港区」, 「湊」), never street addresses or buildings.
 
 ## About weather data
 

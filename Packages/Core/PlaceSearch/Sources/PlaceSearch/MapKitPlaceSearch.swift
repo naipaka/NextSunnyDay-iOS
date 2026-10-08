@@ -53,6 +53,9 @@ private final class CompletionRequest: NSObject, MKLocalSearchCompleterDelegate 
   override init() {
     super.init()
     completer.resultTypes = .address
+    // Areas only: prefectures, cities, wards and towns, not street addresses or buildings.
+    completer.addressFilter = MKAddressFilter(
+      including: [.administrativeArea, .subAdministrativeArea, .locality, .subLocality])
     completer.delegate = self
   }
 
