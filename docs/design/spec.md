@@ -47,14 +47,14 @@ Settings is a sheet with its own navigation stack. The day detail screen is push
 ![Home](images/home.jpg)
 
 - **Toolbar** (system glass): a region button on the leading side (`location.fill` and the region name) and a gear button on the trailing side.
-- **Header.** A full-bleed color layer fixed behind the content:
+- **Header.** A full-bleed color area at the top of the scrolling content:
   - System orange when a sunny day is in range, `systemGray` when none is, and `systemGray2` while loading or when there is no data.
   - Text from top to bottom: 「次の晴れは」 (`headline`), the big 「あと3日」, the date and condition (`title3` semibold), then high / low / precipitation (`subheadline`).
   - A 64 pt white symbol sits at the top trailing corner.
-- **Content sheet.** It scrolls over the header:
+- **Content sheet.** It overlaps the bottom of the header, and both scroll together (a stretchy header):
   - The sheet starts 34 pt above the bottom of the header and has 34 pt top corners and a soft upward shadow (black at 18 %, radius 18, y −4).
-  - While it scrolls, the header fades out over 70 % of its height and moves up at 0.3× the scroll speed (parallax).
-  - Pulling down past the top shows more of the header color.
+  - Scrolling up, the header fades out over 70 % of its height and moves up at 0.3× the scroll speed (parallax), so the sheet slides over it. Once the sheet reaches the top, the toolbar floats over the sheet with the system scroll edge effect, and no header color is left behind it.
+  - Pulling down stretches the header color into the space above it; the header text moves down with the content. The refresh control shows on the header color.
 - **時間ごとの予報** card: a horizontal strip of the next 24 hours with time, symbol, precipitation chance and temperature. The first cell is 「今」; the first hour of the next day shows its date (「10/9」) instead of 「0時」. The screenshots predate this and show 「今日の時間ごと」 with today's hours only.
 - **10日間の天気** card. Each row shows:
   - the symbol, with the precipitation chance under it
