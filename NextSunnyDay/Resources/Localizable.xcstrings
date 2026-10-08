@@ -382,7 +382,14 @@
       }
     },
     "NextSunnyDay" : {
+      "comment" : "The app's name. The key has no spaces because \"Next Sunny Day\" is the key of the widget's label.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Sunny Day"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -393,6 +400,12 @@
     },
     "NextSunnyDay version %@" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next Sunny Day version %@"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
