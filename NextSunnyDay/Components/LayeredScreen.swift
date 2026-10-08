@@ -11,6 +11,8 @@ struct LayeredScreen<Header: View, Content: View>: View {
   @State private var offset: CGFloat = 0
   @State private var headerHeight: CGFloat = 300
   @State private var topInset: CGFloat = 0
+  @Environment(\.colorSchemeContrast) private var contrast
+  @Environment(\.colorScheme) private var colorScheme
   private let overlap: CGFloat = 34
 
   var body: some View {
@@ -60,7 +62,11 @@ struct LayeredScreen<Header: View, Content: View>: View {
       // Behind the scroll view, so that the refresh control shows on it. It ends under the
       // sheet: pulling down stretches it, and it is gone once the sheet reaches the top.
       VStack(spacing: 0) {
-        color.frame(height: max(topInset + headerHeight - offset, 0))
+        color
+          .frame(height: max(topInset + headerHeight - offset, 0))
+          // With Increase Contrast the dark variants get lighter, which lowers the contrast of
+          // the white header text; the light variants get darker.
+          .environment(\.colorScheme, contrast == .increased ? .light : colorScheme)
         Color(.systemGroupedBackground)
       }
       .ignoresSafeArea()
