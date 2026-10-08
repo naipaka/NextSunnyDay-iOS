@@ -3,9 +3,11 @@ import Foundation
 import Weather
 
 /// The Apple Weather mark for the widgets. A widget can't load images while it is shown, so the
-/// mark is downloaded once, while building a timeline, into the widget's caches directory.
+/// mark is downloaded once per language, while building a timeline, into the widget's caches
+/// directory. The mark has the service name in the app's language.
 struct AttributionMarkCache {
-  private let file = URL.cachesDirectory.appending(path: "apple-weather-mark-dark.png")
+  private let file = URL.cachesDirectory.appending(
+    path: "apple-weather-mark-dark-\(Bundle.main.preferredLocalizations.first ?? "en").png")
 
   /// The mark for dark backgrounds (the widgets are orange or gray), or `nil` when it can't be
   /// downloaded now.

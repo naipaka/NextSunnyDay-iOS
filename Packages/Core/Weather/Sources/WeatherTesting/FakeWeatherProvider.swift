@@ -44,13 +44,16 @@ public actor FakeWeatherProvider: WeatherProviding {
 }
 
 extension WeatherDataAttribution {
-  /// Apple Weather's attribution as WeatherKit returned it with the recordings (Japanese marks).
-  public static let sample = WeatherDataAttribution(
-    serviceName: "Apple Weather",
-    legalPageURL: URL(string: "https://weatherkit.apple.com/legal-attribution.html")!,
-    combinedMarkLightURL: URL(
-      string: "https://weatherkit.apple.com/assets/branding/ja/Apple_Weather_blk_ja_3X_090122.png")!,
-    combinedMarkDarkURL: URL(
-      string: "https://weatherkit.apple.com/assets/branding/ja/Apple_Weather_wht_ja_3X_090122.png")!
-  )
+  /// Apple Weather's attribution as WeatherKit returns it, with the marks in Japanese when the app
+  /// runs in Japanese and in English otherwise.
+  public static var sample: WeatherDataAttribution {
+    let language = Bundle.main.preferredLocalizations.first == "ja" ? "ja" : "en"
+    let branding = "https://weatherkit.apple.com/assets/branding/\(language)/Apple_Weather"
+    return WeatherDataAttribution(
+      serviceName: "Apple Weather",
+      legalPageURL: URL(string: "https://weatherkit.apple.com/legal-attribution.html")!,
+      combinedMarkLightURL: URL(string: "\(branding)_blk_\(language)_3X_090122.png")!,
+      combinedMarkDarkURL: URL(string: "\(branding)_wht_\(language)_3X_090122.png")!
+    )
+  }
 }
