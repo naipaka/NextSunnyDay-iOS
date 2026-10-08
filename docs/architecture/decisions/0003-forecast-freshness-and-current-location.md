@@ -34,5 +34,5 @@ A cached forecast is fetched again when **its `expirationDate` has passed, or th
 
 ## Consequences
 
-- The actual expiration intervals have not been measured yet; check them on a device when implementing.
+- Measured on 8 October 2026: WeatherKit's daily and hourly data both expire one hour after they are fetched, so the app fetches at most about once an hour while it is used, and the widget fetches on each timeline refresh.
 - A user who travels far before the data expires sees the old place until they pull to refresh. The next sunny day rarely changes over a few kilometres.

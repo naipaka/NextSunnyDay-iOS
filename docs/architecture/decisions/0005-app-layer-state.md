@@ -214,4 +214,5 @@ The surveyed code that does not use MVVM (Apple's recent samples, Ice Cubes) has
 - Not yet checked on a device: that `task(id:)` in Home keeps reacting while the Settings sheet covers it. If it does not, the trigger for a region changed in the sheet is revisited when implementing Home.
 
 - Fetching when the selected region changes is declared in a view, so it is checked in the running app and previews, not by unit tests. The fetching itself is unit-tested in the state holder and the feature.
+- Previews are in the app target, so the app links the `…Testing` modules, and they ship in release builds: `#Preview` is compiled in every configuration, so `PreviewHost` can't be limited to `DEBUG`, and the fakes' protocol conformances keep their types in the binary. The WeatherKit recordings (about 0.9 MB) are copied into the app bundle. Moving the previews and their fakes out of the release app is left for later.
 - State holder names do not share a suffix, so they cannot be listed by name pattern. They are found by their place in the app target.

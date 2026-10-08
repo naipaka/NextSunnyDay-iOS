@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 26.4.1 (Swift language mode 5, iOS deployment target 26.0).
+NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 26.4.1 (Swift 6 language mode, iOS deployment target 26.0).
 
 ## Setup
 
@@ -24,60 +24,77 @@ xcodebuild -scheme NextSunnyDay -configuration Debug \
   -destination 'platform=iOS Simulator,name=iPhone 17' test
 ```
 
-- Tests use **Swift Testing** (`import Testing`, `@Test`, `#expect`) in the `NextSunnyDayTests` target. There is no UI test target.
+- Tests use **Swift Testing** (`import Testing`, `@Test`, `#expect`). The app's tests (state holders, `LegacyRealmCleanup`) are in the `NextSunnyDayTests` target; there is no UI test target.
 
 Run a single test by appending `-only-testing:NextSunnyDayTests/<SuiteName>/<testFunction>()`.
 
+Each package under `Packages/` builds and tests on its own on the Mac, without a simulator:
+```sh
+for p in Packages/Core/* Packages/Features/*; do (cd "$p" && swift test); done
+```
+
 Format and lint (the `swift-format` bundled with Xcode, config in `.swift-format` = the tool's defaults: 2-space indent, 100 columns):
 ```sh
-xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
-xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages
+xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages
 ```
 CI runs the strict lint before building, so any warning fails CI. Format before committing.
 
 ## Architecture
 
-### MVVM + Combine via `ViewModelObject`
+The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0005); read them before changing the structure.
 
-All ViewModels conform to the `ViewModelObject` protocol (`NextSunnyDay/Protocol/ViewModelObject.swift`), which enforces a three-object split:
+### Packages (`Packages/`)
 
-- **Input** (`InputObject`): user events as `PassthroughSubject`s (e.g. button taps).
-- **Binding** (`BindingObject`): two-way state bound to SwiftUI (`@Published` flags like `isLoading`, sheet visibility).
-- **Output** (`OutputObject`): one-way state derived from the model layer (`@Published` data shown in the view).
+Shared code lives in local Swift packages, one package per module (ADR 0001). Swift 6, tools version 6.2, nonisolated by default, with `NonisolatedNonsendingByDefault`, `InferIsolatedConformances` and `MemberImportVisibility` enabled.
 
-The protocol merges `binding` and `output` `objectWillChange` publishers so Views observe a single source. When adding a ViewModel, define a feature-specific protocol that refines these three (see `HomeViewModel.swift` for the canonical pattern) and wire `Input` subjects to `Binding`/`Output` mutations via `Combine.sink` stored in `cancellables`.
+| Layer | Module | Does | Depends on |
+| --- | --- | --- | --- |
+| `Core/` | `Weather` | WeatherKit: `WeatherKitProvider` returns `WeatherForecast` (`DayForecast`, `HourForecast`, own `WeatherCondition` with `localizedName`) and the attribution | — |
+| `Core/` | `Location` | Core Location: `CoreLocationProvider.currentCoordinate()`, once | — |
+| `Core/` | `PlaceSearch` | MapKit: completions while typing, completion → place, reverse geocoding | — |
+| `Core/` | `AppGroup` | `AppGroupContainer`: the shared `UserDefaults` and caches directory | — |
+| `Features/` | `Region` | `SavedRegion`, `RegionStore`, `RegionSearch`, `RegionLocator` | Location, PlaceSearch, AppGroup |
+| `Features/` | `Forecast` | `CachedForecast` (freshness), `ForecastCache`, `ForecastUpdater` | Weather, AppGroup |
+| `Features/` | `SunnyDay` | `SunnyLevel` (the four levels, 30 % rule), `nextSunnyDay(in:)`, `SunnyLevelStore` | Weather, AppGroup |
 
-### Data flow
+- Core modules don't depend on each other; features depend only on core, never on each other. Only the app and the widget assemble them.
+- Every module a target imports must be its declared direct dependency (ADR 0002), in packages and in the Xcode targets.
+- Public initializers don't use default arguments that reach into another module (such as `defaults: UserDefaults = AppGroupContainer.userDefaults`): a default argument is compiled into the caller, which then needs that module linked. Add an argument-free `init()` inside the module instead.
+- Each core package has a fake in a `…Testing` module (`WeatherTesting`, `LocationTesting`, `PlaceSearchTesting`). `WeatherTesting` decodes forecasts recorded from WeatherKit (`WeatherRecording`).
+- WeatherKit has a type named `Weather`, which hides the `Weather` module in a file that imports both. Only the `Weather` package imports WeatherKit.
 
-- **WeatherKit** is fetched by `WeatherKitProvider` (`API/Weather/WeatherProviding.swift`), which returns a `ForecastSnapshot` (`Model/`): the `ForecastLocation`, the fetch time, the 10-day `[DailyForecast]` and the `[HourlyForecast]` for the same days. The async protocol `WeatherProviding` is the seam — inject fakes in tests/previews via this protocol (see how `HomeViewModel` is constructed in `NextSunnyDayApp.swift`).
-- "Sunny" is `WeatherCondition.isSunny` (`.clear`, `.mostlyClear`); the next sunny day is `[DailyForecast].nextSunnyDay`. Both are unit-tested.
-- **Apple Weather attribution** (mark + legal link from `WeatherService.shared.attribution`) is shown in `AboutWeatherForecastView`.
-- **Storage** (`Storage/`, no database) lives in the App Group `group.com.naipaka.NextSunnyDay` (`AppGroup`), shared with the widget:
-  - `SettingsStore`: `regions: [Region]` (one entry for now) and `sunnyLevel` in App Group `UserDefaults`. **Never migrated** — keep the stored format readable by later versions; `SettingsStoreTests` pins it. Each `Region` has an `id` fixed when added (UUID; `current-location` for the device location).
-  - `ForecastCache` (actor, protocol `ForecastCaching`): one `ForecastSnapshot` per region in `Library/Caches/forecasts/<region id>.json`, written atomically. Disposable: undecodable files or another `formatVersion` are deleted and re-fetched; files of removed regions are deleted.
-  - `LegacyRealmCleanup` deletes v1's `db.realm*` files at launch; v1 data is not migrated.
-- `HomeViewModel` refreshes when the scene becomes active and when `UserDefaults.didChangeNotification` shows a new region, then calls `WidgetCenter.shared.reloadAllTimelines()` after saving a fetch.
-- Forecast staleness check: a fetch is triggered when the earliest stored daily entry is older than ~24h (app) / ~20h (widget). Full flowcharts: `docs/architecture/weather-fetch-flow.md` — keep them in sync when changing fetch logic.
+### App layer (ADR 0005)
+
+- **State lives in the least common ancestor of the views that use it.** Shared state is three `@Observable` state holders in `NextSunnyDay/SharedState/`, created in `NextSunnyDayApp` and put into the environment: `RegionSelection` (the chosen region), `SunnyLevelSelection` and `RegionForecast` (the forecast of the selected region and how its last fetch went). Everything else is `@State` in the screen; a screen uses an `@Observable` class only when updating its state is logic.
+- **State holders don't depend on each other.** The view that needs two pieces of state combines them (Home passes the forecast and the sunny level to `SunnyLevel.nextSunnyDay(in:)`), and views say when work happens (`task(id:)`, `refreshable`, button actions).
+- **Views contain no logic.** `body` only reads state and computes without side effects; side effects go in actions and lifecycle closures.
+- **Features reach the app through `AppFeatures`** (`NextSunnyDay/App/`): `.live` for the app; `AppFeatures.preview(_:)` builds them on the fakes for previews. State holders get features through their initializers; views get state holders with `@Environment(Type.self)` and `RegionSearch` / `ForecastUpdater` through `@Entry` environment values.
+- **Previews:** wrap a screen in `PreviewHost(<scenario>)` (`App/PreviewHost.swift`), which sets up the state holders on the fakes. Don't put it under `#if DEBUG`: `#Preview` is compiled in Release too, and the Release build fails. Check `-configuration Release` builds after changing previews. Scenarios cover the screen states (`.tokyo`, `.singapore`, `.loading`, `.refreshFailed`, `.offline`, `.locationDenied`, `.noRegion`).
+- **Tests** use real features with fakes only for the outside world (the core modules), plus a test `UserDefaults` suite and a temporary directory.
+- Swift settings: the app is `MainActor` by default; the widget and the tests are nonisolated by default; all targets use Approachable Concurrency and Member Import Visibility.
+- Fetch rules and flowcharts: `docs/architecture/weather-fetch-flow.md` — keep it in sync when changing fetch logic.
 
 ### Xcode project format
 
-`NextSunnyDay.xcodeproj` uses **folder-synchronized groups** (objectVersion 77): `NextSunnyDay/`, `NextSunnyDayWidget/` and `NextSunnyDayTests/` are synced to their targets, so adding, moving or deleting a file in those folders needs no `project.pbxproj` change. Exceptions live in `PBXFileSystemSynchronizedBuildFileExceptionSet` entries:
+`NextSunnyDay.xcodeproj` uses **folder-synchronized groups** (objectVersion 77): `NextSunnyDay/`, `NextSunnyDayWidget/` and `NextSunnyDayTests/` are synced to their targets, so adding, moving or deleting a file in those folders needs no `project.pbxproj` change. The local packages are `XCLocalSwiftPackageReference`s; linking another product to a target adds an `XCSwiftPackageProductDependency`, a `PBXBuildFile` in its Frameworks phase and an entry in the target's `packageProductDependencies`. Exceptions live in `PBXFileSystemSynchronizedBuildFileExceptionSet` entries:
 
 - Each target's `Info.plist` is excluded from its own target (it is used via `INFOPLIST_FILE`, not copied as a resource).
-- Files under `NextSunnyDay/` that the widget also compiles or bundles are listed as membership exceptions for `NextSunnyDayWidgetExtension`. When the widget needs another app file, add its path there (or tick the widget in Xcode's Target Membership).
+- The widget shares only `Assets.xcassets` and `Resources/Localizable.xcstrings` from `NextSunnyDay/` (membership exceptions for `NextSunnyDayWidgetExtension`). Shared code goes into a package, not into these exceptions.
 
 ### Widget target
 
-`NextSunnyDayWidget/` is a separate target sharing source with the app (Model, API, ViewModels for the widget views). Its `Provider.getTimeline` reads `SettingsStore` and `ForecastCache`, and may fetch through `WeatherKitProvider` before building the entry. Supported families: `.systemSmall`, `.systemMedium`.
+`NextSunnyDayWidget/` uses `Region` (read only), `Forecast` and `SunnyDay`. Its `Provider.getTimeline` reads the region, the sunny level and the cached forecast, and fetches when the forecast isn't fresh. Supported families: `.systemSmall`, `.systemMedium`. The widget's redesign, schedule and location handling are #96.
 
 ### Localization & resources
 
-- **String Catalogs**, auto-extracted. Write UI text in **English** in code: `Text("Settings")`, `.navigationBarTitle("…")` and other `LocalizedStringKey` APIs for literals in views, `String(localized: "…")` where a `String` is needed (ViewModel outputs, `@Published` defaults). Xcode adds the keys to `NextSunnyDay/Resources/Localizable.xcstrings`; the Japanese copy is the `ja` translation there. English is the source/development language, Japanese the only translation (#98 reviews the English copy).
+- **String Catalogs**, auto-extracted. Write UI text in **English** in code: `Text("Settings")`, `.navigationBarTitle("…")` and other `LocalizedStringKey` APIs for literals in views, `String(localized: "…")` or `LocalizedStringResource` where a `String` or a value is needed. Data from WeatherKit and place names are shown with `Text(verbatim:)`. Xcode adds the keys to `NextSunnyDay/Resources/Localizable.xcstrings`; the Japanese copy is the `ja` translation there. English is the source/development language, Japanese the only translation (#98 reviews the English copy).
+- `xcodebuild` doesn't add new keys to the catalog (Xcode does when building in the IDE). When adding UI text from the command line, add the key with its `ja` translation to `Localizable.xcstrings` yourself; the keys a build emits are in the `.stringsdata` files under DerivedData.
 - `Localizable.xcstrings` is a member of both the app and the widget (membership exception), so there is one catalog for both. `InfoPlist.xcstrings` localizes `CFBundleDisplayName` (`NextSunnyDay` / `次いつ晴れる？`).
 - Non-UI values stay plain literals in code and out of the catalog: SF Symbol names (`Image(systemName: "xmark")`), the `"-"` placeholder, the widget `kind`.
 - **Colors** come from `Assets.xcassets` via Xcode's generated asset symbols: `Color(.nextSunnyDayText)`. The `Blue` asset collides with `UIColor.blue`, so write `Color(ColorResource.blue)`.
 - There are no third-party resource generators, build-tool plugins or script build phases.
-- There are no Swift packages or other third-party dependencies; keep it that way unless there is a strong reason.
+- The only Swift packages are the local ones under `Packages/`; there are no third-party dependencies. Keep it that way unless there is a strong reason.
 
 ## Docs
 
