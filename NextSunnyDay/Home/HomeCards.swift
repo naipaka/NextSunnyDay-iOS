@@ -7,6 +7,9 @@ struct NextHoursCard: View {
   let hours: [HourForecast]
   @ScaledMetric private var cellWidth: CGFloat = 56
   @ScaledMetric private var symbolHeight: CGFloat = 28
+  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+
+  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
   private var shownHours: [HourForecast] {
     let thisHour = Calendar.current.dateInterval(of: .hour, for: .now)?.start ?? .now
@@ -39,7 +42,7 @@ struct NextHoursCard: View {
               )
               .font(.caption2.weight(.semibold))
               .foregroundStyle(.cyan)
-              Text(verbatim: hour.temperature.degrees)
+              Text(verbatim: hour.temperature.degrees(in: temperatureUnit))
             }
             .frame(width: cellWidth)
             .accessibilityElement(children: .ignore)
@@ -66,7 +69,7 @@ struct NextHoursCard: View {
     if hour.precipitationChance.isShownAsPrecipitation {
       parts.append(String(localized: "Chance of rain \(hour.precipitationChance.percent)"))
     }
-    parts.append(hour.temperature.degrees)
+    parts.append(hour.temperature.degrees(in: temperatureUnit))
     return parts.joined(separator: ", ")
   }
 }
@@ -101,6 +104,9 @@ struct DayRow: View {
   @ScaledMetric private var symbolWidth: CGFloat = 36
   @ScaledMetric private var symbolHeight: CGFloat = 28
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+
+  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
   var body: some View {
     HStack(spacing: 14) {
@@ -148,13 +154,15 @@ struct DayRow: View {
 
   private var temperatures: some View {
     HStack(spacing: 6) {
-      Text(verbatim: day.highTemperature.degrees)
-      Text(verbatim: day.lowTemperature.degrees).foregroundStyle(.secondary)
+      Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
+      Text(verbatim: day.lowTemperature.degrees(in: temperatureUnit)).foregroundStyle(.secondary)
     }
     .font(.body.monospacedDigit())
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(
-      Text("High \(day.highTemperature.degrees) Low \(day.lowTemperature.degrees)"))
+      Text(
+        "High \(day.highTemperature.degrees(in: temperatureUnit)) Low \(day.lowTemperature.degrees(in: temperatureUnit))"
+      ))
   }
 }
 

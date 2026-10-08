@@ -2,6 +2,7 @@ import Forecast
 import Foundation
 import Region
 import SunnyDay
+import Units
 import Weather
 import WidgetKit
 
@@ -22,6 +23,7 @@ struct SunnyEntry: TimelineEntry {
   var region: SavedRegion?
   var cached: CachedForecast?
   var level: SunnyLevel
+  var temperatureUnit: UnitTemperature = TemperatureUnitSetting.default.unit(for: .current)
   /// The Apple Weather mark for dark backgrounds, as image data.
   var attributionMark: Data? = nil
 

@@ -2,10 +2,9 @@ import Foundation
 import Weather
 
 extension Measurement<UnitTemperature> {
-  /// Whole degrees in the user's unit for weather, without the unit, such as `25°`.
-  var degrees: String {
-    let unit = UnitTemperature(forLocale: .current, usage: .weather)
-    return "\(Int(converted(to: unit).value.rounded()))°"
+  /// Whole degrees in `unit`, without the unit's letter, such as `25°`.
+  func degrees(in unit: UnitTemperature) -> String {
+    "\(Int(converted(to: unit).value.rounded()))°"
   }
 }
 

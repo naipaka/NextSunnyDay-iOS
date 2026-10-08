@@ -6,13 +6,14 @@ The app and the widget share their data through the App Group `group.com.naipaka
 | --- | --- | --- |
 | Regions (`[SavedRegion]`, one entry for now) | `RegionStore` (`Region`) | App Group `UserDefaults`, key `regions` |
 | The sunny level | `SunnyLevelStore` (`SunnyDay`) | App Group `UserDefaults`, key `sunnyLevel` |
+| The temperature unit (`system`, `celsius` or `fahrenheit`) | `TemperatureUnitStore` (`Units`) | App Group `UserDefaults`, key `temperatureUnit` |
 | The last fetched forecast of each region (`CachedForecast`) | `ForecastCache` (`Forecast`) | `Library/Caches/forecasts/<region id>.json` in the App Group container |
 
 Forecasts come from WeatherKit through `WeatherProviding` (`WeatherKitProvider` in the `Weather` package), which returns a `WeatherForecast`: ten days, their hours, and when the data expires. `ForecastUpdater` (`Forecast`) fetches it for a coordinate and caches it with the region's ID, place name and fetch time. Every successful fetch replaces the region's cache file as a whole (an atomic write). A failed fetch leaves the cached forecast as is.
 
 ## Storage rules
 
-- **Settings are never migrated** ([ADR 0004](decisions/0004-stored-settings-format.md)). Every later version must read what earlier ones wrote, so `RegionStoreTests` and `SunnyLevelStoreTests` pin the stored format. Regions are a list from the start so that multiple regions need no format change.
+- **Settings are never migrated** ([ADR 0004](decisions/0004-stored-settings-format.md)). Every later version must read what earlier ones wrote, so `RegionStoreTests`, `SunnyLevelStoreTests` and `TemperatureUnitStoreTests` pin the stored format. Regions are a list from the start so that multiple regions need no format change.
 - **Each region has an ID** given when it is added: a UUID for a searched place, the fixed `current-location` for the device location. Cache files are keyed by the ID, never by coordinates.
 - **The cache is disposable.** A file that fails to decode, or was written with another `ForecastCache.formatVersion`, is deleted and fetched again. Files of regions that are no longer selected are deleted on the next refresh. The system may also purge the caches directory; that only costs a fetch.
 - **Version 1 data is not migrated.** `LegacyRealmCleanup` deletes the old `db.realm*` files from the App Group container at launch, and the user picks the region again.
@@ -52,7 +53,7 @@ The Region screen searches while the user types (`.searchable` text in `@State`,
 
 ## Widget timeline
 
-`Provider.getTimeline` in `NextSunnyDayWidget` reads the region, the sunny level and the region's cache file, and fetches only when the forecast wasn't fetched since the last 4:00 ([ADR 0006](decisions/0006-fetch-once-a-day.md)). It returns two entries from the same forecast, now and the next midnight, so the day count rolls over without a reload. The next reload is at the next 4:00 plus a random 0–60 minutes; after a failed fetch, in an hour. Without a region the policy is `.never`: the app reloads the widgets when a region is chosen.
+`Provider.getTimeline` in `NextSunnyDayWidget` reads the region, the sunny level, the temperature unit and the region's cache file, and fetches only when the forecast wasn't fetched since the last 4:00 ([ADR 0006](decisions/0006-fetch-once-a-day.md)). It returns two entries from the same forecast, now and the next midnight, so the day count rolls over without a reload. The next reload is at the next 4:00 plus a random 0–60 minutes; after a failed fetch, in an hour. Without a region the policy is `.never`: the app reloads the widgets when a region is chosen.
 
 For the current location the widget looks the location up itself (`NSWidgetWantsLocation`, `isAuthorizedForWidgetUpdates`, five seconds at most). The system only gives a widget locations shortly after it was visible, so the 4:00 reload usually falls back to the coordinate and name of the last cached forecast.
 

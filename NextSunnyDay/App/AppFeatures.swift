@@ -2,6 +2,7 @@ import Forecast
 import Region
 import SunnyDay
 import SwiftUI
+import Units
 
 /// The features the app uses, built in one place: the real ones for the app, and ones on fakes of
 /// the outside world for previews.
@@ -11,6 +12,7 @@ struct AppFeatures {
   var regionLocator: RegionLocator
   var forecastUpdater: ForecastUpdater
   var sunnyLevelStore: SunnyLevelStore
+  var temperatureUnitStore: TemperatureUnitStore
 
   /// WeatherKit, Core Location, MapKit and the App Group.
   static var live: AppFeatures {
@@ -19,7 +21,8 @@ struct AppFeatures {
       regionSearch: RegionSearch(),
       regionLocator: RegionLocator(),
       forecastUpdater: ForecastUpdater(),
-      sunnyLevelStore: SunnyLevelStore()
+      sunnyLevelStore: SunnyLevelStore(),
+      temperatureUnitStore: TemperatureUnitStore()
     )
   }
 }

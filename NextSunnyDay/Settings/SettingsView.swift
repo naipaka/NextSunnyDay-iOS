@@ -1,11 +1,13 @@
 import Region
 import SwiftUI
+import Units
 
-/// The settings sheet: region, sunny level and the weather data note.
+/// The settings sheet: region, sunny level, temperature unit and the weather data note.
 struct SettingsView: View {
   @Environment(RegionSelection.self) private var regionSelection
   @Environment(RegionForecast.self) private var regionForecast
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
+  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
   @Environment(\.dismiss) private var dismiss
 
   private enum Route: Hashable {
@@ -34,6 +36,15 @@ struct SettingsView: View {
           }
         } footer: {
           Text("Choose which kinds of days count as sunny.")
+        }
+        Section {
+          Picker(selection: temperatureUnit) {
+            ForEach(TemperatureUnitSetting.allCases, id: \.self) { setting in
+              Text(setting.title)
+            }
+          } label: {
+            Label("Temperature", systemImage: "thermometer.medium")
+          }
         }
         Section {
           NavigationLink(value: Route.about) {
@@ -70,6 +81,13 @@ struct SettingsView: View {
     }
   }
 
+  /// Changes go through the state holder, which saves them and reloads the widgets.
+  private var temperatureUnit: Binding<TemperatureUnitSetting> {
+    Binding(
+      get: { temperatureUnitSelection.setting },
+      set: { temperatureUnitSelection.select($0) })
+  }
+
   private var version: String {
     Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
   }
@@ -78,5 +96,16 @@ struct SettingsView: View {
 #Preview {
   PreviewHost(.tokyo) {
     SettingsView()
+  }
+}
+
+extension TemperatureUnitSetting {
+  /// The names Apple's Weather app uses for its temperature units.
+  var title: LocalizedStringResource {
+    switch self {
+    case .system: "Use System Setting"
+    case .celsius: "Celsius (°C)"
+    case .fahrenheit: "Fahrenheit (°F)"
+    }
   }
 }

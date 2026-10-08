@@ -3,10 +3,11 @@ import Forecast
 import Foundation
 import Region
 import SunnyDay
+import Units
 import WidgetKit
 
-/// Builds the timeline from what the app shares in the App Group: the region, the sunny level and
-/// the cached forecast. It fetches only when the forecast wasn't fetched since the last 4:00, and
+/// Builds the timeline from what the app shares in the App Group: the region, the sunny level, the
+/// temperature unit and the cached forecast. It fetches only when the forecast wasn't fetched since the last 4:00, and
 /// reloads once a day (ADR 0006).
 struct Provider: TimelineProvider {
   func placeholder(in context: Context) -> SunnyEntry {
@@ -65,6 +66,7 @@ struct Provider: TimelineProvider {
     }
     let entry = SunnyEntry(
       date: now, region: region, cached: cached, level: level,
+      temperatureUnit: TemperatureUnitStore().load().unit(for: .current),
       attributionMark: await AttributionMarkCache().mark(using: updater))
     // A failed fetch didn't reach WeatherKit or was refused, so trying again in an hour costs
     // little. Otherwise the next fetch is due at 4:00, spread over an hour so that devices don't

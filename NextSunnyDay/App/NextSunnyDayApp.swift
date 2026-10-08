@@ -4,6 +4,7 @@ import SwiftUI
 struct NextSunnyDayApp: App {
   @State private var regionSelection: RegionSelection
   @State private var sunnyLevelSelection: SunnyLevelSelection
+  @State private var temperatureUnitSelection: TemperatureUnitSelection
   @State private var regionForecast: RegionForecast
   private let features: AppFeatures
 
@@ -19,6 +20,8 @@ struct NextSunnyDayApp: App {
       initialValue: RegionSelection(store: features.regionStore, search: features.regionSearch))
     _sunnyLevelSelection = State(
       initialValue: SunnyLevelSelection(store: features.sunnyLevelStore))
+    _temperatureUnitSelection = State(
+      initialValue: TemperatureUnitSelection(store: features.temperatureUnitStore))
     _regionForecast = State(
       initialValue: RegionForecast(
         updater: features.forecastUpdater, locator: features.regionLocator))
@@ -29,6 +32,7 @@ struct NextSunnyDayApp: App {
       RootView()
         .environment(regionSelection)
         .environment(sunnyLevelSelection)
+        .environment(temperatureUnitSelection)
         .environment(regionForecast)
         .environment(\.regionSearch, features.regionSearch)
         .environment(\.forecastUpdater, features.forecastUpdater)

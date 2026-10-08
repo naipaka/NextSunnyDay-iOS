@@ -29,6 +29,7 @@ State whose common ancestor is the app root is called **shared state**. In 2.0 t
 | --- | --- | --- |
 | The selected region | `RegionSelection` | Launch (onboarding or Home), Onboarding, Home, Settings, Region |
 | The sunny level | `SunnyLevelSelection` | Home (next sunny day), Settings, Sunny level, About |
+| The temperature unit | `TemperatureUnitSelection` | Home, Day detail, Settings |
 | The forecast of the selected region and its fetch status | `RegionForecast` | Home; the day detail gets the day it shows as a value |
 
 Only Home uses the forecast directly, but Home is the root screen, shown for as long as the app runs, and the selected region can change from the Settings sheet on top of it. Keeping the forecast and its fetch status at the root keeps them across that change, next to the selected region they depend on.

@@ -57,6 +57,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 | `Features/` | `Region` | `SavedRegion`, `RegionStore`, `RegionSearch`, `RegionLocator` | Location, PlaceSearch, AppGroup |
 | `Features/` | `Forecast` | `CachedForecast` (freshness), `ForecastCache`, `ForecastUpdater` | Weather, AppGroup |
 | `Features/` | `SunnyDay` | `SunnyLevel` (the four levels, 30 % rule), `nextSunnyDay(in:)`, `SunnyLevelStore` | Weather, AppGroup |
+| `Features/` | `Units` | `TemperatureUnitSetting` (system, °C, °F), `TemperatureUnitStore` | AppGroup |
 
 - Core modules don't depend on each other; features depend only on core, never on each other. Only the app and the widget assemble them.
 - Every module a target imports must be its declared direct dependency (ADR 0002), in packages and in the Xcode targets.
@@ -66,7 +67,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 
 ### App layer (ADR 0005)
 
-- **State lives in the least common ancestor of the views that use it.** Shared state is three `@Observable` state holders in `NextSunnyDay/SharedState/`, created in `NextSunnyDayApp` and put into the environment: `RegionSelection` (the chosen region), `SunnyLevelSelection` and `RegionForecast` (the forecast of the selected region and how its last fetch went). Everything else is `@State` in the screen; a screen uses an `@Observable` class only when updating its state is logic.
+- **State lives in the least common ancestor of the views that use it.** Shared state is four `@Observable` state holders in `NextSunnyDay/SharedState/`, created in `NextSunnyDayApp` and put into the environment: `RegionSelection` (the chosen region), `SunnyLevelSelection`, `TemperatureUnitSelection` and `RegionForecast` (the forecast of the selected region and how its last fetch went). Everything else is `@State` in the screen; a screen uses an `@Observable` class only when updating its state is logic.
 - **State holders don't depend on each other.** The view that needs two pieces of state combines them (Home passes the forecast and the sunny level to `SunnyLevel.nextSunnyDay(in:)`), and views say when work happens (`task(id:)`, `refreshable`, button actions).
 - **Views contain no logic.** `body` only reads state and computes without side effects; side effects go in actions and lifecycle closures.
 - **Features reach the app through `AppFeatures`** (`NextSunnyDay/App/`): `.live` for the app; `AppFeatures.preview(_:)` builds them on the fakes for previews. State holders get features through their initializers; views get state holders with `@Environment(Type.self)` and `RegionSearch` / `ForecastUpdater` through `@Entry` environment values.
@@ -85,7 +86,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 
 ### Widget target
 
-`NextSunnyDayWidget/` uses `Region`, `Forecast`, `SunnyDay` and `Weather` (plus `WeatherTesting` for its previews). `Provider` builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state. The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. For the current location the widget uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate.
+`NextSunnyDayWidget/` uses `Region`, `Forecast`, `SunnyDay`, `Units` and `Weather` (plus `WeatherTesting` for its previews). `Provider` builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state. The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. For the current location the widget uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate.
 
 ### Localization & resources
 

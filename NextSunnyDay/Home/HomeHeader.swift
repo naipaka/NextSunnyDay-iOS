@@ -14,6 +14,8 @@ struct HomeHeader: View {
   let state: State
   let retry: () -> Void
 
+  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+
   var body: some View {
     VStack(alignment: .leading, spacing: 4) {
       Text("The next sunny day is")
@@ -53,7 +55,7 @@ struct HomeHeader: View {
           .font(.title3.weight(.semibold))
           .padding(.top, 6)
         Text(
-          "High \(next.day.highTemperature.degrees) Low \(next.day.lowTemperature.degrees) Rain \(next.day.precipitationChance.percent)"
+          "High \(next.day.highTemperature.degrees(in: temperatureUnit)) Low \(next.day.lowTemperature.degrees(in: temperatureUnit)) Rain \(next.day.precipitationChance.percent)"
         )
         .font(.subheadline)
         .opacity(0.9)
@@ -79,6 +81,8 @@ struct HomeHeader: View {
       }
     }
   }
+
+  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
   private var isLoading: Bool {
     if case .loading = state { true } else { false }

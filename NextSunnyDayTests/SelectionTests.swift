@@ -3,6 +3,7 @@ import PlaceSearchTesting
 import Region
 import SunnyDay
 import Testing
+import Units
 
 @testable import NextSunnyDay
 
@@ -49,5 +50,16 @@ struct SelectionTests {
     selection.select(.noRain)
 
     #expect(SunnyLevelSelection(store: SunnyLevelStore(defaults: defaults)).level == .noRain)
+  }
+
+  @Test func theTemperatureUnitIsStored() {
+    let selection = TemperatureUnitSelection(store: TemperatureUnitStore(defaults: defaults))
+    #expect(selection.setting == .system)
+
+    selection.select(.fahrenheit)
+
+    let reloaded = TemperatureUnitSelection(store: TemperatureUnitStore(defaults: defaults))
+    #expect(reloaded.setting == .fahrenheit)
+    #expect(reloaded.unit == .fahrenheit)
   }
 }

@@ -7,6 +7,7 @@ import Weather
 struct DayDetailView: View {
   @Environment(RegionForecast.self) private var regionForecast
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
+  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
   @State private var index: Int
 
   init(initialIndex: Int) {
@@ -15,6 +16,8 @@ struct DayDetailView: View {
 
   /// The same days as Home's list, which the index refers to.
   private var days: [DayForecast] { regionForecast.forecast?.forecast.days(from: .now) ?? [] }
+
+  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
   var body: some View {
     if days.indices.contains(index) {
@@ -55,7 +58,7 @@ struct DayDetailView: View {
         .lineLimit(1)
         .minimumScaleFactor(0.5)
       Text(
-        "High \(day.highTemperature.degrees) Low \(day.lowTemperature.degrees) Rain \(day.precipitationChance.percent)"
+        "High \(day.highTemperature.degrees(in: temperatureUnit)) Low \(day.lowTemperature.degrees(in: temperatureUnit)) Rain \(day.precipitationChance.percent)"
       )
       .font(.subheadline)
       .opacity(0.9)
@@ -79,6 +82,9 @@ private struct HoursCard: View {
   @ScaledMetric private var symbolWidth: CGFloat = 32
   @ScaledMetric private var temperatureWidth: CGFloat = 40
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+
+  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
   var body: some View {
     CardSection(title: "Hourly") {
@@ -148,7 +154,7 @@ private struct HoursCard: View {
   }
 
   private func temperature(_ hour: HourForecast) -> some View {
-    Text(verbatim: hour.temperature.degrees)
+    Text(verbatim: hour.temperature.degrees(in: temperatureUnit))
       .monospacedDigit()
       .frame(minWidth: temperatureWidth, alignment: .trailing)
   }

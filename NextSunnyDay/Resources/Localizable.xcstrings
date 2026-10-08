@@ -51,6 +51,16 @@
         }
       }
     },
+    "Celsius (°C)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摂氏（°C）"
+          }
+        }
+      }
+    },
     "Chance of rain %@" : {
       "localizations" : {
         "ja" : {
@@ -207,6 +217,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "東"
+          }
+        }
+      }
+    },
+    "Fahrenheit (°F)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "華氏（°F）"
           }
         }
       }
@@ -714,6 +734,16 @@
         }
       }
     },
+    "Temperature" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "気温"
+          }
+        }
+      }
+    },
     "The app couldn't connect to the internet or get the weather from Apple Weather. Wait a moment, or pull down on the screen to update." : {
       "localizations" : {
         "ja" : {
@@ -830,6 +860,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "現在地を使う"
+          }
+        }
+      }
+    },
+    "Use System Setting" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定を使用"
           }
         }
       }

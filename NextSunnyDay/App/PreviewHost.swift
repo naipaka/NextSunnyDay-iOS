@@ -6,6 +6,7 @@ import PlaceSearchTesting
 import Region
 import SunnyDay
 import SwiftUI
+import Units
 import Weather
 import WeatherTesting
 
@@ -31,6 +32,7 @@ struct PreviewHost<Content: View>: View {
 
   @State private var regionSelection: RegionSelection
   @State private var sunnyLevelSelection: SunnyLevelSelection
+  @State private var temperatureUnitSelection: TemperatureUnitSelection
   @State private var regionForecast: RegionForecast
   private let features: AppFeatures
   private let content: Content
@@ -43,6 +45,8 @@ struct PreviewHost<Content: View>: View {
       initialValue: RegionSelection(store: features.regionStore, search: features.regionSearch))
     _sunnyLevelSelection = State(
       initialValue: SunnyLevelSelection(store: features.sunnyLevelStore))
+    _temperatureUnitSelection = State(
+      initialValue: TemperatureUnitSelection(store: features.temperatureUnitStore))
     _regionForecast = State(
       initialValue: RegionForecast(
         updater: features.forecastUpdater, locator: features.regionLocator))
@@ -52,6 +56,7 @@ struct PreviewHost<Content: View>: View {
     content
       .environment(regionSelection)
       .environment(sunnyLevelSelection)
+      .environment(temperatureUnitSelection)
       .environment(regionForecast)
       .environment(\.regionSearch, features.regionSearch)
       .environment(\.forecastUpdater, features.forecastUpdater)
@@ -118,7 +123,8 @@ extension AppFeatures {
       regionSearch: RegionSearch(places: places),
       regionLocator: RegionLocator(location: location, places: places),
       forecastUpdater: ForecastUpdater(weather: weather, cache: cache),
-      sunnyLevelStore: SunnyLevelStore(defaults: defaults)
+      sunnyLevelStore: SunnyLevelStore(defaults: defaults),
+      temperatureUnitStore: TemperatureUnitStore(defaults: defaults)
     )
   }
 }

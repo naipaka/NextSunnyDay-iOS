@@ -61,7 +61,9 @@ struct MediumWidgetView: View {
       case .sunny, .noneInRange:
         HStack(spacing: 2) {
           ForEach(entry.days.prefix(5), id: \.date) { day in
-            DayColumn(day: day, isToday: day.date == entry.days.first?.date, level: entry.level)
+            DayColumn(
+              day: day, isToday: day.date == entry.days.first?.date, level: entry.level,
+              temperatureUnit: entry.temperatureUnit)
           }
         }
       }
@@ -115,7 +117,9 @@ struct LargeWidgetView: View {
       case .sunny, .noneInRange:
         VStack(spacing: 2) {
           ForEach(entry.days.prefix(7), id: \.date) { day in
-            DayRow(day: day, isToday: day.date == entry.days.first?.date, level: entry.level)
+            DayRow(
+              day: day, isToday: day.date == entry.days.first?.date, level: entry.level,
+              temperatureUnit: entry.temperatureUnit)
           }
         }
         Spacer(minLength: 0)
@@ -219,6 +223,7 @@ private struct DayColumn: View {
   let day: DayForecast
   let isToday: Bool
   let level: SunnyLevel
+  let temperatureUnit: UnitTemperature
 
   var body: some View {
     VStack(spacing: 4) {
@@ -231,7 +236,7 @@ private struct DayColumn: View {
       Image(systemName: day.symbolName.filledSymbol)
         .font(.body)
         .frame(height: 22)
-      Text(verbatim: day.highTemperature.degrees)
+      Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
         .font(.caption.weight(.semibold))
     }
     .frame(width: 34)
@@ -250,6 +255,7 @@ private struct DayRow: View {
   let day: DayForecast
   let isToday: Bool
   let level: SunnyLevel
+  let temperatureUnit: UnitTemperature
 
   var body: some View {
     let isSunny = level.counts(day)
@@ -264,8 +270,11 @@ private struct DayRow: View {
         .font(.caption)
         .lineLimit(1)
       Spacer(minLength: 4)
-      Text(verbatim: "\(day.highTemperature.degrees) \(day.lowTemperature.degrees)")
-        .monospacedDigit()
+      Text(
+        verbatim:
+          "\(day.highTemperature.degrees(in: temperatureUnit)) \(day.lowTemperature.degrees(in: temperatureUnit))"
+      )
+      .monospacedDigit()
     }
     .font(.footnote.weight(isSunny ? .bold : .regular))
     .padding(.horizontal, 8)

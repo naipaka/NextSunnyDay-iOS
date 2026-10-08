@@ -39,6 +39,7 @@ The usual costs of splitting are mechanical: a manifest per module with repeated
 | feature | `Region` | The list of regions (one for now), stored with IDs; resolving a region's coordinate and display name | Location, PlaceSearch, AppGroup |
 | feature | `Forecast` | Keeping forecasts fresh: per-region cache, freshness check, fetch, cleanup of removed regions | Weather, AppGroup |
 | feature | `SunnyDay` | The four sunny levels (including the 30 % rule), storing the level, finding the next sunny day | Weather, AppGroup |
+| feature | `Units` | The temperature unit setting (the system's, °C or °F) and storing it; added in #98 | AppGroup |
 
 - Core modules share coordinates as Apple's `CLLocationCoordinate2D`, so none of them depends on another for a coordinate type.
 - Foundation APIs that are already testable (`UserDefaults` with a test suite, files in a temporary directory) are used directly by the feature that owns the data, not wrapped in core. Core wraps what needs entitlements, permissions or the network: WeatherKit, Core Location, MapKit search.

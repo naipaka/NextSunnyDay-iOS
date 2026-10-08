@@ -18,11 +18,13 @@
 		C3A00000000000000000000C /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000B /* WeatherTesting */; };
 		C3A00000000000000000000E /* LocationTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000D /* LocationTesting */; };
 		C3A000000000000000000010 /* PlaceSearchTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000F /* PlaceSearchTesting */; };
+		C3A000000000000000000012 /* Units in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000011 /* Units */; };
 		C3B000000000000000000012 /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000011 /* Region */; };
 		C3B000000000000000000014 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000013 /* Forecast */; };
 		C3B000000000000000000016 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000015 /* SunnyDay */; };
 		C3B000000000000000000018 /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000017 /* Weather */; };
 		C3B00000000000000000001A /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000019 /* WeatherTesting */; };
+		C3B00000000000000000001C /* Units in Frameworks */ = {isa = PBXBuildFile; productRef = C2B00000000000000000001B /* Units */; };
 		C3C00000000000000000001A /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000019 /* Region */; };
 		C3C00000000000000000001C /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001B /* Forecast */; };
 		C3C00000000000000000001E /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001D /* SunnyDay */; };
@@ -30,6 +32,7 @@
 		C3C000000000000000000022 /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000021 /* WeatherTesting */; };
 		C3C000000000000000000024 /* LocationTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000023 /* LocationTesting */; };
 		C3C000000000000000000026 /* PlaceSearchTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000025 /* PlaceSearchTesting */; };
+		C3C000000000000000000028 /* Units in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000027 /* Units */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +132,7 @@
 				C3B000000000000000000012 /* Region in Frameworks */,
 				C3B000000000000000000014 /* Forecast in Frameworks */,
 				C3B000000000000000000016 /* SunnyDay in Frameworks */,
+				C3B00000000000000000001C /* Units in Frameworks */,
 				C3B000000000000000000018 /* Weather in Frameworks */,
 				C3B00000000000000000001A /* WeatherTesting in Frameworks */,
 				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
@@ -143,6 +147,7 @@
 				C3A000000000000000000002 /* Region in Frameworks */,
 				C3A000000000000000000004 /* Forecast in Frameworks */,
 				C3A000000000000000000006 /* SunnyDay in Frameworks */,
+				C3A000000000000000000012 /* Units in Frameworks */,
 				C3A000000000000000000008 /* Weather in Frameworks */,
 				C3A00000000000000000000A /* AppGroup in Frameworks */,
 				C3A00000000000000000000C /* WeatherTesting in Frameworks */,
@@ -158,6 +163,7 @@
 				C3C00000000000000000001A /* Region in Frameworks */,
 				C3C00000000000000000001C /* Forecast in Frameworks */,
 				C3C00000000000000000001E /* SunnyDay in Frameworks */,
+				C3C000000000000000000028 /* Units in Frameworks */,
 				C3C000000000000000000020 /* Weather in Frameworks */,
 				C3C000000000000000000022 /* WeatherTesting in Frameworks */,
 				C3C000000000000000000024 /* LocationTesting in Frameworks */,
@@ -221,6 +227,7 @@
 				C2B000000000000000000011 /* Region */,
 				C2B000000000000000000013 /* Forecast */,
 				C2B000000000000000000015 /* SunnyDay */,
+				C2B00000000000000000001B /* Units */,
 				C2B000000000000000000017 /* Weather */,
 				C2B000000000000000000019 /* WeatherTesting */,
 			);
@@ -250,6 +257,7 @@
 				C2A000000000000000000001 /* Region */,
 				C2A000000000000000000003 /* Forecast */,
 				C2A000000000000000000005 /* SunnyDay */,
+				C2A000000000000000000011 /* Units */,
 				C2A000000000000000000007 /* Weather */,
 				C2A000000000000000000009 /* AppGroup */,
 				C2A00000000000000000000B /* WeatherTesting */,
@@ -281,6 +289,7 @@
 				C2C000000000000000000019 /* Region */,
 				C2C00000000000000000001B /* Forecast */,
 				C2C00000000000000000001D /* SunnyDay */,
+				C2C000000000000000000027 /* Units */,
 				C2C00000000000000000001F /* Weather */,
 				C2C000000000000000000021 /* WeatherTesting */,
 				C2C000000000000000000023 /* LocationTesting */,
@@ -330,6 +339,7 @@
 				C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */,
 				C10000000000000000000006 /* XCLocalSwiftPackageReference "Packages/Features/Forecast" */,
 				C10000000000000000000007 /* XCLocalSwiftPackageReference "Packages/Features/SunnyDay" */,
+				C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 915F51362521763500B4E384 /* Products */;
@@ -738,6 +748,10 @@
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/Features/SunnyDay;
 		};
+		C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/Features/Units;
+		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -781,6 +795,11 @@
 			package = C10000000000000000000003 /* XCLocalSwiftPackageReference "Packages/Core/PlaceSearch" */;
 			productName = PlaceSearchTesting;
 		};
+		C2A000000000000000000011 /* Units */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */;
+			productName = Units;
+		};
 		C2B000000000000000000011 /* Region */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
@@ -805,6 +824,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
 			productName = WeatherTesting;
+		};
+		C2B00000000000000000001B /* Units */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */;
+			productName = Units;
 		};
 		C2C000000000000000000019 /* Region */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -840,6 +864,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000003 /* XCLocalSwiftPackageReference "Packages/Core/PlaceSearch" */;
 			productName = PlaceSearchTesting;
+		};
+		C2C000000000000000000027 /* Units */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */;
+			productName = Units;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
