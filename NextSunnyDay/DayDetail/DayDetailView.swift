@@ -13,7 +13,8 @@ struct DayDetailView: View {
     _index = State(initialValue: initialIndex)
   }
 
-  private var days: [DayForecast] { regionForecast.forecast?.forecast.daily ?? [] }
+  /// The same days as Home's list, which the index refers to.
+  private var days: [DayForecast] { regionForecast.forecast?.forecast.days(from: .now) ?? [] }
 
   var body: some View {
     if days.indices.contains(index) {

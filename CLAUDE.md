@@ -42,7 +42,7 @@ CI runs the strict lint before building, so any warning fails CI. Format before 
 
 ## Architecture
 
-The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0005); read them before changing the structure.
+The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0006); read them before changing the structure.
 
 ### Packages (`Packages/`)
 

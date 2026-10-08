@@ -14,6 +14,12 @@ public struct WeatherForecast: Codable, Equatable, Sendable {
     self.hourly = hourly
     self.expirationDate = expirationDate
   }
+
+  /// The days from `today` on. A forecast kept past midnight still starts with the days before.
+  public func days(from today: Date, calendar: Calendar = .current) -> [DayForecast] {
+    let start = calendar.startOfDay(for: today)
+    return daily.filter { calendar.startOfDay(for: $0.date) >= start }
+  }
 }
 
 /// The forecast of one day.

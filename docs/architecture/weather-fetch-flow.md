@@ -19,17 +19,20 @@ Forecasts come from WeatherKit through `WeatherProviding` (`WeatherKitProvider` 
 
 ## When the app fetches
 
-A cached forecast is **fresh** while WeatherKit's expiration date has not passed and it was fetched today ([ADR 0003](decisions/0003-forecast-freshness-and-current-location.md)). WeatherKit's daily and hourly data both expire one hour after they are fetched.
+A cached forecast is **fresh** when it was fetched since the last 4:00, by the app or the widget ([ADR 0006](decisions/0006-fetch-once-a-day.md)). WeatherKit's expiration (a flat hour after each fetch) only limits pull to refresh. Crossing midnight doesn't fetch: the cache holds ten days and their hours, so "today" moves to the next cached day.
 
-Home starts every fetch ([ADR 0005](decisions/0005-app-layer-state.md)). One `task(id:)` runs `RegionForecast.refreshIfNeeded(for:)` when Home appears, the selected region changes, the app becomes active, or the day changes (`significantTimeChangeNotification`). Pull to refresh and the retry buttons call `refresh(for:)`, which always fetches.
+Home starts every fetch ([ADR 0005](decisions/0005-app-layer-state.md)). One `task(id:)` runs `RegionForecast.refreshIfNeeded(for:)` when Home appears, the selected region changes, the app becomes active, or the day changes (`significantTimeChangeNotification`, which only moves "today"). Pull to refresh and the retry buttons call `refresh(for:)`, which fetches when the expiration has passed, nothing is cached or the last fetch failed.
 
 ```mermaid
 flowchart TD
     A([Home appears, region changes,<br/>app becomes active, or the day changes]) --> B[Delete cache files<br/>of other regions]
-    B --> C[Show the region's cached forecast]
-    C --> D{Cached and fresh?}
+    B --> C[Show the region's cached forecast<br/>from today on]
+    C --> D{Fetched since<br/>the last 4:00?}
     D -- Yes --> E([Done])
     D -- No --> F[Locate the region]
+    P([Pull to refresh or Retry]) --> Q{Expired, nothing cached,<br/>or the last fetch failed?}
+    Q -- No --> E
+    Q -- Yes --> F
     F --> G{Current location?}
     G -- No --> I[Use the saved coordinate and name]
     G -- Yes --> H[Get the location once and<br/>reverse geocode its name]
@@ -41,7 +44,7 @@ flowchart TD
 ```
 
 - A fetch cancelled because the region changed or the app left the foreground is not a failure; it runs again when needed.
-- Without a cached forecast, a failure shows the "no data" state; with one, a banner above the cached forecast.
+- Without a cached forecast, a failure shows the "no data" state; with one, a banner above the cached forecast. Running out of WeatherKit calls looks the same: `WeatherService` doesn't report it apart from other failures.
 
 ## Region selection
 

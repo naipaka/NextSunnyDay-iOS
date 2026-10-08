@@ -1,6 +1,6 @@
 # 3. Forecast freshness follows WeatherKit's expiration; the current location is resolved only when fetching
 
-- Status: Accepted (2026-10-07, #95)
+- Status: Accepted (2026-10-07, #95). "When to fetch" and the widget's use of Core Location are superseded by [0006](0006-fetch-once-a-day.md) (2026-10-08, #96).
 
 ## Context
 

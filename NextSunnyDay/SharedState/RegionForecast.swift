@@ -35,8 +35,8 @@ final class RegionForecast {
     self.locator = locator
   }
 
-  /// Shows the region's cached forecast, then fetches when it is missing or stale
-  /// (ADR 0003).
+  /// Shows the region's cached forecast, then fetches when it is missing or not fetched since the
+  /// last 4:00 (ADR 0006).
   func refreshIfNeeded(for region: SavedRegion) async {
     await updater.removeForecasts(except: [region.id])
     let cached = await updater.cached(regionID: region.id)
@@ -54,8 +54,15 @@ final class RegionForecast {
     await fetch(region)
   }
 
-  /// Fetches now, for pull to refresh and the retry buttons.
+  /// For pull to refresh and the retry buttons: fetches unless the shown forecast is within the
+  /// weather service's expiration and the last fetch succeeded, so that pulling again and again
+  /// doesn't spend calls (ADR 0006).
   func refresh(for region: SavedRegion) async {
+    if let forecast, forecast.regionID == region.id, failure == nil,
+      !updater.isExpired(forecast)
+    {
+      return
+    }
     await fetch(region)
   }
 

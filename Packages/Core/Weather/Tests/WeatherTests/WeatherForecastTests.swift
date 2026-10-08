@@ -21,6 +21,14 @@ struct WeatherForecastTests {
     #expect(forecast.expirationDate == ISO8601DateFormatter().date(from: "2026-10-07T20:32:55Z"))
   }
 
+  @Test func daysFromTodaySkipTheDaysBefore() throws {
+    let forecast = WeatherRecording.tokyo.forecast()
+    let tomorrow = try #require(Calendar.current.date(byAdding: .day, value: 1, to: .now))
+
+    #expect(forecast.days(from: .now) == forecast.daily)
+    #expect(forecast.days(from: tomorrow) == Array(forecast.daily.dropFirst()))
+  }
+
   @Test func everyWeatherKitConditionHasItsOwnCase() {
     for rawValue in WeatherCondition.weatherKitRawValues {
       #expect(WeatherCondition(rawValue: rawValue) != nil, "\(rawValue)")

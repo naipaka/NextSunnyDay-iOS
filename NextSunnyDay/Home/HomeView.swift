@@ -15,7 +15,8 @@ struct HomeView: View {
   @State private var isShowingSettings = false
   @State private var today = Calendar.current.startOfDay(for: .now)
 
-  /// When any of these change, the forecast is fetched if it is stale.
+  /// When any of these change, the forecast is fetched if it is stale. A new day only moves
+  /// "today" within the cached days; the fetch waits for 4:00 (ADR 0006).
   private struct RefreshKey: Equatable {
     var region: SavedRegion
     var isActive: Bool
@@ -100,7 +101,7 @@ struct HomeView: View {
         }
       }
       TodayHoursCard(hours: cached.forecast.hourly, today: today)
-      DaysCard(days: cached.forecast.daily, level: sunnyLevelSelection.level)
+      DaysCard(days: cached.forecast.days(from: today), level: sunnyLevelSelection.level)
       AttributionFooter(fetchedAt: cached.fetchedAt)
     } else if let failure = regionForecast.failure {
       NoDataCard(failure: failure)

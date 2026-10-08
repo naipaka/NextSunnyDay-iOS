@@ -33,6 +33,16 @@ public struct ForecastUpdater: Sendable {
     forecast.isFresh(at: now(), calendar: calendar)
   }
 
+  /// Whether the weather service's expiration of `forecast` has passed.
+  public func isExpired(_ forecast: CachedForecast) -> Bool {
+    forecast.isExpired(at: now())
+  }
+
+  /// When the next daily fetch is due.
+  public func nextDailyFetchTime(calendar: Calendar = .current) -> Date {
+    CachedForecast.nextDailyFetchTime(after: now(), calendar: calendar)
+  }
+
   /// Fetches the forecast for `coordinate`, caches it for the region and returns it.
   public func fetch(
     regionID: String, placeName: String?, coordinate: CLLocationCoordinate2D

@@ -44,7 +44,7 @@ final class ForecastUpdaterTests {
     #expect(await updater.cached(regionID: "r") == fetched)
   }
 
-  @Test func freshnessUsesTheClock() async throws {
+  @Test func freshnessAndExpirationUseTheClock() async throws {
     let expiring = WeatherRecording.tokyo.forecast(
       startingOn: now, expiringAt: now.addingTimeInterval(60 * 60))
     let updater = updater(FakeWeatherProvider(forecast: expiring))
@@ -52,7 +52,9 @@ final class ForecastUpdaterTests {
     let fetched = try await updater.fetch(regionID: "r", placeName: nil, coordinate: osaka)
 
     #expect(updater.isFresh(fetched))
-    #expect(!fetched.isFresh(at: now.addingTimeInterval(60 * 60)))
+    #expect(!updater.isExpired(fetched))
+    #expect(fetched.isExpired(at: now.addingTimeInterval(60 * 60)))
+    #expect(updater.nextDailyFetchTime() == CachedForecast.nextDailyFetchTime(after: now))
   }
 
   @Test func removedRegionsLoseTheirForecasts() async throws {

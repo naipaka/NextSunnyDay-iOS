@@ -24,17 +24,41 @@ struct CachedForecastTests {
       from: DateComponents(year: 2026, month: 10, day: day, hour: hour, minute: minute))!
   }
 
-  @Test func isFreshUntilItExpires() {
-    let forecast = cached(fetchedAt: date(8, 10), expiringAt: date(8, 11))
+  @Test func isFreshForTheRestOfTheDayAfterFourEvenWhenExpired() {
+    let forecast = cached(fetchedAt: date(8, 7), expiringAt: date(8, 8))
 
-    #expect(forecast.isFresh(at: date(8, 10, 59), calendar: calendar))
-    #expect(!forecast.isFresh(at: date(8, 11), calendar: calendar))
+    #expect(forecast.isFresh(at: date(8, 23, 59), calendar: calendar))
+    #expect(forecast.isExpired(at: date(8, 23, 59)))
   }
 
-  @Test func isStaleOnTheNextDayEvenBeforeItExpires() {
-    let forecast = cached(fetchedAt: date(8, 23, 30), expiringAt: date(9, 0, 30))
+  @Test func staysFreshAcrossMidnightUntilFour() {
+    let forecast = cached(fetchedAt: date(8, 7), expiringAt: date(8, 8))
 
-    #expect(!forecast.isFresh(at: date(9, 0, 10), calendar: calendar))
+    #expect(forecast.isFresh(at: date(9, 3, 59), calendar: calendar))
+    #expect(!forecast.isFresh(at: date(9, 4), calendar: calendar))
+  }
+
+  @Test func aFetchBeforeFourIsStaleAtFour() {
+    let forecast = cached(fetchedAt: date(9, 1), expiringAt: date(9, 2))
+
+    #expect(forecast.isFresh(at: date(9, 3), calendar: calendar))
+    #expect(!forecast.isFresh(at: date(9, 4, 30), calendar: calendar))
+  }
+
+  @Test func expiresAtTheWeatherServicesExpiration() {
+    let forecast = cached(fetchedAt: date(8, 10), expiringAt: date(8, 11))
+
+    #expect(!forecast.isExpired(at: date(8, 10, 59)))
+    #expect(forecast.isExpired(at: date(8, 11)))
+  }
+
+  @Test func dailyFetchTimesAreAtFour() {
+    #expect(
+      CachedForecast.lastDailyFetchTime(atOrBefore: date(9, 3), calendar: calendar) == date(8, 4))
+    #expect(
+      CachedForecast.lastDailyFetchTime(atOrBefore: date(9, 4), calendar: calendar) == date(9, 4))
+    #expect(CachedForecast.nextDailyFetchTime(after: date(9, 3), calendar: calendar) == date(9, 4))
+    #expect(CachedForecast.nextDailyFetchTime(after: date(9, 4), calendar: calendar) == date(10, 4))
   }
 
   @Test func keepsItsCoordinate() {
