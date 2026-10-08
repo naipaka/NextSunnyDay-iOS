@@ -48,12 +48,16 @@ public enum WeatherRecording: String, CaseIterable, Sendable {
     }
   }
 
+  /// Read from the source folder, not from a bundle, so that an app linking this module for its
+  /// previews doesn't ship the recordings. Tests and previews run on the Mac or a simulator,
+  /// which can read the source folder.
   private func data(_ kind: String) -> Data {
-    guard
-      let url = Bundle.module.url(
-        forResource: "\(rawValue)-\(kind)", withExtension: "json", subdirectory: "Recordings"),
-      let data = try? Data(contentsOf: url)
-    else { fatalError("The \(rawValue)-\(kind) recording is missing.") }
+    let url = URL(filePath: #filePath)
+      .deletingLastPathComponent()
+      .appending(path: "Recordings/\(rawValue)-\(kind).json")
+    guard let data = try? Data(contentsOf: url) else {
+      fatalError("The \(rawValue)-\(kind) recording is missing at \(url.path()).")
+    }
     return data
   }
 }

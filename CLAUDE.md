@@ -61,7 +61,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 - Core modules don't depend on each other; features depend only on core, never on each other. Only the app and the widget assemble them.
 - Every module a target imports must be its declared direct dependency (ADR 0002), in packages and in the Xcode targets.
 - Public initializers don't use default arguments that reach into another module (such as `defaults: UserDefaults = AppGroupContainer.userDefaults`): a default argument is compiled into the caller, which then needs that module linked. Add an argument-free `init()` inside the module instead.
-- Each core package has a fake in a `…Testing` module (`WeatherTesting`, `LocationTesting`, `PlaceSearchTesting`). `WeatherTesting` decodes forecasts recorded from WeatherKit (`WeatherRecording`).
+- Each core package has a fake in a `…Testing` module (`WeatherTesting`, `LocationTesting`, `PlaceSearchTesting`). `WeatherTesting` decodes forecasts recorded from WeatherKit (`WeatherRecording`), read from its source folder (`Recordings/`, excluded from the target) so that they are never copied into the app; they work on the Mac and in a simulator, not on a device.
 - WeatherKit has a type named `Weather`, which hides the `Weather` module in a file that imports both. Only the `Weather` package imports WeatherKit.
 
 ### App layer (ADR 0005)

@@ -20,7 +20,8 @@ let package = Package(
     .target(
       name: "WeatherTesting",
       dependencies: ["Weather"],
-      resources: [.copy("Recordings")],
+      // Read from the source folder, so the recordings are never copied into an app.
+      exclude: ["Recordings"],
       swiftSettings: settings
     ),
     .testTarget(
