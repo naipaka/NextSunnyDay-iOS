@@ -39,6 +39,15 @@ extension Date {
   var time: String {
     formatted(date: .omitted, time: .shortened)
   }
+
+  /// When a forecast was fetched: the time today, 「昨日 14:05」 yesterday, and the date with the
+  /// time before that, such as 「10月6日 14:05」.
+  var fetchTime: String {
+    let calendar = Calendar.current
+    if calendar.isDateInToday(self) { return time }
+    if calendar.isDateInYesterday(self) { return String(localized: "yesterday at \(time)") }
+    return formatted(.dateTime.month(.abbreviated).day().hour().minute())
+  }
 }
 
 extension Measurement<UnitAngle> {

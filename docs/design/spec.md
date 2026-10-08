@@ -90,7 +90,8 @@ The 「今日」 and 「あした」 rows were not mocked; they follow the same 
 | --- | --- |
 | ![Error with cache](images/home-error-cached.jpg) | ![Error without data](images/home-error-no-data.jpg) |
 
-- **Refresh failed with cached data:** keep the cached forecast. Add a banner card at the top of the sheet: 「天気を更新できなかったよ」, 「前回 14:05 の予報を表示しています」 and a 「再試行」 glass button.
+- **Refresh failed with cached data:** keep the cached forecast. Add a banner card at the top of the sheet: 「天気を更新できなかったよ」, 「14:05 の予報を表示しています」 and a 「再試行」 glass button.
+- **Fetch time** in the banner and the Home footer (「14:05 に更新」): the time alone for today, 「昨日 14:05」 for yesterday, and the date with the time before that (「10月6日 14:05」). The cache can be a day or more old, because the forecast is fetched once a day from 4:00 and may fail offline. There is no 「一昨日」, so every language follows the same rule.
 - **Fetch failed with no data:** the header shows 「あと？日」 with a 「もう一度試す」 button. The sheet holds a single card: 「通信できる場所で、もう一度試してね」 with a short explanation and a hint about pull to refresh.
 
 ## Onboarding (no region yet)

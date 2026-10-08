@@ -596,7 +596,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "前回 %@ の予報を表示しています"
+            "value" : "%@ の予報を表示しています"
           }
         }
       }
@@ -781,12 +781,12 @@
         }
       }
     },
-    "Updated at %@" : {
+    "Updated %@" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@に更新"
+            "value" : "%@ に更新"
           }
         }
       }
@@ -857,6 +857,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "晴れの基準は設定で変えられます。"
+          }
+        }
+      }
+    },
+    "yesterday at %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "昨日 %@"
           }
         }
       }

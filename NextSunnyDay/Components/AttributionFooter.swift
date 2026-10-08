@@ -13,7 +13,7 @@ struct AttributionFooter: View {
   var body: some View {
     VStack(spacing: 6) {
       if let fetchedAt {
-        Text("Updated at \(fetchedAt.time)")
+        Text("Updated \(fetchedAt.fetchTime)")
       }
       if let attribution {
         AttributionMark(attribution: attribution)

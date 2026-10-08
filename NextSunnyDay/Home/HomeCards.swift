@@ -125,7 +125,7 @@ struct RefreshFailedBanner: View {
       VStack(alignment: .leading, spacing: 2) {
         Text("Couldn't update the weather")
           .font(.headline)
-        Text("Showing the forecast from \(fetchedAt.time)")
+        Text("Showing the forecast from \(fetchedAt.fetchTime)")
           .font(.subheadline)
           .foregroundStyle(.secondary)
       }
