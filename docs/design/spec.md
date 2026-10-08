@@ -155,7 +155,7 @@ Fog, smoke, blowing dust, every kind of precipitation and every storm never coun
 
 ## Attribution
 
-The Apple Weather mark and the legal link appear in three places: the Home footer, the day detail footer and About. The mockups use a dashed placeholder; the real mark comes from `WeatherService.shared.attribution`, in its light and dark variants. Whether widgets also need the mark is checked against the WeatherKit attribution guidelines in #96.
+The Apple Weather mark and the legal link appear in three places: the Home footer, the day detail footer and About. The mockups use a dashed placeholder; the real mark comes from `WeatherService.shared.attribution`, in its light and dark variants. The medium and large widgets also show the mark; the small and Lock Screen widgets have no room for it, and the legal link stays in the app (#96).
 
 ## Widgets
 
@@ -175,7 +175,8 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
   - circular: the symbol over 「3日」
   - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/10（土）快晴」
   The system draws these in monochrome.
-- The mockups are plain views at widget sizes, not a real widget extension. #96 must also cover the accented and vibrant rendering modes and the tinted/clear Home Screen looks.
+- The mockups are plain views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
+- A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」.
 
 ## App icon
 

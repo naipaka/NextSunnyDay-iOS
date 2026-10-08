@@ -84,7 +84,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 
 ### Widget target
 
-`NextSunnyDayWidget/` uses `Region` (read only), `Forecast` and `SunnyDay`. Its `Provider.getTimeline` reads the region, the sunny level and the cached forecast, and fetches when the forecast isn't fresh. Supported families: `.systemSmall`, `.systemMedium`. The widget's redesign, schedule and location handling are #96.
+`NextSunnyDayWidget/` uses `Region`, `Forecast`, `SunnyDay` and `Weather` (plus `WeatherTesting` for its previews). `Provider` builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state. The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. For the current location the widget uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate.
 
 ### Localization & resources
 

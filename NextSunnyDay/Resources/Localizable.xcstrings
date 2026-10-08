@@ -11,6 +11,16 @@
         }
       }
     },
+    "%lld days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld日"
+          }
+        }
+      }
+    },
     "10-Day Forecast" : {
       "localizations" : {
         "ja" : {
@@ -37,6 +47,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定アプリで位置情報の利用を許可するか、地域を検索してね。"
+          }
+        }
+      }
+    },
+    "Choose a region in the app" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリで地域を選んでね"
           }
         }
       }
@@ -117,6 +137,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今いる場所がわからなかったよ"
+          }
+        }
+      }
+    },
+    "Couldn't get it" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取得できなかったよ"
           }
         }
       }
@@ -261,6 +291,16 @@
         }
       }
     },
+    "Last updated %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前回の更新：%@"
+          }
+        }
+      }
+    },
     "Location access is off" : {
       "localizations" : {
         "ja" : {
@@ -321,6 +361,26 @@
         }
       }
     },
+    "Next Sunny Day %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ %@"
+          }
+        }
+      }
+    },
+    "Next Sunny Day %@ (%@)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ %1$@（%2$@）"
+          }
+        }
+      }
+    },
     "NextSunnyDay" : {
       "localizations" : {
         "ja" : {
@@ -367,6 +427,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "10日先まで晴れの予報なし"
+          }
+        }
+      }
+    },
+    "None in the next 10 days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10日先まで晴れなし"
           }
         }
       }
@@ -591,6 +661,16 @@
         }
       }
     },
+    "Tap to update" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タップして更新"
+          }
+        }
+      }
+    },
     "The app couldn't connect to the internet or get the weather from Apple Weather. Wait a moment, or pull down on the screen to update." : {
       "localizations" : {
         "ja" : {
@@ -601,12 +681,12 @@
         }
       }
     },
-    "The forecast uses data from Apple Weather. It is updated when the data expires, about every hour, and you can update it yourself by pulling down on the home screen." : {
+    "The forecast uses data from Apple Weather. It is updated once a day in the early morning, and you can update it yourself by pulling down on the home screen." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "天気予報は Apple Weather のデータを使っています。予報はデータの期限が切れるころ（およそ1時間ごと）に新しくなり、ホーム画面を下に引っぱると手動でも更新できます。"
+            "value" : "天気予報は Apple Weather のデータを使っています。予報は毎日早朝に新しくなり、ホーム画面を下に引っぱると手動でも更新できます。"
           }
         }
       }

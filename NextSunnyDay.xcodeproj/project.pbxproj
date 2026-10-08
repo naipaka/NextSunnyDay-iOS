@@ -22,6 +22,7 @@
 		C3B000000000000000000014 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000013 /* Forecast */; };
 		C3B000000000000000000016 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000015 /* SunnyDay */; };
 		C3B000000000000000000018 /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000017 /* Weather */; };
+		C3B00000000000000000001A /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000019 /* WeatherTesting */; };
 		C3C00000000000000000001A /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000019 /* Region */; };
 		C3C00000000000000000001C /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001B /* Forecast */; };
 		C3C00000000000000000001E /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001D /* SunnyDay */; };
@@ -129,6 +130,7 @@
 				C3B000000000000000000014 /* Forecast in Frameworks */,
 				C3B000000000000000000016 /* SunnyDay in Frameworks */,
 				C3B000000000000000000018 /* Weather in Frameworks */,
+				C3B00000000000000000001A /* WeatherTesting in Frameworks */,
 				91044074253DDA9600A21F20 /* SwiftUI.framework in Frameworks */,
 				91044072253DDA9600A21F20 /* WidgetKit.framework in Frameworks */,
 			);
@@ -220,6 +222,7 @@
 				C2B000000000000000000013 /* Forecast */,
 				C2B000000000000000000015 /* SunnyDay */,
 				C2B000000000000000000017 /* Weather */,
+				C2B000000000000000000019 /* WeatherTesting */,
 			);
 			productName = NextSunnyDayWidgetExtension;
 			productReference = 9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */;
@@ -797,6 +800,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
 			productName = Weather;
+		};
+		C2B000000000000000000019 /* WeatherTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
+			productName = WeatherTesting;
 		};
 		C2C000000000000000000019 /* Region */ = {
 			isa = XCSwiftPackageProductDependency;

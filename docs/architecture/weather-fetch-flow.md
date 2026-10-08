@@ -52,13 +52,23 @@ The Region screen searches while the user types (`.searchable` text in `@State`,
 
 ## Widget timeline
 
-`Provider.getTimeline` in `NextSunnyDayWidget` requests a refresh every 5 hours. It fetches a new forecast when the cached one is missing or not fresh, then builds the entry from the result. The widget doesn't use Core Location: for the current location it fetches for the coordinate of the last cached forecast. Its schedule and location handling are decided in #96.
+`Provider.getTimeline` in `NextSunnyDayWidget` reads the region, the sunny level and the region's cache file, and fetches only when the forecast wasn't fetched since the last 4:00 ([ADR 0006](decisions/0006-fetch-once-a-day.md)). It returns two entries from the same forecast, now and the next midnight, so the day count rolls over without a reload. The next reload is at the next 4:00 plus a random 0–60 minutes; after a failed fetch, in an hour. Without a region the policy is `.never`: the app reloads the widgets when a region is chosen.
+
+For the current location the widget looks the location up itself (`NSWidgetWantsLocation`, `isAuthorizedForWidgetUpdates`, five seconds at most). The system only gives a widget locations shortly after it was visible, so the 4:00 reload usually falls back to the coordinate and name of the last cached forecast.
 
 ```mermaid
 flowchart TD
     A([getTimeline]) --> B[Read the region and the sunny level,<br/>load the region's cache file]
-    B --> C{Missing or not fresh,<br/>and a coordinate is known?}
-    C -- No --> E[Return the timeline,<br/>next refresh in 5h]
-    C -- Yes --> D[Fetch from WeatherKit<br/>and save to the cache file]
-    D --> E
+    B --> R{Region chosen?}
+    R -- No --> N([One entry, reload never])
+    R -- Yes --> C{Fetched since<br/>the last 4:00?}
+    C -- Yes --> E[Entries for now and midnight,<br/>reload at 4:00 + 0–60 min]
+    C -- No --> L{Current location<br/>and the widget may use it?}
+    L -- Yes --> LL[Get the location<br/>and reverse geocode it]
+    L -- No --> LC[Use the saved place, or<br/>the last cached coordinate]
+    LL --> D[Fetch from WeatherKit<br/>and save to the cache file]
+    LC --> D
+    D --> K{Succeeded?}
+    K -- Yes --> E
+    K -- No --> F[Entries from the cached forecast,<br/>reload in an hour]
 ```

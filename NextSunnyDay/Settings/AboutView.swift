@@ -18,7 +18,7 @@ struct AboutView: View {
               .frame(height: 20)
           }
           Text(
-            "The forecast uses data from Apple Weather. It is updated when the data expires, about every hour, and you can update it yourself by pulling down on the home screen."
+            "The forecast uses data from Apple Weather. It is updated once a day in the early morning, and you can update it yourself by pulling down on the home screen."
           )
           .font(.subheadline)
           .foregroundStyle(.secondary)

@@ -13,6 +13,12 @@ public struct RegionLocator: Sendable {
     self.init(location: CoreLocationProvider(), places: MapKitPlaceSearch())
   }
 
+  /// Uses Core Location and MapKit, waiting at most `locationTimeout` for the location: the
+  /// widget has only a few seconds to build its timeline.
+  public init(locationTimeout: Duration) {
+    self.init(location: CoreLocationProvider(timeout: locationTimeout), places: MapKitPlaceSearch())
+  }
+
   public init(location: any LocationProviding, places: any PlaceSearching) {
     self.location = location
     self.places = places
