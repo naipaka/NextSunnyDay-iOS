@@ -171,12 +171,12 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
   - None in range: 「まだ先かも」 / 「10日先まで晴れなし」. The medium widget still lists five days.
   - No data: 「あと？日」 / 「天気を取得できなかったよ」. The small widget adds 「タップして更新」; the medium widget adds the last update time.
 - **Lock Screen:**
-  - inline: 「☀ 次の晴れ あと3日（土）」
+  - inline: 「☀ 次の晴れ あと3日（土）」; 「今日」 and 「あした」 go without the weekday
   - circular: the symbol over 「3日」
   - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/10（土）快晴」
   The system draws these in monochrome.
 - The mockups are plain views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
-- A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」.
+- A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」. The medium and large widgets draw their days redacted, where the forecast goes once a region is chosen.
 
 ## App icon
 

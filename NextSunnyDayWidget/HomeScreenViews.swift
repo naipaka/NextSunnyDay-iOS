@@ -44,13 +44,20 @@ struct MediumWidgetView: View {
       }
       Spacer(minLength: 0)
       switch entry.state {
-      case .noData, .noRegion:
+      case .noData:
         VStack(spacing: 6) {
           WidgetSymbol(state: entry.state)
             .font(.system(size: 36))
           Footnote(entry: entry, showsTapToUpdate: true)
         }
         .frame(maxHeight: .infinity)
+      case .noRegion:
+        // Where the days go once a region is chosen.
+        HStack(spacing: 2) {
+          ForEach(0..<5, id: \.self) { _ in
+            PlaceholderDayColumn()
+          }
+        }
       case .sunny, .noneInRange:
         HStack(spacing: 2) {
           ForEach(entry.days.prefix(5), id: \.date) { day in
@@ -92,10 +99,18 @@ struct LargeWidgetView: View {
           .font(.system(size: 40))
       }
       switch entry.state {
-      case .noData, .noRegion:
+      case .noData:
         Spacer(minLength: 0)
         Footnote(entry: entry, showsTapToUpdate: true)
           .frame(maxWidth: .infinity)
+        Spacer(minLength: 0)
+      case .noRegion:
+        // Where the days go once a region is chosen.
+        VStack(spacing: 2) {
+          ForEach(0..<7, id: \.self) { _ in
+            PlaceholderDayRow()
+          }
+        }
         Spacer(minLength: 0)
       case .sunny, .noneInRange:
         VStack(spacing: 2) {
@@ -260,6 +275,44 @@ private struct DayRow: View {
         Capsule().fill(.white.opacity(0.25))
       }
     }
+  }
+}
+
+/// A day column without data, drawn redacted.
+private struct PlaceholderDayColumn: View {
+  var body: some View {
+    VStack(spacing: 4) {
+      Text(verbatim: "00")
+        .font(.caption2.weight(.bold))
+      Image(systemName: "sun.max.fill")
+        .font(.body)
+        .frame(height: 22)
+      Text(verbatim: "00°")
+        .font(.caption.weight(.semibold))
+    }
+    .frame(width: 34)
+    .padding(.vertical, 6)
+    .redacted(reason: .placeholder)
+  }
+}
+
+/// A day row without data, drawn redacted.
+private struct PlaceholderDayRow: View {
+  var body: some View {
+    HStack(spacing: 8) {
+      Text(verbatim: "00 (00)")
+        .frame(width: 64, alignment: .leading)
+      Image(systemName: "sun.max.fill")
+        .frame(width: 24)
+      Text(verbatim: "000000")
+        .font(.caption)
+      Spacer(minLength: 4)
+      Text(verbatim: "00° 00°")
+    }
+    .font(.footnote)
+    .padding(.horizontal, 8)
+    .padding(.vertical, 5)
+    .redacted(reason: .placeholder)
   }
 }
 
