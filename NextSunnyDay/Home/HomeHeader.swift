@@ -106,5 +106,7 @@ struct HomeHeader: View {
       .font(.system(size: size, weight: .bold))
       .lineLimit(1)
       .minimumScaleFactor(0.6)
+      // Shrinks before it reaches the symbol, which longer English text such as "In ? days" does.
+      .padding(.trailing, symbol == nil ? 0 : 100)
   }
 }
