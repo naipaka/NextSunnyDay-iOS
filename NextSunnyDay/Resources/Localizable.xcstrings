@@ -864,12 +864,12 @@
         }
       }
     },
-    "Use System Setting" : {
+    "Use System Setting (%@)" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "システム設定を使用"
+            "value" : "システム設定を使用（%@）"
           }
         }
       }

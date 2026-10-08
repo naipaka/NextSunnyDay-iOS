@@ -100,10 +100,11 @@ struct SettingsView: View {
 }
 
 extension TemperatureUnitSetting {
-  /// The names Apple's Weather app uses for its temperature units.
+  /// The names Apple's Weather app uses for its temperature units; the system setting shows the
+  /// unit it gives now, such as "Use System Setting (°C)".
   var title: LocalizedStringResource {
     switch self {
-    case .system: "Use System Setting"
+    case .system: "Use System Setting (\(unit(for: .current).symbol))"
     case .celsius: "Celsius (°C)"
     case .fahrenheit: "Fahrenheit (°F)"
     }

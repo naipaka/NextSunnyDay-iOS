@@ -122,7 +122,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 - The rows are:
   - 地域 (`location.fill`, value 「東京都港区」 or 「現在地」)
   - 晴れの基準 (`sun.max.fill`, value = the current level), with the footer 「どんな天気の日を「晴れ」として数えるかを選べるよ。」
-  - 気温 (`thermometer.medium`), a menu picker with the choices of Apple's Weather app: 「システム設定を使用」 (the default: the system's temperature unit, which follows the region unless changed in Settings > General > Language & Region), 「摂氏（°C）」 and 「華氏（°F）」. It applies to the app and the widgets.
+  - 気温 (`thermometer.medium`), a menu picker with the choices of Apple's Weather app, in its order: 「摂氏（°C）」, 「華氏（°F）」 and 「システム設定を使用（°C）」 (the default: the system's temperature unit, shown in the parentheses, which follows the region unless changed in Settings > General > Language & Region). It applies to the app and the widgets.
   - 天気データについて (`info.circle`)
 - The version string goes in the last footer.
 - **晴れの基準** is a list of the four levels. Each row has a symbol, a title and a subtitle listing what counts by the condition names Home shows (WeatherKit's, such as 「快晴、ほぼ快晴」; the loosest level keeps its description instead of listing nine), and the selected row has an orange checkmark. The footer recommends 「雨が降らなければOK」 for laundry.
