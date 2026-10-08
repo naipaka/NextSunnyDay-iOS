@@ -92,7 +92,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 - `xcodebuild` doesn't add new keys to the catalog (Xcode does when building in the IDE). When adding UI text from the command line, add the key with its `ja` translation to `Localizable.xcstrings` yourself; the keys a build emits are in the `.stringsdata` files under DerivedData.
 - `Localizable.xcstrings` is a member of both the app and the widget (membership exception), so there is one catalog for both. `InfoPlist.xcstrings` localizes `CFBundleDisplayName` (`NextSunnyDay` / `次いつ晴れる？`).
 - Non-UI values stay plain literals in code and out of the catalog: SF Symbol names (`Image(systemName: "xmark")`), the `"-"` placeholder, the widget `kind`.
-- **Colors** come from `Assets.xcassets` via Xcode's generated asset symbols: `Color(.nextSunnyDayText)`. The `Blue` asset collides with `UIColor.blue`, so write `Color(ColorResource.blue)`.
+- **Colors** are system colors only (`Color.orange` is the one accent, `Color(.systemGray)`, `Color(.secondarySystemGroupedBackground)` …); no hex values in code. `Assets.xcassets` holds the app icon and an empty `AccentColor` (the system default), and no color sets.
 - There are no third-party resource generators, build-tool plugins or script build phases.
 - The only Swift packages are the local ones under `Packages/`; there are no third-party dependencies. Keep it that way unless there is a strong reason.
 
