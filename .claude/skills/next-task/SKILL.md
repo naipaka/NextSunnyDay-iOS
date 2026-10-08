@@ -5,7 +5,7 @@ description: Pick up the next task of the NextSunnyDay revival roadmap (GitHub i
 
 # Next roadmap task
 
-The revival roadmap is GitHub issue **#89** in `naipaka/NextSunnyDay-iOS`. Each task is a sub-issue of #89. One task = one chat.
+The revival roadmap is GitHub issue **#89** in `naipaka/NextSunnyDay-iOS`. Each task is a sub-issue of #89, or of a group issue under #89 (#101 "New features for 2.0"). One task = one chat.
 
 ## 1. Find the task
 
@@ -13,8 +13,9 @@ The revival roadmap is GitHub issue **#89** in `naipaka/NextSunnyDay-iOS`. Each 
    ```sh
    gh api repos/naipaka/NextSunnyDay-iOS/issues/89/sub_issues --jq '.[] | "\(.number)\t\(.state)\t\(.title)"'
    ```
-2. If every sub-issue is closed, say the roadmap is finished and offer to close #89. Stop.
-3. Read the body of each open sub-issue in ascending number order (`gh issue view <n>`). Its first lines say `Depends on #X` (and sometimes "Can start any time after #X"). Pick the **lowest-numbered open issue whose dependencies are all closed**.
+2. A sub-issue that has sub-issues of its own is a **group**, not a task (check with `gh api repos/naipaka/NextSunnyDay-iOS/issues/<n>/sub_issues`). Treat its open sub-issues as the candidates in its place, and its own `Depends on` line as a dependency of each of them. When all of a group's sub-issues are closed, tick it in #89 and close it.
+3. If every task is closed, say the roadmap is finished and offer to close #89. Stop.
+4. Read the body of each open task in ascending number order (`gh issue view <n>`). Its first lines say `Depends on #X` (and sometimes "Can start any time after #X"). Pick the **lowest-numbered open issue whose dependencies are all closed**.
    - If an open issue already has ticked checkboxes or progress comments, it is in progress — prefer resuming it over starting a new one.
    - If the owner named an issue, use that one instead, but warn if its dependencies are still open.
 
@@ -44,7 +45,7 @@ When every "Done when" item is met:
 
 1. Update `CLAUDE.md` and `docs/` so the next chat starts with accurate context.
 2. Post a short English summary comment on the issue (what changed, commits, anything deferred) and close it. Don't post kick-off or play-by-play progress comments before this.
-3. Tick the task's checkbox in #89's body.
+3. Tick the task's checkbox in #89's body (tasks of a group are listed there too).
 4. Tell the owner in Japanese what was done, and that the next task can be started in a new chat with `/next-task`.
 
 If the task cannot be finished in this chat, leave a progress comment on the issue (done / remaining / blockers) instead of closing it.
