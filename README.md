@@ -4,11 +4,11 @@
 
 <img src="https://user-images.githubusercontent.com/45661924/97105071-d28d2580-16fb-11eb-8f8d-7ec79940db41.png" width="300">
 
-<img src="https://user-images.githubusercontent.com/45661924/97104876-7544a480-16fa-11eb-9bad-e1334d5ab2f8.png" height="300">
+<img src="docs/images/widget.jpg" width="600">
 
 An iOS widget that shows the next sunny day on your home screen.
 Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
-The app also shows the weekly forecast for today through seven days later.
+The app shows when the next sunny day is, the next 24 hours and ten days, and lets you choose what counts as sunny.
 The app is available in Japanese only.
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
@@ -91,11 +91,10 @@ Open `NextSunnyDay.xcodeproj` in Xcode, then build and run the app.
 
 ## Screenshots
 
-| Screen         | Light                                                                                                                        | Dark                                                                                                                         |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Widget         | <img src="https://user-images.githubusercontent.com/45661924/97104984-4f6bcf80-16fb-11eb-8e4f-13f0b694cd4b.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105017-8e018a00-16fb-11eb-92ad-20fd0c67c0e0.png" width="300"> |
-| Home           | <img src="https://user-images.githubusercontent.com/45661924/97104990-54c91a00-16fb-11eb-9408-40ac76eb52ea.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105024-98bc1f00-16fb-11eb-8149-fbffd415dd3e.png" width="300"> |
-| Setting        | <img src="https://user-images.githubusercontent.com/45661924/97104994-585ca100-16fb-11eb-9bcb-c57bc9009f55.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105027-9c4fa600-16fb-11eb-9d8c-41614202eddb.png" width="300"> |
-| Region Search  | <img src="https://user-images.githubusercontent.com/45661924/97105000-66122680-16fb-11eb-9286-2bf512212082.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105031-9fe32d00-16fb-11eb-841f-8b9753442253.png" width="300"> |
-| Search results | <img src="https://user-images.githubusercontent.com/45661924/97105005-6d393480-16fb-11eb-8be8-06fbf7204ec0.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105039-a671a480-16fb-11eb-873b-77fec5736546.png" width="300"> |
-| About weather  | <img src="https://user-images.githubusercontent.com/45661924/97105009-7fb36e00-16fb-11eb-849e-a4b6c5bffdb8.png" width="300"> | <img src="https://user-images.githubusercontent.com/45661924/97105042-aa052b80-16fb-11eb-9feb-f18031116f02.png" width="300"> |
+| Screen | Light | Dark |
+| --- | --- | --- |
+| Home | <img src="docs/images/home-light.jpg" width="300"> | <img src="docs/images/home-dark.jpg" width="300"> |
+| Day detail | <img src="docs/images/day-light.jpg" width="300"> | <img src="docs/images/day-dark.jpg" width="300"> |
+| Settings | <img src="docs/images/settings-light.jpg" width="300"> | <img src="docs/images/settings-dark.jpg" width="300"> |
+| Region search | <img src="docs/images/region-light.jpg" width="300"> | <img src="docs/images/region-dark.jpg" width="300"> |
+| About weather data | <img src="docs/images/about-light.jpg" width="300"> | <img src="docs/images/about-dark.jpg" width="300"> |
