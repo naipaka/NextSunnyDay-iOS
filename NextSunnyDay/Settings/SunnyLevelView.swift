@@ -1,5 +1,6 @@
 import SunnyDay
 import SwiftUI
+import Weather
 
 /// Chooses which days count as sunny.
 struct SunnyLevelView: View {
@@ -19,7 +20,7 @@ struct SunnyLevelView: View {
               VStack(alignment: .leading, spacing: 2) {
                 Text(level.title)
                   .foregroundStyle(.primary)
-                Text(level.detail)
+                level.detail
                   .font(.subheadline)
                   .foregroundStyle(.secondary)
               }
@@ -55,13 +56,21 @@ extension SunnyLevel {
     }
   }
 
-  var detail: LocalizedStringResource {
+  /// The conditions that count, by the names Home shows; the loosest level describes them instead
+  /// of listing nine.
+  var detail: Text {
     switch self {
-    case .clear: "Days with almost no clouds"
-    case .mostlyClear: "Clear and mostly clear"
-    case .partlyCloudy: "Clear, mostly clear and partly cloudy"
-    case .noRain: "Cloudy days too, with a chance of rain under 30%"
+    case .noRain: Text("Cloudy days too, with a chance of rain under 30%")
+    default: Text(verbatim: conditionNames)
     }
+  }
+
+  /// The names of the conditions that count, such as 「快晴、ほぼ快晴」.
+  var conditionNames: String {
+    WeatherCondition.allCases
+      .filter { conditions.contains($0) }
+      .map(\.localizedName)
+      .formatted(.list(type: .and))
   }
 
   var symbolName: String {

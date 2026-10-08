@@ -81,32 +81,12 @@
         }
       }
     },
-    "Clear and mostly clear" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "快晴・晴れ"
-          }
-        }
-      }
-    },
     "Clear only" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "快晴だけ"
-          }
-        }
-      }
-    },
-    "Clear, mostly clear and partly cloudy" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "快晴・晴れ・晴れ時々くもり"
           }
         }
       }
@@ -207,16 +187,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "データソースと法的情報"
-          }
-        }
-      }
-    },
-    "Days with almost no clouds" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "雲がほとんどない日だけ"
           }
         }
       }

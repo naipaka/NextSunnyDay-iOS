@@ -35,7 +35,7 @@ struct AboutView: View {
           Text("What Counts as Sunny")
         }
         LabeledContent {
-          Text(verbatim: countedConditions)
+          Text(verbatim: sunnyLevelSelection.level.conditionNames)
         } label: {
           Text("Weather That Counts")
         }
@@ -50,13 +50,6 @@ struct AboutView: View {
     .task {
       attribution = try? await forecastUpdater.attribution()
     }
-  }
-
-  private var countedConditions: String {
-    WeatherCondition.allCases
-      .filter { sunnyLevelSelection.level.conditions.contains($0) }
-      .map(\.localizedName)
-      .formatted(.list(type: .and))
   }
 }
 

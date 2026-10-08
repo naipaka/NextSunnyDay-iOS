@@ -124,7 +124,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
   - 晴れの基準 (`sun.max.fill`, value = the current level), with the footer 「どんな天気の日を「晴れ」として数えるかを選べるよ。」
   - 天気データについて (`info.circle`)
 - The version string goes in the last footer.
-- **晴れの基準** is a list of the four levels. Each row has a symbol, a title and a subtitle listing what counts, and the selected row has an orange checkmark. The footer recommends 「雨が降らなければOK」 for laundry.
+- **晴れの基準** is a list of the four levels. Each row has a symbol, a title and a subtitle listing what counts by the condition names Home shows (WeatherKit's, such as 「快晴、ほぼ快晴」; the loosest level keeps its description instead of listing nine), and the selected row has an orange checkmark. The footer recommends 「雨が降らなければOK」 for laundry.
 
 ### Sunny levels
 
