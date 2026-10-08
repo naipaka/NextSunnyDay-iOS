@@ -54,7 +54,7 @@ struct Provider: TimelineProvider {
       return Loaded(entry: SunnyEntry(date: now, level: level), policy: .never)
     }
     let updater = ForecastUpdater()
-    var cached = await updater.cached(regionID: region.id)
+    var cached = updater.cached(regionID: region.id)
     var fetchFailed = false
     if fetchingIfStale, cached.map({ !updater.isFresh($0) }) ?? true {
       if let fetched = await fetch(region, cached: cached, updater: updater) {

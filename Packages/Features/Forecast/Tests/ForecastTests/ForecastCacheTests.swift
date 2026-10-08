@@ -32,7 +32,7 @@ final class ForecastCacheTests {
   }
 
   @Test func loadReturnsNilWithoutFile() async {
-    #expect(await ForecastCache(directory: directory).load(regionID: regionID) == nil)
+    #expect(ForecastCache(directory: directory).load(regionID: regionID) == nil)
   }
 
   @Test func savedForecastLoadsBackUnchanged() async throws {
@@ -40,7 +40,7 @@ final class ForecastCacheTests {
     try await ForecastCache(directory: directory).save(saved)
 
     // A new instance, like the widget process, reads the same file.
-    #expect(await ForecastCache(directory: directory).load(regionID: regionID) == saved)
+    #expect(ForecastCache(directory: directory).load(regionID: regionID) == saved)
   }
 
   @Test func saveReplacesTheForecast() async throws {
@@ -50,7 +50,7 @@ final class ForecastCacheTests {
     newer.fetchedAt += 60
     try await cache.save(newer)
 
-    #expect(await cache.load(regionID: regionID) == newer)
+    #expect(cache.load(regionID: regionID) == newer)
   }
 
   @Test func regionsHaveSeparateForecasts() async throws {
@@ -58,8 +58,8 @@ final class ForecastCacheTests {
     try await cache.save(forecast(regionID: regionID, placeName: "港区"))
     try await cache.save(forecast(regionID: "current-location", placeName: "大阪市"))
 
-    #expect(await cache.load(regionID: regionID)?.placeName == "港区")
-    #expect(await cache.load(regionID: "current-location")?.placeName == "大阪市")
+    #expect(cache.load(regionID: regionID)?.placeName == "港区")
+    #expect(cache.load(regionID: "current-location")?.placeName == "大阪市")
   }
 
   @Test func removeAllKeepsOnlyTheGivenRegions() async throws {
@@ -81,7 +81,7 @@ final class ForecastCacheTests {
   @Test func unreadableFileIsDiscarded() async throws {
     try write(Data("not json".utf8), for: regionID)
 
-    #expect(await ForecastCache(directory: directory).load(regionID: regionID) == nil)
+    #expect(ForecastCache(directory: directory).load(regionID: regionID) == nil)
     #expect(!fileExists(regionID))
   }
 
@@ -94,7 +94,7 @@ final class ForecastCacheTests {
     json["formatVersion"] = 1
     try JSONSerialization.data(withJSONObject: json).write(to: url)
 
-    #expect(await cache.load(regionID: regionID) == nil)
+    #expect(cache.load(regionID: regionID) == nil)
     #expect(!fileExists(regionID))
   }
 }

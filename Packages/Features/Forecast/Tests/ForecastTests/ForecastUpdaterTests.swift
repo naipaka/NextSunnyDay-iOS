@@ -29,7 +29,7 @@ final class ForecastUpdaterTests {
     #expect(fetched.fetchedAt == now)
     #expect(fetched.placeName == "大阪駅")
     #expect(fetched.coordinate.latitude == osaka.latitude)
-    #expect(await updater.cached(regionID: "r") == fetched)
+    #expect(updater.cached(regionID: "r") == fetched)
   }
 
   @Test func aFailedFetchKeepsTheCachedForecast() async throws {
@@ -41,7 +41,7 @@ final class ForecastUpdaterTests {
     await #expect(throws: URLError.self) {
       try await updater.fetch(regionID: "r", placeName: nil, coordinate: osaka)
     }
-    #expect(await updater.cached(regionID: "r") == fetched)
+    #expect(updater.cached(regionID: "r") == fetched)
   }
 
   @Test func freshnessAndExpirationUseTheClock() async throws {
@@ -64,7 +64,7 @@ final class ForecastUpdaterTests {
 
     await updater.removeForecasts(except: ["kept"])
 
-    #expect(await updater.cached(regionID: "kept") != nil)
-    #expect(await updater.cached(regionID: "removed") == nil)
+    #expect(updater.cached(regionID: "kept") != nil)
+    #expect(updater.cached(regionID: "removed") == nil)
   }
 }

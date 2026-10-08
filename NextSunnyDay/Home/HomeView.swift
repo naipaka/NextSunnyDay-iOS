@@ -46,6 +46,10 @@ struct HomeView: View {
         await regionForecast.refresh(for: region)
       }
     }
+    .onAppear {
+      // Before the first frame, so that a cached forecast never flashes the loading state.
+      regionForecast.showCached(for: region)
+    }
     .task(id: RefreshKey(region: region, isActive: scenePhase == .active, day: today)) {
       guard scenePhase == .active else { return }
       await regionForecast.refreshIfNeeded(for: region)

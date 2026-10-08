@@ -23,9 +23,9 @@ public struct ForecastUpdater: Sendable {
     self.now = now
   }
 
-  /// The region's cached forecast, fresh or not.
-  public func cached(regionID: String) async -> CachedForecast? {
-    await cache.load(regionID: regionID)
+  /// The region's cached forecast, fresh or not, read synchronously.
+  public func cached(regionID: String) -> CachedForecast? {
+    cache.load(regionID: regionID)
   }
 
   /// Whether `forecast` is still fresh now.

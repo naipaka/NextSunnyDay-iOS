@@ -35,12 +35,10 @@ final class RegionForecast {
     self.locator = locator
   }
 
-  /// Shows the region's cached forecast, then fetches when it is missing or not fetched since the
-  /// last 4:00 (ADR 0006).
-  func refreshIfNeeded(for region: SavedRegion) async {
-    await updater.removeForecasts(except: [region.id])
-    let cached = await updater.cached(regionID: region.id)
-    guard !Task.isCancelled else { return }
+  /// Shows the region's cached forecast at once, so that a screen has it in its first frame and
+  /// shows loading only when nothing is cached.
+  func showCached(for region: SavedRegion) {
+    let cached = updater.cached(regionID: region.id)
     if forecast?.regionID != region.id {
       failure = nil
     }
@@ -50,6 +48,14 @@ final class RegionForecast {
     } else if forecast?.regionID != region.id {
       forecast = nil
     }
+  }
+
+  /// Shows the region's cached forecast, then fetches when it is missing or not fetched since the
+  /// last 4:00 (ADR 0006).
+  func refreshIfNeeded(for region: SavedRegion) async {
+    await updater.removeForecasts(except: [region.id])
+    guard !Task.isCancelled else { return }
+    showCached(for: region)
     if let forecast, forecast.regionID == region.id, updater.isFresh(forecast) { return }
     await fetch(region)
   }

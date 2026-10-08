@@ -100,7 +100,13 @@ extension AppFeatures {
       let stale = CachedForecast(
         regionID: place.id, placeName: "港区", coordinate: minato, fetchedAt: fetchedAt,
         forecast: WeatherRecording.tokyo.forecast(expiringAt: fetchedAt.addingTimeInterval(3600)))
-      Task { try await cache.save(stale) }
+      // Written before the screens start, as an earlier launch would have left it.
+      let saved = DispatchSemaphore(value: 0)
+      Task.detached {
+        try? await cache.save(stale)
+        saved.signal()
+      }
+      saved.wait()
     }
 
     let regionStore = RegionStore(defaults: defaults)

@@ -27,8 +27,10 @@ public actor ForecastCache {
     self.directory = directory
   }
 
-  /// The region's forecast, or `nil` if there is none or it can't be read.
-  public func load(regionID: String) -> CachedForecast? {
+  /// The region's forecast, or `nil` if there is none or it can't be read. It reads one small
+  /// file synchronously, so that a screen can show the forecast in its first frame; saves replace
+  /// the file atomically, so it never reads half a file.
+  public nonisolated func load(regionID: String) -> CachedForecast? {
     let url = fileURL(regionID: regionID)
     guard let data = try? Data(contentsOf: url) else { return nil }
     guard let file = try? JSONDecoder().decode(File.self, from: data),
@@ -58,7 +60,7 @@ public actor ForecastCache {
     }
   }
 
-  private func fileURL(regionID: String) -> URL {
+  private nonisolated func fileURL(regionID: String) -> URL {
     directory.appending(path: "\(regionID).json", directoryHint: .notDirectory)
   }
 }

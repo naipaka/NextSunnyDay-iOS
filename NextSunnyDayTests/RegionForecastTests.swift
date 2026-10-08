@@ -55,6 +55,16 @@ final class RegionForecastTests {
     return cached
   }
 
+  @Test func showsTheCacheWithoutWaiting() async throws {
+    let cached = try await cacheForecast(for: osaka)
+    let model = regionForecast(FakeWeatherProvider(.tokyo))
+
+    model.showCached(for: osaka)
+
+    #expect(model.forecast == cached)
+    #expect(!model.isLoading)
+  }
+
   @Test func showsTodaysCacheWithoutFetchingEvenWhenExpired() async throws {
     let cached = try await cacheForecast(for: osaka, fetchedAt: date(5))
     let model = regionForecast(FakeWeatherProvider(error: URLError(.notConnectedToInternet)))
@@ -201,6 +211,6 @@ final class RegionForecastTests {
     await model.refreshIfNeeded(for: osaka)
 
     #expect(model.forecast == osakaForecast)
-    #expect(await cache.load(regionID: tokyo.id) == nil)
+    #expect(cache.load(regionID: tokyo.id) == nil)
   }
 }
