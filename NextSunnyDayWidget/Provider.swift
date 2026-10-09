@@ -2,6 +2,7 @@ import CoreLocation
 import Forecast
 import Foundation
 import Region
+import RegionIntents
 import SunnyDay
 import Units
 import WidgetKit

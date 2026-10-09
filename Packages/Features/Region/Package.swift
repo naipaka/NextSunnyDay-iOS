@@ -10,9 +10,11 @@ let settings: [SwiftSetting] = [
 
 let package = Package(
   name: "Region",
+  defaultLocalization: "en",
   platforms: [.iOS(.v26), .macOS(.v26)],
   products: [
-    .library(name: "Region", targets: ["Region"])
+    .library(name: "Region", targets: ["Region"]),
+    .library(name: "RegionIntents", targets: ["RegionIntents"]),
   ],
   dependencies: [
     .package(path: "../../Core/Location"),
@@ -29,6 +31,11 @@ let package = Package(
       ],
       swiftSettings: settings
     ),
+    .target(
+      name: "RegionIntents",
+      dependencies: ["Region"],
+      swiftSettings: settings
+    ),
     .testTarget(
       name: "RegionTests",
       dependencies: [
@@ -38,6 +45,11 @@ let package = Package(
         .product(name: "PlaceSearch", package: "PlaceSearch"),
         .product(name: "PlaceSearchTesting", package: "PlaceSearch"),
       ],
+      swiftSettings: settings
+    ),
+    .testTarget(
+      name: "RegionIntentsTests",
+      dependencies: ["Region", "RegionIntents"],
       swiftSettings: settings
     ),
   ]

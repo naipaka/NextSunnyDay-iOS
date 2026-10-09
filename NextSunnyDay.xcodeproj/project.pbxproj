@@ -19,12 +19,14 @@
 		C3A00000000000000000000E /* LocationTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000D /* LocationTesting */; };
 		C3A000000000000000000010 /* PlaceSearchTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000000F /* PlaceSearchTesting */; };
 		C3A000000000000000000012 /* Units in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000011 /* Units */; };
+		C3A000000000000000000014 /* RegionIntents in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000013 /* RegionIntents */; };
 		C3B000000000000000000012 /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000011 /* Region */; };
 		C3B000000000000000000014 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000013 /* Forecast */; };
 		C3B000000000000000000016 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000015 /* SunnyDay */; };
 		C3B000000000000000000018 /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000017 /* Weather */; };
 		C3B00000000000000000001A /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000019 /* WeatherTesting */; };
 		C3B00000000000000000001C /* Units in Frameworks */ = {isa = PBXBuildFile; productRef = C2B00000000000000000001B /* Units */; };
+		C3B00000000000000000001E /* RegionIntents in Frameworks */ = {isa = PBXBuildFile; productRef = C2B00000000000000000001D /* RegionIntents */; };
 		C3C00000000000000000001A /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000019 /* Region */; };
 		C3C00000000000000000001C /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001B /* Forecast */; };
 		C3C00000000000000000001E /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000001D /* SunnyDay */; };
@@ -122,6 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3B000000000000000000012 /* Region in Frameworks */,
+				C3B00000000000000000001E /* RegionIntents in Frameworks */,
 				C3B000000000000000000014 /* Forecast in Frameworks */,
 				C3B000000000000000000016 /* SunnyDay in Frameworks */,
 				C3B00000000000000000001C /* Units in Frameworks */,
@@ -137,6 +140,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3A000000000000000000002 /* Region in Frameworks */,
+				C3A000000000000000000014 /* RegionIntents in Frameworks */,
 				C3A000000000000000000004 /* Forecast in Frameworks */,
 				C3A000000000000000000006 /* SunnyDay in Frameworks */,
 				C3A000000000000000000012 /* Units in Frameworks */,
@@ -217,6 +221,7 @@
 			name = NextSunnyDayWidgetExtension;
 			packageProductDependencies = (
 				C2B000000000000000000011 /* Region */,
+				C2B00000000000000000001D /* RegionIntents */,
 				C2B000000000000000000013 /* Forecast */,
 				C2B000000000000000000015 /* SunnyDay */,
 				C2B00000000000000000001B /* Units */,
@@ -247,6 +252,7 @@
 			name = NextSunnyDay;
 			packageProductDependencies = (
 				C2A000000000000000000001 /* Region */,
+				C2A000000000000000000013 /* RegionIntents */,
 				C2A000000000000000000003 /* Forecast */,
 				C2A000000000000000000005 /* SunnyDay */,
 				C2A000000000000000000011 /* Units */,
@@ -808,6 +814,11 @@
 			package = C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */;
 			productName = Units;
 		};
+		C2A000000000000000000013 /* RegionIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
+			productName = RegionIntents;
+		};
 		C2B000000000000000000011 /* Region */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
@@ -837,6 +848,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000008 /* XCLocalSwiftPackageReference "Packages/Features/Units" */;
 			productName = Units;
+		};
+		C2B00000000000000000001D /* RegionIntents */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C10000000000000000000005 /* XCLocalSwiftPackageReference "Packages/Features/Region" */;
+			productName = RegionIntents;
 		};
 		C2C000000000000000000019 /* Region */ = {
 			isa = XCSwiftPackageProductDependency;
