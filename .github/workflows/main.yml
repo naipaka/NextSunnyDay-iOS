@@ -19,32 +19,20 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
-# To move to another Xcode, change these three together with the Xcode used locally:
-# DEVELOPER_DIR is the Xcode on the runner image, SIMULATOR_RUNTIME the iOS
-# simulator runtime that comes with it (`xcrun simctl list runtimes`).
+# To move to another Xcode, change these together with the Xcode used locally:
+# DEVELOPER_DIR is the Xcode on the runner image, SIMULATOR_OS the iOS
+# simulator that comes with it (`xcrun simctl list runtimes`).
 env:
   DEVELOPER_DIR: /Applications/Xcode_26.4.1.app
-  SIMULATOR_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-4
-  SIMULATOR_NAME: iPhone 17
+  SIMULATOR_OS: "26.4.1"
 
 jobs:
   build:
     runs-on: macos-26
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v7
-
-      # Booting takes minutes on a fresh runner; it runs while the app builds.
-      - name: Boot the simulator
-        if: github.event_name != 'push'
-        run: |
-          udid=$(xcrun simctl list devices available -j |
-            jq -r --arg runtime "$SIMULATOR_RUNTIME" --arg name "$SIMULATOR_NAME" \
-              '.devices[$runtime][] | select(.name == $name) | .udid' | head -n 1)
-          test -n "$udid"
-          echo "SIMULATOR_UDID=$udid" >> "$GITHUB_ENV"
-          xcrun simctl boot "$udid"
 
       - name: Lint
         run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
@@ -64,16 +52,6 @@ jobs:
           -destination 'generic/platform=iOS Simulator'
           build
 
-      - name: Build for testing
-        if: github.event_name != 'push'
-        run: >
-          set -o pipefail &&
-          xcodebuild
-          -scheme NextSunnyDay
-          -configuration Debug
-          -destination "id=$SIMULATOR_UDID"
-          build-for-testing
-
       - name: Test the packages
         if: github.event_name != 'push'
         run: |
@@ -82,18 +60,20 @@ jobs:
             swift test --package-path "$package"
           done
 
+      # The simulator boots on the first test run, which takes about six
+      # minutes on a fresh runner; booting it ahead of the build doesn't save
+      # time, because the boot slows down the steps that run alongside it.
       - name: Test the app
         if: github.event_name != 'push'
-        run: |
-          xcrun simctl bootstatus "$SIMULATOR_UDID"
-          set -o pipefail
-          xcodebuild \
-            -scheme NextSunnyDay \
-            -configuration Debug \
-            -destination "id=$SIMULATOR_UDID" \
-            -resultBundlePath TestResults.xcresult \
-            -only-testing:NextSunnyDayTests \
-            test-without-building
+        run: >
+          set -o pipefail &&
+          xcodebuild
+          -scheme NextSunnyDay
+          -configuration Debug
+          -destination "platform=iOS Simulator,name=iPhone 17,OS=$SIMULATOR_OS"
+          -resultBundlePath TestResults.xcresult
+          -only-testing:NextSunnyDayTests
+          test
 
       - uses: actions/upload-artifact@v7
         if: failure() && github.event_name != 'push'
