@@ -44,6 +44,9 @@ struct SettingsView: View {
             }
           } label: {
             Label("Temperature", systemImage: "thermometer.medium")
+          } currentValueLabel: {
+            // The unit in use, like the other units in the Weather app; the choices spell it out.
+            Text(verbatim: temperatureUnitSelection.unit.symbol)
           }
         }
         Section {
