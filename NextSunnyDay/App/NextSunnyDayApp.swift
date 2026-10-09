@@ -1,3 +1,4 @@
+import AppIntents
 import SwiftUI
 
 @main
@@ -16,6 +17,8 @@ struct NextSunnyDayApp: App {
       let features = AppFeatures.live
     #endif
     self.features = features
+    // Siri and Shortcuts run `NextSunnyDayIntent` in this process, on the same features.
+    AppDependencyManager.shared.add(dependency: features)
     _regionSelection = State(
       initialValue: RegionSelection(
         store: features.regionStore, search: features.regionSearch,

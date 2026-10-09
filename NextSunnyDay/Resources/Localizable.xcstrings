@@ -14,6 +14,26 @@
         }
       }
     },
+    "%@ should be sunny today: %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@は 今日晴れそう。%2$@だよ。"
+          }
+        }
+      }
+    },
+    "%@ should be sunny tomorrow, %@: %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@は あした晴れそう。%2$@、%3$@だよ。"
+          }
+        }
+      }
+    },
     "%lld days" : {
       "localizations" : {
         "ja" : {
@@ -94,6 +114,16 @@
         }
       }
     },
+    "Choose a region in the app." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリで地域を選んでね。"
+          }
+        }
+      }
+    },
     "Choose a region to see when it will be sunny next." : {
       "localizations" : {
         "ja" : {
@@ -170,6 +200,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "天気を取得できなかったよ"
+          }
+        }
+      }
+    },
+    "Couldn't get the weather. Try again where you have a connection." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "天気を取得できなかったよ。通信できる場所で、もう一度試してね。"
           }
         }
       }
@@ -404,6 +444,16 @@
         }
       }
     },
+    "Next sunny day in ${region}" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${region}の次の晴れ"
+          }
+        }
+      }
+    },
     "NextSunnyDay" : {
       "comment" : "The app's name. The key has no spaces because \"Next Sunny Day\" is the key of the widget's label.",
       "localizations" : {
@@ -453,6 +503,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "雨が降らなければOK"
+          }
+        }
+      }
+    },
+    "No sunny day in %@ in the next 10 days." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@は 10日先まで晴れの予報がないよ。まだ先かも。"
           }
         }
       }
@@ -793,6 +853,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "天気予報は Apple Weather のデータを使っています。予報は毎日早朝に新しくなり、ホーム画面を下に引っぱると手動でも更新できます。"
+          }
+        }
+      }
+    },
+    "The next sunny day in %@ is %@, in %lld days: %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@の次の晴れは あと%3$lld日、%2$@、%4$@だよ。"
           }
         }
       }
