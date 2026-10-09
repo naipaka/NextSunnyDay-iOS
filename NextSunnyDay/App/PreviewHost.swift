@@ -18,6 +18,9 @@ struct PreviewHost<Content: View>: View {
     case tokyo
     /// Singapore's recording: no sunny day in ten days.
     case singapore
+    /// Los Angeles' recording, for the English screenshots: sunny today, rain later. Launch the app
+    /// in Los Angeles' time zone (`SIMCTL_CHILD_TZ=America/Los_Angeles`) so the hours line up.
+    case losAngeles
     /// The first fetch is still running.
     case loading
     /// A cached forecast is shown, but the refresh failed.
@@ -75,8 +78,9 @@ extension AppFeatures {
     let cacheDirectory = FileManager.default.temporaryDirectory
       .appending(path: "preview-\(UUID().uuidString)", directoryHint: .isDirectory)
     let minato = CLLocationCoordinate2D(latitude: 35.658, longitude: 139.751)
-    // The name as MapKit gives it in the app's language.
-    let minatoName = Bundle.main.preferredLocalizations.first == "ja" ? "港区" : "Minato"
+    // Names as MapKit gives them in the app's language.
+    let isJapanese = Bundle.main.preferredLocalizations.first == "ja"
+    let minatoName = isJapanese ? "港区" : "Minato"
     let place = SavedRegion.place(name: minatoName, coordinate: minato)
 
     let weather: FakeWeatherProvider
@@ -88,6 +92,11 @@ extension AppFeatures {
       if scenario == .noRegion { region = nil }
     case .singapore:
       weather = FakeWeatherProvider(.singapore)
+    case .losAngeles:
+      weather = FakeWeatherProvider(.losAngeles)
+      region = .place(
+        name: isJapanese ? "ロサンゼルス" : "Los Angeles",
+        coordinate: CLLocationCoordinate2D(latitude: 34.052, longitude: -118.244))
     case .loading:
       weather = FakeWeatherProvider(.tokyo, delay: .seconds(3600))
     case .refreshFailed, .offline:

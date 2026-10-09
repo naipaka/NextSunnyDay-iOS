@@ -14,6 +14,14 @@ struct WeatherForecastTests {
     #expect(forecast.daily.allSatisfy { (0...1).contains($0.precipitationChance) })
   }
 
+  @Test(arguments: WeatherRecording.allCases)
+  func everyRecordingHasTenDaysAndTheirHours(_ recording: WeatherRecording) {
+    let forecast = recording.recorded
+
+    #expect(forecast.daily.count == 10)
+    #expect(forecast.hourly.count == 240)
+  }
+
   @Test func expirationIsTheEarlierOfTheDailyAndHourlyData() {
     let forecast = WeatherRecording.tokyo.recorded
 

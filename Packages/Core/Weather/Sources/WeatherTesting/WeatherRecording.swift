@@ -5,13 +5,17 @@ import WeatherKit
 /// Forecasts recorded from WeatherKit, for tests and previews. They are decoded and converted the
 /// same way as live data, so they show what WeatherKit really returns.
 ///
-/// Recorded on 8 October 2026 (JST) with `WeatherService.weather(for:including:)` for ten days and
-/// their hours.
+/// Recorded with `WeatherService.weather(for:including:)` for ten days and their hours. The hours
+/// start at midnight of the time zone the recording was made in: Japan's for Tokyo and Singapore,
+/// Los Angeles' for Los Angeles.
 public enum WeatherRecording: String, CaseIterable, Sendable {
-  /// Minato, Tokyo: mostly clear and clear days, then drizzle.
+  /// Minato, Tokyo, recorded on 8 October 2026 (JST): mostly clear and clear days, then drizzle.
   case tokyo
-  /// Singapore: rain and drizzle every day, so no day is sunny.
+  /// Singapore, recorded on 8 October 2026 (JST): rain and drizzle every day, so no day is sunny.
   case singapore
+  /// Los Angeles, recorded on 8 October 2026 (PDT): two clear days, clouds, rain and drizzle, then
+  /// clear again. For the English screenshots, with the simulator in Los Angeles' time zone.
+  case losAngeles
 
   /// The recording, moved by whole days so that its first day starts on `day`, and expiring
   /// `expirationDate`.
