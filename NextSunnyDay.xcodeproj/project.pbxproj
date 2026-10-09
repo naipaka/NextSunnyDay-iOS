@@ -594,7 +594,6 @@
 				CODE_SIGN_ENTITLEMENTS = NextSunnyDay/NextSunnyDay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NextSunnyDay/Info.plist;
@@ -622,7 +621,6 @@
 				CODE_SIGN_ENTITLEMENTS = NextSunnyDay/NextSunnyDay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_ASSET_PATHS = "\"NextSunnyDay/Preview Content\"";
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = NextSunnyDay/Info.plist;
