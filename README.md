@@ -4,7 +4,7 @@
 
 <img src="https://user-images.githubusercontent.com/45661924/97105071-d28d2580-16fb-11eb-8f8d-7ec79940db41.png" width="300">
 
-<img src="docs/images/widget.jpg" width="600">
+<img src="docs/images/en/widget.jpg" width="600">
 
 An iOS widget that shows the next sunny day on your home screen.
 Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
@@ -102,8 +102,8 @@ $ for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" &&
 
 | Screen | Light | Dark |
 | --- | --- | --- |
-| Home | <img src="docs/images/home-light.jpg" width="300"> | <img src="docs/images/home-dark.jpg" width="300"> |
-| Day detail | <img src="docs/images/day-light.jpg" width="300"> | <img src="docs/images/day-dark.jpg" width="300"> |
-| Settings | <img src="docs/images/settings-light.jpg" width="300"> | <img src="docs/images/settings-dark.jpg" width="300"> |
-| Region search | <img src="docs/images/region-light.jpg" width="300"> | <img src="docs/images/region-dark.jpg" width="300"> |
-| About weather data | <img src="docs/images/about-light.jpg" width="300"> | <img src="docs/images/about-dark.jpg" width="300"> |
+| Home | <img src="docs/images/en/home-light.jpg" width="300"> | <img src="docs/images/en/home-dark.jpg" width="300"> |
+| Day detail | <img src="docs/images/en/day-light.jpg" width="300"> | <img src="docs/images/en/day-dark.jpg" width="300"> |
+| Settings | <img src="docs/images/en/settings-light.jpg" width="300"> | <img src="docs/images/en/settings-dark.jpg" width="300"> |
+| Region search | <img src="docs/images/en/region-light.jpg" width="300"> | <img src="docs/images/en/region-dark.jpg" width="300"> |
+| About weather data | <img src="docs/images/en/about-light.jpg" width="300"> | <img src="docs/images/en/about-dark.jpg" width="300"> |

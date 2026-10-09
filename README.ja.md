@@ -4,7 +4,7 @@
 
 <img src="https://user-images.githubusercontent.com/45661924/97105071-d28d2580-16fb-11eb-8f8d-7ec79940db41.png" width="300">
 
-<img src="docs/images/widget.jpg" width="600">
+<img src="docs/images/ja/widget.jpg" width="600">
 
 次に晴れる日を、ホーム画面のウィジェットで確かめられる iOS アプリです。
 天気アプリのウィジェットには今日と明日の天気しか出ず、洗濯物をいつ外に干せるかがわかりにくかったため作りました。
@@ -102,8 +102,8 @@ $ for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" &&
 
 | 画面 | Light | Dark |
 | --- | --- | --- |
-| ホーム | <img src="docs/images/home-light.jpg" width="300"> | <img src="docs/images/home-dark.jpg" width="300"> |
-| 日別詳細 | <img src="docs/images/day-light.jpg" width="300"> | <img src="docs/images/day-dark.jpg" width="300"> |
-| 設定 | <img src="docs/images/settings-light.jpg" width="300"> | <img src="docs/images/settings-dark.jpg" width="300"> |
-| 地域検索 | <img src="docs/images/region-light.jpg" width="300"> | <img src="docs/images/region-dark.jpg" width="300"> |
-| 天気データについて | <img src="docs/images/about-light.jpg" width="300"> | <img src="docs/images/about-dark.jpg" width="300"> |
+| ホーム | <img src="docs/images/ja/home-light.jpg" width="300"> | <img src="docs/images/ja/home-dark.jpg" width="300"> |
+| 日別詳細 | <img src="docs/images/ja/day-light.jpg" width="300"> | <img src="docs/images/ja/day-dark.jpg" width="300"> |
+| 設定 | <img src="docs/images/ja/settings-light.jpg" width="300"> | <img src="docs/images/ja/settings-dark.jpg" width="300"> |
+| 地域検索 | <img src="docs/images/ja/region-light.jpg" width="300"> | <img src="docs/images/ja/region-dark.jpg" width="300"> |
+| 天気データについて | <img src="docs/images/ja/about-light.jpg" width="300"> | <img src="docs/images/ja/about-dark.jpg" width="300"> |
