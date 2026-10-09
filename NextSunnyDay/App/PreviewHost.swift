@@ -75,7 +75,9 @@ extension AppFeatures {
     let cacheDirectory = FileManager.default.temporaryDirectory
       .appending(path: "preview-\(UUID().uuidString)", directoryHint: .isDirectory)
     let minato = CLLocationCoordinate2D(latitude: 35.658, longitude: 139.751)
-    let place = SavedRegion.place(name: "港区", coordinate: minato)
+    // The name as MapKit gives it in the app's language.
+    let minatoName = Bundle.main.preferredLocalizations.first == "ja" ? "港区" : "Minato"
+    let place = SavedRegion.place(name: minatoName, coordinate: minato)
 
     let weather: FakeWeatherProvider
     var region: SavedRegion? = place
@@ -104,7 +106,7 @@ extension AppFeatures {
       let fetchedAt = Calendar.current.date(
         bySettingHour: 3, minute: 0, second: 0, of: yesterday)!
       let stale = CachedForecast(
-        regionID: place.id, placeName: "港区", coordinate: minato, fetchedAt: fetchedAt,
+        regionID: place.id, placeName: minatoName, coordinate: minato, fetchedAt: fetchedAt,
         forecast: WeatherRecording.tokyo.forecast(expiringAt: fetchedAt.addingTimeInterval(3600)))
       // Written before the screens start, as an earlier launch would have left it.
       let saved = DispatchSemaphore(value: 0)
