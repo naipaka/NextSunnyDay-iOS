@@ -86,7 +86,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 
 `NextSunnyDay.xcodeproj` uses **folder-synchronized groups** (objectVersion 77): `NextSunnyDay/`, `NextSunnyDayWidget/` and `NextSunnyDayTests/` are synced to their targets, so adding, moving or deleting a file in those folders needs no `project.pbxproj` change. The local packages are `XCLocalSwiftPackageReference`s; linking another product to a target adds an `XCSwiftPackageProductDependency`, a `PBXBuildFile` in its Frameworks phase and an entry in the target's `packageProductDependencies`. Exceptions live in `PBXFileSystemSynchronizedBuildFileExceptionSet` entries:
 
-- Each target's `Info.plist` is excluded from its own target (it is used via `INFOPLIST_FILE`, not copied as a resource).
+- Info.plists are generated (`GENERATE_INFOPLIST_FILE`), as in Xcode's templates: the app has no `Info.plist` file, its keys are `INFOPLIST_KEY_*` build settings (display name, location usage text, portrait only on iPhone). The widget's `Info.plist` holds only what build settings can't express (`NSExtension`, `NSWidgetWantsLocation`); it is excluded from its own target and used via `INFOPLIST_FILE`.
 - The widget shares only `Assets.xcassets` and `Resources/Localizable.xcstrings` from `NextSunnyDay/` (membership exceptions for `NextSunnyDayWidgetExtension`). Shared code goes into a package, not into these exceptions.
 
 ### Widget target

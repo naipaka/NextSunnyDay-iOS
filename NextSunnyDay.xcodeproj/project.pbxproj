@@ -75,13 +75,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		B10000000000000000000011 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDay" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 915F51342521763500B4E384 /* NextSunnyDay */;
-		};
 		B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -103,7 +96,6 @@
 		B10000000000000000000001 /* NextSunnyDay */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				B10000000000000000000011 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDay" target */,
 				B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */,
 			);
 			path = NextSunnyDay;
@@ -424,7 +416,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NextSunnyDayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NextSunnyDayWidget;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -438,7 +432,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -451,7 +445,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NextSunnyDayWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NextSunnyDayWidget;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -465,7 +461,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -596,7 +592,13 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = NextSunnyDay/Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Next Sunny Day";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show the weather where you are.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -623,7 +625,13 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = NA4GG5YL9W;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = NextSunnyDay/Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Next Sunny Day";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show the weather where you are.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -653,7 +661,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NextSunnyDay";
 			};
 			name = Debug;
@@ -671,7 +679,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/NextSunnyDay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/NextSunnyDay";
 			};
 			name = Release;
