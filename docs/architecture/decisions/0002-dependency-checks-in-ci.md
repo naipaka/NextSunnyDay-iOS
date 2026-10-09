@@ -34,7 +34,7 @@ This app's graph is shallow, but the setup should hold for deeper graphs in late
 
 **The check is a Swift executable in its own tools package** (`swift run --package-path <tools> …`), Foundation only. It can be split into files, has Swift Testing tests, and can be copied to another app as one folder. It lives under `Tools/`, outside `Packages/`, because it is not part of the app.
 
-On pull requests, only changed packages and the packages that depend on them need testing; all packages after merging. The exact CI layout is part of #99.
+**CI layout (#99).** The import check runs on every event, like the lint: a missing declaration still builds, so the build alone doesn't catch it. The package tests run on pull requests and manual runs, all packages every time (about two and a half minutes in total); pushes to `main` only build.
 
 ## Considered options
 
@@ -48,4 +48,4 @@ On pull requests, only changed packages and the packages that depend on them nee
 ## Consequences
 
 - On direct pushes to `main` the check reports after the fact; on pull requests it blocks the merge.
-- The tool's build time on CI is not measured yet.
+- Building and running the check takes about 30 seconds on CI.

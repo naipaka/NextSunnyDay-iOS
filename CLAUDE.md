@@ -28,15 +28,20 @@ xcodebuild -scheme NextSunnyDay -configuration Debug \
 
 Run a single test by appending `-only-testing:NextSunnyDayTests/<SuiteName>/<testFunction>()`.
 
-Each package under `Packages/` builds and tests on its own on the Mac, without a simulator:
+Each package under `Packages/` (and the import check under `Tools/`) builds and tests on its own on the Mac, without a simulator:
 ```sh
-for p in Packages/Core/* Packages/Features/*; do (cd "$p" && swift test); done
+for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" && swift test); done
+```
+
+Check that every import of a repository module is a declared direct dependency (ADR 0002; CI runs it on every event):
+```sh
+swift run --package-path Tools/ImportCheck import-check .
 ```
 
 Format and lint (the `swift-format` bundled with Xcode, config in `.swift-format` = the tool's defaults: 2-space indent, 100 columns):
 ```sh
-xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages
-xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages
+xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
 ```
 CI runs the strict lint before building, so any warning fails CI. Format before committing.
 
@@ -60,7 +65,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 | `Features/` | `Units` | `TemperatureUnitSetting` (system, °C, °F), `TemperatureUnitStore` | AppGroup |
 
 - Core modules don't depend on each other; features depend only on core, never on each other. Only the app and the widget assemble them.
-- Every module a target imports must be its declared direct dependency (ADR 0002), in packages and in the Xcode targets.
+- Every module a target imports must be its declared direct dependency (ADR 0002), in packages and in the Xcode targets. `Tools/ImportCheck` (a Swift tool, Foundation only, with tests) checks it on CI.
 - Public initializers don't use default arguments that reach into another module (such as `defaults: UserDefaults = AppGroupContainer.userDefaults`): a default argument is compiled into the caller, which then needs that module linked. Add an argument-free `init()` inside the module instead.
 - Each core package has a fake in a `…Testing` module (`WeatherTesting`, `LocationTesting`, `PlaceSearchTesting`). `WeatherTesting` decodes forecasts recorded from WeatherKit (`WeatherRecording`), read from its source folder (`Recordings/`, excluded from the target) so that they are never copied into the app; they work on the Mac and in a simulator, not on a device.
 - WeatherKit has a type named `Weather`, which hides the `Weather` module in a file that imports both. Only the `Weather` package imports WeatherKit.
@@ -108,4 +113,5 @@ Single long-lived branch: `main` (default). There is no `develop`.
 
 - The owner commits and pushes directly to `main`; do not open PRs for their changes.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
-- CI (`main.yml`) runs on pushes and PRs to `main`, skipping Markdown/`docs/`-only changes. It lints with `swift-format --strict` on the `macos-26` runner with Xcode 26.4.1. On pushes to `main` it then only builds for `generic/platform=iOS Simulator` (no simulator boot, a few minutes); on PRs it runs `NextSunnyDayTests` on an iPhone 17 (iOS 26.4.1) simulator. Because pushes don't run tests, **run the tests locally before pushing to `main`**. Keep `DEVELOPER_DIR` in sync with the local Xcode version.
+- CI (`.github/workflows/ci.yml`, workflow `CI`) runs on pushes and PRs to `main` and by hand (`workflow_dispatch`), skipping Markdown/`docs/`-only changes, on the `macos-26` runner. Both jobs lint with `swift-format --strict` and run the import check. Pushes run the `build` job ("Lint and build"): a build for `generic/platform=iOS Simulator`, about 3 minutes. PRs and manual runs run the `test` job ("Lint and test"): every package's `swift test` and `NextSunnyDayTests` on an iPhone 17 simulator, about 6–10 minutes, most of it the simulator's first boot on a fresh runner. Because pushes don't run tests, **run the tests locally before pushing to `main`**.
+- To move to another Xcode, change `DEVELOPER_DIR` and `SIMULATOR_OS` at the top of `ci.yml` (the Xcode and the iOS simulator runtime on the runner image, see `xcrun simctl list runtimes`), the Xcode version at the top of this file and in the READMEs, and keep them in sync with the local Xcode.

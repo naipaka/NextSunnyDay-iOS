@@ -27,7 +27,35 @@ env:
   SIMULATOR_OS: "26.4.1"
 
 jobs:
+  # Pushes to main only check that the app builds (no simulator).
+  # Tests run locally before pushing, and on PRs and manual runs.
   build:
+    name: Lint and build
+    if: github.event_name == 'push'
+    runs-on: macos-26
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Lint
+        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+
+      - name: Check imports
+        run: swift run --package-path Tools/ImportCheck import-check .
+
+      - name: Build
+        run: >
+          set -o pipefail &&
+          xcodebuild
+          -scheme NextSunnyDay
+          -configuration Debug
+          -destination 'generic/platform=iOS Simulator'
+          build
+
+  test:
+    name: Lint and test
+    if: github.event_name != 'push'
     runs-on: macos-26
     timeout-minutes: 45
 
@@ -40,31 +68,17 @@ jobs:
       - name: Check imports
         run: swift run --package-path Tools/ImportCheck import-check .
 
-      # Pushes to main only check that the app builds (no simulator).
-      # Tests run locally before pushing, and on PRs and manual runs.
-      - name: Build
-        if: github.event_name == 'push'
-        run: >
-          set -o pipefail &&
-          xcodebuild
-          -scheme NextSunnyDay
-          -configuration Debug
-          -destination 'generic/platform=iOS Simulator'
-          build
-
       - name: Test the packages
-        if: github.event_name != 'push'
         run: |
           swift test --package-path Tools/ImportCheck
           for package in Packages/Core/* Packages/Features/*; do
             swift test --package-path "$package"
           done
 
-      # The simulator boots on the first test run, which takes about six
-      # minutes on a fresh runner; booting it ahead of the build doesn't save
-      # time, because the boot slows down the steps that run alongside it.
+      # The simulator boots on the first test run, which takes minutes on a
+      # fresh runner; booting it ahead of the build doesn't save time, because
+      # the boot slows down the steps that run alongside it.
       - name: Test the app
-        if: github.event_name != 'push'
         run: >
           set -o pipefail &&
           xcodebuild
@@ -76,7 +90,7 @@ jobs:
           test
 
       - uses: actions/upload-artifact@v7
-        if: failure() && github.event_name != 'push'
+        if: failure()
         with:
           name: test-results
           path: TestResults.xcresult
