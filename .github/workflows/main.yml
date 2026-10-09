@@ -16,32 +16,43 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
+# To move to another Xcode, change these three together with the Xcode used locally:
+# DEVELOPER_DIR is the Xcode on the runner image, SIMULATOR_RUNTIME the iOS
+# simulator runtime that comes with it (`xcrun simctl list runtimes`).
 env:
   DEVELOPER_DIR: /Applications/Xcode_26.4.1.app
+  SIMULATOR_RUNTIME: com.apple.CoreSimulator.SimRuntime.iOS-26-4
+  SIMULATOR_NAME: iPhone 17
 
 jobs:
   build:
     runs-on: macos-26
-    timeout-minutes: 45
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v7
 
+      # Booting takes minutes on a fresh runner; it runs while the app builds.
+      - name: Boot the simulator
+        if: github.event_name != 'push'
+        run: |
+          udid=$(xcrun simctl list devices available -j |
+            jq -r --arg runtime "$SIMULATOR_RUNTIME" --arg name "$SIMULATOR_NAME" \
+              '.devices[$runtime][] | select(.name == $name) | .udid' | head -n 1)
+          test -n "$udid"
+          echo "SIMULATOR_UDID=$udid" >> "$GITHUB_ENV"
+          xcrun simctl boot "$udid"
+
       - name: Lint
-        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages
+        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
 
-      - name: Cache Swift Package Manager packages
-        uses: actions/cache@v6
-        with:
-          path: SourcePackages
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-spm-
+      - name: Check imports
+        run: swift run --package-path Tools/ImportCheck import-check .
 
-      # Pushes to main only check that the app builds (no simulator boot).
+      # Pushes to main only check that the app builds (no simulator).
       # Tests run locally before pushing, and on PRs and manual runs.
       - name: Build
         if: github.event_name == 'push'
@@ -51,21 +62,38 @@ jobs:
           -scheme NextSunnyDay
           -configuration Debug
           -destination 'generic/platform=iOS Simulator'
-          -clonedSourcePackagesDirPath SourcePackages
           build
 
-      - name: Build and Test
+      - name: Build for testing
         if: github.event_name != 'push'
         run: >
           set -o pipefail &&
           xcodebuild
           -scheme NextSunnyDay
           -configuration Debug
-          -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.4.1'
-          -clonedSourcePackagesDirPath SourcePackages
-          -resultBundlePath TestResults.xcresult
-          -only-testing:NextSunnyDayTests
-          test
+          -destination "id=$SIMULATOR_UDID"
+          build-for-testing
+
+      - name: Test the packages
+        if: github.event_name != 'push'
+        run: |
+          swift test --package-path Tools/ImportCheck
+          for package in Packages/Core/* Packages/Features/*; do
+            swift test --package-path "$package"
+          done
+
+      - name: Test the app
+        if: github.event_name != 'push'
+        run: |
+          xcrun simctl bootstatus "$SIMULATOR_UDID"
+          set -o pipefail
+          xcodebuild \
+            -scheme NextSunnyDay \
+            -configuration Debug \
+            -destination "id=$SIMULATOR_UDID" \
+            -resultBundlePath TestResults.xcresult \
+            -only-testing:NextSunnyDayTests \
+            test-without-building
 
       - uses: actions/upload-artifact@v7
         if: failure() && github.event_name != 'push'
