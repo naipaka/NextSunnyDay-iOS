@@ -21,7 +21,7 @@ Forecasts come from WeatherKit through `WeatherProviding` (`WeatherKitProvider` 
 
 ## When the app fetches
 
-Only the region on screen is fetched: Home's region by the app, and each widget's region by the widget. Saved regions that nobody looks at are not fetched in the background, so the calls per person stay about one a day however many regions are saved ([ADR 0006](decisions/0006-fetch-once-a-day.md)). A region that wasn't shown for a while shows its last forecast until its fetch ends.
+Only the region on screen is fetched: Home's region by the app, each widget's region by the widget, and the region asked about in Siri or Shortcuts by the app's intent. Saved regions that nobody looks at are not fetched in the background, so the calls per person stay about one a day however many regions are saved ([ADR 0006](decisions/0006-fetch-once-a-day.md)). A region that wasn't shown for a while shows its last forecast until its fetch ends.
 
 A cached forecast is **fresh** when it was fetched since the last 4:00, by the app or the widget ([ADR 0006](decisions/0006-fetch-once-a-day.md)). WeatherKit's expiration (a flat hour after each fetch) only limits pull to refresh. Crossing midnight doesn't fetch: the cache holds ten days and their hours, so "today" moves to the next cached day.
 
@@ -61,7 +61,7 @@ flowchart TD
 
 `Provider.timeline(for:in:)` in `NextSunnyDayWidget` reads the widget's region, the sunny level, the temperature unit and the region's cache file, and fetches only when the forecast wasn't fetched since the last 4:00 ([ADR 0006](decisions/0006-fetch-once-a-day.md)). It returns two entries from the same forecast, now and the next midnight, so the day count rolls over without a reload. The next reload is at the next 4:00 plus a random 0–60 minutes; after a failed fetch, in an hour. Without a region the policy is `.never`: the app reloads the widgets when a region is chosen.
 
-Each widget's region is its App Intent configuration (`SelectRegionIntent`, a parameter listing the saved regions as `RegionEntity`). Until one is picked, and after the picked region is removed, the widget shows the first saved region (`RegionList.region(id:)`). Widgets showing different regions fetch separately, each at most once a day.
+Each widget's region is its App Intent configuration (`SelectRegionIntent`, a parameter listing the saved regions as `RegionEntity` from the `RegionIntents` module). Until one is picked, and after the picked region is removed, the widget shows the first saved region (`RegionList.region(id:)`). Widgets showing different regions fetch separately, each at most once a day.
 
 For the current location the widget looks the location up itself (`NSWidgetWantsLocation`, `isAuthorizedForWidgetUpdates`, five seconds at most). The system only gives a widget locations shortly after it was visible, so the 4:00 reload usually falls back to the coordinate and name of the last cached forecast.
 
@@ -81,3 +81,7 @@ flowchart TD
     K -- Yes --> E
     K -- No --> F[Entries from the cached forecast,<br/>reload in an hour]
 ```
+
+## Siri and Shortcuts
+
+`NextSunnyDayIntent` runs in the app's process, in the background. `AppFeatures.nextSunnyDayAnswer(regionID:)` picks the asked region, or the first saved one (`RegionList.region(id:)`), and calls `refreshIfNeeded(for:)` on a `RegionForecast` of its own: the region's cache is shown, and a fetch runs only when it wasn't fetched since the last 4:00, with the same location handling as Home. When the fetch fails (no network, or no location for the current location), the cached forecast answers; a successful fetch reloads the widget timelines like Home's ([ADR 0008](decisions/0008-app-intents.md)).

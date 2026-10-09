@@ -12,6 +12,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
 | Manual refresh | Pull to refresh on Home. |
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
+| Siri and Shortcuts | One App Shortcut answers when the next sunny day is, for a saved region or the first one, with a dialog and a snippet (#104). See [Siri and Shortcuts](#siri-and-shortcuts). |
 | Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header. |
 | Japanese tone | Friendly and casual, matching the app name 次いつ晴れる？ (e.g. 「次の晴れは あと3日」, 「まだ先かも」). |
 | App icon | A close-up of the lion rising into the frame and looking up at the sky, redrawn from scratch and built in Icon Composer layers. See [App icon](#app-icon). |
@@ -196,6 +197,32 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
 - The mockups are plain views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
 - **Region:** each widget has a 「地域」 setting (Edit Widget) listing the saved regions. Until one is picked, and after the picked region is removed, it shows the first region in the app's list (#103).
 - A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」. The medium and large widgets draw their days redacted, where the forecast goes once a region is chosen.
+
+## Siri and Shortcuts
+
+- **One intent, 「次の晴れ」** ("Next Sunny Day"), shown as an App Shortcut in Spotlight and the Shortcuts app with `sun.max`. It takes an optional region (the saved regions); without one, or after it was removed, it answers for the first region in the list, like the widget. The sunny level is the one set in the app.
+- **Phrases:**
+
+  | Japanese | English |
+  | --- | --- |
+  | 次いつ晴れる？ | Next Sunny Day |
+  | 次いつ晴れる？で次の晴れを調べて | When is the Next Sunny Day? |
+  | {地域}は次いつ晴れる？ | When is the Next Sunny Day in {region}? |
+
+- **Dialog,** in the wording of Home's header and the widget. The date is spoken in full (「10月10日 土曜日」).
+
+  | State | Japanese | English |
+  | --- | --- | --- |
+  | In N days | 港区の次の晴れは あと3日、10月10日 土曜日、快晴だよ。 | The next sunny day in Minato is Saturday, October 10, in 3 days: Clear. |
+  | Tomorrow | 港区は あした晴れそう。10月8日 木曜日、快晴だよ。 | Minato should be sunny tomorrow, Thursday, October 8: Clear. |
+  | Today | 港区は 今日晴れそう。快晴だよ。 | Minato should be sunny today: Clear. |
+  | None in range | 港区は 10日先まで晴れの予報がないよ。まだ先かも。 | No sunny day in Minato in the next 10 days. |
+  | No data | 天気を取得できなかったよ。通信できる場所で、もう一度試してね。 | Couldn't get the weather. Try again where you have a connection. |
+  | No region | アプリで地域を選んでね。 | Choose a region in the app. |
+
+  The current location is named by its place name when it is known, and 「現在地」 otherwise.
+- **Snippet:** the small widget's layout on a card with a 26 pt corner radius: 「次の晴れ」 and the symbol, the big 「あと3日」, the date and condition (`headline`), high, low and precipitation (`subheadline`), and the region name. Orange when a sunny day is in range, `systemGray` when none is, `systemGray2` without data or a region (「あと？日」 with 「天気を取得できなかったよ」 or 「アプリで地域を選んでね」).
+- The intent fetches only when the region's forecast wasn't fetched since the last 4:00, and answers from the cache when the fetch fails.
 
 ## App icon
 
