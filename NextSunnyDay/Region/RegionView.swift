@@ -39,9 +39,12 @@ struct RegionView: View {
               HStack {
                 VStack(alignment: .leading, spacing: 2) {
                   Text(verbatim: candidate.name)
-                  Text(verbatim: candidate.area)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                  // MapKit gives some places, such as countries' capitals, no area.
+                  if !candidate.area.isEmpty {
+                    Text(verbatim: candidate.area)
+                      .font(.subheadline)
+                      .foregroundStyle(.secondary)
+                  }
                 }
                 Spacer()
                 if candidate.name == regionSelection.region?.placeName {
