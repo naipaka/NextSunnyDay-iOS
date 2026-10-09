@@ -19,8 +19,8 @@ The app is available in English and Japanese.
 
 | Tool | Version |
 | --- | --- |
-| Xcode | 26.4.1 |
-| Swift | 6.3 (Swift 6 language mode) |
+| Xcode | 27.1 |
+| Swift | 6.4 (Swift 6 language mode) |
 | iOS | 26.0 or later |
 
 ### Configuration

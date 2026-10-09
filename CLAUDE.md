@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 26.4.1 (Swift 6 language mode, iOS deployment target 26.0).
+NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 27.1 (Swift 6.4, Swift 6 language mode, iOS deployment target 26.0).
 
 ## Setup
 
@@ -21,7 +21,7 @@ xcodebuild -scheme NextSunnyDay -configuration Debug \
 Test:
 ```sh
 xcodebuild -scheme NextSunnyDay -configuration Debug \
-  -destination 'platform=iOS Simulator,name=iPhone 17' test
+  -destination 'platform=iOS Simulator,name=iPhone 17,OS=27.0' test
 ```
 
 - Tests use **Swift Testing** (`import Testing`, `@Test`, `#expect`). The app's tests (state holders, `LegacyRealmCleanup`) are in the `NextSunnyDayTests` target; there is no UI test target.
@@ -114,5 +114,5 @@ Single long-lived branch: `main` (default). There is no `develop`.
 
 - The owner commits and pushes directly to `main`; do not open PRs for their changes.
 - A repository ruleset ("Protect main") requires a PR for everyone else and blocks force-pushes and deletion of `main`; the admin role bypasses it.
-- CI (`.github/workflows/ci.yml`, workflow `CI`) runs on pushes and PRs to `main` and by hand (`workflow_dispatch`), skipping Markdown/`docs/`-only changes, on the `macos-26` runner. Both jobs lint with `swift-format --strict` and run the import check. Pushes run the `build` job ("Lint and build"): a build for `generic/platform=iOS Simulator`, about 3 minutes. PRs and manual runs run the `test` job ("Lint and test"): every package's `swift test` and `NextSunnyDayTests` on an iPhone 17 simulator, about 6–10 minutes, most of it the simulator's first boot on a fresh runner. Because pushes don't run tests, **run the tests locally before pushing to `main`**.
-- To move to another Xcode, change `DEVELOPER_DIR` and `SIMULATOR_OS` at the top of `ci.yml` (the Xcode and the iOS simulator runtime on the runner image, see `xcrun simctl list runtimes`), the Xcode version at the top of this file and in the READMEs, and keep them in sync with the local Xcode.
+- CI (`.github/workflows/ci.yml`, workflow `CI`) runs on pushes and PRs to `main` and by hand (`workflow_dispatch`), skipping Markdown/`docs/`-only changes, on the `xcode-27` runner (a GitHub preview image: macOS 27 with Xcode 27.1 and iOS 27.0 simulators). Both jobs lint with `swift-format --strict` and run the import check. Pushes run the `build` job ("Lint and build"): a build for `generic/platform=iOS Simulator`, about 3 minutes. PRs and manual runs run the `test` job ("Lint and test"): every package's `swift test` and `NextSunnyDayTests` on an iPhone 17 simulator, about 6–10 minutes, most of it the simulator's first boot on a fresh runner. Because pushes don't run tests, **run the tests locally before pushing to `main`**.
+- To move to another Xcode, change `DEVELOPER_DIR` and `SIMULATOR_OS` at the top of `ci.yml` and the jobs' `runs-on` (the Xcode and the iOS simulator runtime on the runner image, see `xcrun simctl list runtimes`), the Xcode version at the top of this file and in the READMEs, and keep them in sync with the local Xcode.
