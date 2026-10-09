@@ -14,7 +14,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
 | Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header. |
 | Japanese tone | Friendly and casual, matching the app name 次いつ晴れる？ (e.g. 「次の晴れは あと3日」, 「まだ先かも」). |
-| App icon | Keep the v1 sun lion and split it into three Icon Composer layers. The dark look inverts the light one. See [App icon](#app-icon). |
+| App icon | A close-up of the lion rising into the frame and looking up at the sky, redrawn from scratch and built in Icon Composer layers. See [App icon](#app-icon). |
 
 ## Visual language
 
@@ -183,21 +183,30 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
 
 ## App icon
 
-The three layers live in [`app-icon/`](app-icon/). They were traced as SVG from the v1 master [`app-icon-1024.png`](app-icon-1024.png) and are meant to be imported into Icon Composer in #97:
+The icon is the lion's face rising into the frame from the bottom left and looking up at the sky to the top right, waiting for the next sunny day. The lion is redrawn from scratch rather than traced from v1, so that it holds up next to the system apps.
 
-| Layer | File | Content |
+| Light | Dark | Tinted light | Tinted dark | Clear light | Clear dark |
+| --- | --- | --- | --- | --- | --- |
+| ![Light](app-icon/light.png) | ![Dark](app-icon/dark.png) | ![Tinted light](app-icon/tinted-light.png) | ![Tinted dark](app-icon/tinted-dark.png) | ![Clear light](app-icon/clear-light.png) | ![Clear dark](app-icon/clear-dark.png) |
+
+- **Crop:** the lion overflows the frame, so the face reads at Home Screen size; the sky in the top right is where it looks. The face is turned toward the sky by shifting the eyes, nose and muzzle up and to the right and tilting the head.
+- **Shapes:** few large shapes, no outlines. The mane is two rings of nine large lobes; the face is a soft disc with a white muzzle. Ears are left out: in the mane they made the head read as a bear.
+- **Face:** short vertical line eyes without catchlights, which vanish at small sizes. The nose is a small rounded light brown shape on top of the muzzle; a dark triangle nose read as an open mouth from a distance.
+- **No text:** no "?" or other text in the icon, as the HIG advises.
+- **Colors:** a blue sky that gets lighter toward the horizon, so the orange mane stands out. Every shape has a gentle top-lit gradient.
+
+The icon is [`NextSunnyDay/AppIcon.icon`](../../NextSunnyDay/AppIcon.icon), an Icon Composer document. Its layers are plain SVG shapes in `Assets/`; the colors and gradients are set in `icon.json`:
+
+| Group (front to back) | Layers | Fill |
 | --- | --- | --- |
-| 1 | `layer-1-background.svg` | Orange gradient, #F37E4F at the top to #F89A35 at the bottom |
-| 2 | `layer-2-mane.svg` | White sun-shaped mane and the ears |
-| 3 | `layer-3-face.svg` | Eyes, nose, mouth, whiskers, whisker dots and the bolt on the forehead (strokes slightly thicker than v1 so they survive small sizes) |
+| Features | `eyes`, `nose` | Dark brown #3A1806; light brown #E3A47C |
+| Face | `muzzle`, `face` | White to #FFE7C2; #FFF0BE to #FFC24A |
+| Mane | `mane-front`, `mane-back` | #FFB547 to #F47A1C; #FF9A2E to #E0540C |
+| Background | | Sky, #2F86E6 at the top to #8CCBFF at the bottom |
 
-| Light | Dark | Tinted |
-| --- | --- | --- |
-| ![Light](app-icon/preview-light.svg) | ![Dark](app-icon/preview-dark.svg) | ![Tinted](app-icon/preview-tinted.svg) |
-
-- **Dark:** near-black gradient background, orange mane, dark face. It is the inverse of the light icon and the closest to iOS 26 system dark icons.
-- **Tinted:** the mane carries the shape; the face is cut out in the dark color.
-- The trace is approximate. The final shapes, glass highlights and the clear look are tuned in Icon Composer.
+- **Dark:** a night sky (#0E1530 to #28365F), with the face and mane a little deeper. The lion keeps its colors, so the icon is recognizable in every appearance.
+- **Tinted and clear:** left to the system, which keeps the shapes and drops the colors.
+- The previews in [`app-icon/`](app-icon/) and [`app-icon-1024.png`](app-icon-1024.png) are rendered from the document with `ictool` (inside Icon Composer.app): `ictool NextSunnyDay/AppIcon.icon --export-image --output-file light.png --platform iOS --rendition Default --width 256 --height 256 --scale 1`. The renditions are `Default`, `Dark`, `TintedLight`, `TintedDark`, `ClearLight` and `ClearDark`.
 
 ## Implications for later tasks
 
@@ -219,7 +228,7 @@ The three layers live in [`app-icon/`](app-icon/). They were traced as SVG from 
 - **#97 Visuals**
   - The layered header and sheet: overlap, corner radius, shadow, fade and parallax values as above.
   - The SF Symbols palette mapping, system colors with only the orange accent, and glass on controls only.
-  - The Icon Composer icon from the three layers, with the dark and tinted looks above.
+  - The app icon is done in #110 (see [App icon](#app-icon)).
 - **#98 English**
   - Every string in this spec gets an English source string. The Japanese above is the `ja` translation.
   - The English app name is "Next Sunny Day" (home screen, widget gallery, Settings).

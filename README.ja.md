@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-<img src="https://user-images.githubusercontent.com/45661924/97105071-d28d2580-16fb-11eb-8f8d-7ec79940db41.png" width="300">
+<img src="docs/images/app-icon.png" width="300">
 
 <img src="docs/images/ja/widget.jpg" width="600">
 
