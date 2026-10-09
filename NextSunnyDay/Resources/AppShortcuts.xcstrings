@@ -1,15 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "When is the ${applicationName}?" : {
+    "Check ${applicationName}" : {
       "localizations" : {
         "en" : {
           "stringSet" : {
             "state" : "new",
             "values" : [
-              "When is the ${applicationName}?",
-              "${applicationName}",
-              "When is the ${applicationName} in ${region}?"
+              "Check ${applicationName}",
+              "Check ${applicationName} for ${region}",
+              "Ask ${applicationName}"
             ]
           }
         },
@@ -17,9 +17,9 @@
           "stringSet" : {
             "state" : "translated",
             "values" : [
-              "${applicationName}",
               "${applicationName}で次の晴れを調べて",
-              "${region}は${applicationName}"
+              "${applicationName}で${region}の次の晴れを調べて",
+              "${applicationName}で調べて"
             ]
           }
         }

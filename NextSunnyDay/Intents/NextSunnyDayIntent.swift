@@ -35,15 +35,17 @@ struct NextSunnyDayIntent: AppIntent {
 }
 
 /// The phrases for Siri, and the shortcut shown in Spotlight and the Shortcuts app. The Japanese
-/// phrases are in `AppShortcuts.xcstrings`.
+/// phrases are in `AppShortcuts.xcstrings`. Each phrase asks the app to do something: a phrase that
+/// reads as a weather question, such as the app's name 「次いつ晴れる？」 alone, is answered by
+/// Siri's own weather instead (ADR 0008).
 struct NextSunnyDayShortcuts: AppShortcutsProvider {
   static var appShortcuts: [AppShortcut] {
     AppShortcut(
       intent: NextSunnyDayIntent(),
       phrases: [
-        "When is the \(.applicationName)?",
-        "\(.applicationName)",
-        "When is the \(.applicationName) in \(\.$region)?",
+        "Check \(.applicationName)",
+        "Check \(.applicationName) for \(\.$region)",
+        "Ask \(.applicationName)",
       ],
       shortTitle: "Next Sunny Day",
       systemImageName: "sun.max"

@@ -47,7 +47,7 @@ The metadata kind explains reports of package intents showing their keys untrans
 - A region asked about is a region looked at (0007): the intent shows its cache and fetches only when it isn't fresh (0006), through a `RegionForecast` of its own, the same rules as Home. When the fetch fails, the cached forecast answers.
 - What it says is a value, `SunnyDayAnswer` (sunny, none in range, no data, no region), computed by `AppFeatures.nextSunnyDayAnswer(regionID:)` and tested with the features on fakes. The dialog and the snippet (`SunnyDaySnippet`, the small widget's layout) are made from it.
 - The intent gets the features through `AppDependencyManager` (`@Dependency`), registered in `NextSunnyDayApp.init` with the same `AppFeatures` the screens use. It is Apple's way to hand dependencies to intents, which the system creates with no arguments; it keeps 0005's rule of no singletons, and a `-PreviewScenario` launch runs the intent on the fakes too.
-- The phrases are in `NextSunnyDayShortcuts`; their Japanese versions are in `NextSunnyDay/Resources/AppShortcuts.xcstrings`, where each language has its own list of phrases.
+- The phrases are in `NextSunnyDayShortcuts`; their Japanese versions are in `NextSunnyDay/Resources/AppShortcuts.xcstrings`, where each language has its own list of phrases. Every phrase asks the app to do something (「次いつ晴れる？で次の晴れを調べて」): on a device, Siri answers a phrase that reads as a weather question, including the app's name alone, with its own weather, and App Intents can't take precedence over it.
 
 ## Considered options
 

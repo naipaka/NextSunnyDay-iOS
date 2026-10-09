@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@" : {
-      "shouldTranslate" : false
-    },
     "%@ %@" : {
       "localizations" : {
         "ja" : {
@@ -344,22 +341,22 @@
         }
       }
     },
-    "In %lld days" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "あと%lld日"
-          }
-        }
-      }
-    },
     "In ? days" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "あと？日"
+          }
+        }
+      }
+    },
+    "In %lld days" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あと%lld日"
           }
         }
       }
@@ -647,16 +644,6 @@
         }
       }
     },
-    "Search Results" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "検索結果"
-          }
-        }
-      }
-    },
     "Search cities" : {
       "localizations" : {
         "ja" : {
@@ -673,6 +660,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "地域を検索"
+          }
+        }
+      }
+    },
+    "Search Results" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "検索結果"
           }
         }
       }
@@ -757,22 +754,22 @@
         }
       }
     },
-    "Sunny in %lld days (%@)" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次の晴れ あと%1$lld日（%2$@）"
-          }
-        }
-      }
-    },
     "Sunny in ? days" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "次の晴れ あと？日"
+          }
+        }
+      }
+    },
+    "Sunny in %lld days (%@)" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れ あと%1$lld日（%2$@）"
           }
         }
       }
@@ -927,16 +924,6 @@
         }
       }
     },
-    "UV Index" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "UV指数"
-          }
-        }
-      }
-    },
     "Up to partly cloudy" : {
       "localizations" : {
         "ja" : {
@@ -973,6 +960,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "システム設定を使用（%@）"
+          }
+        }
+      }
+    },
+    "UV Index" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UV指数"
           }
         }
       }

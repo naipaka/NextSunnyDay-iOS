@@ -201,14 +201,15 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
 ## Siri and Shortcuts
 
 - **One intent, 「次の晴れ」** ("Next Sunny Day"), shown as an App Shortcut in Spotlight and the Shortcuts app with `sun.max`. It takes an optional region (the saved regions); without one, or after it was removed, it answers for the first region in the list, like the widget. The sunny level is the one set in the app.
-- **Phrases:**
+- **Phrases.** Each one asks the app to do something. A phrase that reads as a weather question, such as the app's name 「次いつ晴れる？」 alone or 「札幌市は次いつ晴れる？」, is answered by Siri's own weather on a device, so those aren't used.
 
   | Japanese | English |
   | --- | --- |
-  | 次いつ晴れる？ | Next Sunny Day |
-  | 次いつ晴れる？で次の晴れを調べて | When is the Next Sunny Day? |
-  | {地域}は次いつ晴れる？ | When is the Next Sunny Day in {region}? |
+  | 次いつ晴れる？で次の晴れを調べて | Check Next Sunny Day |
+  | 次いつ晴れる？で{地域}の次の晴れを調べて | Check Next Sunny Day for {region} |
+  | 次いつ晴れる？で調べて | Ask Next Sunny Day |
 
+  The first time Siri runs one, it asks whether to turn on the app's shortcuts.
 - **Dialog,** in the wording of Home's header and the widget. The date is spoken in full (「10月10日 土曜日」).
 
   | State | Japanese | English |
