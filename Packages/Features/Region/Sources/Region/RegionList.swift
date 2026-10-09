@@ -19,6 +19,12 @@ public struct RegionList: Equatable, Sendable {
     regions.first { $0.id == selectedID } ?? regions.first
   }
 
+  /// The saved region with this ID, or the first one when there is no such region: what a widget
+  /// shows before its region is picked, or after the picked region was removed.
+  public func region(id: String?) -> SavedRegion? {
+    regions.first { $0.id == id } ?? regions.first
+  }
+
   public var isFull: Bool {
     regions.count >= Self.maximumCount
   }

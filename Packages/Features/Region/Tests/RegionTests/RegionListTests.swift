@@ -110,4 +110,13 @@ struct RegionListTests {
     let list = RegionList(regions: [minato, sapporo], selectedID: "removed")
     #expect(list.selected == minato)
   }
+
+  @Test func aRegionThatIsntSavedFallsBackToTheFirst() {
+    let list = RegionList(regions: [minato, sapporo], selectedID: sapporo.id)
+
+    #expect(list.region(id: sapporo.id) == sapporo)
+    #expect(list.region(id: nil) == minato)
+    #expect(list.region(id: naha.id) == minato)
+    #expect(RegionList().region(id: nil) == nil)
+  }
 }

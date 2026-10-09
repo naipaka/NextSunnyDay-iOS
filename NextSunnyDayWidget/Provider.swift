@@ -6,27 +6,23 @@ import SunnyDay
 import Units
 import WidgetKit
 
-/// Builds the timeline from what the app shares in the App Group: the region, the sunny level, the
-/// temperature unit and the cached forecast. It fetches only when the forecast wasn't fetched since the last 4:00, and
-/// reloads once a day (ADR 0006).
-struct Provider: TimelineProvider {
+/// Builds the timeline from what the app shares in the App Group: the regions, the sunny level, the
+/// temperature unit and the cached forecast of the widget's region. It fetches only when the
+/// forecast wasn't fetched since the last 4:00, and reloads once a day (ADR 0006).
+struct Provider: AppIntentTimelineProvider {
   func placeholder(in context: Context) -> SunnyEntry {
     .placeholder
   }
 
-  func getSnapshot(in context: Context, completion: @escaping @Sendable (SunnyEntry) -> Void) {
-    Task {
-      completion(await load(fetchingIfStale: false).entry)
-    }
+  func snapshot(for configuration: SelectRegionIntent, in context: Context) async -> SunnyEntry {
+    await load(configuration, fetchingIfStale: false).entry
   }
 
-  func getTimeline(
-    in context: Context, completion: @escaping @Sendable (Timeline<SunnyEntry>) -> Void
-  ) {
-    Task {
-      let loaded = await load(fetchingIfStale: true)
-      completion(Timeline(entries: loaded.entries, policy: loaded.policy))
-    }
+  func timeline(for configuration: SelectRegionIntent, in context: Context) async -> Timeline<
+    SunnyEntry
+  > {
+    let loaded = await load(configuration, fetchingIfStale: true)
+    return Timeline(entries: loaded.entries, policy: loaded.policy)
   }
 
   private struct Loaded {
@@ -47,10 +43,10 @@ struct Provider: TimelineProvider {
     }
   }
 
-  private func load(fetchingIfStale: Bool) async -> Loaded {
+  private func load(_ configuration: SelectRegionIntent, fetchingIfStale: Bool) async -> Loaded {
     let now = Date.now
     let level = SunnyLevelStore().load()
-    guard let region = RegionStore().load().first else {
+    guard let region = RegionStore().loadList().region(id: configuration.region?.id) else {
       // The app reloads the widgets when a region is chosen.
       return Loaded(entry: SunnyEntry(date: now, level: level), policy: .never)
     }

@@ -6,7 +6,8 @@ struct NextSunnyDayWidget: Widget {
   let kind: String = "NextSunnyDayWidget"
 
   var body: some WidgetConfiguration {
-    StaticConfiguration(kind: kind, provider: Provider()) { entry in
+    AppIntentConfiguration(kind: kind, intent: SelectRegionIntent.self, provider: Provider()) {
+      entry in
       NextSunnyDayWidgetEntryView(entry: entry)
         .containerBackground(for: .widget) {
           WidgetBackground(state: entry.state)
