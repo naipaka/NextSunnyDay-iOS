@@ -17,49 +17,54 @@ The app is available in English and Japanese.
 
 ### Environment
 
-| Tool  | Version          |
-| ----- | ---------------- |
-| Xcode | 26.4.1           |
-| Swift | 6.3 (Swift 5 mode) |
+| Tool | Version |
+| --- | --- |
+| Xcode | 26.4.1 |
+| Swift | 6.3 (Swift 6 language mode) |
+| iOS | 26.0 or later |
 
 ### Configuration
 
-| Configuration     | Model        |
-| ----------------- | ------------ |
-| UI implementation | SwiftUI      |
-| Widget            | WidgetKit    |
-| Architecture      | MVVM+Combine |
-| Local storage     | UserDefaults + JSON files |
-| Branching model   | Git-flow     |
+| Area | What it uses |
+| --- | --- |
+| UI | SwiftUI (Liquid Glass) |
+| Widget | WidgetKit (Home Screen and Lock Screen) |
+| Weather data | WeatherKit |
+| Place search | MapKit |
+| Modules | Local Swift packages, one per module |
+| State | Observation (`@Observable` state holders in the environment) |
+| Concurrency | Swift 6, Approachable Concurrency |
+| Local storage | App Group `UserDefaults` + JSON files |
+| Tests | Swift Testing |
+| Dependencies | None (Apple frameworks only) |
+| Branching | `main` only |
+
+The architecture decisions and their reasons are in [`docs/architecture/decisions/`](docs/architecture/decisions/).
 
 ### How it works
 
-The app keeps the place you choose in `UserDefaults` and the fetched forecast as a JSON file, both in an App Group container that the widget can also read. There are no third-party dependencies.
-The widget shows the saved forecast and refreshes every five hours. When the saved forecast is out of date, the widget fetches a new one from WeatherKit on its own.
-Places are searched with MapKit's `MKLocalSearchCompleter`.
+The app keeps the chosen region and the settings in `UserDefaults`, and the fetched forecast as a JSON file, both in an App Group container that the widget also reads.
+A forecast counts as fresh when it was fetched since the last 4:00, by the app or the widget. The app fetches when it opens and the forecast isn't fresh, and on pull to refresh.
+The widget shows the saved forecast. It reloads once a day after 4:00 and fetches from WeatherKit on its own when the saved forecast isn't fresh.
+[`docs/architecture/weather-fetch-flow.md`](docs/architecture/weather-fetch-flow.md) has the details.
 
 ### Directory Structure
 
 ```
-NextSunnyDay/
-├── NextSunnyDayApp.swift
-├── API/
-│   ├── Weather/          # WeatherKit
-│   └── LocalSearch/
-├── Model/
-├── Storage/            # Settings and the forecast cache
-├── View/
-├── ViewModel/
-├── Protocol/
-├── Extension/
-├── UIViewRepresentable/
-├── Resources/            # String Catalogs (.xcstrings)
-├── Assets.xcassets
-├── Info.plist
-└── Preview Content/
-    └── Preview Assets.xcassets
-NextSunnyDayWidget/
-└── NextSunnyDayWidget.swift
+NextSunnyDay/               # The app
+├── App/                    # App entry, AppFeatures, PreviewHost
+├── SharedState/            # @Observable state holders shared by the screens
+├── Home/  DayDetail/  Onboarding/  Region/  Settings/
+├── Components/
+├── Resources/              # String Catalogs (.xcstrings)
+└── Assets.xcassets
+NextSunnyDayWidget/         # The widget extension
+NextSunnyDayTests/          # Tests of the app layer
+Packages/
+├── Core/                   # Weather, Location, PlaceSearch, AppGroup
+└── Features/               # Region, Forecast, SunnyDay, Units
+Tools/ImportCheck/          # CI check that every import is a declared dependency
+docs/                       # Design spec, architecture docs and ADRs
 ```
 
 ## Set up
@@ -81,13 +86,17 @@ To fetch real forecasts, the app and widget App IDs need the WeatherKit capabili
 Code is formatted and linted with the `swift-format` bundled with Xcode, using `.swift-format`. CI fails on lint warnings.
 
 ```sh
-$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
-$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
 ```
 
-### Build
+### Build and test
 
-Open `NextSunnyDay.xcodeproj` in Xcode, then build and run the app.
+Open `NextSunnyDay.xcodeproj` in Xcode, then build and run the app. The app's tests run in the `NextSunnyDay` scheme; each package also tests on its own on the Mac:
+
+```sh
+$ for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" && swift test); done
+```
 
 ## Screenshots
 

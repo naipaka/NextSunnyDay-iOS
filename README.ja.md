@@ -17,49 +17,54 @@
 
 ### 環境
 
-| ツール | バージョン       |
-| ------ | ---------------- |
-| Xcode  | 26.4.1           |
-| Swift  | 6.3 (Swift 5 モード) |
+| ツール | バージョン |
+| --- | --- |
+| Xcode | 26.4.1 |
+| Swift | 6.3 (Swift 6 言語モード) |
+| iOS | 26.0 以降 |
 
 ### 構成
 
-| 項目               | 採用しているもの |
-| ------------------ | ---------------- |
-| UI                 | SwiftUI          |
-| ウィジェット       | WidgetKit        |
-| アーキテクチャ     | MVVM+Combine     |
-| ローカルの保存     | UserDefaults + JSON ファイル |
-| ブランチの運用     | Git-flow         |
+| 項目 | 採用しているもの |
+| --- | --- |
+| UI | SwiftUI (Liquid Glass) |
+| ウィジェット | WidgetKit (ホーム画面とロック画面) |
+| 天気データ | WeatherKit |
+| 場所の検索 | MapKit |
+| モジュール | モジュールごとのローカル Swift パッケージ |
+| 状態 | Observation (environment に置く `@Observable` の状態ホルダー) |
+| 並行処理 | Swift 6、Approachable Concurrency |
+| ローカルの保存 | App Group の `UserDefaults` + JSON ファイル |
+| テスト | Swift Testing |
+| 依存ライブラリ | なし (Apple のフレームワークのみ) |
+| ブランチ | `main` のみ |
+
+アーキテクチャの決定とその理由は [`docs/architecture/decisions/`](docs/architecture/decisions/) にあります。
 
 ### 仕組み
 
-アプリは、選んだ場所を `UserDefaults` に、取得した天気予報を JSON ファイルに保存します。保存先はどちらも、ウィジェットからも読める App Group のコンテナです。サードパーティのライブラリは使っていません。
-ウィジェットは保存された予報を表示し、5 時間ごとに更新します。保存された予報が古くなると、ウィジェット自身が WeatherKit から新しい予報を取得します。
-場所の検索には、MapKit の `MKLocalSearchCompleter` を使っています。
+アプリは、選んだ地域と設定を `UserDefaults` に、取得した天気予報を JSON ファイルに保存します。保存先はどちらも、ウィジェットからも読める App Group のコンテナです。
+予報は、アプリかウィジェットが直近の 4 時以降に取得していれば新しいものとみなします。アプリは、開いたときに予報が新しくなければ取得し、引っ張って更新したときにも取得します。
+ウィジェットは保存された予報を表示し、1 日に 1 回、4 時過ぎに更新します。保存された予報が新しくなければ、ウィジェット自身が WeatherKit から取得します。
+詳しくは [`docs/architecture/weather-fetch-flow.md`](docs/architecture/weather-fetch-flow.md) を見てください。
 
 ### ディレクトリ構成
 
 ```
-NextSunnyDay/
-├── NextSunnyDayApp.swift
-├── API/
-│   ├── Weather/          # WeatherKit
-│   └── LocalSearch/
-├── Model/
-├── Storage/            # 設定と予報のキャッシュ
-├── View/
-├── ViewModel/
-├── Protocol/
-├── Extension/
-├── UIViewRepresentable/
-├── Resources/            # String Catalogs (.xcstrings)
-├── Assets.xcassets
-├── Info.plist
-└── Preview Content/
-    └── Preview Assets.xcassets
-NextSunnyDayWidget/
-└── NextSunnyDayWidget.swift
+NextSunnyDay/               # アプリ
+├── App/                    # エントリポイント、AppFeatures、PreviewHost
+├── SharedState/            # 画面間で共有する @Observable の状態ホルダー
+├── Home/  DayDetail/  Onboarding/  Region/  Settings/
+├── Components/
+├── Resources/              # String Catalogs (.xcstrings)
+└── Assets.xcassets
+NextSunnyDayWidget/         # ウィジェット拡張
+NextSunnyDayTests/          # アプリ層のテスト
+Packages/
+├── Core/                   # Weather, Location, PlaceSearch, AppGroup
+└── Features/               # Region, Forecast, SunnyDay, Units
+Tools/ImportCheck/          # import がすべて宣言済みの依存かを確かめる CI 用ツール
+docs/                       # デザイン仕様、アーキテクチャの資料と ADR
 ```
 
 ## セットアップ
@@ -81,13 +86,17 @@ $ cd NextSunnyDay-iOS
 コードのフォーマットと lint には、Xcode 同梱の `swift-format` を `.swift-format` の設定で使います。CI では lint の警告があると失敗します。
 
 ```sh
-$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
-$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests
+$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
 ```
 
-### ビルド
+### ビルドとテスト
 
-`NextSunnyDay.xcodeproj` を Xcode で開き、アプリをビルドして実行してください。
+`NextSunnyDay.xcodeproj` を Xcode で開き、アプリをビルドして実行してください。アプリのテストは `NextSunnyDay` スキームで実行します。各パッケージは Mac 上で単体でもテストできます。
+
+```sh
+$ for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" && swift test); done
+```
 
 ## スクリーンショット
 
