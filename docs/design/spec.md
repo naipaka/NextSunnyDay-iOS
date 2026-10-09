@@ -6,7 +6,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 
 | Topic | Decision |
 | --- | --- |
-| Regions | A single region. The user picks it by search, or chooses "use current location" (Core Location). No list of saved regions. |
+| Regions | Up to three saved regions, found by search or "use current location" (Core Location); the current location is one of them, added and removed like a place. Home switches between them with a menu (#103). See [Regions](#regions). |
 | Sunny definition | A user setting with four levels; the default matches v1. See [Sunny levels](#sunny-levels). |
 | Hourly forecast | Home shows the next 24 hours as a horizontal strip, so the strip stays useful in the evening. Each day's hours are in the day detail screen, which opens from a row in the 10-day list. |
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
@@ -31,11 +31,13 @@ flowchart LR
   Launch{Region set?} -- no --> Onboarding
   Launch -- yes --> Home
   Onboarding -- 現在地を使う / 地域を検索 --> Home
-  Home -- toolbar: region button --> Region
+  Home -- region menu: 地域を追加 --> Region
+  Home -- region menu: 地域を編集 --> Regions
+  Regions -- 地域を追加 --> Region
   Home -- toolbar: gear --> Settings
   Home -- tap a day --> DayDetail
   DayDetail -- up / down buttons --> DayDetail
-  Settings --> Region
+  Settings --> Regions
   Settings --> SunnyLevel
   Settings --> About
 ```
@@ -46,7 +48,7 @@ Settings is a sheet with its own navigation stack. The day detail screen is push
 
 ![Home](images/home.jpg)
 
-- **Toolbar** (system glass): a region button on the leading side (`location.fill` and the region name) and a gear button on the trailing side.
+- **Toolbar** (system glass): a region menu on the leading side and a gear button on the trailing side. The menu's button shows the region name and a small `chevron.down`, with `location.fill` before the name only when the current location is shown. See [Regions](#regions).
 - **Header.** A full-bleed color area at the top of the scrolling content:
   - System orange when a sunny day is in range, `systemGray` when none is, and `systemGray2` while loading or when there is no data.
   - Text from top to bottom: 「次の晴れは」 (`headline`), the big 「あと3日」, the date and condition (`title3` semibold), then high / low / precipitation (`subheadline`).
@@ -120,7 +122,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 
 - A sheet with an inline title 「設定」 and a confirm button (`Button(role: .confirm)`).
 - The rows are:
-  - 地域 (`location.fill`, value 「東京都港区」 or 「現在地」)
+  - 地域 (`location.fill`, value = the region Home shows, 「港区」 or 「現在地」), which opens [地域](#regions)
   - 晴れの基準 (`sun.max.fill`, value = the current level), with the footer 「どんな天気の日を「晴れ」として数えるかを選べるよ。」
   - 気温 (`thermometer.medium`, value = the unit in use, 「°C」 or 「°F」), a menu picker with the choices of Apple's Weather app, in its order: 「摂氏（°C）」, 「華氏（°F）」 and 「システム設定を使用（°C）」 (the default: the system's temperature unit, shown in the parentheses, which follows the region unless changed in Settings > General > Language & Region). It applies to the app and the widgets.
   - 天気データについて (`info.circle`)
@@ -140,14 +142,27 @@ The levels are cumulative. Both the next-sunny-day search and the orange "sunny"
 
 Fog, smoke, blowing dust, every kind of precipitation and every storm never count. The home copy stays 「次の晴れは」 at every level.
 
-## Region
+## Regions
+
+| Home's region menu | 地域 |
+| --- | --- |
+| ![Region menu](images/region-menu.jpg) | ![Regions](images/regions.jpg) |
+
+- **Up to three regions.** The current location counts as one of them.
+- **The region menu** on Home lists the saved regions in their order, the shown one checked, with `mappin` for places and `location.fill` for 「現在地」. Below a divider: 「地域を追加」 (`plus`, only while fewer than three are saved) and 「地域を編集」 (`list.bullet`). Choosing a region shows it on Home at once, from its cached forecast when there is one.
+- **地域** (pushed from 「地域を編集」 or from the Settings row) lists the regions as plain rows; the current location reads 「現在地」 with `location.fill` after it and its place name below when known. The shown region has an orange checkmark, and tapping a row shows that region and goes back. 「編集」 deletes and reorders (the last region can't be deleted); the order is the menu's order. The footer reads 「地域は3つまで保存できます。」, and 「地域を追加」 below it is disabled at three regions.
+- **Saving a place twice** chooses the saved one instead of adding it again.
+
+## Region (adding a region)
 
 ![Region](images/region.jpg)
 
-- The first row is 「現在地を使う」 (`location.fill` in blue, subtitle 「今いる場所の天気を表示します」).
-- Below it is a 「検索結果」 section that updates while the user types (#28). Each result shows a place name and a gray subtitle, and the current region has an orange checkmark.
+- The title is 「地域」 during onboarding and 「地域を追加」 afterwards.
+- The first row is 「現在地を使う」 (`location.fill` in blue, subtitle 「今いる場所の天気を表示します」); it is hidden when the current location is already saved.
+- Below it is a 「検索結果」 section that updates while the user types (#28). Each result shows a place name and a gray subtitle, and saved places have an orange checkmark.
 - Search uses `.searchable`; on iOS 26 the field sits at the bottom.
 - Results are areas only: prefectures, cities, wards and towns (「港区」, 「湊」), never street addresses or buildings.
+- Choosing a result or the current location adds it, shows it on Home and goes back.
 
 ## About weather data
 
@@ -179,6 +194,7 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
   - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/10（土）快晴」
   The system draws these in monochrome.
 - The mockups are plain views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
+- **Region:** each widget has a 「地域」 setting (Edit Widget) listing the saved regions. Until one is picked, and after the picked region is removed, it shows the first region in the app's list (#103).
 - A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」. The medium and large widgets draw their days redacted, where the forecast goes once a region is chosen.
 
 ## App icon

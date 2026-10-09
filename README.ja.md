@@ -8,7 +8,7 @@
 
 次に晴れる日を、ホーム画面のウィジェットで確かめられる iOS アプリです。
 天気アプリのウィジェットには今日と明日の天気しか出ず、洗濯物をいつ外に干せるかがわかりにくかったため作りました。
-アプリでは、次の晴れの日に加えて、24 時間先までと 10 日間の天気を見られます。何を「晴れ」と数えるかも選べます。
+アプリでは、最大 3 つの地域について、次の晴れの日に加えて、24 時間先までと 10 日間の天気を見られます。何を「晴れ」と数えるかも選べます。
 日本語と英語に対応しています。
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
@@ -43,7 +43,7 @@
 
 ### 仕組み
 
-アプリは、選んだ地域と設定を `UserDefaults` に、取得した天気予報を JSON ファイルに保存します。保存先はどちらも、ウィジェットからも読める App Group のコンテナです。
+アプリは、保存した地域と設定を `UserDefaults` に、地域ごとに取得した天気予報を JSON ファイルに保存します。保存先はどちらも、ウィジェットからも読める App Group のコンテナです。
 予報は、アプリかウィジェットが直近の 4 時以降に取得していれば新しいものとみなします。アプリは、開いたときに予報が新しくなければ取得し、引っ張って更新したときにも取得します。
 ウィジェットは保存された予報を表示し、1 日に 1 回、4 時過ぎに更新します。保存された予報が新しくなければ、ウィジェット自身が WeatherKit から取得します。
 詳しくは [`docs/architecture/weather-fetch-flow.md`](docs/architecture/weather-fetch-flow.md) を見てください。

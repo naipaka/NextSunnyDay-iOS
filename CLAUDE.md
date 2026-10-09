@@ -47,7 +47,7 @@ CI runs the strict lint before building, so any warning fails CI. Format before 
 
 ## Architecture
 
-The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0006); read them before changing the structure.
+The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0007); read them before changing the structure.
 
 ### Packages (`Packages/`)
 
@@ -59,7 +59,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 | `Core/` | `Location` | Core Location: `CoreLocationProvider.currentCoordinate()`, once | — |
 | `Core/` | `PlaceSearch` | MapKit: completions while typing, completion → place, reverse geocoding | — |
 | `Core/` | `AppGroup` | `AppGroupContainer`: the shared `UserDefaults` and caches directory | — |
-| `Features/` | `Region` | `SavedRegion`, `RegionStore`, `RegionSearch`, `RegionLocator` | Location, PlaceSearch, AppGroup |
+| `Features/` | `Region` | `SavedRegion`, `RegionList` (up to three regions, their order and the shown one), `RegionStore`, `RegionSearch`, `RegionLocator` | Location, PlaceSearch, AppGroup |
 | `Features/` | `Forecast` | `CachedForecast` (freshness), `ForecastCache`, `ForecastUpdater` | Weather, AppGroup |
 | `Features/` | `SunnyDay` | `SunnyLevel` (the four levels, 30 % rule), `nextSunnyDay(in:)`, `SunnyLevelStore` | Weather, AppGroup |
 | `Features/` | `Units` | `TemperatureUnitSetting` (system, °C, °F), `TemperatureUnitStore` | AppGroup |
@@ -67,17 +67,17 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 - Core modules don't depend on each other; features depend only on core, never on each other. Only the app and the widget assemble them.
 - Every module a target imports must be its declared direct dependency (ADR 0002), in packages and in the Xcode targets. `Tools/ImportCheck` (a Swift tool, Foundation only, with tests) checks it on CI.
 - Public initializers don't use default arguments that reach into another module (such as `defaults: UserDefaults = AppGroupContainer.userDefaults`): a default argument is compiled into the caller, which then needs that module linked. Add an argument-free `init()` inside the module instead.
-- Each core package has a fake in a `…Testing` module (`WeatherTesting`, `LocationTesting`, `PlaceSearchTesting`). `WeatherTesting` decodes forecasts recorded from WeatherKit (`WeatherRecording`), read from its source folder (`Recordings/`, excluded from the target) so that they are never copied into the app; they work on the Mac and in a simulator, not on a device.
+- Each core package has a fake in a `…Testing` module (`WeatherTesting`, `LocationTesting`, `PlaceSearchTesting`). `WeatherTesting` decodes forecasts recorded from WeatherKit (`WeatherRecording`; `NearestRecordingWeatherProvider` answers each coordinate with the closest recording), read from its source folder (`Recordings/`, excluded from the target) so that they are never copied into the app; they work on the Mac and in a simulator, not on a device.
 - WeatherKit has a type named `Weather`, which hides the `Weather` module in a file that imports both. Only the `Weather` package imports WeatherKit.
 
 ### App layer (ADR 0005)
 
-- **State lives in the least common ancestor of the views that use it.** Shared state is four `@Observable` state holders in `NextSunnyDay/SharedState/`, created in `NextSunnyDayApp` and put into the environment: `RegionSelection` (the chosen region), `SunnyLevelSelection`, `TemperatureUnitSelection` and `RegionForecast` (the forecast of the selected region and how its last fetch went). Everything else is `@State` in the screen; a screen uses an `@Observable` class only when updating its state is logic.
+- **State lives in the least common ancestor of the views that use it.** Shared state is four `@Observable` state holders in `NextSunnyDay/SharedState/`, created in `NextSunnyDayApp` and put into the environment: `RegionSelection` (the saved regions and the one Home shows), `SunnyLevelSelection`, `TemperatureUnitSelection` and `RegionForecast` (the forecast of the shown region and how its last fetch went). Only the region on screen is fetched; every saved region keeps its cache until it is removed (ADR 0007). Everything else is `@State` in the screen; a screen uses an `@Observable` class only when updating its state is logic.
 - **State holders don't depend on each other.** The view that needs two pieces of state combines them (Home passes the forecast and the sunny level to `SunnyLevel.nextSunnyDay(in:)`), and views say when work happens (`task(id:)`, `refreshable`, button actions).
 - **Views contain no logic.** `body` only reads state and computes without side effects; side effects go in actions and lifecycle closures.
 - **Features reach the app through `AppFeatures`** (`NextSunnyDay/App/`): `.live` for the app; `AppFeatures.preview(_:)` builds them on the fakes for previews. State holders get features through their initializers; views get state holders with `@Environment(Type.self)` and `RegionSearch` / `ForecastUpdater` through `@Entry` environment values.
 - **Simulator states:** a Debug build launched with `-PreviewScenario <scenario>` (for example `xcrun simctl launch <device> com.naipaka.NextSunnyDay -PreviewScenario offline`) runs on the same fakes as the previews, to check or screenshot a state in the simulator.
-- **Previews:** wrap a screen in `PreviewHost(<scenario>)` (`App/PreviewHost.swift`), which sets up the state holders on the fakes. Don't put it under `#if DEBUG`: `#Preview` is compiled in Release too, and the Release build fails. Check `-configuration Release` builds after changing previews. Scenarios cover the screen states (`.tokyo`, `.singapore`, `.loading`, `.refreshFailed`, `.offline`, `.locationDenied`, `.noRegion`); `.losAngeles` is for the English screenshots, launched with `SIMCTL_CHILD_TZ=America/Los_Angeles` so the hours match its recording.
+- **Previews:** wrap a screen in `PreviewHost(<scenario>)` (`App/PreviewHost.swift`), which sets up the state holders on the fakes. Don't put it under `#if DEBUG`: `#Preview` is compiled in Release too, and the Release build fails. Check `-configuration Release` builds after changing previews. Scenarios cover the screen states (`.tokyo`, `.singapore`, `.loading`, `.refreshFailed`, `.offline`, `.locationDenied`, `.noRegion`, `.severalRegions`); `.losAngeles` is for the English screenshots, launched with `SIMCTL_CHILD_TZ=America/Los_Angeles` so the hours match its recording.
 - **Tests** use real features with fakes only for the outside world (the core modules), plus a test `UserDefaults` suite and a temporary directory.
 - Swift settings: the app is `MainActor` by default; the widget and the tests are nonisolated by default; all targets use Approachable Concurrency and Member Import Visibility.
 - Fetch rules and flowcharts: `docs/architecture/weather-fetch-flow.md` — keep it in sync when changing fetch logic.
@@ -91,7 +91,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 
 ### Widget target
 
-`NextSunnyDayWidget/` uses `Region`, `Forecast`, `SunnyDay`, `Units` and `Weather` (plus `WeatherTesting` for its previews). `Provider` builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state. The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. For the current location the widget uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate.
+`NextSunnyDayWidget/` uses `Region`, `Forecast`, `SunnyDay`, `Units` and `Weather` (plus `WeatherTesting` for its previews). Each widget picks its region in its App Intent configuration (`SelectRegionIntent`, `RegionEntity` in `RegionIntent.swift`) and shows the first saved region until one is picked or after it is removed. `Provider` (an `AppIntentTimelineProvider`) builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state. The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. For the current location the widget uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate.
 
 ### Localization & resources
 

@@ -8,7 +8,7 @@
 
 An iOS widget that shows the next sunny day on your home screen.
 Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
-The app shows when the next sunny day is, the next 24 hours and ten days, and lets you choose what counts as sunny.
+The app shows when the next sunny day is, the next 24 hours and ten days for up to three regions, and lets you choose what counts as sunny.
 The app is available in English and Japanese.
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
@@ -43,7 +43,7 @@ The architecture decisions and their reasons are in [`docs/architecture/decision
 
 ### How it works
 
-The app keeps the chosen region and the settings in `UserDefaults`, and the fetched forecast as a JSON file, both in an App Group container that the widget also reads.
+The app keeps the saved regions and the settings in `UserDefaults`, and each region's fetched forecast as a JSON file, both in an App Group container that the widget also reads.
 A forecast counts as fresh when it was fetched since the last 4:00, by the app or the widget. The app fetches when it opens and the forecast isn't fresh, and on pull to refresh.
 The widget shows the saved forecast. It reloads once a day after 4:00 and fetches from WeatherKit on its own when the saved forecast isn't fresh.
 [`docs/architecture/weather-fetch-flow.md`](docs/architecture/weather-fetch-flow.md) has the details.
