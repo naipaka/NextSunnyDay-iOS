@@ -14,7 +14,7 @@ struct OnboardingView: View {
       } actions: {
         VStack(spacing: 12) {
           Button {
-            regionSelection.useCurrentLocation()
+            regionSelection.addCurrentLocation()
           } label: {
             Label("Use Current Location", systemImage: "location.fill")
               .frame(maxWidth: 240)
@@ -22,7 +22,7 @@ struct OnboardingView: View {
           .buttonStyle(.glassProminent)
           .tint(.orange)
           NavigationLink {
-            RegionView()
+            AddRegionView()
           } label: {
             Label("Search for a Region", systemImage: "magnifyingglass")
               .frame(maxWidth: 240)

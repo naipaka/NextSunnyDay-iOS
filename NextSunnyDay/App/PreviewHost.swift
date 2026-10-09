@@ -31,6 +31,9 @@ struct PreviewHost<Content: View>: View {
     case locationDenied
     /// No region yet.
     case noRegion
+    /// Three regions, Minato chosen: the current location (also in Minato) and Singapore, each
+    /// with the weather recorded there.
+    case severalRegions
   }
 
   @State private var regionSelection: RegionSelection
@@ -45,7 +48,9 @@ struct PreviewHost<Content: View>: View {
     self.features = features
     self.content = content()
     _regionSelection = State(
-      initialValue: RegionSelection(store: features.regionStore, search: features.regionSearch))
+      initialValue: RegionSelection(
+        store: features.regionStore, search: features.regionSearch,
+        forecastUpdater: features.forecastUpdater))
     _sunnyLevelSelection = State(
       initialValue: SunnyLevelSelection(store: features.sunnyLevelStore))
     _temperatureUnitSelection = State(
@@ -83,27 +88,37 @@ extension AppFeatures {
     let minatoName = isJapanese ? "港区" : "Minato"
     let place = SavedRegion.place(name: minatoName, coordinate: minato)
 
-    let weather: FakeWeatherProvider
-    var region: SavedRegion? = place
+    let weather: any WeatherProviding
+    var regions: [SavedRegion] = [place]
     var location = FakeLocationProvider()
     switch scenario {
     case .tokyo, .noRegion:
       weather = FakeWeatherProvider(.tokyo)
-      if scenario == .noRegion { region = nil }
+      if scenario == .noRegion { regions = [] }
     case .singapore:
       weather = FakeWeatherProvider(.singapore)
     case .losAngeles:
       weather = FakeWeatherProvider(.losAngeles)
-      region = .place(
-        name: isJapanese ? "ロサンゼルス" : "Los Angeles",
-        coordinate: CLLocationCoordinate2D(latitude: 34.052, longitude: -118.244))
+      regions = [
+        .place(
+          name: isJapanese ? "ロサンゼルス" : "Los Angeles",
+          coordinate: WeatherRecording.losAngeles.coordinate)
+      ]
     case .loading:
       weather = FakeWeatherProvider(.tokyo, delay: .seconds(3600))
     case .refreshFailed, .offline:
       weather = FakeWeatherProvider(error: URLError(.notConnectedToInternet))
+    case .severalRegions:
+      weather = NearestRecordingWeatherProvider()
+      regions = [
+        place, .currentLocation,
+        .place(
+          name: isJapanese ? "シンガポール" : "Singapore",
+          coordinate: WeatherRecording.singapore.coordinate),
+      ]
     case .locationDenied:
       weather = FakeWeatherProvider(.tokyo)
-      region = .currentLocation
+      regions = [.currentLocation]
       location = .denied
     }
 
@@ -127,7 +142,7 @@ extension AppFeatures {
     }
 
     let regionStore = RegionStore(defaults: defaults)
-    regionStore.save(region.map { [$0] } ?? [])
+    regionStore.save(regions)
     let places = FakePlaceSearch()
     return AppFeatures(
       regionStore: regionStore,

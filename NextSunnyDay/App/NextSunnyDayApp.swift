@@ -17,7 +17,9 @@ struct NextSunnyDayApp: App {
     #endif
     self.features = features
     _regionSelection = State(
-      initialValue: RegionSelection(store: features.regionStore, search: features.regionSearch))
+      initialValue: RegionSelection(
+        store: features.regionStore, search: features.regionSearch,
+        forecastUpdater: features.forecastUpdater))
     _sunnyLevelSelection = State(
       initialValue: SunnyLevelSelection(store: features.sunnyLevelStore))
     _temperatureUnitSelection = State(

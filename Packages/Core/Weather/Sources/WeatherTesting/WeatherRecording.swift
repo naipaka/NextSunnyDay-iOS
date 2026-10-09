@@ -1,3 +1,4 @@
+import CoreLocation
 import Foundation
 import Weather
 import WeatherKit
@@ -16,6 +17,28 @@ public enum WeatherRecording: String, CaseIterable, Sendable {
   /// Los Angeles, recorded on 8 October 2026 (PDT): two clear days, clouds, rain and drizzle, then
   /// clear again. For the English screenshots, with the simulator in Los Angeles' time zone.
   case losAngeles
+
+  /// Where the recording was made.
+  public var coordinate: CLLocationCoordinate2D {
+    switch self {
+    case .tokyo: CLLocationCoordinate2D(latitude: 35.658, longitude: 139.751)
+    case .singapore: CLLocationCoordinate2D(latitude: 1.290, longitude: 103.852)
+    case .losAngeles: CLLocationCoordinate2D(latitude: 34.052, longitude: -118.244)
+    }
+  }
+
+  /// The recording made closest to `coordinate`.
+  public static func nearest(to coordinate: CLLocationCoordinate2D) -> WeatherRecording {
+    allCases.min { a, b in
+      a.squaredDistance(to: coordinate) < b.squaredDistance(to: coordinate)
+    }!
+  }
+
+  private func squaredDistance(to other: CLLocationCoordinate2D) -> Double {
+    let dLatitude = coordinate.latitude - other.latitude
+    let dLongitude = coordinate.longitude - other.longitude
+    return dLatitude * dLatitude + dLongitude * dLongitude
+  }
 
   /// The recording, moved by whole days so that its first day starts on `day`, and expiring
   /// `expirationDate`.

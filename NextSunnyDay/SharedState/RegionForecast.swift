@@ -4,7 +4,8 @@ import Observation
 import Region
 import WidgetKit
 
-/// The forecast of the selected region and how its last fetch went.
+/// The forecast of the region Home shows and how its last fetch went. Other regions keep their
+/// cached forecasts for when they are shown.
 ///
 /// Views say when to fetch (Home's `task(id:)`, pull to refresh, retry buttons); this decides how:
 /// show the cache, fetch when it is stale, keep it when a fetch fails.
@@ -53,8 +54,6 @@ final class RegionForecast {
   /// Shows the region's cached forecast, then fetches when it is missing or not fetched since the
   /// last 4:00 (ADR 0006).
   func refreshIfNeeded(for region: SavedRegion) async {
-    await updater.removeForecasts(except: [region.id])
-    guard !Task.isCancelled else { return }
     showCached(for: region)
     if let forecast, forecast.regionID == region.id, updater.isFresh(forecast) { return }
     await fetch(region)

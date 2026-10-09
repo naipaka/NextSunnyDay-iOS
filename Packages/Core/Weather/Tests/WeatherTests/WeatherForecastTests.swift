@@ -1,3 +1,4 @@
+import CoreLocation
 import Foundation
 import Testing
 import Weather
@@ -68,5 +69,17 @@ struct WeatherForecastTests {
     let offset = moved.daily[0].date.timeIntervalSince(recorded.daily[0].date)
     #expect(moved.hourly[5].date == recorded.hourly[5].date + offset)
     #expect(moved.daily[3].sunrise == recorded.daily[3].sunrise.map { $0 + offset })
+  }
+
+  @Test func eachPlaceGetsTheNearestRecording() async throws {
+    let provider = NearestRecordingWeatherProvider()
+    let sapporo = CLLocationCoordinate2D(latitude: 43.062, longitude: 141.354)
+    let singapore = CLLocationCoordinate2D(latitude: 1.352, longitude: 103.820)
+
+    #expect(WeatherRecording.nearest(to: sapporo) == .tokyo)
+    #expect(WeatherRecording.nearest(to: singapore) == .singapore)
+    let forecast = try await provider.forecast(for: singapore)
+    #expect(
+      forecast.daily.map(\.condition) == WeatherRecording.singapore.recorded.daily.map(\.condition))
   }
 }

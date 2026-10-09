@@ -4,12 +4,14 @@ import SunnyDay
 import SwiftUI
 import Weather
 
-/// The next sunny day, the next 24 hours and ten days for the selected region.
+/// The next sunny day, the next 24 hours and ten days for the selected region, with a menu to
+/// switch between the saved regions.
 struct HomeView: View {
   let region: SavedRegion
 
   @Environment(RegionForecast.self) private var regionForecast
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
+  @Environment(RegionSelection.self) private var regionSelection
   @Environment(\.scenePhase) private var scenePhase
   @State private var path: [HomeRoute] = []
   @State private var isShowingSettings = false
@@ -36,7 +38,8 @@ struct HomeView: View {
       .navigationDestination(for: HomeRoute.self) { route in
         switch route {
         case .day(let index): DayDetailView(initialIndex: index)
-        case .region: RegionView()
+        case .regions: RegionListView()
+        case .addRegion: AddRegionView()
         }
       }
       .sheet(isPresented: $isShowingSettings) {
@@ -95,6 +98,17 @@ struct HomeView: View {
     }
   }
 
+  /// The region menu's choice; choosing changes the region Home shows.
+  private var selectedRegionID: Binding<String> {
+    Binding(
+      get: { region.id },
+      set: { id in
+        if let chosen = regionSelection.regions.first(where: { $0.id == id }) {
+          regionSelection.select(chosen)
+        }
+      })
+  }
+
   // MARK: - Content
 
   @ViewBuilder private var content: some View {
@@ -116,10 +130,43 @@ struct HomeView: View {
 
   @ToolbarContentBuilder private var toolbar: some ToolbarContent {
     ToolbarItem(placement: .topBarLeading) {
-      NavigationLink(value: HomeRoute.region) {
+      Menu {
+        Picker(selection: selectedRegionID) {
+          ForEach(regionSelection.regions) { saved in
+            if let name = saved.placeName {
+              Label {
+                Text(verbatim: name)
+              } icon: {
+                Image(systemName: "mappin")
+              }
+              .tag(saved.id)
+            } else {
+              Label("Current Location", systemImage: "location.fill").tag(saved.id)
+            }
+          }
+        } label: {
+          EmptyView()
+        }
+        .pickerStyle(.inline)
+        Section {
+          if !regionSelection.list.isFull {
+            Button("Add Region", systemImage: "plus") {
+              path.append(.addRegion)
+            }
+          }
+          Button("Edit Regions", systemImage: "list.bullet") {
+            path.append(.regions)
+          }
+        }
+      } label: {
         HStack(spacing: 6) {
-          Image(systemName: "location.fill")
+          if region.kind == .currentLocation {
+            Image(systemName: "location.fill")
+          }
           regionName
+          Image(systemName: "chevron.down")
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(.secondary)
         }
         .padding(.horizontal, 4)
       }
@@ -138,11 +185,16 @@ struct HomeView: View {
 enum HomeRoute: Hashable {
   /// The day at this index of the forecast.
   case day(Int)
-  case region
+  case regions
+  case addRegion
 }
 
 #Preview("Sunny day ahead") {
   PreviewHost(.tokyo)
+}
+
+#Preview("Several regions") {
+  PreviewHost(.severalRegions)
 }
 
 #Preview("No sunny day") {

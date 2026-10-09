@@ -199,18 +199,19 @@ final class RegionForecastTests {
     #expect(!model.isLoading)
   }
 
-  @Test func anotherRegionShowsItsOwnCacheAndDropsTheOldOnes() async throws {
+  @Test func switchingRegionsShowsEachOnesCacheAndKeepsThem() async throws {
     let tokyo = SavedRegion.place(
       name: "港区", coordinate: CLLocationCoordinate2D(latitude: 35.658, longitude: 139.751))
-    _ = try await cacheForecast(for: tokyo)
-    let model = regionForecast(FakeWeatherProvider(.tokyo))
-    await model.refreshIfNeeded(for: tokyo)
-    // The widget may have cached the other region's forecast meanwhile.
+    let tokyoForecast = try await cacheForecast(for: tokyo)
     let osakaForecast = try await cacheForecast(for: osaka)
+    let model = regionForecast(FakeWeatherProvider(error: URLError(.notConnectedToInternet)))
+    await model.refreshIfNeeded(for: tokyo)
 
     await model.refreshIfNeeded(for: osaka)
-
     #expect(model.forecast == osakaForecast)
-    #expect(cache.load(regionID: tokyo.id) == nil)
+
+    await model.refreshIfNeeded(for: tokyo)
+    #expect(model.forecast == tokyoForecast)
+    #expect(cache.load(regionID: osaka.id) == osakaForecast)
   }
 }

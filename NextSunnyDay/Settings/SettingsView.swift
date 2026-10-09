@@ -68,7 +68,7 @@ struct SettingsView: View {
       }
       .navigationDestination(for: Route.self) { route in
         switch route {
-        case .region: RegionView()
+        case .region: RegionListView()
         case .sunnyLevel: SunnyLevelView()
         case .about: AboutView()
         }

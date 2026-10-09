@@ -4,12 +4,12 @@ public import Foundation
 /// Keeps the user's regions in App Group `UserDefaults`, so the widget reads the same ones.
 ///
 /// Never migrated: the stored format must stay readable by every later version
-/// (`RegionStoreTests` pins it). Regions are a list from the start, although the app keeps only
-/// one for now.
+/// (`RegionStoreTests` pins it).
 ///
 /// `@unchecked` because `UserDefaults` is not marked `Sendable`, although it is thread-safe.
 public struct RegionStore: @unchecked Sendable {
   static let key = "regions"
+  static let selectedKey = "selectedRegion"
 
   private let defaults: UserDefaults
 
@@ -26,6 +26,16 @@ public struct RegionStore: @unchecked Sendable {
   public func load() -> [SavedRegion] {
     defaults.data(forKey: Self.key)
       .flatMap { try? JSONDecoder().decode([SavedRegion].self, from: $0) } ?? []
+  }
+
+  /// The regions and which one the app shows.
+  public func loadList() -> RegionList {
+    RegionList(regions: load(), selectedID: defaults.string(forKey: Self.selectedKey))
+  }
+
+  public func save(_ list: RegionList) {
+    save(list.regions)
+    defaults.set(list.selected?.id, forKey: Self.selectedKey)
   }
 
   public func save(_ regions: [SavedRegion]) {

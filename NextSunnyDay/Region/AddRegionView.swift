@@ -1,8 +1,9 @@
 import Region
 import SwiftUI
 
-/// Chooses the region: the current location, or a place found by search while typing.
-struct RegionView: View {
+/// Adds a region and chooses it: the current location, or a place found by search while typing.
+/// Onboarding opens it for the first region.
+struct AddRegionView: View {
   @Environment(RegionSelection.self) private var regionSelection
   @Environment(\.regionSearch) private var regionSearch
   @Environment(\.dismiss) private var dismiss
@@ -12,23 +13,8 @@ struct RegionView: View {
 
   var body: some View {
     List {
-      Section {
-        Button {
-          regionSelection.useCurrentLocation()
-          dismiss()
-        } label: {
-          Label {
-            VStack(alignment: .leading, spacing: 2) {
-              Text("Use Current Location")
-              Text("Shows the weather where you are")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            }
-          } icon: {
-            Image(systemName: "location.fill").foregroundStyle(.blue)
-          }
-        }
-        .tint(.primary)
+      if !regionSelection.list.containsCurrentLocation {
+        currentLocationSection
       }
       if !candidates.isEmpty {
         Section("Search Results") {
@@ -47,7 +33,7 @@ struct RegionView: View {
                   }
                 }
                 Spacer()
-                if candidate.name == regionSelection.region?.placeName {
+                if regionSelection.regions.contains(where: { $0.placeName == candidate.name }) {
                   Image(systemName: "checkmark").foregroundStyle(.orange).fontWeight(.semibold)
                 }
               }
@@ -58,7 +44,7 @@ struct RegionView: View {
         }
       }
     }
-    .navigationTitle("Region")
+    .navigationTitle(regionSelection.regions.isEmpty ? "Region" : "Add Region")
     .navigationBarTitleDisplayMode(.inline)
     .searchable(text: $query, prompt: "Search cities")
     .task(id: query) {
@@ -80,9 +66,30 @@ struct RegionView: View {
     }
   }
 
+  private var currentLocationSection: some View {
+    Section {
+      Button {
+        regionSelection.addCurrentLocation()
+        dismiss()
+      } label: {
+        Label {
+          VStack(alignment: .leading, spacing: 2) {
+            Text("Use Current Location")
+            Text("Shows the weather where you are")
+              .font(.subheadline)
+              .foregroundStyle(.secondary)
+          }
+        } icon: {
+          Image(systemName: "location.fill").foregroundStyle(.blue)
+        }
+      }
+      .tint(.primary)
+    }
+  }
+
   private func select(_ candidate: RegionCandidate) async {
     do {
-      try await regionSelection.select(candidate)
+      try await regionSelection.add(candidate)
       dismiss()
     } catch {
       isShowingNotFound = true
@@ -92,6 +99,6 @@ struct RegionView: View {
 
 #Preview {
   PreviewHost(.tokyo) {
-    NavigationStack { RegionView() }
+    NavigationStack { AddRegionView() }
   }
 }

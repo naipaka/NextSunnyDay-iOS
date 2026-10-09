@@ -28,6 +28,19 @@ struct RegionStoreTests {
     #expect(defaults.object(forKey: "regions") == nil)
   }
 
+  @Test func keepsTheChosenRegion() {
+    let store = RegionStore(defaults: defaults)
+    var list = RegionList()
+    list.add(.currentLocation)
+    list.add(
+      .place(name: "港区", coordinate: CLLocationCoordinate2D(latitude: 35.658, longitude: 139.751)))
+    list.select(SavedRegion.currentLocationID)
+    store.save(list)
+
+    #expect(store.loadList() == list)
+    #expect(defaults.string(forKey: "selectedRegion") == "current-location")
+  }
+
   /// The stored format is never migrated, so data written by this version must stay readable.
   @Test func readsTheStoredFormat() throws {
     let json = """

@@ -41,6 +41,16 @@
         }
       }
     },
+    "Add Region" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地域を追加"
+          }
+        }
+      }
+    },
     "Allow location access in Settings, or search for a region instead." : {
       "localizations" : {
         "ja" : {
@@ -217,6 +227,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "東"
+          }
+        }
+      }
+    },
+    "Edit Regions" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地域を編集"
           }
         }
       }
@@ -535,6 +555,16 @@
       }
     },
     "Region" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地域"
+          }
+        }
+      }
+    },
+    "Regions" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
@@ -930,6 +960,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "晴れの基準は設定で変えられます。"
+          }
+        }
+      }
+    },
+    "You can save up to %lld regions." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地域は%lldつまで保存できます。"
           }
         }
       }

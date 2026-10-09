@@ -43,6 +43,20 @@ public actor FakeWeatherProvider: WeatherProviding {
   }
 }
 
+/// A `WeatherProviding` that answers each coordinate with the recording made closest to it, so
+/// that regions in different places get different weather.
+public struct NearestRecordingWeatherProvider: WeatherProviding {
+  public init() {}
+
+  public func forecast(for coordinate: CLLocationCoordinate2D) async throws -> WeatherForecast {
+    WeatherRecording.nearest(to: coordinate).forecast()
+  }
+
+  public func attribution() async throws -> WeatherDataAttribution {
+    .sample
+  }
+}
+
 extension WeatherDataAttribution {
   /// Apple Weather's attribution as WeatherKit returns it, with the marks in Japanese when the app
   /// runs in Japanese and in English otherwise.
