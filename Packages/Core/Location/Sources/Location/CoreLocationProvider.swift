@@ -10,8 +10,9 @@ public struct CoreLocationProvider: LocationProviding {
   }
 
   public func currentCoordinate() async throws -> CLLocationCoordinate2D {
-    #if os(iOS)
-      // The session asks for permission and keeps it while the updates run.
+    #if !os(macOS)
+      // The session asks for permission and keeps it while the updates run. macOS, where the
+      // package's tests run, has no `CLServiceSession`.
       let session = CLServiceSession(authorization: .whenInUse)
       defer { session.invalidate() }
     #endif
