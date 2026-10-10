@@ -24,7 +24,7 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 
 > Next Sunny Day tells you when the sun comes out next.
 >
-> Most weather widgets show only today and tomorrow. If you want to hang the laundry outside, plan a walk or wash the car, you have to open a weather app and scan the whole week. Next Sunny Day answers that question in one word: Today, Tomorrow or In 3 days.
+> Most weather widgets show only today and tomorrow. If you want to hang the laundry outside, plan a walk or wash the car, you have to open a weather app and scan the whole week. Next Sunny Day answers that question in one word, Tomorrow or In 3 days, and shows today's weather beside it.
 >
 > FEATURES
 >
@@ -57,7 +57,7 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 
 > 「次いつ晴れる？」は、次に晴れる日がひと目でわかるアプリです。
 >
-> 天気アプリのウィジェットに出るのは、たいてい今日と明日の天気だけ。洗濯物を外に干したい日や出かけたい日を探すには、天気アプリを開いて 1 週間分を見比べる必要がありました。このアプリなら「今日」「あした」「あと3日」と、ひと言で答えます。
+> 天気アプリのウィジェットに出るのは、たいてい今日と明日の天気だけ。洗濯物を外に干したい日や出かけたい日を探すには、天気アプリを開いて 1 週間分を見比べる必要がありました。このアプリなら「あした」「あと3日」と、ひと言で答えます。今日の天気もその横に出ます。
 >
 > ◆ 主な機能
 >

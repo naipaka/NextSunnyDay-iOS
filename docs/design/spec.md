@@ -8,21 +8,23 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | --- | --- |
 | Regions | Up to three saved regions, found by search or "use current location" (Core Location); the current location is one of them, added and removed like a place. Home switches between them with a menu (#103). See [Regions](#regions). |
 | Sunny definition | A user setting with four levels; the default matches v1. See [Sunny levels](#sunny-levels). |
+| Today | Never the answer: the next sunny day is counted from tomorrow, because today's weather can be seen by looking outside. Today's condition is shown beside the answer, smaller, in Home's header and in every Home Screen widget. See [Home](#home) and [Widgets](#widgets). |
 | Hourly forecast | Home shows the next 24 hours as a horizontal strip, so the strip stays useful in the evening. Each day's hours are in the day detail screen, which opens from a row in the 10-day list. |
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
 | Manual refresh | Pull to refresh on Home. |
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
 | Siri and Shortcuts | One App Shortcut answers when the next sunny day is, for a saved region or the first one, with a dialog and a snippet (#104). See [Siri and Shortcuts](#siri-and-shortcuts). |
 | Notifications | One notification the day before a sunny spell starts, for one region at a chosen time, from the cached forecast (#105). See [Notifications](#notifications). |
-| Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header. |
+| Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header, which brightens toward yellow at the top like sunlight. |
 | Japanese tone | Friendly and casual, matching the app name 次いつ晴れる？ (e.g. 「次の晴れは あと3日」, 「まだ先かも」). |
 | App icon | A close-up of the lion rising into the frame and looking up at the sky, redrawn from scratch and built in Icon Composer layers. See [App icon](#app-icon). |
 
 ## Visual language
 
 - **System colors only.** Backgrounds use `systemGroupedBackground` and `secondarySystemGroupedBackground`; text uses `label`, `secondaryLabel` and `tertiaryLabel`. Don't hard-code hex values in code. The one accent is `Color.orange`, and it stays the system orange in dark mode (don't darken it). With Increase Contrast on, the header colors use their light variants in both appearances: the dark variants get lighter and drop the white header text to about 2:1, the light ones get darker and reach 4.5:1.
+- **Header gradient.** The header and the Home Screen widgets are a vertical gradient: the bottom is the state's color (system orange, `systemGray` or `systemGray2`), and the top is the same color made lighter, toward yellow for orange and toward white for the grays. In light mode the top lands near #FFB347 for orange, #A3A3A8 for `systemGray` and #C2C2C6 for `systemGray2`; in dark mode near #FFB24A, #A3A3A8 and #77777B. In code the top is derived from the system colors (for example with `Color.mix(with:by:)`), not written as hex. White on orange is already under 3:1 without the gradient (2.3:1) and about 2.0:1 where 「次の晴れ」 sits, so small header text stays semibold or heavier. With Increase Contrast on there is no gradient: the header and the widgets use the flat color above.
 - **Weather symbols** are SF Symbols with the palette rendering mode. Clouds use `systemGray2` in light and white in dark; the sun and moon are yellow; rain drops and the precipitation chance are cyan. Symbols used: `sun.max.fill` (clear), `sun.min.fill` (mostly clear), `cloud.sun.fill` (partly cloudy), `cloud.fill`, `cloud.rain.fill`, `cloud.heavyrain.fill`, `cloud.drizzle.fill`, and the night variants `cloud.moon.fill` and `moon.stars.fill` in hourly cells.
-- **Type.** Use system text styles so Dynamic Type works. The big "days until" number is the only display-size text (72 pt bold, scaled down to fit). Section headers are `subheadline` in `secondaryLabel`, regular weight. Rows are `body` with a `subheadline` secondary line.
+- **Type.** Use system text styles so Dynamic Type works. The big "days until" number is the only display-size text (64 pt bold, scaled down to fit). Section headers are `subheadline` in `secondaryLabel`, regular weight. Rows are `body` with a `subheadline` secondary line.
 - **Shapes.** Cards have a 26 pt continuous corner radius. The content sheet's top corners are 34 pt.
 - **Liquid Glass is for controls only:** toolbar buttons, the confirm button in sheets, and buttons such as Retry or "Use current location". No custom glass in the content layer.
 
@@ -52,10 +54,12 @@ Settings is a sheet with its own navigation stack. The day detail screen is push
 ![Home](images/home.jpg)
 
 - **Toolbar** (system glass): a region menu on the leading side and a gear button on the trailing side. The menu's button shows the region name and a small `chevron.down`, with `location.fill` before the name only when the current location is shown. See [Regions](#regions).
-- **Header.** A full-bleed color area at the top of the scrolling content:
+- **Header.** A full-bleed area at the top of the scrolling content, in the [header gradient](#visual-language):
   - System orange when a sunny day is in range, `systemGray` when none is, and `systemGray2` while loading or when there is no data.
-  - Text from top to bottom: 「次の晴れは」 (`headline`), the big 「あと3日」, the date and condition (`title3` semibold), then high / low / precipitation (`subheadline`).
-  - A 64 pt white symbol sits at the top trailing corner.
+  - Two areas side by side, split by a 1 pt white line at 40 %: the answer on the leading side, today on a 92 pt column on the trailing side, 18 pt apart from the line.
+  - **The answer**, from top to bottom: 「次の晴れ」 (`subheadline` semibold), the big 「あと3日」, the day's symbol with the date and condition (`headline`), then high and low (`subheadline`).
+  - **Today**, centered in its column: 「今日」 (`subheadline` semibold), today's symbol (46 pt) and the condition (`headline`, wrapping onto a second line for long names such as 「ところにより／雷雨」). It is secondary: smaller than the answer, and only the condition, without temperatures.
+  - The screenshots predate the today column and the gradient: they show 「次の晴れは」, the answer alone and a 64 pt symbol at the top trailing corner.
 - **Content sheet.** It overlaps the bottom of the header, and both scroll together (a stretchy header):
   - The sheet starts 34 pt above the bottom of the header and has 34 pt top corners and a soft upward shadow (black at 18 %, radius 18, y −4).
   - Scrolling up, the header fades out over 70 % of its height and moves up at 0.3× the scroll speed (parallax), so the sheet slides over it. Once the sheet reaches the top, the toolbar floats over the sheet with the system scroll edge effect, and no header color is left behind it.
@@ -74,16 +78,15 @@ Settings is a sheet with its own navigation stack. The day detail screen is push
 
 ### Header copy
 
-| State | Big text | Line 2 | Line 3 | Color / symbol |
-| --- | --- | --- | --- | --- |
-| Sunny day in N ≥ 2 days | あと{N}日 | {M}月{D}日（{曜}）{condition} | 最高 {H}° 最低 {L}° 降水 {P}% | orange / day symbol |
-| Tomorrow | あした | same | same | orange |
-| Today | 今日 | same | same | orange |
-| None in the 10-day range | まだ先かも | 10日先まで晴れの予報なし | 予報が変わったらここに出るよ | `systemGray` / `cloud.fill` |
-| No data (fetch failed, nothing cached) | あと？日 | 天気を取得できなかったよ | 「もう一度試す」 button | `systemGray2` / `icloud.slash.fill` |
-| Loading (first fetch) | spinner + 天気を取得中… | — | — | `systemGray2`; the sheet is redacted |
+| State | Big text | Line 2 | Line 3 | Today column | Color |
+| --- | --- | --- | --- | --- | --- |
+| Sunny day in N ≥ 2 days | あと{N}日 | {day symbol} {M}月{D}日（{曜}）{condition} | 最高 {H}° 最低 {L}° | 今日 / today's symbol / today's condition | orange |
+| Tomorrow | あした | same | same | same | orange |
+| None in the 10-day range | まだ先かも | 10日先まで晴れの予報なし | 予報が変わったらここに出るよ | same | `systemGray` |
+| No data (fetch failed, nothing cached) | あと？日 | 天気を取得できなかったよ | 「もう一度試す」 button | 今日 / 「—」 | `systemGray2` |
+| Loading (first fetch) | spinner + 天気を取得中… | — | — | 今日, the symbol and the condition redacted | `systemGray2`; the sheet is redacted |
 
-The 「今日」 and 「あした」 rows were not mocked; they follow the same layout.
+There is no 「今日」 state: a sunny today is not the answer (see [Sunny levels](#sunny-levels)), and the today column says 「晴れ」. The no-data column keeps its place with 「—」, so the layout doesn't change between states.
 
 ### States
 
@@ -111,7 +114,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 | --- | --- |
 | ![Day detail](images/day-detail.jpg) | ![Day detail scrolled](images/day-detail-scrolled.jpg) |
 
-- It uses the same layered layout as Home. The header is orange on a sunny day and `systemGray` otherwise. It shows the date (`headline`), the condition as the big text, then high / low / precipitation, with the day's symbol at the top trailing corner.
+- It uses the same layered layout as Home. The header is orange on a sunny day and `systemGray` otherwise, in the same [header gradient](#visual-language). It shows the date (`headline`), the condition as the big text, then high / low / precipitation, with the day's symbol at the top trailing corner.
 - The toolbar has the system back button, plus up/down buttons (`chevron.up` / `chevron.down`) that move to the previous or next day.
 - **時間ごと** card: one row per hour with time, symbol, condition, precipitation chance (20 % or more) and temperature.
 - **その他** card: sunrise, sunset, UV index and wind, each with a multicolor symbol.
@@ -136,6 +139,8 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 ### Sunny levels
 
 The levels are cumulative. Both the next-sunny-day search and the orange "sunny" styling use the selected level.
+
+The search starts tomorrow, so the shortest answer is 「あした」. Today is left out because it can be seen by looking outside; when today and tomorrow are both sunny, the answer is still 「あした」, the next sunny day, not the end of the current spell. Today's weather is shown next to the answer instead (see [Home](#home)).
 
 | Level (UI) | Counts as sunny (`WeatherCondition`) | Extra rule |
 | --- | --- | --- |
@@ -207,21 +212,23 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
 | --- | --- | --- |
 | ![Home Screen widgets](images/widgets-home-screen.jpg) | ![Widget states](images/widgets-states.jpg) | ![Lock Screen widgets](images/widgets-lock-screen.jpg) |
 
-- **Small:** 「次の晴れ」 with a symbol, 「あと3日」, 「10/10（土）快晴」 and the region name.
-- **Medium:** the small layout plus the next five days (weekday, symbol, high). Sunny days get a light capsule behind them.
-- **Large:** a header row like the small widget, then seven days (date, symbol, condition, high/low). Sunny rows are bold on a light capsule.
-- **Background:** system orange when a sunny day is in range, `systemGray` otherwise.
+The Home Screen widgets follow Home's header: the answer and today, the answer larger, in the same [header gradient](#visual-language). The screenshots predate today and the gradient.
+
+- **Small:** the answer on top: 「港区 · 次の晴れ」 (`footnote` semibold), then at the bottom of that area 「あと3日」 and the day's symbol with 「10/13（火）快晴」. Below a 1 pt white line at 40 %, one row: 「今日」 on the leading side, today's symbol and condition on the trailing side. A long condition is truncated (「ところにより…」).
+- **Medium:** the answer and today side by side, split by a 1 pt line like Home: the answer with its label on top and 「あと3日」 and the date at the bottom; today in an 84 pt column with 「今日」, its symbol (44 pt) and the condition, wrapping onto two lines when long.
+- **Large:** the medium layout as a 116 pt top area, a 1 pt line, then six days from tomorrow (date, symbol, condition, high/low). Sunny rows are bold on a light capsule.
+- **Background:** the [header gradient](#visual-language) of system orange when a sunny day is in range, `systemGray` when none is, and `systemGray2` without data or a region.
 - **States:**
-  - None in range: 「まだ先かも」 / 「10日先まで晴れなし」. The medium widget still lists five days.
-  - No data: 「あと？日」 / 「天気を取得できなかったよ」. The small widget adds 「タップして更新」; the medium widget adds the last update time.
+  - None in range: 「まだ先かも」 / 「10日先まで晴れなし」, with today as usual.
+  - No data: 「あと？日」 / 「天気を取得できなかったよ」 / 「タップして更新」, and 「—」 for today. The large widget shows 「タップして更新」 and the last update time where its days go.
 - **Lock Screen:**
-  - inline: 「☀ 次の晴れ あと3日（土）」; 「今日」 and 「あした」 go without the weekday. In English each state is its own short sentence to fit the line above the clock: "Sunny in 3 days (Sat)", "Sunny today", "Sunny tomorrow", "No sunny day soon", "Sunny in ? days".
-  - circular: the symbol over 「3日」
-  - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/10（土）快晴」
+  - inline: 「☀ 次の晴れ あと3日（土）」; 「あした」 goes without the weekday. In English each state is its own short sentence to fit the line above the clock: "Sunny in 3 days (Sat)", "Sunny tomorrow", "No sunny day soon", "Sunny in ? days". Today isn't shown: the line is too short for two things.
+  - circular: the symbol over 「3日」 (「あした」 for tomorrow)
+  - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/13（火）」 on the leading side, and after a thin line, 「今日」 over today's symbol
   The system draws these in monochrome.
 - The mockups are plain views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
 - **Region:** each widget has a 「地域」 setting (Edit Widget) listing the saved regions. Until one is picked, and after the picked region is removed, it shows the first region in the app's list (#103).
-- A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」. The medium and large widgets draw their days redacted, where the forecast goes once a region is chosen.
+- A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」, with 「—」 for today. The large widget draws its days redacted, where the forecast goes once a region is chosen.
 
 ## Siri and Shortcuts
 
@@ -241,12 +248,11 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
   | --- | --- | --- |
   | In N days | 港区の次の晴れは あと3日、10月10日 土曜日、快晴だよ。 | The next sunny day in Minato is Saturday, October 10, in 3 days: Clear. |
   | Tomorrow | 港区は あした晴れそう。10月8日 木曜日、快晴だよ。 | Minato should be sunny tomorrow, Thursday, October 8: Clear. |
-  | Today | 港区は 今日晴れそう。快晴だよ。 | Minato should be sunny today: Clear. |
   | None in range | 港区は 10日先まで晴れの予報がないよ。まだ先かも。 | No sunny day in Minato in the next 10 days. |
   | No data | 天気を取得できなかったよ。通信できる場所で、もう一度試してね。 | Couldn't get the weather. Try again where you have a connection. |
   | No region | アプリで地域を選んでね。 | Choose a region in the app. |
 
-  The current location is named by its place name when it is known, and 「現在地」 otherwise.
+  The current location is named by its place name when it is known, and 「現在地」 otherwise. Like Home, the answer is never today.
 - **Snippet:** the small widget's layout on a card with a 26 pt corner radius: 「次の晴れ」 and the symbol, the big 「あと3日」, the date and condition (`headline`), high, low and precipitation (`subheadline`), and the region name. Orange when a sunny day is in range, `systemGray` when none is, `systemGray2` without data or a region (「あと？日」 with 「天気を取得できなかったよ」 or 「アプリで地域を選んでね」).
 - The intent fetches only when the region's forecast wasn't fetched since the last 4:00, and answers from the cache when the fetch fails.
 
