@@ -10,20 +10,24 @@ enum SunnyDayAnswer: Equatable {
   case noRegion
   /// No forecast from today on: nothing was fetched, or only days that have passed.
   case noData
-  case sunny(NextSunnyDay, placeName: String?)
+  /// `today` is today's forecast, shown beside the answer.
+  case sunny(NextSunnyDay, placeName: String?, today: DayForecast?)
   /// None of the cached days is sunny.
-  case noneInRange(placeName: String?)
+  case noneInRange(placeName: String?, today: DayForecast?)
 
   /// `placeName` is `nil` only for the current location before its name is known.
   init(region: SavedRegion, forecast: CachedForecast?, level: SunnyLevel, now: Date = .now) {
     let placeName = region.placeName ?? forecast?.placeName
     let days = forecast?.forecast.days(from: now) ?? []
+    let today = days.first.flatMap {
+      Calendar.current.isDate($0.date, inSameDayAs: now) ? $0 : nil
+    }
     if days.isEmpty {
       self = .noData
     } else if let next = level.nextSunnyDay(in: days, now: now) {
-      self = .sunny(next, placeName: placeName)
+      self = .sunny(next, placeName: placeName, today: today)
     } else {
-      self = .noneInRange(placeName: placeName)
+      self = .noneInRange(placeName: placeName, today: today)
     }
   }
 
@@ -34,7 +38,7 @@ enum SunnyDayAnswer: Equatable {
       return "Choose a region in the app."
     case .noData:
       return "Couldn't get the weather. Try again where you have a connection."
-    case .sunny(let next, let placeName):
+    case .sunny(let next, let placeName, _):
       let place = Self.place(placeName)
       let condition = next.day.condition.localizedName
       switch next.daysAway {
@@ -44,7 +48,7 @@ enum SunnyDayAnswer: Equatable {
         return
           "The next sunny day in \(place) is \(next.day.date.spokenDay), in \(next.daysAway) days: \(condition)."
       }
-    case .noneInRange(let placeName):
+    case .noneInRange(let placeName, _):
       return "No sunny day in \(Self.place(placeName)) in the next 10 days."
     }
   }

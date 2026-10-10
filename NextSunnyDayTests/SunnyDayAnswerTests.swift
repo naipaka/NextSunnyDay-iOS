@@ -51,25 +51,26 @@ final class SunnyDayAnswerTests {
   @Test func answersForTheChosenRegion() async {
     let answer = await features([minato, singapore]).nextSunnyDayAnswer(regionID: singapore.id)
 
-    #expect(answer == .noneInRange(placeName: "シンガポール"))
+    #expect(noneInRangePlace(answer) == "シンガポール")
   }
 
   @Test func answersForTheFirstRegionWithoutOne() async throws {
     let answer = await features([minato, singapore]).nextSunnyDayAnswer(regionID: nil)
 
-    guard case .sunny(let next, let placeName) = answer else {
+    guard case .sunny(let next, let placeName, let today) = answer else {
       Issue.record("Expected a sunny day, got \(answer)")
       return
     }
     #expect(placeName == "港区")
-    // Tokyo is mostly clear today, which isn't the answer.
+    // Tokyo is mostly clear today, which isn't the answer but is shown beside it.
     #expect(next.daysAway == 1)
+    #expect(today?.condition == .mostlyClear)
   }
 
   @Test func answersForTheFirstRegionWhenTheChosenOneWasRemoved() async {
     let answer = await features([singapore, minato]).nextSunnyDayAnswer(regionID: "removed")
 
-    #expect(answer == .noneInRange(placeName: "シンガポール"))
+    #expect(noneInRangePlace(answer) == "シンガポール")
   }
 
   @Test func asksForARegionBeforeOneIsSaved() async {
@@ -79,7 +80,7 @@ final class SunnyDayAnswerTests {
   @Test func namesTheCurrentLocationWhereItIs() async {
     let answer = await features([.currentLocation]).nextSunnyDayAnswer(regionID: nil)
 
-    guard case .sunny(_, let placeName) = answer else {
+    guard case .sunny(_, let placeName, _) = answer else {
       Issue.record("Expected a sunny day, got \(answer)")
       return
     }
@@ -100,7 +101,7 @@ final class SunnyDayAnswerTests {
       [singapore], weather: FakeWeatherProvider(error: URLError(.notConnectedToInternet))
     ).nextSunnyDayAnswer(regionID: nil)
 
-    #expect(answer == .noneInRange(placeName: "シンガポール"))
+    #expect(noneInRangePlace(answer) == "シンガポール")
   }
 
   @Test func saysTheWeatherIsMissingWhenNothingIsCachedAndTheFetchFails() async {
@@ -122,7 +123,7 @@ final class SunnyDayAnswerTests {
       region: minato, forecast: cached, level: .mostlyClear, now: yesterday)
     let stricter = SunnyDayAnswer(region: minato, forecast: cached, level: .clear, now: yesterday)
 
-    guard case .sunny(let first, _) = looser, case .sunny(let clear, _) = stricter else {
+    guard case .sunny(let first, _, _) = looser, case .sunny(let clear, _, _) = stricter else {
       Issue.record("Expected sunny days, got \(looser) and \(stricter)")
       return
     }
@@ -133,10 +134,15 @@ final class SunnyDayAnswerTests {
   @Test func speaksInTheAppsWording() {
     var noRegion = SunnyDayAnswer.noRegion.dialog
     noRegion.locale = Locale(identifier: "ja")
-    var none = SunnyDayAnswer.noneInRange(placeName: "シンガポール").dialog
+    var none = SunnyDayAnswer.noneInRange(placeName: "シンガポール", today: nil).dialog
     none.locale = Locale(identifier: "ja")
 
     #expect(String(localized: noRegion) == "アプリで地域を選んでね。")
     #expect(String(localized: none) == "シンガポールは 10日先まで晴れの予報がないよ。まだ先かも。")
+  }
+
+  /// The place of a `noneInRange` answer, or `nil` for any other answer.
+  private func noneInRangePlace(_ answer: SunnyDayAnswer) -> String? {
+    if case .noneInRange(let placeName, _) = answer { placeName } else { nil }
   }
 }
