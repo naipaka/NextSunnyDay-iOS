@@ -32,6 +32,7 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 > • The next 24 hours and the next 10 days
 > • Widgets for the Home Screen and the Lock Screen, so you don't even need to open the app
 > • Choose what counts as sunny: clear only, sunny, up to partly cloudy, or any day without rain
+> • Or look for a laundry day: no rain, sunny, dry and calm from 7:00 to 19:00
 > • Your current location, or any city you search for
 > • Temperatures in your own units, in English and Japanese
 >
@@ -65,6 +66,7 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 > ・24 時間先までと 10 日間の天気
 > ・ホーム画面とロック画面のウィジェット。アプリを開かなくても確かめられます
 > ・何を「晴れ」と数えるかを選べます（快晴だけ／晴れ／晴れ時々くもりまで／雨が降らなければOK）
+> ・洗濯日和も探せます。雨が降らず、7時から19時が晴れて乾いていて風の弱い日です
 > ・現在地か、検索した市区町村の天気
 > ・日本語と英語に対応
 >
