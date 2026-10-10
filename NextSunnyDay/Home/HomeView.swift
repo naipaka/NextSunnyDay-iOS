@@ -30,7 +30,7 @@ struct HomeView: View {
 
   var body: some View {
     NavigationStack(path: $path) {
-      LayeredScreen(color: headerColor) {
+      LayeredScreen(tone: headerTone) {
         HomeHeader(
           state: headerState,
           retry: { Task { await regionForecast.refresh(for: region) } })
@@ -92,11 +92,11 @@ struct HomeView: View {
     return next.map(HomeHeader.State.sunny) ?? .noneInRange
   }
 
-  private var headerColor: Color {
+  private var headerTone: HeaderTone {
     switch headerState {
-    case .sunny: .orange
-    case .noneInRange: Color(.systemGray)
-    case .loading, .noData: Color(.systemGray2)
+    case .sunny: .sunny
+    case .noneInRange: .gray
+    case .loading, .noData: .noData
     }
   }
 

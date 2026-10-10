@@ -45,12 +45,13 @@ struct WidgetBackground: View {
   let state: SunnyEntry.State
 
   @Environment(\.widgetFamily) private var family
+  @Environment(\.colorSchemeContrast) private var contrast
 
   var body: some View {
     switch family {
     case .accessoryCircular, .accessoryRectangular: AccessoryWidgetBackground()
     case .accessoryInline: Color.clear
-    default: state.background
+    default: Rectangle().fill(state.background(increasedContrast: contrast == .increased))
     }
   }
 }

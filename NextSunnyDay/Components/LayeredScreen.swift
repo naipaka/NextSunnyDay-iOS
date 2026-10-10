@@ -4,7 +4,7 @@ import SwiftUI
 /// screen. Both scroll together: scrolling up, the header moves slower than the sheet (parallax)
 /// and fades; pulling down stretches the header color into the space above it.
 struct LayeredScreen<Header: View, Content: View>: View {
-  let color: Color
+  let tone: HeaderTone
   @ViewBuilder let header: Header
   @ViewBuilder let content: Content
 
@@ -62,7 +62,8 @@ struct LayeredScreen<Header: View, Content: View>: View {
       // Behind the scroll view, so that the refresh control shows on it. It ends under the
       // sheet: pulling down stretches it, and it is gone once the sheet reaches the top.
       VStack(spacing: 0) {
-        color
+        Rectangle()
+          .fill(tone.fill(increasedContrast: contrast == .increased))
           .frame(height: max(topInset + headerHeight - offset, 0))
           // With Increase Contrast the dark variants get lighter, which lowers the contrast of
           // the white header text; the light variants get darker.

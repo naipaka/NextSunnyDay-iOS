@@ -22,9 +22,7 @@ struct DayDetailView: View {
   var body: some View {
     if days.indices.contains(index) {
       let day = days[index]
-      LayeredScreen(
-        color: sunnyLevelSelection.level.counts(day) ? .orange : Color(.systemGray)
-      ) {
+      LayeredScreen(tone: sunnyLevelSelection.level.counts(day) ? .sunny : .gray) {
         header(day)
       } content: {
         HoursCard(hours: hours(of: day))

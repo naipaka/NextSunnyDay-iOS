@@ -41,9 +41,24 @@ extension SunnyEntry.State {
     }
   }
 
-  /// System orange when a sunny day is in range, gray otherwise.
-  var background: Color {
-    if case .sunny = self { .orange } else { Color(.systemGray) }
+  /// System orange when a sunny day is in range, `systemGray` when none is and `systemGray2`
+  /// without data or a region, lighter toward the top like Home's header (the app's
+  /// `HeaderTone`). With Increase Contrast, the flat color.
+  func background(increasedContrast: Bool) -> AnyShapeStyle {
+    let color: Color =
+      switch self {
+      case .sunny: .orange
+      case .noneInRange: Color(.systemGray)
+      case .noData, .noRegion: Color(.systemGray2)
+      }
+    guard !increasedContrast else { return AnyShapeStyle(color) }
+    let top: Color =
+      if case .sunny = self {
+        color.mix(with: .yellow, by: 0.4).mix(with: .white, by: 0.1)
+      } else {
+        color.mix(with: .white, by: 0.18)
+      }
+    return AnyShapeStyle(LinearGradient(colors: [top, color], startPoint: .top, endPoint: .bottom))
   }
 }
 
