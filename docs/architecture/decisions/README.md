@@ -13,3 +13,4 @@ One file per decision: the context, the decision, the options that were consider
 | [0007](0007-multiple-regions.md) | Up to three regions; only the region on screen is fetched |
 | [0008](0008-app-intents.md) | App Intents: the shared entity in a package, the intents in the targets that run them |
 | [0009](0009-sunny-day-notifications.md) | Notifications before a sunny day are scheduled from the cached forecast |
+| [0010](0010-apple-watch.md) | Apple Watch: settings come from the iPhone, the forecast is fetched on the watch |

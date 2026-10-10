@@ -108,3 +108,11 @@ flowchart TD
 ```
 
 Opening a notification shows its region on Home. The system's notification settings for the app open the app's Notifications screen.
+
+## Apple Watch
+
+The watch has its own App Group container, so it keeps its own copy of the settings and its own forecast cache ([ADR 0010](decisions/0010-apple-watch.md)).
+
+- **Settings.** The iPhone app sends the stored values of `regions`, `sunnyLevel` and `temperatureUnit` with WatchConnectivity's application context (`SettingsSync` in the `WatchSync` package) when they change, after its session activates, and when the watch app is installed. The watch writes them into its own `UserDefaults` under the same keys, reloads the complications, asks for new configuration recommendations and deletes the caches of removed regions. `selectedRegion` isn't sent: each device keeps the region it shows.
+- **Forecasts.** The watch app fetches the region it shows with the iPhone's rules (`WatchForecast`): show the cache, fetch when it wasn't fetched since the last 4:00, retry by hand after a failure. The complications use the iPhone widget's `Provider` and fetch at most once a day. For the current location the watch app looks up the location; the complications use the coordinate of the last cached forecast, because watchOS widgets can't ask for it.
+
