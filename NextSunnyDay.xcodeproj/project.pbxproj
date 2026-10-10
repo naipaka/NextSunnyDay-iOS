@@ -23,6 +23,7 @@
 		C3A000000000000000000016 /* Notice in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000015 /* Notice */; };
 		C3A000000000000000000018 /* Notifications in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000017 /* Notifications */; };
 		C3A00000000000000000001A /* NotificationsTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2A000000000000000000019 /* NotificationsTesting */; };
+		C3A00000000000000000001C /* WatchSync in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000001B /* WatchSync */; };
 		C3B000000000000000000012 /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000011 /* Region */; };
 		C3B000000000000000000014 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000013 /* Forecast */; };
 		C3B000000000000000000016 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = C2B000000000000000000015 /* SunnyDay */; };
@@ -42,6 +43,8 @@
 		C3C00000000000000000002A /* Notice in Frameworks */ = {isa = PBXBuildFile; productRef = C2C000000000000000000029 /* Notice */; };
 		C3C00000000000000000002C /* Notifications in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000002B /* Notifications */; };
 		C3C00000000000000000002E /* NotificationsTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C2C00000000000000000002D /* NotificationsTesting */; };
+		D1000000000000000000000B /* NextSunnyDayWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D10000000000000000000002 /* NextSunnyDayWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D2000000000000000000000B /* NextSunnyDayWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000002 /* NextSunnyDayWatchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E30000000000000000000002 /* Region in Frameworks */ = {isa = PBXBuildFile; productRef = E10000000000000000000001 /* Region */; };
 		E30000000000000000000004 /* Forecast in Frameworks */ = {isa = PBXBuildFile; productRef = E10000000000000000000003 /* Forecast */; };
 		E30000000000000000000006 /* SunnyDay in Frameworks */ = {isa = PBXBuildFile; productRef = E10000000000000000000005 /* SunnyDay */; };
@@ -59,26 +62,9 @@
 		E4000000000000000000000A /* Units in Frameworks */ = {isa = PBXBuildFile; productRef = E20000000000000000000009 /* Units */; };
 		E4000000000000000000000C /* Weather in Frameworks */ = {isa = PBXBuildFile; productRef = E2000000000000000000000B /* Weather */; };
 		E4000000000000000000000E /* WeatherTesting in Frameworks */ = {isa = PBXBuildFile; productRef = E2000000000000000000000D /* WeatherTesting */; };
-		C3A00000000000000000001C /* WatchSync in Frameworks */ = {isa = PBXBuildFile; productRef = C2A00000000000000000001B /* WatchSync */; };
-		D1000000000000000000000B /* NextSunnyDayWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D10000000000000000000002 /* NextSunnyDayWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D2000000000000000000000B /* NextSunnyDayWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D20000000000000000000002 /* NextSunnyDayWatchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D1000000000000000000000D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 915F512D2521763500B4E384 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D10000000000000000000001;
-			remoteInfo = NextSunnyDayWatch;
-		};
-		D2000000000000000000000D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 915F512D2521763500B4E384 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D20000000000000000000001;
-			remoteInfo = NextSunnyDayWatchWidgetExtension;
-		};
 		9104407B253DDA9700A21F20 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 915F512D2521763500B4E384 /* Project object */;
@@ -93,9 +79,34 @@
 			remoteGlobalIDString = 915F51342521763500B4E384;
 			remoteInfo = NextSunnyDay;
 		};
+		D1000000000000000000000D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915F512D2521763500B4E384 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D10000000000000000000001;
+			remoteInfo = NextSunnyDayWatch;
+		};
+		D2000000000000000000000D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915F512D2521763500B4E384 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D20000000000000000000001;
+			remoteInfo = NextSunnyDayWatchWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		9104407E253DDA9700A21F20 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D10000000000000000000006 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -118,30 +129,27 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9104407E253DDA9700A21F20 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				9104407D253DDA9700A21F20 /* NextSunnyDayWidgetExtension.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		D10000000000000000000002 /* NextSunnyDayWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDayWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D20000000000000000000002 /* NextSunnyDayWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9104406F253DDA9600A21F20 /* NextSunnyDayWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		91044071253DDA9600A21F20 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		91044073253DDA9600A21F20 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		915F51352521763500B4E384 /* NextSunnyDay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915F51462521763600B4E384 /* NextSunnyDayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextSunnyDayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D10000000000000000000002 /* NextSunnyDayWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NextSunnyDayWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D20000000000000000000002 /* NextSunnyDayWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NextSunnyDayWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Resources/Localizable.xcstrings,
+			);
+			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
+		};
 		B10000000000000000000013 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWatch" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -159,14 +167,6 @@
 				Resources/Localizable.xcstrings,
 			);
 			target = D20000000000000000000001 /* NextSunnyDayWatchWidgetExtension */;
-		};
-		B10000000000000000000012 /* Exceptions for "NextSunnyDay" folder in "NextSunnyDayWidgetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Assets.xcassets,
-				Resources/Localizable.xcstrings,
-			);
-			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
 		};
 		B10000000000000000000021 /* Exceptions for "NextSunnyDayWidget" folder in "NextSunnyDayWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -197,19 +197,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B10000000000000000000004 /* NextSunnyDayWatch */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = NextSunnyDayWatch;
-			sourceTree = "<group>";
-		};
-		B10000000000000000000005 /* NextSunnyDayWatchWidget */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				B10000000000000000000051 /* Exceptions for "NextSunnyDayWatchWidget" folder in "NextSunnyDayWatchWidgetExtension" target */,
-			);
-			path = NextSunnyDayWatchWidget;
-			sourceTree = "<group>";
-		};
 		B10000000000000000000001 /* NextSunnyDay */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -234,40 +221,22 @@
 			path = NextSunnyDayTests;
 			sourceTree = "<group>";
 		};
+		B10000000000000000000004 /* NextSunnyDayWatch */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = NextSunnyDayWatch;
+			sourceTree = "<group>";
+		};
+		B10000000000000000000005 /* NextSunnyDayWatchWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B10000000000000000000051 /* Exceptions for "NextSunnyDayWatchWidget" folder in "NextSunnyDayWatchWidgetExtension" target */,
+			);
+			path = NextSunnyDayWatchWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D10000000000000000000004 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E30000000000000000000002 /* Region in Frameworks */,
-				E30000000000000000000004 /* Forecast in Frameworks */,
-				E30000000000000000000006 /* SunnyDay in Frameworks */,
-				E30000000000000000000008 /* Units in Frameworks */,
-				E3000000000000000000000A /* Weather in Frameworks */,
-				E3000000000000000000000C /* AppGroup in Frameworks */,
-				E3000000000000000000000E /* WatchSync in Frameworks */,
-				E30000000000000000000010 /* WeatherTesting in Frameworks */,
-				E30000000000000000000012 /* LocationTesting in Frameworks */,
-				E30000000000000000000014 /* PlaceSearchTesting in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D20000000000000000000004 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E40000000000000000000002 /* Region in Frameworks */,
-				E40000000000000000000004 /* RegionIntents in Frameworks */,
-				E40000000000000000000006 /* Forecast in Frameworks */,
-				E40000000000000000000008 /* SunnyDay in Frameworks */,
-				E4000000000000000000000A /* Units in Frameworks */,
-				E4000000000000000000000C /* Weather in Frameworks */,
-				E4000000000000000000000E /* WeatherTesting in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9104406C253DDA9600A21F20 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -324,6 +293,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D10000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E30000000000000000000002 /* Region in Frameworks */,
+				E30000000000000000000004 /* Forecast in Frameworks */,
+				E30000000000000000000006 /* SunnyDay in Frameworks */,
+				E30000000000000000000008 /* Units in Frameworks */,
+				E3000000000000000000000A /* Weather in Frameworks */,
+				E3000000000000000000000C /* AppGroup in Frameworks */,
+				E3000000000000000000000E /* WatchSync in Frameworks */,
+				E30000000000000000000010 /* WeatherTesting in Frameworks */,
+				E30000000000000000000012 /* LocationTesting in Frameworks */,
+				E30000000000000000000014 /* PlaceSearchTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D20000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E40000000000000000000002 /* Region in Frameworks */,
+				E40000000000000000000004 /* RegionIntents in Frameworks */,
+				E40000000000000000000006 /* Forecast in Frameworks */,
+				E40000000000000000000008 /* SunnyDay in Frameworks */,
+				E4000000000000000000000A /* Units in Frameworks */,
+				E4000000000000000000000C /* Weather in Frameworks */,
+				E4000000000000000000000E /* WeatherTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -364,70 +364,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D10000000000000000000001 /* NextSunnyDayWatch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D10000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatch" */;
-			buildPhases = (
-				D10000000000000000000003 /* Sources */,
-				D10000000000000000000004 /* Frameworks */,
-				D10000000000000000000005 /* Resources */,
-				D10000000000000000000006 /* Embed Foundation Extensions */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				D2000000000000000000000C /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				B10000000000000000000004 /* NextSunnyDayWatch */,
-			);
-			name = NextSunnyDayWatch;
-			packageProductDependencies = (
-				E10000000000000000000001 /* Region */,
-				E10000000000000000000003 /* Forecast */,
-				E10000000000000000000005 /* SunnyDay */,
-				E10000000000000000000007 /* Units */,
-				E10000000000000000000009 /* Weather */,
-				E1000000000000000000000B /* AppGroup */,
-				E1000000000000000000000D /* WatchSync */,
-				E1000000000000000000000F /* WeatherTesting */,
-				E10000000000000000000011 /* LocationTesting */,
-				E10000000000000000000013 /* PlaceSearchTesting */,
-			);
-			productName = NextSunnyDayWatch;
-			productReference = D10000000000000000000002 /* NextSunnyDayWatch.app */;
-			productType = "com.apple.product-type.application";
-		};
-		D20000000000000000000001 /* NextSunnyDayWatchWidgetExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D20000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatchWidgetExtension" */;
-			buildPhases = (
-				D20000000000000000000003 /* Sources */,
-				D20000000000000000000004 /* Frameworks */,
-				D20000000000000000000005 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				B10000000000000000000002 /* NextSunnyDayWidget */,
-				B10000000000000000000005 /* NextSunnyDayWatchWidget */,
-			);
-			name = NextSunnyDayWatchWidgetExtension;
-			packageProductDependencies = (
-				E20000000000000000000001 /* Region */,
-				E20000000000000000000003 /* RegionIntents */,
-				E20000000000000000000005 /* Forecast */,
-				E20000000000000000000007 /* SunnyDay */,
-				E20000000000000000000009 /* Units */,
-				E2000000000000000000000B /* Weather */,
-				E2000000000000000000000D /* WeatherTesting */,
-			);
-			productName = NextSunnyDayWatchWidgetExtension;
-			productReference = D20000000000000000000002 /* NextSunnyDayWatchWidgetExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91044081253DDA9700A21F20 /* Build configuration list for PBXNativeTarget "NextSunnyDayWidgetExtension" */;
@@ -532,6 +468,70 @@
 			productReference = 915F51462521763600B4E384 /* NextSunnyDayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D10000000000000000000001 /* NextSunnyDayWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D10000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatch" */;
+			buildPhases = (
+				D10000000000000000000003 /* Sources */,
+				D10000000000000000000004 /* Frameworks */,
+				D10000000000000000000005 /* Resources */,
+				D10000000000000000000006 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2000000000000000000000C /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B10000000000000000000004 /* NextSunnyDayWatch */,
+			);
+			name = NextSunnyDayWatch;
+			packageProductDependencies = (
+				E10000000000000000000001 /* Region */,
+				E10000000000000000000003 /* Forecast */,
+				E10000000000000000000005 /* SunnyDay */,
+				E10000000000000000000007 /* Units */,
+				E10000000000000000000009 /* Weather */,
+				E1000000000000000000000B /* AppGroup */,
+				E1000000000000000000000D /* WatchSync */,
+				E1000000000000000000000F /* WeatherTesting */,
+				E10000000000000000000011 /* LocationTesting */,
+				E10000000000000000000013 /* PlaceSearchTesting */,
+			);
+			productName = NextSunnyDayWatch;
+			productReference = D10000000000000000000002 /* NextSunnyDayWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D20000000000000000000001 /* NextSunnyDayWatchWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D20000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatchWidgetExtension" */;
+			buildPhases = (
+				D20000000000000000000003 /* Sources */,
+				D20000000000000000000004 /* Frameworks */,
+				D20000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B10000000000000000000002 /* NextSunnyDayWidget */,
+				B10000000000000000000005 /* NextSunnyDayWatchWidget */,
+			);
+			name = NextSunnyDayWatchWidgetExtension;
+			packageProductDependencies = (
+				E20000000000000000000001 /* Region */,
+				E20000000000000000000003 /* RegionIntents */,
+				E20000000000000000000005 /* Forecast */,
+				E20000000000000000000007 /* SunnyDay */,
+				E20000000000000000000009 /* Units */,
+				E2000000000000000000000B /* Weather */,
+				E2000000000000000000000D /* WeatherTesting */,
+			);
+			productName = NextSunnyDayWatchWidgetExtension;
+			productReference = D20000000000000000000002 /* NextSunnyDayWatchWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -548,15 +548,15 @@
 					915F51342521763500B4E384 = {
 						CreatedOnToolsVersion = 12.0.1;
 					};
+					915F51452521763600B4E384 = {
+						CreatedOnToolsVersion = 12.0.1;
+						TestTargetID = 915F51342521763500B4E384;
+					};
 					D10000000000000000000001 = {
 						CreatedOnToolsVersion = 27.1;
 					};
 					D20000000000000000000001 = {
 						CreatedOnToolsVersion = 27.1;
-					};
-					915F51452521763600B4E384 = {
-						CreatedOnToolsVersion = 12.0.1;
-						TestTargetID = 915F51342521763500B4E384;
 					};
 				};
 			};
@@ -598,20 +598,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D10000000000000000000005 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D20000000000000000000005 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9104406D253DDA9600A21F20 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -633,23 +619,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D10000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D20000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D10000000000000000000003 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D20000000000000000000003 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		9104406B253DDA9600A21F20 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -671,19 +657,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D10000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D20000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D1000000000000000000000C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D10000000000000000000001 /* NextSunnyDayWatch */;
-			targetProxy = D1000000000000000000000D /* PBXContainerItemProxy */;
-		};
-		D2000000000000000000000C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D20000000000000000000001 /* NextSunnyDayWatchWidgetExtension */;
-			targetProxy = D2000000000000000000000D /* PBXContainerItemProxy */;
-		};
 		9104407C253DDA9700A21F20 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9104406E253DDA9600A21F20 /* NextSunnyDayWidgetExtension */;
@@ -694,133 +684,19 @@
 			target = 915F51342521763500B4E384 /* NextSunnyDay */;
 			targetProxy = 915F51472521763600B4E384 /* PBXContainerItemProxy */;
 		};
+		D1000000000000000000000C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D10000000000000000000001 /* NextSunnyDayWatch */;
+			targetProxy = D1000000000000000000000D /* PBXContainerItemProxy */;
+		};
+		D2000000000000000000000C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D20000000000000000000001 /* NextSunnyDayWatchWidgetExtension */;
+			targetProxy = D2000000000000000000000D /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		D10000000000000000000008 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatch/NextSunnyDayWatch.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Next Sunny Day";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show the weather where you are.";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.naipaka.NextSunnyDay;
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 4;
-			};
-			name = Debug;
-		};
-		D10000000000000000000009 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatch/NextSunnyDayWatch.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Next Sunny Day";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show the weather where you are.";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.naipaka.NextSunnyDay;
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 4;
-			};
-			name = Release;
-		};
-		D20000000000000000000008 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatchWidget/NextSunnyDayWatchWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NextSunnyDayWatchWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = NextSunnyDayWatchWidget;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp.NextSunnyDayWatchWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 4;
-			};
-			name = Debug;
-		};
-		D20000000000000000000009 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatchWidget/NextSunnyDayWatchWidgetExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = NextSunnyDayWatchWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = NextSunnyDayWatchWidget;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp.NextSunnyDayWatchWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 6.0;
-				TARGETED_DEVICE_FAMILY = 4;
-			};
-			name = Release;
-		};
 		9104407F253DDA9700A21F20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1102,27 +978,133 @@
 			};
 			name = Release;
 		};
+		D10000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatch/NextSunnyDayWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Next Sunny Day";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show the weather where you are.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.naipaka.NextSunnyDay;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		D10000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatch/NextSunnyDayWatch.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Next Sunny Day";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your location is used to show the weather where you are.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.naipaka.NextSunnyDay;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		D20000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatchWidget/NextSunnyDayWatchWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NextSunnyDayWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NextSunnyDayWatchWidget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp.NextSunnyDayWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		D20000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = NextSunnyDayWatchWidget/NextSunnyDayWatchWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NextSunnyDayWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = NextSunnyDayWatchWidget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.naipaka.NextSunnyDay.watchkitapp.NextSunnyDayWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D10000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D10000000000000000000008 /* Debug */,
-				D10000000000000000000009 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D20000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatchWidgetExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D20000000000000000000008 /* Debug */,
-				D20000000000000000000009 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		91044081253DDA9700A21F20 /* Build configuration list for PBXNativeTarget "NextSunnyDayWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1155,6 +1137,24 @@
 			buildConfigurations = (
 				915F515E2521763600B4E384 /* Debug */,
 				915F515F2521763600B4E384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D10000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D10000000000000000000008 /* Debug */,
+				D10000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D20000000000000000000007 /* Build configuration list for PBXNativeTarget "NextSunnyDayWatchWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D20000000000000000000008 /* Debug */,
+				D20000000000000000000009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1273,6 +1273,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000009 /* XCLocalSwiftPackageReference "Packages/Core/Notifications" */;
 			productName = NotificationsTesting;
+		};
+		C2A00000000000000000001B /* WatchSync */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C1000000000000000000000B /* XCLocalSwiftPackageReference "Packages/Core/WatchSync" */;
+			productName = WatchSync;
 		};
 		C2B000000000000000000011 /* Region */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1453,11 +1458,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C10000000000000000000001 /* XCLocalSwiftPackageReference "Packages/Core/Weather" */;
 			productName = WeatherTesting;
-		};
-		C2A00000000000000000001B /* WatchSync */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C1000000000000000000000B /* XCLocalSwiftPackageReference "Packages/Core/WatchSync" */;
-			productName = WatchSync;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
