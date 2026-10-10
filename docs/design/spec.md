@@ -7,7 +7,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Topic | Decision |
 | --- | --- |
 | Regions | Up to three saved regions, found by search or "use current location" (Core Location); the current location is one of them, added and removed like a place. Home switches between them with a menu (#103). See [Regions](#regions). |
-| Sunny definition | A user setting with four levels; the default matches v1. See [Sunny levels](#sunny-levels). |
+| Sunny definition | A user setting with four levels, the default matching v1, and a laundry-day level (#106). See [Sunny levels](#sunny-levels). |
 | Today | Never the answer: the next sunny day is counted from tomorrow, because today's weather can be seen by looking outside. Today's condition is shown beside the answer, smaller, in Home's header and in every Home Screen widget. See [Home](#home) and [Widgets](#widgets). |
 | Hourly forecast | Home shows the next 24 hours as a horizontal strip, so the strip stays useful in the evening. Each day's hours are in the day detail screen, which opens from a row in the 10-day list. |
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
@@ -133,7 +133,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
   - 気温 (`thermometer.medium`, value = the unit in use, 「°C」 or 「°F」), a menu picker with the choices of Apple's Weather app, in its order: 「摂氏（°C）」, 「華氏（°F）」 and 「システム設定を使用（°C）」 (the default: the system's temperature unit, shown in the parentheses, which follows the region unless changed in Settings > General > Language & Region). It applies to the app and the widgets.
   - 天気データについて (`info.circle`)
 - The version string goes in the last footer.
-- **晴れの基準** is a list of the four levels. Each row has a symbol, a title and a subtitle listing what counts by the condition names Home shows (WeatherKit's, such as 「快晴、ほぼ快晴」; the loosest level keeps its description instead of listing nine), and the selected row has an orange checkmark. The footer recommends 「雨が降らなければOK」 for laundry.
+- **晴れの基準** lists the four levels in one section, with the footer 「下に行くほどゆるい基準です。」, and 「洗濯日和」 in a section of its own below, because it isn't one step looser than the others. Its footer reads 「外に洗濯物を干したい日に。雨の予報がない日を、7時から19時の予報で判断します。」. Each row has a symbol, a title and a subtitle listing what counts by the condition names Home shows (WeatherKit's, such as 「快晴、ほぼ快晴」; the loosest level and 洗濯日和 describe it instead), and the selected row has an orange checkmark. The four levels use their weather symbols; 洗濯日和 uses `tshirt.fill` in yellow, the sun's color (cyan would read as rain).
 
 ### Sunny levels
 
@@ -147,8 +147,25 @@ The search starts tomorrow, so the shortest answer is 「あした」. Today is 
 | 晴れ (default, same as v1) | `.clear`, `.mostlyClear` | — |
 | 晴れ時々くもりまで | + `.partlyCloudy` | — |
 | 雨が降らなければOK | + `.mostlyCloudy`, `.cloudy`, `.haze`, `.breezy`, `.windy`, `.hot`, `.frigid` | daily precipitation chance < 30 % |
+| 洗濯日和 | the day: the conditions of 雨が降らなければOK | the daytime (7:00–19:00, WeatherKit's `daytimeForecast`): up to partly cloudy, precipitation chance < 20 %, minimum humidity ≤ 60 %, highest wind speed < 10 m/s |
 
-Fog, smoke, blowing dust, every kind of precipitation and every storm never count. The home copy stays 「次の晴れは」 at every level.
+Fog, smoke, blowing dust, every kind of precipitation and every storm never count. The home copy stays 「次の晴れは」 at the four levels.
+
+**洗濯日和** finds a day to dry laundry outside. Laundry hangs out in the daytime, so the daytime forecast decides: some sun, little chance of rain, air dry enough (60 % is a common rule of thumb for drying outside) and no wind strong enough to blow laundry away. The whole day must also be free of rain, fog and storms, because Home, the widgets and the notification show the whole day's condition and a day shown as drizzle must not be the answer; a day with rain only in the night is left out, which errs on the dry side. On the recorded forecasts it counts the six sunny days in Tokyo (daytime minimum humidity 51–58 %) and none in Singapore (61 % or more).
+
+At this level the answer is called a laundry day wherever it is named:
+
+| Where | Japanese | English |
+| --- | --- | --- |
+| Home's header, the snippet, the medium, large and rectangular widgets | 次の洗濯日和 | Next Laundry Day |
+| None in range (Home, the snippet) | 10日先まで洗濯日和の予報なし | No laundry day in the next 10 days |
+| Inline widget | 次の洗濯日和 あと3日（土） / あした / まだ先かも / あと？日 | Laundry day in 3 days (Sat) / Laundry day tomorrow / No laundry day soon / Laundry day in ? days |
+| Siri, in N days | 港区の次の洗濯日和は あと3日、10月10日 土曜日、快晴だよ。 | The next laundry day in Minato is Saturday, October 10, in 3 days: Clear. |
+| Siri, tomorrow | 港区は あした洗濯日和になりそう。10月8日 木曜日、快晴だよ。 | Minato should be a laundry day tomorrow, Thursday, October 8: Clear. |
+| Siri, none in range | 港区は 10日先まで洗濯日和の予報がないよ。まだ先かも。 | No laundry day in Minato in the next 10 days. |
+| Notification body | あしたは洗濯日和になりそう！快晴で、最高 24° 最低 16° だよ。 | Good news: a laundry day tomorrow! Clear, with a high of 24° and a low of 16°. |
+
+Everything else, including the orange styling of the counted days, works as at the other levels.
 
 ## Regions
 
@@ -198,7 +215,7 @@ Fog, smoke, blowing dust, every kind of precipitation and every storm never coun
   | Body | あしたは晴れそう！快晴で、最高 24° 最低 16° だよ。 | Good news: sunny tomorrow! Clear, with a high of 24° and a low of 16°. |
   | With previews hidden | あしたの天気 | Tomorrow's weather |
 
-  Temperatures are in the unit set in the app. The body says 「晴れそう」, not 「晴れる」: it is a forecast.
+  Temperatures are in the unit set in the app. The body says 「晴れそう」, not 「晴れる」: it is a forecast. At the laundry level the body speaks of a laundry day (see [Sunny levels](#sunny-levels)).
 - **Opening it** shows that region on Home. While the app is open, a notification goes to Notification Center without a banner.
 
 ## Attribution
