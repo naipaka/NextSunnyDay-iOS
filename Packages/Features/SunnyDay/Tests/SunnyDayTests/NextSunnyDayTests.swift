@@ -21,8 +21,15 @@ struct NextSunnyDayTests {
     let next = try #require(SunnyLevel.clear.nextSunnyDay(in: days, now: now, calendar: calendar))
     #expect(next.daysAway == 1)
     #expect(next.day.condition == .clear)
-    #expect(
-      SunnyLevel.mostlyClear.nextSunnyDay(in: days, now: now, calendar: calendar)?.daysAway == 0)
+  }
+
+  @Test func todayIsNeverTheAnswer() throws {
+    let days = WeatherRecording.tokyo.forecast(startingOn: now, calendar: calendar).daily
+    #expect(SunnyLevel.mostlyClear.counts(days[0]))
+
+    let next = try #require(
+      SunnyLevel.mostlyClear.nextSunnyDay(in: days, now: now, calendar: calendar))
+    #expect(next.daysAway == 1)
   }
 
   @Test func noDayIsSunnyInTheRainyRecording() {
@@ -38,7 +45,8 @@ struct NextSunnyDayTests {
 
     let next = try #require(
       SunnyLevel.mostlyClear.nextSunnyDay(in: days, now: now, calendar: calendar))
-    #expect(next.daysAway == 0)
-    #expect(calendar.isDate(next.day.date, inSameDayAs: now))
+    let tomorrow = calendar.date(byAdding: .day, value: 1, to: now)!
+    #expect(next.daysAway == 1)
+    #expect(calendar.isDate(next.day.date, inSameDayAs: tomorrow))
   }
 }

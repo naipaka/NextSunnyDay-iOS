@@ -62,7 +62,8 @@ final class SunnyDayAnswerTests {
       return
     }
     #expect(placeName == "港区")
-    #expect(next.daysAway == 0)
+    // Tokyo is mostly clear today, which isn't the answer.
+    #expect(next.daysAway == 1)
   }
 
   @Test func answersForTheFirstRegionWhenTheChosenOneWasRemoved() async {
@@ -115,8 +116,11 @@ final class SunnyDayAnswerTests {
       regionID: minato.id, placeName: "港区", coordinate: WeatherRecording.tokyo.coordinate,
       fetchedAt: .now, forecast: WeatherRecording.tokyo.forecast())
 
-    let looser = SunnyDayAnswer(region: minato, forecast: cached, level: .mostlyClear)
-    let stricter = SunnyDayAnswer(region: minato, forecast: cached, level: .clear)
+    // The day before the recording, so that its mostly clear first day is tomorrow.
+    let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
+    let looser = SunnyDayAnswer(
+      region: minato, forecast: cached, level: .mostlyClear, now: yesterday)
+    let stricter = SunnyDayAnswer(region: minato, forecast: cached, level: .clear, now: yesterday)
 
     guard case .sunny(let first, _) = looser, case .sunny(let clear, _) = stricter else {
       Issue.record("Expected sunny days, got \(looser) and \(stricter)")

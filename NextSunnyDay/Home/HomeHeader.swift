@@ -98,11 +98,7 @@ struct HomeHeader: View {
   }
 
   private func daysAway(_ days: Int) -> Text {
-    switch days {
-    case 0: Text("Today")
-    case 1: Text("Tomorrow")
-    default: Text("In \(days) days")
-    }
+    days == 1 ? Text("Tomorrow") : Text("In \(days) days")
   }
 
   private func bigText(_ text: Text, size: CGFloat = 72) -> some View {

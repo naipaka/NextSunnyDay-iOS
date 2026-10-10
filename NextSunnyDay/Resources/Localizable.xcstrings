@@ -11,16 +11,6 @@
         }
       }
     },
-    "%@ should be sunny today: %@." : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@は 今日晴れそう。%2$@だよ。"
-          }
-        }
-      }
-    },
     "%@ should be sunny tomorrow, %@: %@." : {
       "localizations" : {
         "ja" : {
@@ -830,16 +820,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "次の晴れ あと%1$lld日（%2$@）"
-          }
-        }
-      }
-    },
-    "Sunny today" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次の晴れ 今日"
           }
         }
       }

@@ -48,12 +48,12 @@ extension SunnyEntry.State {
 }
 
 extension Text {
-  /// 「今日」, 「あした」 or 「あと3日」.
+  /// 「あした」 or 「あと3日」.
   init(daysAway: Int) {
-    switch daysAway {
-    case 0: self.init("Today")
-    case 1: self.init("Tomorrow")
-    default: self.init("In \(daysAway) days")
+    if daysAway == 1 {
+      self.init("Tomorrow")
+    } else {
+      self.init("In \(daysAway) days")
     }
   }
 }

@@ -39,11 +39,7 @@ struct SunnyDaySnippet: View {
     switch answer {
     case .noRegion, .noData: Text("In ? days")
     case .sunny(let next, _):
-      switch next.daysAway {
-      case 0: Text("Today")
-      case 1: Text("Tomorrow")
-      default: Text("In \(next.daysAway) days")
-      }
+      next.daysAway == 1 ? Text("Tomorrow") : Text("In \(next.daysAway) days")
     case .noneInRange: Text("Maybe not for a while")
     }
   }

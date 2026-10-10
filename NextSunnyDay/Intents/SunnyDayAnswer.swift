@@ -38,8 +38,6 @@ enum SunnyDayAnswer: Equatable {
       let place = Self.place(placeName)
       let condition = next.day.condition.localizedName
       switch next.daysAway {
-      case 0:
-        return "\(place) should be sunny today: \(condition)."
       case 1:
         return "\(place) should be sunny tomorrow, \(next.day.date.spokenDay): \(condition)."
       default:

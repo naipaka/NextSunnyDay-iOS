@@ -12,13 +12,11 @@ struct InlineWidgetView: View {
     Label {
       // One sentence per state, short enough for the line above the clock in English too.
       switch entry.state {
-      // 「今日」 and 「あした」 need no weekday.
+      // 「あした」 needs no weekday.
       case .sunny(let next) where next.daysAway > 1:
         Text("Sunny in \(next.daysAway) days (\(next.day.date.weekday))")
-      case .sunny(let next) where next.daysAway == 1:
-        Text("Sunny tomorrow")
       case .sunny:
-        Text("Sunny today")
+        Text("Sunny tomorrow")
       case .noneInRange:
         Text("No sunny day soon")
       case .noData, .noRegion:
@@ -42,11 +40,7 @@ struct CircularWidgetView: View {
       Group {
         switch entry.state {
         case .sunny(let next):
-          switch next.daysAway {
-          case 0: Text("Today")
-          case 1: Text("Tomorrow")
-          default: Text("\(next.daysAway) days")
-          }
+          next.daysAway == 1 ? Text("Tomorrow") : Text("\(next.daysAway) days")
         case .noneInRange: Text(verbatim: "-")
         case .noData, .noRegion: Text(verbatim: "?")
         }
