@@ -215,7 +215,7 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
 
 - **Small:** the answer on top: 「港区 · 次の晴れ」 (`footnote` semibold), then at the bottom of that area 「あと3日」 and the day's symbol with 「10/13（火）快晴」. Below a 1 pt white line at 40 %, one row: 「今日」 on the leading side, today's symbol and condition on the trailing side. A long condition is truncated (「ところにより…」).
 - **Medium:** the answer and today side by side, split by a 1 pt line like Home: the answer with its label on top and 「あと3日」 and the date at the bottom; today in an 84 pt column with 「今日」, its symbol (44 pt) and the condition, wrapping onto two lines when long.
-- **Large:** the medium layout as a 116 pt top area, a 1 pt line, then six days from tomorrow (date, symbol, condition, high/low). Sunny rows are bold on a light capsule.
+- **Large:** the medium layout as a 116 pt top area, a 1 pt line, then six days from tomorrow (date, symbol, condition, high/low in `subheadline`) sharing the height left. Sunny rows are bold on a light rounded rectangle.
 - **Background:** the [header gradient](#visual-language) of system orange when a sunny day is in range, `systemGray` when none is, and `systemGray2` without data or a region.
 - **States:**
   - None in range: 「まだ先かも」 / 「10日先まで晴れなし」, with today as usual.
