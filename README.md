@@ -9,7 +9,7 @@
 An iOS widget that shows the next sunny day on your home screen.
 Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
 The app shows when the next sunny day is, with today's weather beside it, the next 24 hours and ten days for up to three regions, and lets you choose what counts as sunny, or look for a day to dry the laundry outside.
-It can also notify you the day before a sunny day, and Siri and Shortcuts answer when the next sunny day is.
+It can also notify you the day before a sunny day, Siri and Shortcuts answer when the next sunny day is, and Apple Watch shows it on the watch face.
 The app is available in English and Japanese.
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
@@ -23,6 +23,7 @@ The app is available in English and Japanese.
 | Xcode | 27.1 |
 | Swift | 6.4 (Swift 6 language mode) |
 | iOS | 26.0 or later |
+| watchOS | 26.0 or later |
 
 ### Configuration
 
@@ -30,6 +31,7 @@ The app is available in English and Japanese.
 | --- | --- |
 | UI | SwiftUI (Liquid Glass) |
 | Widget | WidgetKit (Home Screen and Lock Screen) |
+| Apple Watch | A watch app and complications (WidgetKit), settings from the iPhone with WatchConnectivity |
 | Weather data | WeatherKit |
 | Place search | MapKit |
 | Notifications | UserNotifications (local notifications) |
@@ -49,6 +51,7 @@ The architecture decisions and their reasons are in [`docs/architecture/decision
 The app keeps the saved regions and the settings in `UserDefaults`, and each region's fetched forecast as a JSON file, both in an App Group container that the widget also reads.
 A forecast counts as fresh when it was fetched since the last 4:00, by the app or the widget. The app fetches when it opens and the forecast isn't fresh, and on pull to refresh.
 The widget shows the saved forecast. It reloads once a day after 4:00 and fetches from WeatherKit on its own when the saved forecast isn't fresh.
+The Apple Watch gets the regions and settings from the iPhone and fetches its own forecast with the same rules.
 [`docs/architecture/weather-fetch-flow.md`](docs/architecture/weather-fetch-flow.md) has the details.
 
 ### Directory Structure
@@ -61,11 +64,13 @@ NextSunnyDay/               # The app
 ├── Components/
 ├── Resources/              # String Catalogs (.xcstrings)
 └── Assets.xcassets
-NextSunnyDayWidget/         # The widget extension
+NextSunnyDayWidget/         # The widget extension, also compiled into the watch's complications
+NextSunnyDayWatch/          # The Apple Watch app
+NextSunnyDayWatchWidget/    # The watch's complications: what differs from the iPhone widget
 NextSunnyDayTests/          # Tests of the app layer
 Packages/
-├── Core/                   # Weather, Location, PlaceSearch, AppGroup
-└── Features/               # Region, Forecast, SunnyDay, Units
+├── Core/                   # Weather, Location, PlaceSearch, Notifications, AppGroup, WatchSync
+└── Features/               # Region, Forecast, SunnyDay, Notice, Units
 Tools/ImportCheck/          # CI check that every import is a declared dependency
 docs/                       # Design spec, architecture docs and ADRs
 ```
@@ -82,15 +87,15 @@ $ cd NextSunnyDay-iOS
 ### Weather data
 
 Forecasts come from [WeatherKit](https://developer.apple.com/weatherkit/). No API key is needed to build.
-To fetch real forecasts, the app and widget App IDs need the WeatherKit capability, and the team needs the WeatherKit App Service, both enabled in Certificates, Identifiers & Profiles. If you build with your own team, change the bundle identifiers and enable them for your App IDs.
+To fetch real forecasts, the App IDs of the app, the widget, the watch app and the watch's complications need the WeatherKit capability, and the team needs the WeatherKit App Service, both enabled in Certificates, Identifiers & Profiles. If you build with your own team, change the bundle identifiers and enable them for your App IDs.
 
 ### Formatting
 
 Code is formatted and linted with the `swift-format` bundled with Xcode, using `.swift-format`. CI fails on lint warnings.
 
 ```sh
-$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
-$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+$ xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayWatch NextSunnyDayWatchWidget NextSunnyDayTests Packages Tools
+$ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayWatch NextSunnyDayWatchWidget NextSunnyDayTests Packages Tools
 ```
 
 ### Build and test

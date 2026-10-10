@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus a home-screen Widget. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 27.1 (Swift 6.4, Swift 6 language mode, iOS deployment target 26.0).
+NextSunnyDay (次いつ晴れる？) — SwiftUI iOS app that shows when the next sunny day will be, plus Home Screen and Lock Screen widgets and an Apple Watch app with complications. Originally written with Xcode 12 / Swift 5.3; currently builds with Xcode 27.1 (Swift 6.4, Swift 6 language mode, iOS and watchOS deployment targets 26.0).
 
 ## Setup
 
-No API key is needed. Weather data comes from **WeatherKit**: both targets carry the `com.apple.developer.weatherkit` entitlement, and the App IDs (`com.naipaka.NextSunnyDay`, `com.naipaka.NextSunnyDay.NextSunnyDayWidget`) plus the team's WeatherKit App Service are enabled in the Developer portal. Without that, builds succeed but fetches fail at runtime.
+No API key is needed. Weather data comes from **WeatherKit**: the four targets that fetch carry the `com.apple.developer.weatherkit` entitlement, and the App IDs (`com.naipaka.NextSunnyDay`, `….NextSunnyDayWidget`, `….watchkitapp`, `….watchkitapp.NextSunnyDayWatchWidget`) plus the team's WeatherKit App Service are enabled in the Developer portal. Without that, builds succeed but fetches fail at runtime (a JWT error from `WeatherDaemon`). Xcode's automatic signing registers new App IDs with their App Groups but not WeatherKit, which has to be ticked in the App ID's App Services tab.
 
 ## Common commands
 
@@ -16,6 +16,12 @@ Build:
 ```sh
 xcodebuild -scheme NextSunnyDay -configuration Debug \
   -destination 'generic/platform=iOS Simulator' build
+```
+
+The watch app (with its complications) builds on its own; the iPhone app embeds it:
+```sh
+xcodebuild -scheme NextSunnyDayWatch -configuration Debug \
+  -destination 'generic/platform=watchOS Simulator' build
 ```
 
 Test:
@@ -40,18 +46,18 @@ swift run --package-path Tools/ImportCheck import-check .
 
 Format and lint (the `swift-format` bundled with Xcode, config in `.swift-format` = the tool's defaults: 2-space indent, 100 columns):
 ```sh
-xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
-xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+xcrun swift-format format -i -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayWatch NextSunnyDayWatchWidget NextSunnyDayTests Packages Tools
+xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSunnyDayWatch NextSunnyDayWatchWidget NextSunnyDayTests Packages Tools
 ```
 CI runs the strict lint before building, so any warning fails CI. Format before committing.
 
 ## Architecture
 
-The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0009); read them before changing the structure.
+The decisions and their reasons are in `docs/architecture/decisions/` (ADRs 0001–0010); read them before changing the structure.
 
 ### Packages (`Packages/`)
 
-Shared code lives in local Swift packages, one package per module (ADR 0001). Swift 6, tools version 6.2, nonisolated by default, with `NonisolatedNonsendingByDefault`, `InferIsolatedConformances` and `MemberImportVisibility` enabled.
+Shared code lives in local Swift packages, one package per module (ADR 0001). They build for iOS, macOS (tests) and watchOS, except `Notifications` and `Notice` (the watch shows the iPhone's notifications). Swift 6, tools version 6.2, nonisolated by default, with `NonisolatedNonsendingByDefault`, `InferIsolatedConformances` and `MemberImportVisibility` enabled.
 
 | Layer | Module | Does | Depends on |
 | --- | --- | --- | --- |
@@ -60,6 +66,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 | `Core/` | `PlaceSearch` | MapKit: completions while typing, completion → place, reverse geocoding | — |
 | `Core/` | `Notifications` | UserNotifications: permission, replacing pending notifications by an ID prefix, `NotificationResponder` (the delegate: a notification opened, the app's notification settings asked for) | — |
 | `Core/` | `AppGroup` | `AppGroupContainer`: the shared `UserDefaults` and caches directory | — |
+| `Core/` | `WatchSync` | WatchConnectivity: `SettingsMirror` copies stored `UserDefaults` values by key, `SettingsSync` sends them from the iPhone and applies them on the watch (application context) | — |
 | `Features/` | `Region` | `SavedRegion`, `RegionList` (up to three regions, their order and the shown one), `RegionStore`, `RegionSearch`, `RegionLocator` | Location, PlaceSearch, AppGroup |
 | `Features/` (in `Region`) | `RegionIntents` | `RegionEntity` and its query for App Intents, `RegionIntentsPackage`, its own String Catalog for the entity's names | Region |
 | `Features/` | `Forecast` | `CachedForecast` (freshness), `ForecastCache`, `ForecastUpdater` | Weather, AppGroup |
@@ -88,16 +95,26 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 - Swift settings: the app is `MainActor` by default; the widget and the tests are nonisolated by default; all targets use Approachable Concurrency and Member Import Visibility.
 - Fetch rules and flowcharts: `docs/architecture/weather-fetch-flow.md` — keep it in sync when changing fetch logic.
 
+### Apple Watch (ADR 0010)
+
+- `NextSunnyDayWatch/` is the watch app (embedded in the iPhone app, not independent); `NextSunnyDayWatchWidget/` holds what the complications don't share with the iPhone widget. The watch has its own App Group container: settings and caches there are the watch's own.
+- **Settings come from the iPhone.** `AppFeatures.syncedKeys` (`RegionStore.key`, `SunnyLevelStore.key`, `TemperatureUnitStore.key`) are sent with `SettingsSync` when `RootView` sees them change, after activation and when the watch app is installed. The watch applies them in `NextSunnyDayWatchApp` (also from `.backgroundTask(.watchConnectivity)`), reloads the complications, invalidates their recommendations and removes caches of removed regions. `selectedRegion` isn't sent: each device keeps its own shown region (the watch starts with the first). Notification settings aren't sent.
+- **The forecast is fetched on the watch** with the iPhone's rules: `WatchForecast` (the app's `RegionForecast` rules) and the shared `Provider` (once a day from 4:00). The watch app looks up the current location itself; the complications can't (no `isAuthorizedForWidgetUpdates` on watchOS) and use the last cached coordinate.
+- The watch app's state holders are `SyncedSettings` (regions, level, unit, the shown region) and `WatchForecast`, created in `NextSunnyDayWatchApp`; features come from `WatchFeatures` (`.live`, `.preview(_:)`). Previews wrap a screen in `WatchPreviewHost(<scenario>)`, and a Debug build launched with `-PreviewScenario <scenario>` runs on the fakes (`tokyo`, `laundry`, `singapore`, `losAngeles`, `loading`, `refreshFailed`, `offline`, `locationDenied`, `noRegion`, `severalRegions`).
+- **The complications compile `NextSunnyDayWidget/`.** Platform differences are in `Provider+iOS.swift` and `NextSunnyDayWatchWidget/Provider+watchOS.swift` (the same functions: `locate`, `didFetch`, `attributionMark`; the watch adds `recommendations()`), and in a few `#if os(watchOS)` inside shared views. The iPhone-only files are membership exceptions of the watch widget target. Families: `.accessoryCircular`, `.accessoryCorner`, `.accessoryRectangular`, `.accessoryInline`; on a full-color face the answer is orange and symbols are multicolor, in the Smart Stack the rectangular one has the widgets' orange or gray background.
+- In the simulator, WatchConnectivity needs a paired iPhone and watch (`xcrun simctl pair`, then reboot both until `simctl list pairs` says connected).
+
 ### Xcode project format
 
-`NextSunnyDay.xcodeproj` uses **folder-synchronized groups** (objectVersion 77): `NextSunnyDay/`, `NextSunnyDayWidget/` and `NextSunnyDayTests/` are synced to their targets, so adding, moving or deleting a file in those folders needs no `project.pbxproj` change. The local packages are `XCLocalSwiftPackageReference`s; linking another product to a target adds an `XCSwiftPackageProductDependency`, a `PBXBuildFile` in its Frameworks phase and an entry in the target's `packageProductDependencies`. Exceptions live in `PBXFileSystemSynchronizedBuildFileExceptionSet` entries:
+`NextSunnyDay.xcodeproj` uses **folder-synchronized groups** (objectVersion 77): `NextSunnyDay/`, `NextSunnyDayWidget/`, `NextSunnyDayWatch/`, `NextSunnyDayWatchWidget/` and `NextSunnyDayTests/` are synced to their targets (`NextSunnyDayWidget/` to both widget targets), so adding, moving or deleting a file in those folders needs no `project.pbxproj` change. The local packages are `XCLocalSwiftPackageReference`s; linking another product to a target adds an `XCSwiftPackageProductDependency`, a `PBXBuildFile` in its Frameworks phase and an entry in the target's `packageProductDependencies`. Exceptions live in `PBXFileSystemSynchronizedBuildFileExceptionSet` entries:
 
 - Info.plists are generated (`GENERATE_INFOPLIST_FILE`), as in Xcode's templates: the app has no `Info.plist` file, its keys are `INFOPLIST_KEY_*` build settings (display name, location usage text, portrait only on iPhone). The widget's `Info.plist` holds only what build settings can't express (`NSExtension`, `NSWidgetWantsLocation`); it is excluded from its own target and used via `INFOPLIST_FILE`.
-- The widget shares only `Assets.xcassets` and `Resources/Localizable.xcstrings` from `NextSunnyDay/` (membership exceptions for `NextSunnyDayWidgetExtension`). Shared code goes into a package, not into these exceptions.
+- The widget shares only `Assets.xcassets` and `Resources/Localizable.xcstrings` from `NextSunnyDay/` (membership exceptions for `NextSunnyDayWidgetExtension`); the watch app also takes `AppIcon.icon` and `Resources/InfoPlist.xcstrings`, the watch widget the same two as the widget. Shared code goes into a package, not into these exceptions; the one exception is the widget folder compiled into the watch's complications (ADR 0010).
+- The watch app's Info.plist is generated (`WKCompanionAppBundleIdentifier`, location usage text); the watch widget's `Info.plist` holds only `NSExtension`. The iPhone app embeds the watch app in an "Embed Watch Content" phase; the watch app embeds its widget.
 
 ### Widget target
 
-`NextSunnyDayWidget/` uses `Region`, `RegionIntents`, `Forecast`, `SunnyDay`, `Units`, `Notice` and `Weather` (plus `WeatherTesting` for its previews). Each widget picks its region in its App Intent configuration (`SelectRegionIntent` in `RegionIntent.swift`, with `RegionEntity` from `RegionIntents`) and shows the first saved region until one is picked or after it is removed. `Provider` (an `AppIntentTimelineProvider`) builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state. The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. For the current location the widget uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate. After fetching the region notifications are about, it schedules them again (ADR 0009).
+`NextSunnyDayWidget/` uses `Region`, `RegionIntents`, `Forecast`, `SunnyDay`, `Units`, `Notice` and `Weather` (plus `WeatherTesting` for its previews). Each widget picks its region in its App Intent configuration (`SelectRegionIntent` in `RegionIntent.swift`, with `RegionEntity` from `RegionIntents`) and shows the first saved region until one is picked or after it is removed. `Provider` (an `AppIntentTimelineProvider`) builds a timeline of two entries (now and the next midnight) from the cached forecast, fetches only when it wasn't fetched since the last 4:00, and reloads at 4:00 plus up to an hour (ADR 0006). `SunnyEntry.state` is one of sunny, none in range, no data or no region. Families: `.systemSmall`, `.systemMedium`, `.systemLarge`, `.accessoryInline`, `.accessoryCircular`, `.accessoryRectangular`; the previews in `WidgetPreviews.swift` cover every family and state, from the entries in `PreviewEntries.swift` (shared with the watch's `ComplicationPreviews.swift`). The medium and large widgets show the Apple Weather mark, downloaded once by `AttributionMarkCache`. What only the iPhone's widget does around a fetch is in `Provider+iOS.swift`: for the current location it uses Core Location itself (`NSWidgetWantsLocation`) and falls back to the cached coordinate; after fetching the region notifications are about, it schedules them again (ADR 0009). The same folder is compiled into the watch's complications (see Apple Watch).
 
 ### Localization & resources
 
@@ -106,7 +123,7 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Sw
 - `Localizable.xcstrings` is a member of both the app and the widget (membership exception), so there is one catalog for both. App Shortcut phrases are in the app's `NextSunnyDay/Resources/AppShortcuts.xcstrings` (a `stringSet` of phrases per language). A package module may carry the general names of its own concept in its own catalog (`RegionIntents`: 「地域」, 「現在地」); the app's own wording stays in `Localizable.xcstrings`. `InfoPlist.xcstrings` localizes `CFBundleDisplayName` (`Next Sunny Day` / `次いつ晴れる？`). In `Localizable.xcstrings` the app's name has the key `NextSunnyDay` with an `en` value of `Next Sunny Day`, because the key `Next Sunny Day` is the widget's label (「次の晴れ」).
 - Non-UI values stay plain literals in code and out of the catalog: SF Symbol names (`Image(systemName: "xmark")`), the `"-"` placeholder, the widget `kind`.
 - **Colors** are system colors only (`Color.orange` is the one accent, `Color(.systemGray)`, `Color(.secondarySystemGroupedBackground)` …); no hex values in code. `Assets.xcassets` holds an empty `AccentColor` (the system default) and no color sets.
-- **App icon:** `NextSunnyDay/AppIcon.icon`, an Icon Composer document (`ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`). Its layers are plain SVG shapes; colors, gradients and the dark appearance are in its `icon.json`. Edit it in Icon Composer, then re-render the previews in `docs/design/` with `ictool` (see "App icon" in `docs/design/spec.md`).
+- **App icon:** `NextSunnyDay/AppIcon.icon`, an Icon Composer document (`ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon`), used by the app and the watch app. Its groups are scaled 1.06 on watchOS (`position-specializations`, idiom `watchOS`): the layers end at the canvas edge, which showed the sky along the circle's bottom left. Its layers are plain SVG shapes; colors, gradients and the dark appearance are in its `icon.json`. Edit it in Icon Composer, then re-render the previews in `docs/design/` with `ictool` (see "App icon" in `docs/design/spec.md`).
 - There are no third-party resource generators, build-tool plugins or script build phases.
 - The only Swift packages are the local ones under `Packages/`; there are no third-party dependencies. Keep it that way unless there is a strong reason.
 
