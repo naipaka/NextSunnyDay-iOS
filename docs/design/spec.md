@@ -253,7 +253,7 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
   | No region | アプリで地域を選んでね。 | Choose a region in the app. |
 
   The current location is named by its place name when it is known, and 「現在地」 otherwise. Like Home, the answer is never today.
-- **Snippet:** the small widget's layout on a card with a 26 pt corner radius: 「次の晴れ」 and the symbol, the big 「あと3日」, the date and condition (`headline`), high, low and precipitation (`subheadline`), and the region name. Orange when a sunny day is in range, `systemGray` when none is, `systemGray2` without data or a region (「あと？日」 with 「天気を取得できなかったよ」 or 「アプリで地域を選んでね」).
+- **Snippet:** Home's header on a card with a 26 pt corner radius, in the [header gradient](#visual-language): 「次の晴れ」, the big 「あと3日」, the day's symbol with the date and condition (`headline`), high and low (`subheadline`) and the region name; after a 1 pt line, an 84 pt column with 「今日」, today's symbol and condition (「—」 without data or a region). Orange when a sunny day is in range, `systemGray` when none is, `systemGray2` without data or a region (「あと？日」 with 「天気を取得できなかったよ」 or 「アプリで地域を選んでね」). The dialog is the answer alone.
 - The intent fetches only when the region's forecast wasn't fetched since the last 4:00, and answers from the cache when the fetch fails.
 
 ## App icon
