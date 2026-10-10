@@ -110,17 +110,17 @@ struct LargeWidgetView: View {
 
 // MARK: - Parts
 
-/// 「港区 · 次の晴れ」, or 「次の晴れ」 without a region.
+/// 「港区 · 次の晴れ」, or 「次の晴れ」 without a region; 「次の洗濯日和」 at the laundry level.
 private struct AnswerLabel: View {
   let entry: SunnyEntry
 
   var body: some View {
     Group {
       if entry.region == nil {
-        Text("Next Sunny Day")
+        Text(entry.level.answerTitle)
       } else {
         let place = entry.placeName ?? String(localized: "Current Location")
-        Text(verbatim: "\(place) · \(String(localized: "Next Sunny Day"))")
+        Text(verbatim: "\(place) · \(String(localized: entry.level.answerTitle))")
       }
     }
     .font(.footnote.weight(.semibold))

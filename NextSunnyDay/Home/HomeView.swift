@@ -34,6 +34,7 @@ struct HomeView: View {
         HomeHeader(
           state: headerState,
           today: todayForecast,
+          level: sunnyLevelSelection.level,
           retry: { Task { await regionForecast.refresh(for: region) } })
       } content: {
         content

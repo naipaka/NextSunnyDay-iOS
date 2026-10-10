@@ -10,10 +10,11 @@ enum SunnyDayAnswer: Equatable {
   case noRegion
   /// No forecast from today on: nothing was fetched, or only days that have passed.
   case noData
-  /// `today` is today's forecast, shown beside the answer.
-  case sunny(NextSunnyDay, placeName: String?, today: DayForecast?)
+  /// `today` is today's forecast, shown beside the answer. `level` names the answer: the next
+  /// sunny day or the next laundry day.
+  case sunny(NextSunnyDay, placeName: String?, today: DayForecast?, level: SunnyLevel)
   /// None of the cached days is sunny.
-  case noneInRange(placeName: String?, today: DayForecast?)
+  case noneInRange(placeName: String?, today: DayForecast?, level: SunnyLevel)
 
   /// `placeName` is `nil` only for the current location before its name is known.
   init(region: SavedRegion, forecast: CachedForecast?, level: SunnyLevel, now: Date = .now) {
@@ -25,9 +26,9 @@ enum SunnyDayAnswer: Equatable {
     if days.isEmpty {
       self = .noData
     } else if let next = level.nextSunnyDay(in: days, now: now) {
-      self = .sunny(next, placeName: placeName, today: today)
+      self = .sunny(next, placeName: placeName, today: today, level: level)
     } else {
-      self = .noneInRange(placeName: placeName, today: today)
+      self = .noneInRange(placeName: placeName, today: today, level: level)
     }
   }
 
@@ -38,18 +39,25 @@ enum SunnyDayAnswer: Equatable {
       return "Choose a region in the app."
     case .noData:
       return "Couldn't get the weather. Try again where you have a connection."
-    case .sunny(let next, let placeName, _):
+    case .sunny(let next, let placeName, _, let level):
       let place = Self.place(placeName)
+      let day = next.day.date.spokenDay
       let condition = next.day.condition.localizedName
-      switch next.daysAway {
-      case 1:
-        return "\(place) should be sunny tomorrow, \(next.day.date.spokenDay): \(condition)."
-      default:
+      switch (next.daysAway, level) {
+      case (1, .laundry):
+        return "\(place) should be a laundry day tomorrow, \(day): \(condition)."
+      case (1, _):
+        return "\(place) should be sunny tomorrow, \(day): \(condition)."
+      case (_, .laundry):
         return
-          "The next sunny day in \(place) is \(next.day.date.spokenDay), in \(next.daysAway) days: \(condition)."
+          "The next laundry day in \(place) is \(day), in \(next.daysAway) days: \(condition)."
+      default:
+        return "The next sunny day in \(place) is \(day), in \(next.daysAway) days: \(condition)."
       }
-    case .noneInRange(let placeName, _):
-      return "No sunny day in \(Self.place(placeName)) in the next 10 days."
+    case .noneInRange(let placeName, _, let level):
+      return level == .laundry
+        ? "No laundry day in \(Self.place(placeName)) in the next 10 days."
+        : "No sunny day in \(Self.place(placeName)) in the next 10 days."
     }
   }
 

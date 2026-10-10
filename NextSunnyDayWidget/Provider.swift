@@ -111,21 +111,29 @@ struct Provider: AppIntentTimelineProvider {
     let notices = setting.notices(
       in: fetched.forecast.daily, fetchedAt: fetched.fetchedAt, isSunny: level.counts)
     await NoticeScheduler().schedule(notices, regionID: region.id) { notice in
-      NoticeText(notice, placeName: placeName, unit: unit)
+      NoticeText(notice, placeName: placeName, unit: unit, level: level)
     }
   }
 }
 
 extension NoticeText {
   /// Worded as the app words it (`NoticeSchedule.swift` in the app).
-  init(_ notice: Notice, placeName: String?, unit: UnitTemperature) {
+  init(_ notice: Notice, placeName: String?, unit: UnitTemperature, level: SunnyLevel) {
     let day = notice.day
+    let condition = day.condition.localizedName
+    let high = day.highTemperature.degrees(in: unit)
+    let low = day.lowTemperature.degrees(in: unit)
     self.init(
       title: placeName ?? String(localized: "Current Location"),
-      body: String(
-        localized:
-          "Good news: sunny tomorrow! \(day.condition.localizedName), with a high of \(day.highTemperature.degrees(in: unit)) and a low of \(day.lowTemperature.degrees(in: unit))."
-      ),
+      body: level == .laundry
+        ? String(
+          localized:
+            "Good news: a laundry day tomorrow! \(condition), with a high of \(high) and a low of \(low)."
+        )
+        : String(
+          localized:
+            "Good news: sunny tomorrow! \(condition), with a high of \(high) and a low of \(low)."
+        ),
       hiddenPreviewsBody: String(localized: "Tomorrow's weather"))
   }
 }

@@ -27,6 +27,11 @@ extension SunnyEntry {
     SunnyEntry(date: .now, region: minato, cached: recorded(.tokyo), level: .default)
   }
 
+  /// Tokyo's recording at the laundry level: 「次の洗濯日和」.
+  static var laundry: SunnyEntry {
+    SunnyEntry(date: .now, region: minato, cached: recorded(.tokyo), level: .laundry)
+  }
+
   /// Singapore's recording: no sunny day in ten days.
   static var noneInRange: SunnyEntry {
     SunnyEntry(date: .now, region: minato, cached: recorded(.singapore), level: .default)
@@ -48,6 +53,7 @@ extension SunnyEntry {
   NextSunnyDayWidget()
 } timeline: {
   SunnyEntry.sunny
+  SunnyEntry.laundry
   SunnyEntry.noneInRange
   SunnyEntry.noData
   SunnyEntry.noRegion
@@ -57,6 +63,7 @@ extension SunnyEntry {
   NextSunnyDayWidget()
 } timeline: {
   SunnyEntry.sunny
+  SunnyEntry.laundry
   SunnyEntry.noneInRange
   SunnyEntry.noData
   SunnyEntry.noRegion
@@ -66,6 +73,7 @@ extension SunnyEntry {
   NextSunnyDayWidget()
 } timeline: {
   SunnyEntry.sunny
+  SunnyEntry.laundry
   SunnyEntry.noneInRange
   SunnyEntry.noData
   SunnyEntry.noRegion
@@ -75,6 +83,7 @@ extension SunnyEntry {
   NextSunnyDayWidget()
 } timeline: {
   SunnyEntry.sunny
+  SunnyEntry.laundry
   SunnyEntry.noneInRange
   SunnyEntry.noData
   SunnyEntry.noRegion
@@ -84,6 +93,7 @@ extension SunnyEntry {
   NextSunnyDayWidget()
 } timeline: {
   SunnyEntry.sunny
+  SunnyEntry.laundry
   SunnyEntry.noneInRange
   SunnyEntry.noData
   SunnyEntry.noRegion
@@ -93,6 +103,7 @@ extension SunnyEntry {
   NextSunnyDayWidget()
 } timeline: {
   SunnyEntry.sunny
+  SunnyEntry.laundry
   SunnyEntry.noneInRange
   SunnyEntry.noData
   SunnyEntry.noRegion

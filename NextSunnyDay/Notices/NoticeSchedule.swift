@@ -27,21 +27,30 @@ extension AppFeatures {
     let notices = setting.notices(
       in: cached.forecast.daily, fetchedAt: cached.fetchedAt, now: now, isSunny: level.counts)
     await noticeScheduler.schedule(notices, regionID: region.id) { notice in
-      NoticeText(notice, placeName: placeName, unit: unit)
+      NoticeText(notice, placeName: placeName, unit: unit, level: level)
     }
   }
 }
 
 extension NoticeText {
-  /// The region's name, and tomorrow's condition and temperatures. The widget words it the same.
-  init(_ notice: Notice, placeName: String?, unit: UnitTemperature) {
+  /// The region's name, and tomorrow's condition and temperatures; at the laundry level it says
+  /// a laundry day. The widget words it the same.
+  init(_ notice: Notice, placeName: String?, unit: UnitTemperature, level: SunnyLevel) {
     let day = notice.day
+    let condition = day.condition.localizedName
+    let high = day.highTemperature.degrees(in: unit)
+    let low = day.lowTemperature.degrees(in: unit)
     self.init(
       title: placeName ?? String(localized: "Current Location"),
-      body: String(
-        localized:
-          "Good news: sunny tomorrow! \(day.condition.localizedName), with a high of \(day.highTemperature.degrees(in: unit)) and a low of \(day.lowTemperature.degrees(in: unit))."
-      ),
+      body: level == .laundry
+        ? String(
+          localized:
+            "Good news: a laundry day tomorrow! \(condition), with a high of \(high) and a low of \(low)."
+        )
+        : String(
+          localized:
+            "Good news: sunny tomorrow! \(condition), with a high of \(high) and a low of \(low)."
+        ),
       hiddenPreviewsBody: String(localized: "Tomorrow's weather"))
   }
 }

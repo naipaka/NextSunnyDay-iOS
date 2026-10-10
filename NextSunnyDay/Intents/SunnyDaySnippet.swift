@@ -17,7 +17,7 @@ struct SunnyDaySnippet: View {
   var body: some View {
     HStack(alignment: .top, spacing: 16) {
       VStack(alignment: .leading, spacing: 2) {
-        Text("Next Sunny Day")
+        Text(level.answerTitle)
           .font(.subheadline.weight(.semibold))
         headline
           .font(.system(size: 44, weight: .bold))
@@ -47,7 +47,7 @@ struct SunnyDaySnippet: View {
   @ViewBuilder private var headline: some View {
     switch answer {
     case .noRegion, .noData: Text("In ? days")
-    case .sunny(let next, _, _):
+    case .sunny(let next, _, _, _):
       next.daysAway == 1 ? Text("Tomorrow") : Text("In \(next.daysAway) days")
     case .noneInRange: Text("Maybe not for a while")
     }
@@ -61,7 +61,7 @@ struct SunnyDaySnippet: View {
     case .noData:
       Text("Couldn't get the weather")
         .font(.headline)
-    case .sunny(let next, _, _):
+    case .sunny(let next, _, _, _):
       Label {
         Text(verbatim: "\(next.day.date.dayWithWeekday) \(next.day.condition.localizedName)")
       } icon: {
@@ -74,7 +74,7 @@ struct SunnyDaySnippet: View {
       )
       .font(.subheadline)
     case .noneInRange:
-      Text("No sunny day in the next 10 days")
+      Text(level.noneInRangeText)
         .font(.headline)
     }
   }
@@ -105,14 +105,22 @@ struct SunnyDaySnippet: View {
   private var today: DayForecast? {
     switch answer {
     case .noRegion, .noData: nil
-    case .sunny(_, _, let today), .noneInRange(_, let today): today
+    case .sunny(_, _, let today, _), .noneInRange(_, let today, _): today
+    }
+  }
+
+  /// The default level while there is no answer, so the label reads 「次の晴れ」.
+  private var level: SunnyLevel {
+    switch answer {
+    case .noRegion, .noData: .default
+    case .sunny(_, _, _, let level), .noneInRange(_, _, let level): level
     }
   }
 
   private var placeName: String? {
     switch answer {
     case .noRegion, .noData: nil
-    case .sunny(_, let placeName, _), .noneInRange(let placeName, _):
+    case .sunny(_, let placeName, _, _), .noneInRange(let placeName, _, _):
       placeName ?? String(localized: "Current Location")
     }
   }
@@ -137,6 +145,7 @@ struct SunnyDaySnippet: View {
   let answers: [SunnyDayAnswer] = [
     SunnyDayAnswer(region: minato, forecast: cached(.tokyo), level: .default),
     SunnyDayAnswer(region: minato, forecast: cached(.singapore), level: .default),
+    SunnyDayAnswer(region: minato, forecast: cached(.tokyo), level: .laundry),
     .noData,
     .noRegion,
   ]

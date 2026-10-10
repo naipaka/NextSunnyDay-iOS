@@ -15,6 +15,8 @@ struct HomeHeader: View {
   let state: State
   /// Today's forecast, `nil` while loading or without data.
   let today: DayForecast?
+  /// Names the answer: the next sunny day or the next laundry day.
+  let level: SunnyLevel
   let retry: () -> Void
 
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
@@ -37,7 +39,7 @@ struct HomeHeader: View {
 
   @ViewBuilder private var answer: some View {
     VStack(alignment: .leading, spacing: 0) {
-      Text("Next Sunny Day")
+      Text(level.answerTitle)
         .font(.subheadline.weight(.semibold))
         .redacted(reason: isLoading ? .placeholder : [])
       switch state {
@@ -85,7 +87,7 @@ struct HomeHeader: View {
         .padding(.top, 2)
       case .noneInRange:
         bigText(Text("Maybe not for a while"), size: 46)
-        Text("No sunny day in the next 10 days")
+        Text(level.noneInRangeText)
           .font(.headline)
           .padding(.top, 10)
         Text("It shows up here when the forecast changes")

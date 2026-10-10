@@ -57,7 +57,7 @@ final class SunnyDayAnswerTests {
   @Test func answersForTheFirstRegionWithoutOne() async throws {
     let answer = await features([minato, singapore]).nextSunnyDayAnswer(regionID: nil)
 
-    guard case .sunny(let next, let placeName, let today) = answer else {
+    guard case .sunny(let next, let placeName, let today, _) = answer else {
       Issue.record("Expected a sunny day, got \(answer)")
       return
     }
@@ -80,7 +80,7 @@ final class SunnyDayAnswerTests {
   @Test func namesTheCurrentLocationWhereItIs() async {
     let answer = await features([.currentLocation]).nextSunnyDayAnswer(regionID: nil)
 
-    guard case .sunny(_, let placeName, _) = answer else {
+    guard case .sunny(_, let placeName, _, _) = answer else {
       Issue.record("Expected a sunny day, got \(answer)")
       return
     }
@@ -123,7 +123,8 @@ final class SunnyDayAnswerTests {
       region: minato, forecast: cached, level: .mostlyClear, now: yesterday)
     let stricter = SunnyDayAnswer(region: minato, forecast: cached, level: .clear, now: yesterday)
 
-    guard case .sunny(let first, _, _) = looser, case .sunny(let clear, _, _) = stricter else {
+    guard case .sunny(let first, _, _, _) = looser, case .sunny(let clear, _, _, _) = stricter
+    else {
       Issue.record("Expected sunny days, got \(looser) and \(stricter)")
       return
     }
@@ -134,15 +135,24 @@ final class SunnyDayAnswerTests {
   @Test func speaksInTheAppsWording() {
     var noRegion = SunnyDayAnswer.noRegion.dialog
     noRegion.locale = Locale(identifier: "ja")
-    var none = SunnyDayAnswer.noneInRange(placeName: "シンガポール", today: nil).dialog
+    var none = SunnyDayAnswer.noneInRange(placeName: "シンガポール", today: nil, level: .default)
+      .dialog
     none.locale = Locale(identifier: "ja")
 
     #expect(String(localized: noRegion) == "アプリで地域を選んでね。")
     #expect(String(localized: none) == "シンガポールは 10日先まで晴れの予報がないよ。まだ先かも。")
   }
 
+  @Test func speaksOfLaundryDaysAtTheLaundryLevel() {
+    var none = SunnyDayAnswer.noneInRange(placeName: "シンガポール", today: nil, level: .laundry)
+      .dialog
+    none.locale = Locale(identifier: "ja")
+
+    #expect(String(localized: none) == "シンガポールは 10日先まで洗濯日和の予報がないよ。まだ先かも。")
+  }
+
   /// The place of a `noneInRange` answer, or `nil` for any other answer.
   private func noneInRangePlace(_ answer: SunnyDayAnswer) -> String? {
-    if case .noneInRange(let placeName, _) = answer { placeName } else { nil }
+    if case .noneInRange(let placeName, _, _) = answer { placeName } else { nil }
   }
 }

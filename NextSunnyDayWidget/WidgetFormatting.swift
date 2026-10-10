@@ -113,3 +113,11 @@ extension Date {
     return formatter.string(from: self)
   }
 }
+
+extension SunnyLevel {
+  /// The label over the answer, 「次の晴れ」 or 「次の洗濯日和」, as the app words it
+  /// (`SunnyLevelWording.swift` in the app).
+  var answerTitle: LocalizedStringResource {
+    self == .laundry ? "Next Laundry Day" : "Next Sunny Day"
+  }
+}
