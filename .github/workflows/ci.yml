@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Lint
-        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayWatch NextSunnyDayWatchWidget NextSunnyDayTests Packages Tools
 
       - name: Check imports
         run: swift run --package-path Tools/ImportCheck import-check .
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Lint
-        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayTests Packages Tools
+        run: xcrun swift-format lint --strict --recursive --parallel NextSunnyDay NextSunnyDayWidget NextSunnyDayWatch NextSunnyDayWatchWidget NextSunnyDayTests Packages Tools
 
       - name: Check imports
         run: swift run --package-path Tools/ImportCheck import-check .

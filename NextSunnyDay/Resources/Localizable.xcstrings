@@ -121,6 +121,16 @@
         }
       }
     },
+    "Choose a region in the app on your iPhone." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPhoneのアプリで地域を選んでね。"
+          }
+        }
+      }
+    },
     "Choose a region on your iPhone" : {
       "localizations" : {
         "ja" : {
@@ -850,6 +860,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "次に晴れる日を確認できます。"
+          }
+        }
+      }
+    },
+    "Selected" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択中"
           }
         }
       }
