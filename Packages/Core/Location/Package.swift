@@ -10,7 +10,7 @@ let settings: [SwiftSetting] = [
 
 let package = Package(
   name: "Location",
-  platforms: [.iOS(.v26), .macOS(.v26)],
+  platforms: [.iOS(.v26), .macOS(.v26), .watchOS(.v26)],
   products: [
     .library(name: "Location", targets: ["Location"]),
     .library(name: "LocationTesting", targets: ["LocationTesting"]),

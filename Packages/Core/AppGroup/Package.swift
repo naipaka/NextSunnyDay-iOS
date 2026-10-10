@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
   name: "AppGroup",
-  platforms: [.iOS(.v26), .macOS(.v26)],
+  platforms: [.iOS(.v26), .macOS(.v26), .watchOS(.v26)],
   products: [
     .library(name: "AppGroup", targets: ["AppGroup"])
   ],

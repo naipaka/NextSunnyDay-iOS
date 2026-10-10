@@ -10,7 +10,7 @@ let settings: [SwiftSetting] = [
 
 let package = Package(
   name: "SunnyDay",
-  platforms: [.iOS(.v26), .macOS(.v26)],
+  platforms: [.iOS(.v26), .macOS(.v26), .watchOS(.v26)],
   products: [
     .library(name: "SunnyDay", targets: ["SunnyDay"])
   ],
