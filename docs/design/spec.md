@@ -1,6 +1,6 @@
 # NextSunnyDay 2.0 design spec
 
-Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 build from this document. The screenshots were taken on an iPhone 17 (iOS 26.4) simulator, so they show real SF Symbols, Liquid Glass and system colors. The screenshots and the values in this document are the source of truth. Each image puts light on the left and dark on the right. Sample data: Minato, Tokyo, on Wed 7 Oct, with the next sunny day on Sat 10 Oct.
+Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 build from this document. The screenshots were taken on an iPhone 17 simulator (iOS 26.4; Home, the day detail screen and the widgets on iOS 27.0), so they show real SF Symbols, Liquid Glass and system colors. The screenshots and the values in this document are the source of truth. Each image puts light on the left and dark on the right. Sample data: Minato, Tokyo, from the preview scenarios; on Home, the day detail screen and the widgets it is Sat 10 Oct, with the next sunny day on Sun 11 Oct. The widget images are the widget views laid out at Home Screen and Lock Screen sizes, not a real widget extension.
 
 ## Decisions
 
@@ -59,12 +59,11 @@ Settings is a sheet with its own navigation stack. The day detail screen is push
   - Two areas side by side, split by a 1 pt white line at 40 %: the answer on the leading side, today on a 92 pt column on the trailing side, 18 pt apart from the line.
   - **The answer**, from top to bottom: 「次の晴れ」 (`subheadline` semibold), the big 「あと3日」, the day's symbol with the date and condition (`headline`), then high and low (`subheadline`).
   - **Today**, centered in its column: 「今日」 (`subheadline` semibold), today's symbol (46 pt) and the condition (`headline`, wrapping onto a second line for long names such as 「ところにより／雷雨」). It is secondary: smaller than the answer, and only the condition, without temperatures.
-  - The screenshots predate the today column and the gradient: they show 「次の晴れは」, the answer alone and a 64 pt symbol at the top trailing corner.
 - **Content sheet.** It overlaps the bottom of the header, and both scroll together (a stretchy header):
   - The sheet starts 34 pt above the bottom of the header and has 34 pt top corners and a soft upward shadow (black at 18 %, radius 18, y −4).
   - Scrolling up, the header fades out over 70 % of its height and moves up at 0.3× the scroll speed (parallax), so the sheet slides over it. Once the sheet reaches the top, the toolbar floats over the sheet with the system scroll edge effect, and no header color is left behind it.
   - Pulling down stretches the header color into the space above it; the header text moves down with the content. The refresh control shows on the header color.
-- **時間ごとの予報** card: a horizontal strip of the next 24 hours with time, symbol, precipitation chance and temperature. The first cell is 「今」; the first hour of the next day shows its date (「10/9」) instead of 「0時」. The screenshots predate this and show 「今日の時間ごと」 with today's hours only.
+- **時間ごとの予報** card: a horizontal strip of the next 24 hours with time, symbol, precipitation chance and temperature. The first cell is 「今」; the first hour of the next day shows its date (「10/9」) instead of 「0時」.
 - **10日間の天気** card. Each row shows:
   - the symbol, with the precipitation chance under it
   - the date (「今日」, then 「10月8日（木）」…)
@@ -212,7 +211,7 @@ The Apple Weather mark and the legal link appear in three places: the Home foote
 | --- | --- | --- |
 | ![Home Screen widgets](images/widgets-home-screen.jpg) | ![Widget states](images/widgets-states.jpg) | ![Lock Screen widgets](images/widgets-lock-screen.jpg) |
 
-The Home Screen widgets follow Home's header: the answer and today, the answer larger, in the same [header gradient](#visual-language). The screenshots predate today and the gradient.
+The Home Screen widgets follow Home's header: the answer and today, the answer larger, in the same [header gradient](#visual-language).
 
 - **Small:** the answer on top: 「港区 · 次の晴れ」 (`footnote` semibold), then at the bottom of that area 「あと3日」 and the day's symbol with 「10/13（火）快晴」. Below a 1 pt white line at 40 %, one row: 「今日」 on the leading side, today's symbol and condition on the trailing side. A long condition is truncated (「ところにより…」).
 - **Medium:** the answer and today side by side, split by a 1 pt line like Home: the answer with its label on top and 「あと3日」 and the date at the bottom; today in an 84 pt column with 「今日」, its symbol (44 pt) and the condition, wrapping onto two lines when long.
@@ -226,7 +225,7 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
   - circular: the symbol over 「3日」 (「あした」 for tomorrow)
   - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/13（火）」 on the leading side, and after a thin line, 「今日」 over today's symbol
   The system draws these in monochrome.
-- The mockups are plain views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
+- The images are the widget views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
 - **Region:** each widget has a 「地域」 setting (Edit Widget) listing the saved regions. Until one is picked, and after the picked region is removed, it shows the first region in the app's list (#103).
 - A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」, with 「—」 for today. The large widget draws its days redacted, where the forecast goes once a region is chosen.
 
