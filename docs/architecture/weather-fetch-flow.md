@@ -8,13 +8,14 @@ The app and the widget share their data through the App Group `group.com.naipaka
 | The ID of the region Home shows | `RegionStore` (`Region`) | App Group `UserDefaults`, key `selectedRegion` |
 | The sunny level | `SunnyLevelStore` (`SunnyDay`) | App Group `UserDefaults`, key `sunnyLevel` |
 | The temperature unit (`system`, `celsius` or `fahrenheit`) | `TemperatureUnitStore` (`Units`) | App Group `UserDefaults`, key `temperatureUnit` |
+| Whether notifications are on, their region and time (`noticeOn`, `noticeRegion`, `noticeTime`) | `NoticeSettingStore` (`Notice`) | App Group `UserDefaults` |
 | The last fetched forecast of each region (`CachedForecast`) | `ForecastCache` (`Forecast`) | `Library/Caches/forecasts/<region id>.json` in the App Group container |
 
 Forecasts come from WeatherKit through `WeatherProviding` (`WeatherKitProvider` in the `Weather` package), which returns a `WeatherForecast`: ten days, their hours, and when the data expires. `ForecastUpdater` (`Forecast`) fetches it for a coordinate and caches it with the region's ID, place name and fetch time. Every successful fetch replaces the region's cache file as a whole (an atomic write). A failed fetch leaves the cached forecast as is.
 
 ## Storage rules
 
-- **Settings are never migrated** ([ADR 0004](decisions/0004-stored-settings-format.md)). Every later version must read what earlier ones wrote, so `RegionStoreTests`, `SunnyLevelStoreTests` and `TemperatureUnitStoreTests` pin the stored format.
+- **Settings are never migrated** ([ADR 0004](decisions/0004-stored-settings-format.md)). Every later version must read what earlier ones wrote, so `RegionStoreTests`, `SunnyLevelStoreTests`, `TemperatureUnitStoreTests` and `NoticeSettingStoreTests` pin the stored format.
 - **Each region has an ID** given when it is added: a UUID for a searched place, the fixed `current-location` for the device location. Cache files are keyed by the ID, never by coordinates.
 - **The cache is disposable.** A file that fails to decode, or was written with another `ForecastCache.formatVersion`, is deleted and fetched again. Every saved region keeps its file; a region's file is deleted when the region is removed. The system may also purge the caches directory; that only costs a fetch.
 - **Version 1 data is not migrated.** `LegacyRealmCleanup` deletes the old `db.realm*` files from the App Group container at launch, and the user picks the region again.
@@ -85,3 +86,25 @@ flowchart TD
 ## Siri and Shortcuts
 
 `NextSunnyDayIntent` runs in the app's process, in the background. `AppFeatures.nextSunnyDayAnswer(regionID:)` picks the asked region, or the first saved one (`RegionList.region(id:)`), and calls `refreshIfNeeded(for:)` on a `RegionForecast` of its own: the region's cache is shown, and a fetch runs only when it wasn't fetched since the last 4:00, with the same location handling as Home. When the fetch fails (no network, or no location for the current location), the cached forecast answers; a successful fetch reloads the widget timelines like Home's ([ADR 0008](decisions/0008-app-intents.md)).
+
+## Notifications
+
+Notifications before a sunny day are scheduled from the cached forecast of one region: the first saved one, or the one chosen in the notification settings ([ADR 0009](decisions/0009-sunny-day-notifications.md)). Nothing is fetched for them; there is no background refresh.
+
+- **What:** a notification at the chosen time (19:00 by default) the day before each day that counts as sunny after a day that doesn't, so a sunny spell is announced once (`NoticeSetting.notices(in:fetchedAt:now:calendar:isSunny:)`).
+- **Only recent forecasts:** a notification goes out at most two days after its forecast was fetched; later ones aren't scheduled.
+- **When they are scheduled again:** every scheduling replaces all pending notices (IDs starting with `sunny-day-`).
+
+```mermaid
+flowchart TD
+    A([App: a setting, the regions or the shown forecast changes,<br/>or the app becomes active]) --> S
+    W([Widget: fetched the notified region]) --> S
+    I([Siri or Shortcuts answered]) --> S
+    S{Notifications on<br/>and a forecast cached?}
+    S -- No --> C[Cancel the pending notices]
+    S -- Yes --> N[Days that are sunny after a day that isn't,<br/>at the user's level]
+    N --> T[The day before each, at the chosen time,<br/>still ahead and within two days of the fetch]
+    T --> R[Replace the pending notices]
+```
+
+Opening a notification shows its region on Home. The system's notification settings for the app open the app's Notifications screen.

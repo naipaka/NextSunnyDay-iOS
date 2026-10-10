@@ -13,6 +13,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Manual refresh | Pull to refresh on Home. |
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
 | Siri and Shortcuts | One App Shortcut answers when the next sunny day is, for a saved region or the first one, with a dialog and a snippet (#104). See [Siri and Shortcuts](#siri-and-shortcuts). |
+| Notifications | One notification the day before a sunny spell starts, for one region at a chosen time, from the cached forecast (#105). See [Notifications](#notifications). |
 | Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header. |
 | Japanese tone | Friendly and casual, matching the app name 次いつ晴れる？ (e.g. 「次の晴れは あと3日」, 「まだ先かも」). |
 | App icon | A close-up of the lion rising into the frame and looking up at the sky, redrawn from scratch and built in Icon Composer layers. See [App icon](#app-icon). |
@@ -40,6 +41,7 @@ flowchart LR
   DayDetail -- up / down buttons --> DayDetail
   Settings --> Regions
   Settings --> SunnyLevel
+  Settings --> Notifications
   Settings --> About
 ```
 
@@ -125,6 +127,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 - The rows are:
   - 地域 (`location.fill`, value = the region Home shows, 「港区」 or 「現在地」), which opens [地域](#regions)
   - 晴れの基準 (`sun.max.fill`, value = the current level), with the footer 「どんな天気の日を「晴れ」として数えるかを選べるよ。」
+  - 通知 (`bell.fill`, value = the time, 「19:00」, or 「オフ」), which opens [通知](#notifications)
   - 気温 (`thermometer.medium`, value = the unit in use, 「°C」 or 「°F」), a menu picker with the choices of Apple's Weather app, in its order: 「摂氏（°C）」, 「華氏（°F）」 and 「システム設定を使用（°C）」 (the default: the system's temperature unit, shown in the parentheses, which follows the region unless changed in Settings > General > Language & Region). It applies to the app and the widgets.
   - 天気データについて (`info.circle`)
 - The version string goes in the last footer.
@@ -171,6 +174,28 @@ Fog, smoke, blowing dust, every kind of precipitation and every storm never coun
 
 - The Apple Weather mark (`WeatherService.shared.attribution`), a short note on the data and refresh, and the 「データソースと法的情報」 link.
 - A 「いまの設定」 section shows the selected sunny level and which conditions count.
+
+## Notifications
+
+- **When.** One notification the day before a day that counts as sunny at the selected level, when that day before doesn't: once when a sunny spell starts, not every evening of a sunny week. It goes out at the chosen time, 19:00 by default.
+- **Which region.** One: the first saved region until another is chosen, and again after the chosen one is removed.
+- **Only recent forecasts.** Nothing is fetched for notifications. They follow the cached forecast, which the app, the widget and Siri update, and a notification goes out at most two days after its forecast was fetched.
+- **通知** (pushed from Settings, inline title 「通知」):
+  - 「晴れの前日に通知」, a switch, off by default.
+  - While it is on: 「地域」, a menu of the saved regions, and 「時刻」, a time picker (hours and minutes).
+  - Footer: 「晴れそうな日の前日、この時刻にお知らせするよ。晴れが続くあいだはお休みするよ。」
+  - When the system doesn't allow the app's notifications, the switch shows off and a section below it has 「設定を開く」 (the app's notification settings) with the footer 「通知がオフになっているよ。受け取るには設定でオンにしてね。」
+- **Permission** is asked when the switch is turned on, not at launch. The system's notification settings for the app link to this screen.
+- **Copy:**
+
+  | Part | Japanese | English |
+  | --- | --- | --- |
+  | Title | 港区 (the region's name; 「現在地」 before the current location's name is known) | Minato |
+  | Body | あしたは晴れそう！快晴で、最高 24° 最低 16° だよ。 | Good news: sunny tomorrow! Clear, with a high of 24° and a low of 16°. |
+  | With previews hidden | あしたの天気 | Tomorrow's weather |
+
+  Temperatures are in the unit set in the app. The body says 「晴れそう」, not 「晴れる」: it is a forecast.
+- **Opening it** shows that region on Home. While the app is open, a notification goes to Notification Center without a banner.
 
 ## Attribution
 
