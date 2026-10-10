@@ -24,9 +24,10 @@ extension SunnyEntry.State {
     }
   }
 
-  /// A shorter `detail` for the Lock Screen.
-  var shortDetail: Text {
+  /// The next sunny day's date without its condition, or a shorter `detail`, for the Lock Screen.
+  var shortDate: Text {
     switch self {
+    case .sunny(let next): Text(verbatim: next.day.date.monthDayWeekday)
     case .noData: Text("Couldn't get it")
     default: detail
     }

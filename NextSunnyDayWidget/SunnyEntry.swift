@@ -36,6 +36,16 @@ struct SunnyEntry: TimelineEntry {
     cached?.forecast.days(from: date) ?? []
   }
 
+  /// Today's forecast, shown beside the answer.
+  var today: DayForecast? {
+    days.first.flatMap { Calendar.current.isDate($0.date, inSameDayAs: date) ? $0 : nil }
+  }
+
+  /// The days after today, for the large widget's list.
+  var laterDays: [DayForecast] {
+    days.filter { !Calendar.current.isDate($0.date, inSameDayAs: date) }
+  }
+
   var state: State {
     guard region != nil else { return .noRegion }
     guard !days.isEmpty else { return .noData }

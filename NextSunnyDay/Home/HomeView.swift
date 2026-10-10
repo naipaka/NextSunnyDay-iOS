@@ -33,6 +33,7 @@ struct HomeView: View {
       LayeredScreen(tone: headerTone) {
         HomeHeader(
           state: headerState,
+          today: todayForecast,
           retry: { Task { await regionForecast.refresh(for: region) } })
       } content: {
         content
@@ -90,6 +91,13 @@ struct HomeView: View {
     }
     let next = sunnyLevelSelection.level.nextSunnyDay(in: cached.forecast.daily, now: today)
     return next.map(HomeHeader.State.sunny) ?? .noneInRange
+  }
+
+  /// Today's forecast, shown beside the answer.
+  private var todayForecast: DayForecast? {
+    cached?.forecast.days(from: today).first.flatMap {
+      Calendar.current.isDate($0.date, inSameDayAs: today) ? $0 : nil
+    }
   }
 
   private var headerTone: HeaderTone {

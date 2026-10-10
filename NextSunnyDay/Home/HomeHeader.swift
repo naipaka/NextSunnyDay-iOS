@@ -2,7 +2,8 @@ import SunnyDay
 import SwiftUI
 import Weather
 
-/// The colored header of Home: when the next sunny day is, or why it isn't known.
+/// The colored header of Home: when the next sunny day is, or why it isn't known, and beside it,
+/// smaller, today's weather.
 struct HomeHeader: View {
   enum State {
     case loading
@@ -12,27 +13,45 @@ struct HomeHeader: View {
   }
 
   let state: State
+  /// Today's forecast, `nil` while loading or without data.
+  let today: DayForecast?
   let retry: () -> Void
 
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 4) {
-      Text("The next sunny day is")
-        .font(.headline)
+    HStack(alignment: .top, spacing: 18) {
+      answer
+        .frame(maxWidth: .infinity, alignment: .leading)
+      Rectangle()
+        .fill(.white.opacity(0.4))
+        .frame(width: 1)
+      todayColumn
+        .frame(width: 92)
+    }
+    .fixedSize(horizontal: false, vertical: true)
+    .foregroundStyle(.white)
+  }
+
+  // MARK: - The answer
+
+  @ViewBuilder private var answer: some View {
+    VStack(alignment: .leading, spacing: 0) {
+      Text("Next Sunny Day")
+        .font(.subheadline.weight(.semibold))
         .redacted(reason: isLoading ? .placeholder : [])
       switch state {
       case .loading:
         HStack(spacing: 12) {
           ProgressView().tint(.white).controlSize(.large)
-          Text("Getting the weather…").font(.title2.weight(.semibold))
+          Text("Getting the weather…").font(.title3.weight(.semibold))
         }
-        .frame(height: 86, alignment: .leading)
+        .frame(height: 76, alignment: .leading)
         Group {
-          Text(verbatim: "October 00 (Sat) Clear")
-            .font(.title3.weight(.semibold))
-            .padding(.top, 6)
-          Text(verbatim: "High 00° Low 00° Rain 0%")
+          Text(verbatim: "10/00 (Sat) Clear")
+            .font(.headline)
+            .padding(.top, 10)
+          Text(verbatim: "High 00° Low 00°")
             .font(.subheadline)
         }
         .redacted(reason: .placeholder)
@@ -40,73 +59,94 @@ struct HomeHeader: View {
       case .noData:
         bigText(Text("In ? days"))
         Text("Couldn't get the weather")
-          .font(.title3.weight(.semibold))
-          .padding(.top, 6)
+          .font(.headline)
+          .padding(.top, 10)
         Button(action: retry) {
           Label("Try Again", systemImage: "arrow.clockwise")
             .foregroundStyle(.black)
         }
         .buttonStyle(.glassProminent)
         .tint(.white)
-        .padding(.top, 10)
+        .padding(.top, 12)
       case .sunny(let next):
         bigText(daysAway(next.daysAway))
-        Text(verbatim: "\(next.day.date.dayWithWeekday) \(next.day.condition.localizedName)")
-          .font(.title3.weight(.semibold))
-          .padding(.top, 6)
+        Label {
+          Text(verbatim: "\(next.day.date.dayWithWeekday) \(next.day.condition.localizedName)")
+        } icon: {
+          Image(systemName: "\(next.day.symbolName).fill")
+        }
+        .labelStyle(.titleAndIcon)
+        .font(.headline)
+        .padding(.top, 10)
         Text(
-          "High \(next.day.highTemperature.degrees(in: temperatureUnit)) Low \(next.day.lowTemperature.degrees(in: temperatureUnit)) Rain \(next.day.precipitationChance.percent)"
+          "High \(next.day.highTemperature.degrees(in: temperatureUnit)) Low \(next.day.lowTemperature.degrees(in: temperatureUnit))"
         )
         .font(.subheadline)
-        .opacity(0.9)
+        .padding(.top, 2)
       case .noneInRange:
-        bigText(Text("Maybe not for a while"), size: 52)
+        bigText(Text("Maybe not for a while"), size: 46)
         Text("No sunny day in the next 10 days")
-          .font(.title3.weight(.semibold))
-          .padding(.top, 6)
+          .font(.headline)
+          .padding(.top, 10)
         Text("It shows up here when the forecast changes")
           .font(.subheadline)
-          .opacity(0.9)
-      }
-    }
-    .foregroundStyle(.white)
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .overlay(alignment: .topTrailing) {
-      if let symbol {
-        Image(systemName: symbol)
-          .font(.system(size: 64))
-          .foregroundStyle(.white.opacity(0.95))
-          .offset(y: -6)
-          .accessibilityHidden(true)
+          .padding(.top, 2)
       }
     }
   }
 
-  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
-
-  private var isLoading: Bool {
-    if case .loading = state { true } else { false }
-  }
-
-  private var symbol: String? {
-    switch state {
-    case .loading: nil
-    case .noData: "icloud.slash.fill"
-    case .sunny(let next): "\(next.day.symbolName).fill"
-    case .noneInRange: "cloud.fill"
-    }
+  private func bigText(_ text: Text, size: CGFloat = 64) -> some View {
+    text
+      .font(.system(size: size, weight: .bold))
+      .lineLimit(1)
+      .minimumScaleFactor(0.5)
+      .padding(.top, 4)
   }
 
   private func daysAway(_ days: Int) -> Text {
     days == 1 ? Text("Tomorrow") : Text("In \(days) days")
   }
 
-  private func bigText(_ text: Text, size: CGFloat = 72) -> some View {
-    text
-      .font(.system(size: size, weight: .bold))
-      .lineLimit(1)
-      .minimumScaleFactor(0.6)
-      // Shrinks before it reaches the symbol, which longer English text such as "In ? days" does.
-      .padding(.trailing, symbol == nil ? 0 : 100)
+  // MARK: - Today
+
+  @ViewBuilder private var todayColumn: some View {
+    VStack(spacing: 10) {
+      Text("Today")
+        .font(.subheadline.weight(.semibold))
+        .redacted(reason: isLoading ? .placeholder : [])
+      if let today {
+        Image(systemName: "\(today.symbolName).fill")
+          .font(.system(size: 40))
+          .frame(height: 46)
+          .accessibilityHidden(true)
+        Text(verbatim: today.condition.localizedName)
+          .font(.headline)
+          .multilineTextAlignment(.center)
+          .lineLimit(2)
+          .minimumScaleFactor(0.8)
+      } else if isLoading {
+        Group {
+          Image(systemName: "cloud.fill")
+            .font(.system(size: 40))
+            .frame(height: 46)
+          Text(verbatim: "Cloudy")
+            .font(.headline)
+        }
+        .redacted(reason: .placeholder)
+        .accessibilityHidden(true)
+      } else {
+        Text(verbatim: "—")
+          .font(.title2)
+          .frame(height: 46)
+          .accessibilityHidden(true)
+      }
+    }
+    .accessibilityElement(children: .combine)
+  }
+
+  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
+
+  private var isLoading: Bool {
+    if case .loading = state { true } else { false }
   }
 }

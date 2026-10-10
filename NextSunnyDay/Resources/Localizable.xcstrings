@@ -904,16 +904,6 @@
         }
       }
     },
-    "The next sunny day is" : {
-      "localizations" : {
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "次の晴れは"
-          }
-        }
-      }
-    },
     "Time" : {
       "localizations" : {
         "ja" : {
@@ -930,6 +920,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "今日"
+          }
+        }
+      }
+    },
+    "Today: %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日：%@"
           }
         }
       }

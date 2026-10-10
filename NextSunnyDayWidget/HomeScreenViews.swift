@@ -5,121 +5,99 @@ import UIKit
 import Weather
 import WidgetKit
 
-/// 「次の晴れ」, 「あと3日」, the day and the region.
+/// The answer on top: the region, 「あと3日」 and the day. Below a line, today's weather.
 struct SmallWidgetView: View {
   let entry: SunnyEntry
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
-      HStack(alignment: .top) {
-        WidgetTitle()
-        Spacer(minLength: 4)
-        WidgetSymbol(state: entry.state)
-          .font(.title3)
-      }
+      AnswerLabel(entry: entry)
       Spacer(minLength: 4)
-      Headline(state: entry.state, size: 30)
+      Headline(state: entry.state, size: 32)
       Detail(state: entry.state)
-      Footnote(entry: entry, showsTapToUpdate: true)
+      if case .noData = entry.state {
+        Text("Tap to update")
+          .font(.caption2)
+          .opacity(0.9)
+      }
+      Line()
+        .padding(.top, 8)
+        .padding(.bottom, 7)
+      TodayRow(today: entry.today)
     }
   }
 }
 
-/// The small layout, with the next five days on the right.
+/// The answer and, split by a line, today's weather in a column.
 struct MediumWidgetView: View {
   let entry: SunnyEntry
 
   var body: some View {
-    HStack(alignment: .bottom, spacing: 8) {
+    HStack(spacing: 16) {
       VStack(alignment: .leading, spacing: 0) {
-        WidgetTitle()
+        HStack(alignment: .top) {
+          AnswerLabel(entry: entry)
+          Spacer(minLength: 4)
+          AttributionMarkImage(data: entry.attributionMark)
+            .frame(height: 9)
+        }
         Spacer(minLength: 4)
-        Headline(state: entry.state, size: 32)
+        Headline(state: entry.state, size: 44)
         Detail(state: entry.state)
         if case .noData = entry.state {
           LastUpdate(entry: entry)
-        } else {
-          Footnote(entry: entry, showsTapToUpdate: false)
         }
       }
-      Spacer(minLength: 0)
-      switch entry.state {
-      case .noData:
-        VStack(spacing: 6) {
-          WidgetSymbol(state: entry.state)
-            .font(.system(size: 36))
-          Footnote(entry: entry, showsTapToUpdate: true)
-        }
-        .frame(maxHeight: .infinity)
-      case .noRegion:
-        // Where the days go once a region is chosen.
-        HStack(spacing: 2) {
-          ForEach(0..<5, id: \.self) { _ in
-            PlaceholderDayColumn()
-          }
-        }
-      case .sunny, .noneInRange:
-        HStack(spacing: 2) {
-          ForEach(entry.days.prefix(5), id: \.date) { day in
-            DayColumn(
-              day: day, isToday: day.date == entry.days.first?.date, level: entry.level,
-              temperatureUnit: entry.temperatureUnit)
-          }
-        }
-      }
-    }
-    .overlay(alignment: .topTrailing) {
-      AttributionMarkImage(data: entry.attributionMark)
-        .frame(height: 9)
+      .frame(maxWidth: .infinity, alignment: .leading)
+      Line(vertical: true)
+      TodayColumn(today: entry.today)
+        .frame(width: 84)
     }
   }
 }
 
-/// A header like the small widget's, then seven days.
+/// The medium layout on top, then six days from tomorrow.
 struct LargeWidgetView: View {
   let entry: SunnyEntry
 
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      HStack(alignment: .top) {
+      HStack(spacing: 16) {
         VStack(alignment: .leading, spacing: 0) {
-          WidgetTitle()
-          Headline(state: entry.state, size: 30)
-          if case .sunny(let next) = entry.state, let placeName = entry.placeName {
-            Text(
-              verbatim:
-                "\(next.day.date.monthDayWeekday) \(next.day.condition.localizedName) · \(placeName)"
-            )
-            .font(.caption2.weight(.bold))
-            .lineLimit(1)
-          } else {
-            Detail(state: entry.state)
-          }
+          AnswerLabel(entry: entry)
+          Spacer(minLength: 4)
+          Headline(state: entry.state, size: 44)
+          Detail(state: entry.state)
         }
-        Spacer(minLength: 4)
-        WidgetSymbol(state: entry.state)
-          .font(.system(size: 40))
+        .frame(maxWidth: .infinity, alignment: .leading)
+        Line(vertical: true)
+        TodayColumn(today: entry.today)
+          .frame(width: 84)
       }
+      .frame(height: 116)
+      Line()
       switch entry.state {
       case .noData:
         Spacer(minLength: 0)
-        Footnote(entry: entry, showsTapToUpdate: true)
-          .frame(maxWidth: .infinity)
+        VStack(spacing: 4) {
+          Text("Tap to update")
+            .font(.subheadline.weight(.semibold))
+          LastUpdate(entry: entry)
+        }
+        .frame(maxWidth: .infinity)
         Spacer(minLength: 0)
       case .noRegion:
         // Where the days go once a region is chosen.
         VStack(spacing: 2) {
-          ForEach(0..<7, id: \.self) { _ in
+          ForEach(0..<6, id: \.self) { _ in
             PlaceholderDayRow()
           }
         }
         Spacer(minLength: 0)
       case .sunny, .noneInRange:
         VStack(spacing: 2) {
-          ForEach(entry.days.prefix(7), id: \.date) { day in
-            DayRow(
-              day: day, isToday: day.date == entry.days.first?.date, level: entry.level,
-              temperatureUnit: entry.temperatureUnit)
+          ForEach(entry.laterDays.prefix(6), id: \.date) { day in
+            DayRow(day: day, level: entry.level, temperatureUnit: entry.temperatureUnit)
           }
         }
         Spacer(minLength: 0)
@@ -133,21 +111,22 @@ struct LargeWidgetView: View {
 
 // MARK: - Parts
 
-/// 「次の晴れ」.
-struct WidgetTitle: View {
-  var body: some View {
-    Text("Next Sunny Day")
-      .font(.caption2.weight(.bold))
-  }
-}
-
-/// The weather symbol of the next sunny day, or why there is none.
-struct WidgetSymbol: View {
-  let state: SunnyEntry.State
+/// 「港区 · 次の晴れ」, or 「次の晴れ」 without a region.
+private struct AnswerLabel: View {
+  let entry: SunnyEntry
 
   var body: some View {
-    Image(systemName: state.symbolName)
-      .widgetAccentable()
+    Group {
+      if entry.region == nil {
+        Text("Next Sunny Day")
+      } else {
+        let place = entry.placeName ?? String(localized: "Current Location")
+        Text(verbatim: "\(place) · \(String(localized: "Next Sunny Day"))")
+      }
+    }
+    .font(.footnote.weight(.semibold))
+    .lineLimit(1)
+    .minimumScaleFactor(0.8)
   }
 }
 
@@ -165,46 +144,88 @@ private struct Headline: View {
   }
 }
 
-/// The day and its condition, or why there is none.
+/// The day's symbol, date and condition, or why there is no day.
 private struct Detail: View {
   let state: SunnyEntry.State
 
   var body: some View {
-    state.detail
-      .font(.caption2.weight(.bold))
-      .lineLimit(1)
-      .minimumScaleFactor(0.7)
+    HStack(spacing: 4) {
+      if case .sunny = state {
+        Image(systemName: state.symbolName)
+          .widgetAccentable()
+      }
+      state.detail
+    }
+    .font(.caption.weight(.semibold))
+    .lineLimit(1)
+    .minimumScaleFactor(0.7)
   }
 }
 
-/// The region's name, or 「タップして更新」 when there is no data. Tapping opens the app, which
-/// fetches when it becomes active.
-private struct Footnote: View {
-  let entry: SunnyEntry
-  let showsTapToUpdate: Bool
+/// The small widget's last row: 「今日」 and today's symbol and condition.
+private struct TodayRow: View {
+  let today: DayForecast?
 
   var body: some View {
-    Group {
-      switch entry.state {
-      case .sunny, .noneInRange:
-        if let placeName = entry.placeName {
-          Text(verbatim: placeName)
-        } else {
-          Text("Current Location")
+    HStack(spacing: 6) {
+      Text("Today")
+      Spacer(minLength: 4)
+      if let today {
+        HStack(spacing: 4) {
+          Image(systemName: today.symbolName.filledSymbol)
+          Text(verbatim: today.condition.localizedName)
+            .lineLimit(1)
         }
-      case .noData:
-        if showsTapToUpdate { Text("Tap to update") }
-      case .noRegion:
-        EmptyView()
+      } else {
+        Text(verbatim: "—")
       }
     }
-    .font(.caption2)
-    .lineLimit(1)
-    .opacity(0.85)
+    .font(.caption.weight(.semibold))
+    .accessibilityElement(children: .combine)
   }
 }
 
-/// When the forecast that has run out was fetched, for the medium widget without data.
+/// 「今日」, today's symbol and its condition, centered in a column.
+private struct TodayColumn: View {
+  let today: DayForecast?
+
+  var body: some View {
+    VStack(spacing: 4) {
+      Text("Today")
+        .font(.caption.weight(.bold))
+      Spacer(minLength: 0)
+      if let today {
+        Image(systemName: today.symbolName.filledSymbol)
+          .font(.system(size: 34))
+        Spacer(minLength: 0)
+        Text(verbatim: today.condition.localizedName)
+          .font(.caption.weight(.semibold))
+          .multilineTextAlignment(.center)
+          .lineLimit(2)
+          .minimumScaleFactor(0.8)
+      } else {
+        Text(verbatim: "—")
+          .font(.title3)
+        Spacer(minLength: 0)
+      }
+    }
+    .frame(maxHeight: .infinity)
+    .accessibilityElement(children: .combine)
+  }
+}
+
+/// A 1 pt white line between the answer and today.
+private struct Line: View {
+  var vertical = false
+
+  var body: some View {
+    Rectangle()
+      .fill(.white.opacity(0.4))
+      .frame(width: vertical ? 1 : nil, height: vertical ? nil : 1)
+  }
+}
+
+/// When the forecast that has run out was fetched, for the medium and large widgets without data.
 private struct LastUpdate: View {
   let entry: SunnyEntry
 
@@ -218,52 +239,18 @@ private struct LastUpdate: View {
   }
 }
 
-/// A day in the medium widget: weekday, symbol, high. Sunny days get a light capsule.
-private struct DayColumn: View {
-  let day: DayForecast
-  let isToday: Bool
-  let level: SunnyLevel
-  let temperatureUnit: UnitTemperature
-
-  var body: some View {
-    VStack(spacing: 4) {
-      Group {
-        if isToday { Text("Today") } else { Text(verbatim: day.date.weekday) }
-      }
-      .font(.caption2.weight(.bold))
-      .lineLimit(1)
-      .minimumScaleFactor(0.7)
-      Image(systemName: day.symbolName.filledSymbol)
-        .font(.body)
-        .frame(height: 22)
-      Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
-        .font(.caption.weight(.semibold))
-    }
-    .frame(width: 34)
-    .padding(.vertical, 6)
-    .background {
-      if level.counts(day) {
-        Capsule().fill(.white.opacity(0.25))
-      }
-    }
-  }
-}
-
 /// A day in the large widget: date, symbol, condition, high and low. Sunny rows are bold on a
 /// light capsule.
 private struct DayRow: View {
   let day: DayForecast
-  let isToday: Bool
   let level: SunnyLevel
   let temperatureUnit: UnitTemperature
 
   var body: some View {
     let isSunny = level.counts(day)
     HStack(spacing: 8) {
-      Group {
-        if isToday { Text("Today") } else { Text(verbatim: day.date.dayAndWeekday) }
-      }
-      .frame(width: 64, alignment: .leading)
+      Text(verbatim: day.date.dayAndWeekday)
+        .frame(width: 64, alignment: .leading)
       Image(systemName: day.symbolName.filledSymbol)
         .frame(width: 24)
       Text(verbatim: day.condition.localizedName)
@@ -284,24 +271,6 @@ private struct DayRow: View {
         Capsule().fill(.white.opacity(0.25))
       }
     }
-  }
-}
-
-/// A day column without data, drawn redacted.
-private struct PlaceholderDayColumn: View {
-  var body: some View {
-    VStack(spacing: 4) {
-      Text(verbatim: "00")
-        .font(.caption2.weight(.bold))
-      Image(systemName: "sun.max.fill")
-        .font(.body)
-        .frame(height: 22)
-      Text(verbatim: "00°")
-        .font(.caption.weight(.semibold))
-    }
-    .frame(width: 34)
-    .padding(.vertical, 6)
-    .redacted(reason: .placeholder)
   }
 }
 

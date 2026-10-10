@@ -53,26 +53,42 @@ struct CircularWidgetView: View {
   }
 }
 
-/// 「次の晴れ」, 「あと3日」 and the day.
+/// 「次の晴れ」, 「あと3日」 and the day, and after a thin line, today's symbol.
 struct RectangularWidgetView: View {
   let entry: SunnyEntry
 
   var body: some View {
-    VStack(alignment: .leading, spacing: 0) {
-      Label {
-        Text("Next Sunny Day")
-      } icon: {
-        Image(systemName: entry.state.symbolName)
+    HStack(spacing: 8) {
+      VStack(alignment: .leading, spacing: 0) {
+        Label {
+          Text("Next Sunny Day")
+        } icon: {
+          Image(systemName: entry.state.symbolName)
+        }
+        .font(.caption2.weight(.bold))
+        entry.state.headline
+          .font(.headline)
+          .widgetAccentable()
+        entry.state.shortDate
+          .font(.caption2)
       }
-      .font(.caption2.weight(.bold))
-      entry.state.headline
-        .font(.headline)
-        .widgetAccentable()
-      entry.state.shortDetail
-        .font(.caption2)
+      .lineLimit(1)
+      .minimumScaleFactor(0.7)
+      .frame(maxWidth: .infinity, alignment: .leading)
+      if let today = entry.today {
+        Rectangle()
+          .frame(width: 1)
+          .opacity(0.5)
+          .padding(.vertical, 6)
+        VStack(spacing: 2) {
+          Text("Today")
+            .font(.caption2.weight(.bold))
+          Image(systemName: today.symbolName.filledSymbol)
+            .font(.title3)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text("Today: \(today.condition.localizedName)"))
+      }
     }
-    .lineLimit(1)
-    .minimumScaleFactor(0.7)
-    .frame(maxWidth: .infinity, alignment: .leading)
   }
 }
