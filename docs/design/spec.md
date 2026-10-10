@@ -13,6 +13,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
 | Manual refresh | Pull to refresh on Home. |
 | Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
+| Apple Watch | A one-screen watch app and complications (circular, corner, rectangular, inline), with the regions, the sunny level and the unit from the iPhone (#107). See [Apple Watch](#apple-watch). |
 | Siri and Shortcuts | One App Shortcut answers when the next sunny day is, for a saved region or the first one, with a dialog and a snippet (#104). See [Siri and Shortcuts](#siri-and-shortcuts). |
 | Notifications | One notification the day before a sunny spell starts, for one region at a chosen time, from the cached forecast (#105). See [Notifications](#notifications). |
 | Visual direction | Close to iOS 26 standard apps: system colors and materials, SF Symbols and grouped cards. System orange is the single accent and carries the "next sunny day" header, which brightens toward yellow at the top like sunlight. |
@@ -245,6 +246,31 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
 - The images are the widget views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
 - **Region:** each widget has a 「地域」 setting (Edit Widget) listing the saved regions. Until one is picked, and after the picked region is removed, it shows the first region in the app's list (#103).
 - A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」, with 「—」 for today. The large widget draws its days redacted, where the forecast goes once a region is chosen.
+
+## Apple Watch
+
+![Watch app: the top, scrolled, the bottom, and the region list](images/watch-app.jpg)
+
+![Watch app states: none in range, no data, a failed refresh under a cached forecast, no region](images/watch-app-states.jpg)
+
+![Complications: rectangular and circular when sunny, at the laundry level, none in range, no data and no region; the corner on a tinted face; the Smart Stack](images/watch-complications.jpg)
+
+The images were taken on an Apple Watch Series 12 (46 mm) simulator (watchOS 27.0) with the recorded forecasts. The watch has no light appearance, so each image is one appearance.
+
+The watch shows what the complications point to: the next sunny day of one region (#107). Regions, the sunny level and the temperature unit come from the iPhone; managing them, the day detail and notifications stay on the iPhone.
+
+- **App, one screen,** on the [header gradient](#visual-language) of its state as the full background (orange, `systemGray`, or `systemGray` darkened toward `systemGray2` without data or a region; watchOS has no numbered grays). The region's name is the white navigation title. From the top: 「次の晴れ」 (`footnote` semibold), the answer in 40 pt bold, the day's symbol with 「10/11(日) 快晴」 (`headline`), 「最高 25° 最低 15°」 (`footnote`); a 1 pt white line at 40 %; 「今日」 with today's symbol and condition; a line; the days after today (date, symbol, high and low), the days that count bold on a light band as in the large widget. At the bottom 「今日 16:18 に更新」, the Apple Weather mark and an underlined 「データソース」 link.
+- **Symbols** use their own colors (`multicolor`), as the system's weather complications do on the watch.
+- **States:** 「天気を取得中…」 while the first fetch runs; 「あと？日」 with 「天気を取得できなかったよ」 (or 「位置情報がオフになっているよ」 / 「今いる場所がわからなかったよ」 for the current location) and a white 「もう一度試す」 button as on Home; under a cached forecast, 「天気を更新できなかったよ」 with the same button. Before the iPhone sends a region: an iPhone symbol and 「iPhoneのアプリで地域を選んでね。」
+- **Regions:** with more than one saved region, a toolbar button (`list.bullet`) opens the list in the iPhone's order, worded as the iPhone's region list, with a checkmark on the shown one. Each device keeps its own shown region; the watch starts with the first.
+- **Complications** are the Lock Screen widgets on the watch face, plus the corner. On a full-color face the answer is orange and the symbols have their own colors; on a tinted face the system draws them in one color.
+  - rectangular: the Lock Screen layout. Today is a small column (`body` symbol), and the answer takes the room beside it (`title2` semibold, scaled down to fit).
+  - circular: the symbol over 「あした」 / 「3日」.
+  - corner: the symbol, with 「あと3日」 along the bezel.
+  - inline: the Lock Screen sentence.
+  - In the Smart Stack the rectangular one has the orange or gray background of the Home Screen widgets, with white text and symbols.
+  - States as on the Lock Screen; without a region the rectangular one says 「iPhoneで地域を選んでね」.
+- **Region:** the face's editor lists one complication per saved region (watchOS has no Edit Widget screen).
 
 ## Siri and Shortcuts
 
