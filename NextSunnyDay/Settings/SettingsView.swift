@@ -1,24 +1,30 @@
+import Notice
 import Region
 import SwiftUI
 import Units
 
-/// The settings sheet: region, sunny level, temperature unit and the weather data note.
+/// The settings sheet: region, sunny level, notifications, temperature unit and the weather data
+/// note.
 struct SettingsView: View {
   @Environment(RegionSelection.self) private var regionSelection
   @Environment(RegionForecast.self) private var regionForecast
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+  @Environment(NoticeSelection.self) private var noticeSelection
   @Environment(\.dismiss) private var dismiss
+  @State private var path: [SettingsRoute]
 
-  private enum Route: Hashable {
-    case region, sunnyLevel, about
+  /// - Parameter route: A screen to open at once, such as the notification settings when the
+  ///   system's settings ask for them.
+  init(route: SettingsRoute? = nil) {
+    _path = State(initialValue: route.map { [$0] } ?? [])
   }
 
   var body: some View {
-    NavigationStack {
+    NavigationStack(path: $path) {
       Form {
         Section {
-          NavigationLink(value: Route.region) {
+          NavigationLink(value: SettingsRoute.region) {
             LabeledContent {
               regionName
             } label: {
@@ -27,7 +33,7 @@ struct SettingsView: View {
           }
         }
         Section {
-          NavigationLink(value: Route.sunnyLevel) {
+          NavigationLink(value: SettingsRoute.sunnyLevel) {
             LabeledContent {
               Text(sunnyLevelSelection.level.title)
             } label: {
@@ -36,6 +42,19 @@ struct SettingsView: View {
           }
         } footer: {
           Text("Choose which kinds of days count as sunny.")
+        }
+        Section {
+          NavigationLink(value: SettingsRoute.notifications) {
+            LabeledContent {
+              if noticeSelection.isOn {
+                Text(verbatim: noticeSelection.setting.time.formatted)
+              } else {
+                Text("Off")
+              }
+            } label: {
+              Label("Notifications", systemImage: "bell.fill")
+            }
+          }
         }
         Section {
           Picker(selection: temperatureUnit) {
@@ -50,7 +69,7 @@ struct SettingsView: View {
           }
         }
         Section {
-          NavigationLink(value: Route.about) {
+          NavigationLink(value: SettingsRoute.about) {
             Label("About Weather Data", systemImage: "info.circle")
           }
         } footer: {
@@ -66,10 +85,11 @@ struct SettingsView: View {
           Button(role: .confirm) { dismiss() }
         }
       }
-      .navigationDestination(for: Route.self) { route in
+      .navigationDestination(for: SettingsRoute.self) { route in
         switch route {
         case .region: RegionListView()
         case .sunnyLevel: SunnyLevelView()
+        case .notifications: NotificationsView()
         case .about: AboutView()
         }
       }
@@ -94,6 +114,11 @@ struct SettingsView: View {
   private var version: String {
     Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
   }
+}
+
+/// The screens Settings pushes.
+enum SettingsRoute: Hashable {
+  case region, sunnyLevel, notifications, about
 }
 
 #Preview {

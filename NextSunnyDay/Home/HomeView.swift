@@ -12,9 +12,12 @@ struct HomeView: View {
   @Environment(RegionForecast.self) private var regionForecast
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
   @Environment(RegionSelection.self) private var regionSelection
+  @Environment(NoticeSelection.self) private var noticeSelection
   @Environment(\.scenePhase) private var scenePhase
   @State private var path: [HomeRoute] = []
   @State private var isShowingSettings = false
+  /// The screen Settings opens on, when it isn't its first.
+  @State private var settingsRoute: SettingsRoute?
   @State private var today = Calendar.current.startOfDay(for: .now)
 
   /// When any of these change, the forecast is fetched if it is stale. A new day only moves
@@ -43,11 +46,18 @@ struct HomeView: View {
         }
       }
       .sheet(isPresented: $isShowingSettings) {
-        SettingsView()
+        SettingsView(route: settingsRoute)
       }
       .refreshable {
         await regionForecast.refresh(for: region)
       }
+    }
+    .onChange(of: noticeSelection.isSettingsRequested, initial: true) { _, isRequested in
+      // The system's notification settings asked for the app's.
+      guard isRequested else { return }
+      noticeSelection.isSettingsRequested = false
+      settingsRoute = .notifications
+      isShowingSettings = true
     }
     .onAppear {
       // Before the first frame, so that a cached forecast never flashes the loading state.
@@ -175,6 +185,7 @@ struct HomeView: View {
     }
     ToolbarItem(placement: .topBarTrailing) {
       Button("Settings", systemImage: "gearshape") {
+        settingsRoute = nil
         isShowingSettings = true
       }
     }

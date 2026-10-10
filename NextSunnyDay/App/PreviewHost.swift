@@ -2,6 +2,9 @@ import CoreLocation
 import Forecast
 import Foundation
 import LocationTesting
+import Notice
+import Notifications
+import NotificationsTesting
 import PlaceSearchTesting
 import Region
 import SunnyDay
@@ -34,12 +37,17 @@ struct PreviewHost<Content: View>: View {
     /// Three regions, Minato chosen: the current location (also in Minato) and Singapore, each
     /// with the weather recorded there.
     case severalRegions
+    /// Tokyo's recording, with notifications on and allowed.
+    case notificationsOn
+    /// Tokyo's recording, with notifications turned off in the system's settings.
+    case notificationsDenied
   }
 
   @State private var regionSelection: RegionSelection
   @State private var sunnyLevelSelection: SunnyLevelSelection
   @State private var temperatureUnitSelection: TemperatureUnitSelection
   @State private var regionForecast: RegionForecast
+  @State private var noticeSelection: NoticeSelection
   private let features: AppFeatures
   private let content: Content
 
@@ -58,6 +66,7 @@ struct PreviewHost<Content: View>: View {
     _regionForecast = State(
       initialValue: RegionForecast(
         updater: features.forecastUpdater, locator: features.regionLocator))
+    _noticeSelection = State(initialValue: NoticeSelection(features: features))
   }
 
   var body: some View {
@@ -66,6 +75,7 @@ struct PreviewHost<Content: View>: View {
       .environment(sunnyLevelSelection)
       .environment(temperatureUnitSelection)
       .environment(regionForecast)
+      .environment(noticeSelection)
       .environment(\.regionSearch, features.regionSearch)
       .environment(\.forecastUpdater, features.forecastUpdater)
   }
@@ -92,7 +102,7 @@ extension AppFeatures {
     var regions: [SavedRegion] = [place]
     var location = FakeLocationProvider()
     switch scenario {
-    case .tokyo, .noRegion:
+    case .tokyo, .noRegion, .notificationsOn, .notificationsDenied:
       weather = FakeWeatherProvider(.tokyo)
       if scenario == .noRegion { regions = [] }
     case .singapore:
@@ -144,13 +154,27 @@ extension AppFeatures {
     let regionStore = RegionStore(defaults: defaults)
     regionStore.save(regions)
     let places = FakePlaceSearch()
+    let noticeStore = NoticeSettingStore(defaults: defaults)
+    let notifications: FakeNotificationScheduler
+    switch scenario {
+    case .notificationsOn:
+      noticeStore.save(NoticeSetting(isOn: true, regionID: nil, time: .default))
+      notifications = FakeNotificationScheduler(authorization: .authorized)
+    case .notificationsDenied:
+      noticeStore.save(NoticeSetting(isOn: true, regionID: nil, time: .default))
+      notifications = FakeNotificationScheduler(authorization: .denied)
+    default:
+      notifications = FakeNotificationScheduler()
+    }
     return AppFeatures(
       regionStore: regionStore,
       regionSearch: RegionSearch(places: places),
       regionLocator: RegionLocator(location: location, places: places),
       forecastUpdater: ForecastUpdater(weather: weather, cache: cache),
       sunnyLevelStore: SunnyLevelStore(defaults: defaults),
-      temperatureUnitStore: TemperatureUnitStore(defaults: defaults)
+      temperatureUnitStore: TemperatureUnitStore(defaults: defaults),
+      noticeStore: noticeStore,
+      noticeScheduler: NoticeScheduler(notifications: notifications)
     )
   }
 }

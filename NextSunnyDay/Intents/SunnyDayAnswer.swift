@@ -66,11 +66,14 @@ extension Date {
 extension AppFeatures {
   /// The answer for a saved region, or for the first one when `regionID` is `nil` or the region
   /// was removed (the widget's rule, ADR 0007). The forecast is fetched first when it isn't fresh,
-  /// as Home does; when that fails, the cached one answers.
+  /// as Home does; when that fails, the cached one answers. The notifications are scheduled
+  /// again afterwards.
   func nextSunnyDayAnswer(regionID: String?, now: Date = .now) async -> SunnyDayAnswer {
     guard let region = regionStore.loadList().region(id: regionID) else { return .noRegion }
     let regionForecast = RegionForecast(updater: forecastUpdater, locator: regionLocator)
     await regionForecast.refreshIfNeeded(for: region)
+    // A fetch may have changed the forecast the notifications come from.
+    await scheduleNotices(now: now)
     return SunnyDayAnswer(
       region: region, forecast: regionForecast.forecast, level: sunnyLevelStore.load(), now: now)
   }

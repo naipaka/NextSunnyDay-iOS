@@ -2,6 +2,8 @@ import CoreLocation
 import Forecast
 import Foundation
 import LocationTesting
+import Notice
+import NotificationsTesting
 import PlaceSearchTesting
 import Region
 import SunnyDay
@@ -41,7 +43,9 @@ final class SunnyDayAnswerTests {
       regionLocator: RegionLocator(location: FakeLocationProvider(), places: places),
       forecastUpdater: ForecastUpdater(weather: weather, cache: cache),
       sunnyLevelStore: SunnyLevelStore(defaults: defaults),
-      temperatureUnitStore: TemperatureUnitStore(defaults: defaults))
+      temperatureUnitStore: TemperatureUnitStore(defaults: defaults),
+      noticeStore: NoticeSettingStore(defaults: defaults),
+      noticeScheduler: NoticeScheduler(notifications: FakeNotificationScheduler()))
   }
 
   @Test func answersForTheChosenRegion() async {

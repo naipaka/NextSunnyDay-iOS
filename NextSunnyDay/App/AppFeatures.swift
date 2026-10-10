@@ -1,4 +1,5 @@
 import Forecast
+import Notice
 import Region
 import SunnyDay
 import SwiftUI
@@ -13,8 +14,10 @@ struct AppFeatures {
   var forecastUpdater: ForecastUpdater
   var sunnyLevelStore: SunnyLevelStore
   var temperatureUnitStore: TemperatureUnitStore
+  var noticeStore: NoticeSettingStore
+  var noticeScheduler: NoticeScheduler
 
-  /// WeatherKit, Core Location, MapKit and the App Group.
+  /// WeatherKit, Core Location, MapKit, notifications and the App Group.
   static var live: AppFeatures {
     AppFeatures(
       regionStore: RegionStore(),
@@ -22,7 +25,9 @@ struct AppFeatures {
       regionLocator: RegionLocator(),
       forecastUpdater: ForecastUpdater(),
       sunnyLevelStore: SunnyLevelStore(),
-      temperatureUnitStore: TemperatureUnitStore()
+      temperatureUnitStore: TemperatureUnitStore(),
+      noticeStore: NoticeSettingStore(),
+      noticeScheduler: NoticeScheduler()
     )
   }
 }

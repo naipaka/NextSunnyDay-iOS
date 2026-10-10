@@ -291,12 +291,32 @@
         }
       }
     },
+    "Get a notification the day before a sunny day, at this time. None while the sunny days continue." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れそうな日の前日、この時刻にお知らせするよ。晴れが続くあいだはお休みするよ。"
+          }
+        }
+      }
+    },
     "Getting the weather…" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "天気を取得中…"
+          }
+        }
+      }
+    },
+    "Good news: sunny tomorrow! %@, with a high of %@ and a low of %@." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あしたは晴れそう！%1$@で、最高 %2$@ 最低 %3$@ だよ。"
           }
         }
       }
@@ -574,12 +594,52 @@
         }
       }
     },
+    "Notifications" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
+          }
+        }
+      }
+    },
+    "Notifications are off for this app. Turn them on in Settings to get them." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知がオフになっているよ。受け取るには設定でオンにしてね。"
+          }
+        }
+      }
+    },
+    "Notify the Day Before" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れの前日に通知"
+          }
+        }
+      }
+    },
     "Now" : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "今"
+          }
+        }
+      }
+    },
+    "Off" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
           }
         }
       }
@@ -874,6 +934,16 @@
         }
       }
     },
+    "Time" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時刻"
+          }
+        }
+      }
+    },
     "Today" : {
       "localizations" : {
         "ja" : {
@@ -890,6 +960,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "あした"
+          }
+        }
+      }
+    },
+    "Tomorrow's weather" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "あしたの天気"
           }
         }
       }

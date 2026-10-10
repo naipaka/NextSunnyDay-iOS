@@ -1,10 +1,12 @@
 import CoreLocation
 import Forecast
 import Foundation
+import Notice
 import Region
 import RegionIntents
 import SunnyDay
 import Units
+import Weather
 import WidgetKit
 
 /// Builds the timeline from what the app shares in the App Group: the regions, the sunny level, the
@@ -57,6 +59,7 @@ struct Provider: AppIntentTimelineProvider {
     if fetchingIfStale, cached.map({ !updater.isFresh($0) }) ?? true {
       if let fetched = await fetch(region, cached: cached, updater: updater) {
         cached = fetched
+        await scheduleNotices(after: fetched, level: level)
       } else {
         fetchFailed = true
       }
@@ -91,5 +94,38 @@ struct Provider: AppIntentTimelineProvider {
     guard let coordinate = located?.coordinate ?? cached?.coordinate else { return nil }
     return try? await updater.fetch(
       regionID: region.id, placeName: placeName, coordinate: coordinate)
+  }
+
+  /// Schedules the app's notifications again when the widget fetched the region they are about,
+  /// as the app does after its own fetches: the widget's daily fetch often runs when the app
+  /// doesn't.
+  private func scheduleNotices(after fetched: CachedForecast, level: SunnyLevel) async {
+    let setting = NoticeSettingStore().load()
+    guard
+      setting.isOn,
+      let region = RegionStore().loadList().region(id: setting.regionID),
+      region.id == fetched.regionID
+    else { return }
+    let unit = TemperatureUnitStore().load().unit(for: .current)
+    let placeName = region.placeName ?? fetched.placeName
+    let notices = setting.notices(
+      in: fetched.forecast.daily, fetchedAt: fetched.fetchedAt, isSunny: level.counts)
+    await NoticeScheduler().schedule(notices, regionID: region.id) { notice in
+      NoticeText(notice, placeName: placeName, unit: unit)
+    }
+  }
+}
+
+extension NoticeText {
+  /// Worded as the app words it (`NoticeSchedule.swift` in the app).
+  init(_ notice: Notice, placeName: String?, unit: UnitTemperature) {
+    let day = notice.day
+    self.init(
+      title: placeName ?? String(localized: "Current Location"),
+      body: String(
+        localized:
+          "Good news: sunny tomorrow! \(day.condition.localizedName), with a high of \(day.highTemperature.degrees(in: unit)) and a low of \(day.lowTemperature.degrees(in: unit))."
+      ),
+      hiddenPreviewsBody: String(localized: "Tomorrow's weather"))
   }
 }
