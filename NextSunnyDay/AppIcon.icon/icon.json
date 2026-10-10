@@ -74,7 +74,19 @@
       "translucency": {
         "enabled": false,
         "value": 0.5
-      }
+      },
+      "position-specializations": [
+        {
+          "idiom": "watchOS",
+          "value": {
+            "scale": 1.06,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Face",
@@ -140,7 +152,19 @@
       "translucency": {
         "enabled": false,
         "value": 0.5
-      }
+      },
+      "position-specializations": [
+        {
+          "idiom": "watchOS",
+          "value": {
+            "scale": 1.06,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "Mane",
@@ -215,7 +239,19 @@
       "translucency": {
         "enabled": false,
         "value": 0.5
-      }
+      },
+      "position-specializations": [
+        {
+          "idiom": "watchOS",
+          "value": {
+            "scale": 1.06,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
     }
   ],
   "supported-platforms": {
