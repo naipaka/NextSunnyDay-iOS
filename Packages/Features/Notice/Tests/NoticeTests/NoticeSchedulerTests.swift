@@ -14,7 +14,10 @@ struct NoticeSchedulerTests {
       condition: .clear, symbolName: "sun.max", highTemperature: .init(value: 24, unit: .celsius),
       lowTemperature: .init(value: 16, unit: .celsius), precipitationChance: 0, sunrise: nil,
       sunset: nil, uvIndex: 0, windSpeed: .init(value: 0, unit: .kilometersPerHour),
-      windDirection: .init(value: 0, unit: .degrees))
+      windDirection: .init(value: 0, unit: .degrees),
+      daytime: DaytimeForecast(
+        condition: .clear, precipitationChance: 0, minimumHumidity: 0.5,
+        highWindSpeed: .init(value: 0, unit: .kilometersPerHour)))
     return Notice(date: date.addingTimeInterval(Double(daysLater - 1) * 86_400), day: day)
   }
 

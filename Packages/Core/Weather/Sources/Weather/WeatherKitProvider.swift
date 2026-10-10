@@ -55,7 +55,19 @@ extension DayForecast {
       sunset: day.sun.sunset,
       uvIndex: day.uvIndex.value,
       windSpeed: day.wind.speed,
-      windDirection: day.wind.direction
+      windDirection: day.wind.direction,
+      daytime: DaytimeForecast(day.daytimeForecast)
+    )
+  }
+}
+
+extension DaytimeForecast {
+  init(_ part: DayPartForecast) {
+    self.init(
+      condition: WeatherCondition(part.condition),
+      precipitationChance: part.precipitationChance,
+      minimumHumidity: part.minimumHumidity,
+      highWindSpeed: part.highWindSpeed
     )
   }
 }

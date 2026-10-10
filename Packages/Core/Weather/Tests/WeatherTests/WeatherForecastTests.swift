@@ -15,6 +15,15 @@ struct WeatherForecastTests {
     #expect(forecast.daily.allSatisfy { (0...1).contains($0.precipitationChance) })
   }
 
+  @Test func recordedForecastConvertsTheDaytime() {
+    let daytime = WeatherRecording.tokyo.recorded.daily[0].daytime
+
+    #expect(daytime.condition == .mostlyClear)
+    #expect(daytime.precipitationChance == 0)
+    #expect(daytime.minimumHumidity == 0.51)
+    #expect(abs(daytime.highWindSpeed.converted(to: .kilometersPerHour).value - 11.69) < 0.01)
+  }
+
   @Test(arguments: WeatherRecording.allCases)
   func everyRecordingHasTenDaysAndTheirHours(_ recording: WeatherRecording) {
     let forecast = recording.recorded

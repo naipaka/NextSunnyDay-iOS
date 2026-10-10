@@ -41,12 +41,15 @@ public struct DayForecast: Codable, Equatable, Sendable {
   public var windSpeed: Measurement<UnitSpeed>
   /// The direction the wind blows from.
   public var windDirection: Measurement<UnitAngle>
+  /// The forecast from 7:00 to 19:00.
+  public var daytime: DaytimeForecast
 
   public init(
     date: Date, condition: WeatherCondition, symbolName: String,
     highTemperature: Measurement<UnitTemperature>, lowTemperature: Measurement<UnitTemperature>,
     precipitationChance: Double, sunrise: Date?, sunset: Date?, uvIndex: Int,
-    windSpeed: Measurement<UnitSpeed>, windDirection: Measurement<UnitAngle>
+    windSpeed: Measurement<UnitSpeed>, windDirection: Measurement<UnitAngle>,
+    daytime: DaytimeForecast
   ) {
     self.date = date
     self.condition = condition
@@ -59,6 +62,28 @@ public struct DayForecast: Codable, Equatable, Sendable {
     self.uvIndex = uvIndex
     self.windSpeed = windSpeed
     self.windDirection = windDirection
+    self.daytime = daytime
+  }
+}
+
+/// The forecast of a day from 7:00 to 19:00, when laundry hangs outside.
+public struct DaytimeForecast: Codable, Equatable, Sendable {
+  public var condition: WeatherCondition
+  /// The chance of precipitation, from 0 to 1.
+  public var precipitationChance: Double
+  /// The lowest relative humidity, from 0 to 1.
+  public var minimumHumidity: Double
+  /// The highest sustained wind speed.
+  public var highWindSpeed: Measurement<UnitSpeed>
+
+  public init(
+    condition: WeatherCondition, precipitationChance: Double, minimumHumidity: Double,
+    highWindSpeed: Measurement<UnitSpeed>
+  ) {
+    self.condition = condition
+    self.precipitationChance = precipitationChance
+    self.minimumHumidity = minimumHumidity
+    self.highWindSpeed = highWindSpeed
   }
 }
 
