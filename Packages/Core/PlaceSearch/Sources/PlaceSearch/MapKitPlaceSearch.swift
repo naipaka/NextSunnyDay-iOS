@@ -3,7 +3,14 @@ import MapKit
 
 /// Searches with MapKit: completions while typing, then the completion's coordinate.
 public struct MapKitPlaceSearch: PlaceSearching {
-  public init() {}
+  /// How long to wait for the name of a coordinate.
+  private let nameTimeout: Duration
+
+  /// - Parameter nameTimeout: How long `placeName(at:)` waits before it gives up with `nil`. The
+  ///   name is only a label for the current location, so a fetch shouldn't wait for it long.
+  public init(nameTimeout: Duration = .seconds(10)) {
+    self.nameTimeout = nameTimeout
+  }
 
   public func completions(for query: String) async throws -> [PlaceCompletion] {
     let request = await CompletionRequest()
@@ -26,13 +33,29 @@ public struct MapKitPlaceSearch: PlaceSearching {
     return Place(name: completion.title, coordinate: item.location.coordinate)
   }
 
+  /// The city of a coordinate, or `nil` when MapKit has none or doesn't answer within the
+  /// timeout. The request is cancelled when it times out.
   public func placeName(at coordinate: CLLocationCoordinate2D) async throws -> String? {
     let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
     guard let request = MKReverseGeocodingRequest(location: location) else { return nil }
-    let item = try await request.mapItems.first
-    return item?.addressRepresentations?.cityWithContext(.short)
-      ?? item?.addressRepresentations?.cityName
+    let box = RequestBox(request: request)
+    return try await withTimeout(nameTimeout) {
+      try await withTaskCancellationHandler {
+        let item = try await box.request.mapItems.first
+        return item?.addressRepresentations?.cityWithContext(.short)
+          ?? item?.addressRepresentations?.cityName
+      } onCancel: {
+        box.request.cancel()
+      }
+    }
   }
+}
+
+/// Lets the cancellation handler cancel the request from another task. `@unchecked` because
+/// `MKReverseGeocodingRequest` has no `Sendable` annotation; `cancel()` may be called from any
+/// thread.
+private struct RequestBox: @unchecked Sendable {
+  let request: MKReverseGeocodingRequest
 }
 
 extension PlaceCompletion {
