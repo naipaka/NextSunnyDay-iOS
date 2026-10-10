@@ -108,6 +108,11 @@ struct RootView: View {
     .onChange(of: watchKey) {
       settingsSync?.send()
     }
+    // Siri recognizes a region's name in a phrase only after the app tells it the regions:
+    // at launch and when they change.
+    .task(id: regionSelection.regions) {
+      NextSunnyDayShortcuts.updateAppShortcutParameters()
+    }
   }
 
   /// What the watch app gets from the iPhone (ADR 0010).
