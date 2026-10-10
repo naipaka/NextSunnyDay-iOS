@@ -8,7 +8,9 @@ public import Foundation
 ///
 /// `@unchecked` because `UserDefaults` is not marked `Sendable`, although it is thread-safe.
 public struct RegionStore: @unchecked Sendable {
-  static let key = "regions"
+  /// Where the regions are stored, for copying them to the watch. The region the app shows is
+  /// stored apart, so that each device keeps its own.
+  public static let key = "regions"
   static let selectedKey = "selectedRegion"
 
   private let defaults: UserDefaults

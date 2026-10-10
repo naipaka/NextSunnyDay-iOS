@@ -8,7 +8,8 @@ public import Foundation
 ///
 /// `@unchecked` because `UserDefaults` is not marked `Sendable`, although it is thread-safe.
 public struct SunnyLevelStore: @unchecked Sendable {
-  static let key = "sunnyLevel"
+  /// Where the level is stored, for copying it to the watch.
+  public static let key = "sunnyLevel"
 
   private let defaults: UserDefaults
 

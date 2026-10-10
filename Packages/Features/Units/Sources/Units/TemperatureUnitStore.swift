@@ -9,7 +9,8 @@ public import Foundation
 ///
 /// `@unchecked` because `UserDefaults` is not marked `Sendable`, although it is thread-safe.
 public struct TemperatureUnitStore: @unchecked Sendable {
-  static let key = "temperatureUnit"
+  /// Where the setting is stored, for copying it to the watch.
+  public static let key = "temperatureUnit"
 
   private let defaults: UserDefaults
 
