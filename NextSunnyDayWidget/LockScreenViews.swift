@@ -9,34 +9,47 @@ struct InlineWidgetView: View {
   let entry: SunnyEntry
 
   var body: some View {
+    // The sentence, or where it doesn't fit (the watch faces' inline slots are shorter than the
+    // line above the Lock Screen's clock) the answer alone: 「☀ あと3日」.
+    ViewThatFits {
+      label(sentence)
+      label(entry.state.headline)
+    }
+  }
+
+  private func label(_ text: Text) -> some View {
     Label {
-      // One sentence per state, short enough for the line above the clock in English too.
-      if entry.level == .laundry {
-        switch entry.state {
-        case .sunny(let next) where next.daysAway > 1:
-          Text("Laundry day in \(next.daysAway) days (\(next.day.date.weekday))")
-        case .sunny:
-          Text("Laundry day tomorrow")
-        case .noneInRange:
-          Text("No laundry day soon")
-        case .noData, .noRegion:
-          Text("Laundry day in ? days")
-        }
-      } else {
-        switch entry.state {
-        // 「あした」 needs no weekday.
-        case .sunny(let next) where next.daysAway > 1:
-          Text("Sunny in \(next.daysAway) days (\(next.day.date.weekday))")
-        case .sunny:
-          Text("Sunny tomorrow")
-        case .noneInRange:
-          Text("No sunny day soon")
-        case .noData, .noRegion:
-          Text("Sunny in ? days")
-        }
-      }
+      text
     } icon: {
       Image(systemName: entry.state.symbolName)
+    }
+  }
+
+  /// One sentence per state, short enough for the line above the clock in English too.
+  private var sentence: Text {
+    if entry.level == .laundry {
+      switch entry.state {
+      case .sunny(let next) where next.daysAway > 1:
+        Text("Laundry day in \(next.daysAway) days (\(next.day.date.weekday))")
+      case .sunny:
+        Text("Laundry day tomorrow")
+      case .noneInRange:
+        Text("No laundry day soon")
+      case .noData, .noRegion:
+        Text("Laundry day in ? days")
+      }
+    } else {
+      switch entry.state {
+      // 「あした」 needs no weekday.
+      case .sunny(let next) where next.daysAway > 1:
+        Text("Sunny in \(next.daysAway) days (\(next.day.date.weekday))")
+      case .sunny:
+        Text("Sunny tomorrow")
+      case .noneInRange:
+        Text("No sunny day soon")
+      case .noData, .noRegion:
+        Text("Sunny in ? days")
+      }
     }
   }
 }
