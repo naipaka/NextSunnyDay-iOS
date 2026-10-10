@@ -47,7 +47,7 @@ struct CircularWidgetView: View {
 
   var body: some View {
     VStack(spacing: 2) {
-      Image(systemName: entry.state.symbolName)
+      AccessorySymbol(name: entry.state.symbolName)
         .font(.title3)
         .widgetAccentable()
       Group {
@@ -61,6 +61,7 @@ struct CircularWidgetView: View {
       .font(.headline)
       .lineLimit(1)
       .minimumScaleFactor(0.5)
+      .answerAccent()
     }
     .padding(4)
   }
@@ -70,18 +71,41 @@ struct CircularWidgetView: View {
 struct RectangularWidgetView: View {
   let entry: SunnyEntry
 
+  /// Today stays small beside the answer. The watch's text styles are larger for the same
+  /// space, so it takes a smaller one there.
+  /// The answer is what the complication is glanced at for. On the watch, where today is small,
+  /// it takes the room beside it.
+  private static var answerFont: Font {
+    #if os(watchOS)
+      .title2.weight(.semibold)
+    #else
+      .headline
+    #endif
+  }
+
+  private static var todaySymbolFont: Font {
+    #if os(watchOS)
+      .body
+    #else
+      .title3
+    #endif
+  }
+
   var body: some View {
     HStack(spacing: 8) {
       VStack(alignment: .leading, spacing: 0) {
         Label {
           Text(entry.level.answerTitle)
         } icon: {
-          Image(systemName: entry.state.symbolName)
+          AccessorySymbol(name: entry.state.symbolName)
         }
         .font(.caption2.weight(.bold))
         entry.state.headline
-          .font(.headline)
+          .font(Self.answerFont)
+          .minimumScaleFactor(0.5)
+          .layoutPriority(1)
           .widgetAccentable()
+          .answerAccent()
         entry.state.shortDate
           .font(.caption2)
       }
@@ -96,12 +120,51 @@ struct RectangularWidgetView: View {
         VStack(spacing: 2) {
           Text("Today")
             .font(.caption2.weight(.bold))
-          Image(systemName: today.symbolName.filledSymbol)
-            .font(.title3)
+          AccessorySymbol(name: today.symbolName.filledSymbol)
+            .font(Self.todaySymbolFont)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("Today: \(today.condition.localizedName)"))
       }
+    }
+  }
+}
+
+/// A weather or state symbol. On the watch's full-color faces it has its own colors, like the
+/// system's weather complications. Elsewhere it is one color: the system's on the Lock Screen and
+/// in tinted faces, and white on the orange or gray background in the Smart Stack, where a yellow
+/// sun would be lost.
+struct AccessorySymbol: View {
+  let name: String
+
+  @Environment(\.widgetRenderingMode) private var renderingMode
+  @Environment(\.showsWidgetContainerBackground) private var showsBackground
+
+  var body: some View {
+    Image(systemName: name)
+      .symbolRenderingMode(
+        renderingMode == .fullColor && !showsBackground ? .multicolor : .monochrome)
+  }
+}
+
+extension View {
+  /// The answer in the app's orange on a full-color watch face, as the app's own accent. Elsewhere
+  /// the system's color: one color on the Lock Screen and in tinted faces, and white on the
+  /// orange or gray background in the Smart Stack.
+  func answerAccent() -> some View {
+    modifier(AnswerAccent())
+  }
+}
+
+private struct AnswerAccent: ViewModifier {
+  @Environment(\.widgetRenderingMode) private var renderingMode
+  @Environment(\.showsWidgetContainerBackground) private var showsBackground
+
+  func body(content: Content) -> some View {
+    if renderingMode == .fullColor, !showsBackground {
+      content.foregroundStyle(.orange)
+    } else {
+      content
     }
   }
 }

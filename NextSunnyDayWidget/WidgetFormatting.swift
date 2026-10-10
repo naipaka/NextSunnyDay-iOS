@@ -29,6 +29,13 @@ extension SunnyEntry.State {
     switch self {
     case .sunny(let next): Text(verbatim: next.day.date.monthDayWeekday)
     case .noData: Text("Couldn't get it")
+    case .noRegion:
+      // The watch has no screen to choose regions on; they come from the iPhone.
+      #if os(watchOS)
+        Text("Choose a region on your iPhone")
+      #else
+        detail
+      #endif
     default: detail
     }
   }
@@ -49,8 +56,8 @@ extension SunnyEntry.State {
     let color: Color =
       switch self {
       case .sunny: .orange
-      case .noneInRange: Color(.systemGray)
-      case .noData, .noRegion: Color(.systemGray2)
+      case .noneInRange: .gray
+      case .noData, .noRegion: .noDataGray
       }
     guard !increasedContrast else { return AnyShapeStyle(color) }
     let top: Color =
@@ -60,6 +67,18 @@ extension SunnyEntry.State {
         color.mix(with: .white, by: 0.18)
       }
     return AnyShapeStyle(LinearGradient(colors: [top, color], startPoint: .top, endPoint: .bottom))
+  }
+}
+
+extension Color {
+  /// `systemGray2`. watchOS has no numbered system grays; there it is `systemGray` darkened to
+  /// about `systemGray2` in dark mode, the watch's only appearance.
+  static var noDataGray: Color {
+    #if os(watchOS)
+      Color.gray.mix(with: .black, by: 0.3)
+    #else
+      Color(.systemGray2)
+    #endif
   }
 }
 
