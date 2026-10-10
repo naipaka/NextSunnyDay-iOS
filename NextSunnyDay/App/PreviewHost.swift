@@ -41,6 +41,12 @@ struct PreviewHost<Content: View>: View {
     case notificationsOn
     /// Tokyo's recording, with notifications turned off in the system's settings.
     case notificationsDenied
+    /// Minato and Hakodate with WeatherKit's live forecasts at the laundry level, Hakodate shown,
+    /// and the notification for Hakodate on two minutes after launch, scheduled for real. On a
+    /// day when Hakodate's today doesn't count and tomorrow does, switching to Minato and then
+    /// opening the notification checks on a device that it arrives and switches back. The
+    /// recordings can't be read on a device.
+    case notificationsLive
   }
 
   @State private var regionSelection: RegionSelection
@@ -126,6 +132,15 @@ extension AppFeatures {
           name: isJapanese ? "シンガポール" : "Singapore",
           coordinate: WeatherRecording.singapore.coordinate),
       ]
+    case .notificationsLive:
+      weather = WeatherKitProvider()
+      // The notification is about Hakodate, which Home shows first.
+      regions = [
+        place,
+        .place(
+          name: isJapanese ? "函館市" : "Hakodate",
+          coordinate: CLLocationCoordinate2D(latitude: 41.769, longitude: 140.729)),
+      ]
     case .locationDenied:
       weather = FakeWeatherProvider(.tokyo)
       regions = [.currentLocation]
@@ -153,9 +168,14 @@ extension AppFeatures {
 
     let regionStore = RegionStore(defaults: defaults)
     regionStore.save(regions)
+    if scenario == .notificationsLive, let hakodate = regions.last {
+      // Shown first, so that its forecast is fetched and the notification scheduled.
+      regionStore.save(RegionList(regions: regions, selectedID: hakodate.id))
+    }
     let places = FakePlaceSearch()
     let noticeStore = NoticeSettingStore(defaults: defaults)
-    let notifications: FakeNotificationScheduler
+    let notifications: any NotificationScheduling
+    let sunnyLevelStore = SunnyLevelStore(defaults: defaults)
     switch scenario {
     case .notificationsOn:
       noticeStore.save(NoticeSetting(isOn: true, regionID: nil, time: .default))
@@ -163,6 +183,15 @@ extension AppFeatures {
     case .notificationsDenied:
       noticeStore.save(NoticeSetting(isOn: true, regionID: nil, time: .default))
       notifications = FakeNotificationScheduler(authorization: .denied)
+    case .notificationsLive:
+      let soon = Calendar.current.dateComponents(
+        [.hour, .minute], from: .now.addingTimeInterval(120))
+      noticeStore.save(
+        NoticeSetting(
+          isOn: true, regionID: regions.last?.id,
+          time: NoticeTime(hour: soon.hour!, minute: soon.minute!)))
+      sunnyLevelStore.save(.laundry)
+      notifications = UserNotificationScheduler()
     default:
       notifications = FakeNotificationScheduler()
     }
@@ -171,7 +200,7 @@ extension AppFeatures {
       regionSearch: RegionSearch(places: places),
       regionLocator: RegionLocator(location: location, places: places),
       forecastUpdater: ForecastUpdater(weather: weather, cache: cache),
-      sunnyLevelStore: SunnyLevelStore(defaults: defaults),
+      sunnyLevelStore: sunnyLevelStore,
       temperatureUnitStore: TemperatureUnitStore(defaults: defaults),
       noticeStore: noticeStore,
       noticeScheduler: NoticeScheduler(notifications: notifications)
