@@ -88,19 +88,18 @@ struct LargeWidgetView: View {
         Spacer(minLength: 0)
       case .noRegion:
         // Where the days go once a region is chosen.
-        VStack(spacing: 2) {
+        // Where the days go once a region is chosen.
+        VStack(spacing: 3) {
           ForEach(0..<6, id: \.self) { _ in
             PlaceholderDayRow()
           }
         }
-        Spacer(minLength: 0)
       case .sunny, .noneInRange:
-        VStack(spacing: 2) {
+        VStack(spacing: 3) {
           ForEach(entry.laterDays.prefix(6), id: \.date) { day in
             DayRow(day: day, level: entry.level, temperatureUnit: entry.temperatureUnit)
           }
         }
-        Spacer(minLength: 0)
       }
       AttributionMarkImage(data: entry.attributionMark)
         .frame(height: 10)
@@ -239,8 +238,8 @@ private struct LastUpdate: View {
   }
 }
 
-/// A day in the large widget: date, symbol, condition, high and low. Sunny rows are bold on a
-/// light capsule.
+/// A day in the large widget: date, symbol, condition, high and low. The six rows share the
+/// height below the answer. Sunny rows are bold on a light rounded rectangle.
 private struct DayRow: View {
   let day: DayForecast
   let level: SunnyLevel
@@ -248,27 +247,29 @@ private struct DayRow: View {
 
   var body: some View {
     let isSunny = level.counts(day)
-    HStack(spacing: 8) {
+    HStack(spacing: 0) {
       Text(verbatim: day.date.dayAndWeekday)
-        .frame(width: 64, alignment: .leading)
+        .frame(width: 76, alignment: .leading)
       Image(systemName: day.symbolName.filledSymbol)
-        .frame(width: 24)
+        .frame(width: 28, alignment: .leading)
       Text(verbatim: day.condition.localizedName)
-        .font(.caption)
         .lineLimit(1)
       Spacer(minLength: 4)
-      Text(
-        verbatim:
-          "\(day.highTemperature.degrees(in: temperatureUnit)) \(day.lowTemperature.degrees(in: temperatureUnit))"
-      )
+      HStack(spacing: 4) {
+        Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
+        Text(verbatim: day.lowTemperature.degrees(in: temperatureUnit))
+          .opacity(0.75)
+      }
       .monospacedDigit()
     }
-    .font(.footnote.weight(isSunny ? .bold : .regular))
-    .padding(.horizontal, 8)
-    .padding(.vertical, 5)
+    .font(.subheadline.weight(isSunny ? .bold : .regular))
+    .lineLimit(1)
+    .minimumScaleFactor(0.8)
+    .padding(.horizontal, 10)
+    .frame(maxHeight: .infinity)
     .background {
       if isSunny {
-        Capsule().fill(.white.opacity(0.25))
+        RoundedRectangle(cornerRadius: 14, style: .continuous).fill(.white.opacity(0.25))
       }
     }
   }
@@ -277,19 +278,18 @@ private struct DayRow: View {
 /// A day row without data, drawn redacted.
 private struct PlaceholderDayRow: View {
   var body: some View {
-    HStack(spacing: 8) {
+    HStack(spacing: 0) {
       Text(verbatim: "00 (00)")
-        .frame(width: 64, alignment: .leading)
+        .frame(width: 76, alignment: .leading)
       Image(systemName: "sun.max.fill")
-        .frame(width: 24)
+        .frame(width: 28, alignment: .leading)
       Text(verbatim: "000000")
-        .font(.caption)
       Spacer(minLength: 4)
       Text(verbatim: "00° 00°")
     }
-    .font(.footnote)
-    .padding(.horizontal, 8)
-    .padding(.vertical, 5)
+    .font(.subheadline)
+    .padding(.horizontal, 10)
+    .frame(maxHeight: .infinity)
     .redacted(reason: .placeholder)
   }
 }
