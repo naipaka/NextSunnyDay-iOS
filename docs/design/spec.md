@@ -239,7 +239,7 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
   - None in range: 「まだ先かも」 / 「10日先まで晴れなし」, with today as usual.
   - No data: 「あと？日」 / 「天気を取得できなかったよ」 / 「タップして更新」, and 「—」 for today. The large widget shows 「タップして更新」 and the last update time where its days go.
 - **Lock Screen:**
-  - inline: 「☀ 次の晴れ あと3日（土）」; 「あした」 goes without the weekday. In English each state is its own short sentence to fit the line above the clock: "Sunny in 3 days (Sat)", "Sunny tomorrow", "No sunny day soon", "Sunny in ? days". Today isn't shown: the line is too short for two things.
+  - inline: 「☀ 次の晴れ あと3日（土）」; 「あした」 goes without the weekday. In English each state is its own short sentence to fit the line above the clock: "Sunny in 3 days (Sat)", "Sunny tomorrow", "No sunny day soon", "Sunny in ? days". Today isn't shown: the line is too short for two things. Where the sentence doesn't fit, the answer alone: 「☀ あと3日」.
   - circular: the symbol over 「3日」 (「あした」 for tomorrow)
   - rectangular: 「次の晴れ」 / 「あと3日」 / 「10/13（火）」 on the leading side, and after a thin line, 「今日」 over today's symbol
   The system draws these in monochrome.
@@ -267,7 +267,7 @@ The watch shows what the complications point to: the next sunny day of one regio
   - rectangular: the Lock Screen layout. Today is a small column (`body` symbol), and the answer takes the room beside it (`title2` semibold, scaled down to fit).
   - circular: the symbol over 「あした」 / 「3日」.
   - corner: the symbol, with 「あと3日」 along the bezel.
-  - inline: the Lock Screen sentence.
+  - inline: the Lock Screen sentence, or where a face's slot is too short for it, the answer alone (「☀ あした」).
   - In the Smart Stack the rectangular one has the orange or gray background of the Home Screen widgets, with white text and symbols.
   - States as on the Lock Screen; without a region the rectangular one says 「iPhoneで地域を選んでね」.
 - **Region:** the face's editor lists one complication per saved region (watchOS has no Edit Widget screen).
