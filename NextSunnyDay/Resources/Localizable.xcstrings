@@ -281,6 +281,16 @@
         }
       }
     },
+    "For drying laundry outside: judged by the forecast from 7:00 to 19:00, on days without rain." : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外に洗濯物を干したい日に。雨の予報がない日を、7時から19時の予報で判断します。"
+          }
+        }
+      }
+    },
     "Get a notification the day before a sunny day, at this time. None while the sunny days continue." : {
       "localizations" : {
         "ja" : {
@@ -391,6 +401,16 @@
         }
       }
     },
+    "Laundry day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "洗濯日和"
+          }
+        }
+      }
+    },
     "Location access is off" : {
       "localizations" : {
         "ja" : {
@@ -401,12 +421,12 @@
         }
       }
     },
-    "Lower levels are looser. Looking for a day to dry the laundry? Try “No rain is fine”." : {
+    "Lower levels are looser." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下に行くほどゆるい基準です。洗濯物を干したい日を探すなら「雨が降らなければOK」がおすすめ。"
+            "value" : "下に行くほどゆるい基準です。"
           }
         }
       }
@@ -990,6 +1010,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "晴れ時々くもりまで"
+          }
+        }
+      }
+    },
+    "Up to partly cloudy, chance of rain under 20%, humidity 60% or less, little wind" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れ時々くもりまで、降水確率 20% 未満、湿度 60% 以下、風が弱い"
           }
         }
       }
