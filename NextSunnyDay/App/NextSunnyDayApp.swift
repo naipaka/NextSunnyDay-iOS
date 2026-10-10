@@ -5,6 +5,8 @@ import Notifications
 import Region
 import SunnyDay
 import SwiftUI
+import Units
+import WatchSync
 
 @main
 struct NextSunnyDayApp: App {
@@ -50,6 +52,7 @@ struct NextSunnyDayApp: App {
     }
     notificationResponder.onOpenSettings = { noticeSelection.isSettingsRequested = true }
     notificationResponder.activate()
+    features.settingsSync?.activate()
   }
 
   var body: some Scene {
@@ -62,6 +65,7 @@ struct NextSunnyDayApp: App {
         .environment(noticeSelection)
         .environment(\.regionSearch, features.regionSearch)
         .environment(\.forecastUpdater, features.forecastUpdater)
+        .environment(\.settingsSync, features.settingsSync)
     }
   }
 }
@@ -75,6 +79,7 @@ struct RootView: View {
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
   @Environment(NoticeSelection.self) private var noticeSelection
   @Environment(\.scenePhase) private var scenePhase
+  @Environment(\.settingsSync) private var settingsSync
 
   /// What the notifications depend on. Becoming active covers a fetch by the widget or Siri and a
   /// permission changed in the system's settings.
@@ -100,6 +105,22 @@ struct RootView: View {
       await noticeSelection.refreshAuthorization()
       await noticeSelection.reschedule()
     }
+    .onChange(of: watchKey) {
+      settingsSync?.send()
+    }
+  }
+
+  /// What the watch app gets from the iPhone (ADR 0010).
+  private struct WatchKey: Equatable {
+    var regions: [SavedRegion]
+    var level: SunnyLevel
+    var unit: TemperatureUnitSetting
+  }
+
+  private var watchKey: WatchKey {
+    WatchKey(
+      regions: regionSelection.regions, level: sunnyLevelSelection.level,
+      unit: temperatureUnitSelection.setting)
   }
 
   private var noticeKey: NoticeKey {
