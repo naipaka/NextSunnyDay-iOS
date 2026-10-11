@@ -9,7 +9,7 @@
 次に晴れる日を、ホーム画面のウィジェットで確かめられる iOS アプリです。
 天気アプリのウィジェットには今日と明日の天気しか出ず、洗濯物をいつ外に干せるかがわかりにくかったため作りました。
 アプリでは、最大 3 つの地域について、次の晴れの日と今日の天気に加えて、24 時間先までと 10 日間の天気を見られます。何を「晴れ」と数えるかを選んだり、外に干せる洗濯日和を探したりもできます。
-晴れる日の前日に通知で知らせることもでき、次の晴れは Siri やショートカットでも聞けます。Apple Watch では文字盤に次の晴れを表示します。
+晴れる日の前日に通知で知らせることもでき、次の晴れは Siri やショートカットでも聞けます。Apple Watch では文字盤に次の晴れを表示します。iPad や横向きでは、答えを予報の横に表示したまま使えます。
 日本語と英語に対応しています。
 
 <a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
@@ -22,7 +22,7 @@
 | --- | --- |
 | Xcode | 27.1 |
 | Swift | 6.4 (Swift 6 言語モード) |
-| iOS | 26.0 以降 |
+| iOS / iPadOS | 26.0 以降 |
 | watchOS | 26.0 以降 |
 
 ### 構成
