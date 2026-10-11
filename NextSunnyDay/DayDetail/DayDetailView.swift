@@ -8,6 +8,7 @@ struct DayDetailView: View {
   @Environment(RegionForecast.self) private var regionForecast
   @Environment(SunnyLevelSelection.self) private var sunnyLevelSelection
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+  @Environment(\.verticalSizeClass) private var verticalSizeClass
   @State private var index: Int
 
   init(initialIndex: Int) {
@@ -22,12 +23,29 @@ struct DayDetailView: View {
   var body: some View {
     if days.indices.contains(index) {
       let day = days[index]
-      LayeredScreen(tone: sunnyLevelSelection.level.counts(day) ? .sunny : .gray) {
-        header(day)
-      } content: {
-        HoursCard(hours: hours(of: day))
-        MoreCard(day: day)
-        AttributionFooter(fetchedAt: regionForecast.forecast?.fetchedAt)
+      let tone: HeaderTone = sunnyLevelSelection.level.counts(day) ? .sunny : .gray
+      AdaptiveLayout { layout in
+        if layout == .panel {
+          PanelScreen(tone: tone) {
+            panel(day)
+          } content: {
+            CardSection(title: "Hourly") {
+              TemperatureChart(hours: hours(of: day))
+                .padding(.vertical, 14)
+                .padding(.horizontal, 8)
+            }
+            DayFactTiles(day: day)
+            AttributionFooter(fetchedAt: regionForecast.forecast?.fetchedAt)
+          }
+        } else {
+          LayeredScreen(tone: tone) {
+            header(day)
+          } content: {
+            HoursCard(hours: hours(of: day))
+            MoreCard(day: day)
+            AttributionFooter(fetchedAt: regionForecast.forecast?.fetchedAt)
+          }
+        }
       }
       .toolbar {
         ToolbarItemGroup(placement: .topBarTrailing) {
@@ -45,6 +63,31 @@ struct DayDetailView: View {
   private func hours(of day: DayForecast) -> [HourForecast] {
     let hourly = regionForecast.forecast?.forecast.hourly ?? []
     return hourly.filter { Calendar.current.isDate($0.date, inSameDayAs: day.date) }
+  }
+
+  /// The panel of the panel layout: the day, its symbol, the condition and the temperatures.
+  private func panel(_ day: DayForecast) -> some View {
+    let isCompactHeight = verticalSizeClass == .compact
+    return VStack(alignment: .leading, spacing: 6) {
+      HStack(alignment: .top) {
+        Text(verbatim: day.date.dayWithWeekday)
+          .font(isCompactHeight ? .headline : .title3.weight(.semibold))
+          .padding(.top, 6)
+        Spacer()
+        Image(systemName: "\(day.symbolName).fill")
+          .font(.system(size: isCompactHeight ? 48 : 72))
+          .accessibilityHidden(true)
+      }
+      Text(verbatim: day.condition.localizedName)
+        .font(.system(size: isCompactHeight ? 44 : 72, weight: .bold))
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+      Text(
+        "High \(day.highTemperature.degrees(in: temperatureUnit)) Low \(day.lowTemperature.degrees(in: temperatureUnit)) Rain \(day.precipitationChance.percent)"
+      )
+      .font(.subheadline)
+      .opacity(0.9)
+    }
   }
 
   private func header(_ day: DayForecast) -> some View {

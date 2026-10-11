@@ -11,10 +11,7 @@ struct NextHoursCard: View {
 
   private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
-  private var shownHours: [HourForecast] {
-    let thisHour = Calendar.current.dateInterval(of: .hour, for: .now)?.start ?? .now
-    return Array(hours.filter { $0.date >= thisHour }.prefix(24))
-  }
+  private var shownHours: [HourForecast] { hours.next24 }
 
   var body: some View {
     CardSection(title: "Hourly Forecast") {
@@ -74,17 +71,49 @@ struct NextHoursCard: View {
   }
 }
 
-/// Ten days; a row opens the day detail screen.
+extension [HourForecast] {
+  /// The 24 hours from the current one.
+  var next24: [HourForecast] {
+    let thisHour = Calendar.current.dateInterval(of: .hour, for: .now)?.start ?? .now
+    return Array(filter { $0.date >= thisHour }.prefix(24))
+  }
+}
+
+/// The next 24 hours as a temperature chart, in the wider layouts.
+struct NextHoursChartCard: View {
+  let hours: [HourForecast]
+
+  var body: some View {
+    CardSection(title: "Hourly Forecast") {
+      TemperatureChart(hours: hours.next24, startsNow: true)
+        .padding(.vertical, 14)
+        .padding(.horizontal, 8)
+    }
+  }
+}
+
+/// Ten days; a row opens the day detail screen. The wider layouts add range bars.
 struct DaysCard: View {
   let days: [DayForecast]
   let level: SunnyLevel
+  var showsRanges = false
+
+  /// The scale of the range bars: the shown days' lowest low to highest high, in Celsius.
+  private var range: ClosedRange<Double>? {
+    guard showsRanges,
+      let low = days.map({ $0.lowTemperature.converted(to: .celsius).value }).min(),
+      let high = days.map({ $0.highTemperature.converted(to: .celsius).value }).max(),
+      low <= high
+    else { return nil }
+    return low...high
+  }
 
   var body: some View {
     CardSection(title: "10-Day Forecast") {
       VStack(spacing: 0) {
         ForEach(Array(days.enumerated()), id: \.element.date) { index, day in
           NavigationLink(value: HomeRoute.day(index)) {
-            DayRow(day: day, isToday: index == 0, isSunny: level.counts(day))
+            DayRow(day: day, isToday: index == 0, isSunny: level.counts(day), range: range)
           }
           .buttonStyle(.plain)
           if index != days.count - 1 {
@@ -101,6 +130,8 @@ struct DayRow: View {
   let day: DayForecast
   let isToday: Bool
   let isSunny: Bool
+  /// The scale of the range bar, in Celsius; no bar without it.
+  var range: ClosedRange<Double>?
   @ScaledMetric private var symbolWidth: CGFloat = 36
   @ScaledMetric private var symbolHeight: CGFloat = 28
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -153,9 +184,29 @@ struct DayRow: View {
   }
 
   private var temperatures: some View {
-    HStack(spacing: 6) {
-      Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
-      Text(verbatim: day.lowTemperature.degrees(in: temperatureUnit)).foregroundStyle(.secondary)
+    Group {
+      if let range {
+        HStack(spacing: 10) {
+          Text(verbatim: day.lowTemperature.degrees(in: temperatureUnit))
+            .foregroundStyle(.secondary)
+            .frame(minWidth: 34, alignment: .trailing)
+          RangeBar(
+            low: day.lowTemperature.converted(to: .celsius).value,
+            high: day.highTemperature.converted(to: .celsius).value,
+            range: range, isSunny: isSunny
+          )
+          .frame(minWidth: 60, maxWidth: 300)
+          Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
+            .frame(minWidth: 34, alignment: .leading)
+        }
+        .layoutPriority(1)
+      } else {
+        HStack(spacing: 6) {
+          Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
+          Text(verbatim: day.lowTemperature.degrees(in: temperatureUnit))
+            .foregroundStyle(.secondary)
+        }
+      }
     }
     .font(.body.monospacedDigit())
     .accessibilityElement(children: .ignore)
@@ -163,6 +214,40 @@ struct DayRow: View {
       Text(
         "High \(day.highTemperature.degrees(in: temperatureUnit)) Low \(day.lowTemperature.degrees(in: temperatureUnit))"
       ))
+  }
+}
+
+/// A day's low to high on the scale of the shown days: orange on a day that counts.
+private struct RangeBar: View {
+  let low: Double
+  let high: Double
+  let range: ClosedRange<Double>
+  let isSunny: Bool
+
+  var body: some View {
+    GeometryReader { proxy in
+      let span = max(range.upperBound - range.lowerBound, 1)
+      let start = (low - range.lowerBound) / span * proxy.size.width
+      let end = (high - range.lowerBound) / span * proxy.size.width
+      Capsule()
+        .fill(Color(.systemGray5))
+        .overlay(alignment: .leading) {
+          Capsule()
+            .fill(fill)
+            .frame(width: max(end - start, 6))
+            .offset(x: start)
+        }
+    }
+    .frame(height: 6)
+    .accessibilityHidden(true)
+  }
+
+  private var fill: AnyShapeStyle {
+    isSunny
+      ? AnyShapeStyle(
+        LinearGradient(
+          colors: [HeaderTone.sunny.top, .orange], startPoint: .leading, endPoint: .trailing))
+      : AnyShapeStyle(Color(.systemGray3))
   }
 }
 

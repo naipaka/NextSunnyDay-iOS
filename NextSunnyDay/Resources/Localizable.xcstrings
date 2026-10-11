@@ -481,6 +481,16 @@
         }
       }
     },
+    "Laundry days until %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "洗濯日和は %@ まで続きそう"
+          }
+        }
+      }
+    },
     "Location access is off" : {
       "localizations" : {
         "ja" : {
@@ -774,6 +784,16 @@
         }
       }
     },
+    "On %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ の様子"
+          }
+        }
+      }
+    },
     "Open Settings" : {
       "localizations" : {
         "ja" : {
@@ -974,6 +994,16 @@
         }
       }
     },
+    "Sunny until %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晴れは %@ まで続きそう"
+          }
+        }
+      }
+    },
     "Sunrise" : {
       "localizations" : {
         "ja" : {
@@ -1034,12 +1064,32 @@
         }
       }
     },
+    "The Next Laundry Day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の洗濯日和の様子"
+          }
+        }
+      }
+    },
     "The next laundry day in %@ is %@, in %lld days: %@." : {
       "localizations" : {
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@の次の洗濯日和は あと%3$lld日、%2$@、%4$@だよ。"
+          }
+        }
+      }
+    },
+    "The Next Sunny Day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れの日の様子"
           }
         }
       }

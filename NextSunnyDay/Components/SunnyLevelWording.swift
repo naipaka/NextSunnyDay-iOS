@@ -13,4 +13,14 @@ extension SunnyLevel {
   var noneInRangeText: LocalizedStringResource {
     self == .laundry ? "No laundry day in the next 10 days" : "No sunny day in the next 10 days"
   }
+
+  /// The title of the answer day's details when there is no answer: 「次の晴れの日の様子」.
+  var answerDayTitle: LocalizedStringResource {
+    self == .laundry ? "The Next Laundry Day" : "The Next Sunny Day"
+  }
+
+  /// How long the run of days that count lasts: 「晴れは 10月17日(土) まで続きそう」.
+  func runText(until day: String) -> LocalizedStringResource {
+    self == .laundry ? "Laundry days until \(day)" : "Sunny until \(day)"
+  }
 }

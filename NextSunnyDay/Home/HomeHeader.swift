@@ -19,11 +19,9 @@ struct HomeHeader: View {
   let level: SunnyLevel
   let retry: () -> Void
 
-  @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
-
   var body: some View {
     HStack(alignment: .top, spacing: 18) {
-      answer
+      HomeAnswer(state: state, level: level, retry: retry)
         .frame(maxWidth: .infinity, alignment: .leading)
       Rectangle()
         .fill(.white.opacity(0.4))
@@ -33,80 +31,6 @@ struct HomeHeader: View {
     }
     .fixedSize(horizontal: false, vertical: true)
     .foregroundStyle(.white)
-  }
-
-  // MARK: - The answer
-
-  @ViewBuilder private var answer: some View {
-    VStack(alignment: .leading, spacing: 0) {
-      Text(level.answerTitle)
-        .font(.subheadline.weight(.semibold))
-        .redacted(reason: isLoading ? .placeholder : [])
-      switch state {
-      case .loading:
-        HStack(spacing: 12) {
-          ProgressView().tint(.white).controlSize(.large)
-          Text("Getting the weather…").font(.title3.weight(.semibold))
-        }
-        .frame(height: 76, alignment: .leading)
-        Group {
-          Text(verbatim: "10/00 (Sat) Clear")
-            .font(.headline)
-            .padding(.top, 10)
-          Text(verbatim: "High 00° Low 00°")
-            .font(.subheadline)
-        }
-        .redacted(reason: .placeholder)
-        .accessibilityHidden(true)
-      case .noData:
-        bigText(Text("In ? days"))
-        Text("Couldn't get the weather")
-          .font(.headline)
-          .padding(.top, 10)
-        Button(action: retry) {
-          Label("Try Again", systemImage: "arrow.clockwise")
-            .foregroundStyle(.black)
-        }
-        .buttonStyle(.glassProminent)
-        .tint(.white)
-        .padding(.top, 12)
-      case .sunny(let next):
-        bigText(daysAway(next.daysAway))
-        Label {
-          Text(verbatim: "\(next.day.date.dayWithWeekday) \(next.day.condition.localizedName)")
-        } icon: {
-          Image(systemName: "\(next.day.symbolName).fill")
-        }
-        .labelStyle(.titleAndIcon)
-        .font(.headline)
-        .padding(.top, 10)
-        Text(
-          "High \(next.day.highTemperature.degrees(in: temperatureUnit)) Low \(next.day.lowTemperature.degrees(in: temperatureUnit))"
-        )
-        .font(.subheadline)
-        .padding(.top, 2)
-      case .noneInRange:
-        bigText(Text("Maybe not for a while"), size: 46)
-        Text(level.noneInRangeText)
-          .font(.headline)
-          .padding(.top, 10)
-        Text("It shows up here when the forecast changes")
-          .font(.subheadline)
-          .padding(.top, 2)
-      }
-    }
-  }
-
-  private func bigText(_ text: Text, size: CGFloat = 64) -> some View {
-    text
-      .font(.system(size: size, weight: .bold))
-      .lineLimit(1)
-      .minimumScaleFactor(0.5)
-      .padding(.top, 4)
-  }
-
-  private func daysAway(_ days: Int) -> Text {
-    days == 1 ? Text("Tomorrow") : Text("In \(days) days")
   }
 
   // MARK: - Today
@@ -145,8 +69,6 @@ struct HomeHeader: View {
     }
     .accessibilityElement(children: .combine)
   }
-
-  private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
 
   private var isLoading: Bool {
     if case .loading = state { true } else { false }

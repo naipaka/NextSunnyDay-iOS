@@ -30,14 +30,23 @@ struct HomeView: View {
 
   var body: some View {
     NavigationStack(path: $path) {
-      LayeredScreen(tone: headerTone) {
-        HomeHeader(
-          state: headerState,
-          today: todayForecast,
-          level: sunnyLevelSelection.level,
-          retry: { Task { await regionForecast.refresh(for: region) } })
-      } content: {
-        content
+      AdaptiveLayout { layout in
+        switch layout {
+        case .panel:
+          PanelScreen(tone: headerTone) {
+            HomePanel(
+              state: headerState, today: todayForecast, level: sunnyLevelSelection.level,
+              retry: retry)
+          } content: {
+            content(layout)
+          }
+        case .compact, .stacked:
+          LayeredScreen(tone: headerTone) {
+            header(layout)
+          } content: {
+            content(layout)
+          }
+        }
       }
       .toolbar { toolbar }
       .navigationDestination(for: HomeRoute.self) { route in
@@ -128,17 +137,54 @@ struct HomeView: View {
       })
   }
 
+  private func retry() {
+    Task { await regionForecast.refresh(for: region) }
+  }
+
   // MARK: - Content
 
-  @ViewBuilder private var content: some View {
+  /// The layered header; the stacked layout adds the answer day's details under a line.
+  @ViewBuilder private func header(_ layout: ScreenLayout) -> some View {
+    let header = HomeHeader(
+      state: headerState, today: todayForecast, level: sunnyLevelSelection.level, retry: retry)
+    if layout == .stacked {
+      VStack(alignment: .leading, spacing: 16) {
+        header
+        Rectangle()
+          .fill(.white.opacity(0.4))
+          .frame(height: 1)
+        Group {
+          if case .loading = headerState {
+            AnswerDayFacts(day: nil, level: sunnyLevelSelection.level, columns: 4)
+              .redacted(reason: .placeholder)
+          } else {
+            AnswerDayFacts(day: answerDay, level: sunnyLevelSelection.level, columns: 4)
+          }
+        }
+        .foregroundStyle(.white)
+      }
+    } else {
+      header
+    }
+  }
+
+  private var answerDay: DayForecast? {
+    if case .sunny(let next) = headerState { next.day } else { nil }
+  }
+
+  @ViewBuilder private func content(_ layout: ScreenLayout) -> some View {
     if let cached {
       if regionForecast.failure != nil {
-        RefreshFailedBanner(fetchedAt: cached.fetchedAt) {
-          Task { await regionForecast.refresh(for: region) }
-        }
+        RefreshFailedBanner(fetchedAt: cached.fetchedAt, retry: retry)
       }
-      NextHoursCard(hours: cached.forecast.hourly)
-      DaysCard(days: cached.forecast.days(from: today), level: sunnyLevelSelection.level)
+      if layout.isWide {
+        NextHoursChartCard(hours: cached.forecast.hourly)
+      } else {
+        NextHoursCard(hours: cached.forecast.hourly)
+      }
+      DaysCard(
+        days: cached.forecast.days(from: today), level: sunnyLevelSelection.level,
+        showsRanges: layout.isWide)
       AttributionFooter(fetchedAt: cached.fetchedAt)
     } else if let failure = regionForecast.failure {
       NoDataCard(failure: failure)
