@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Check ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringSet" : {
