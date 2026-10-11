@@ -139,4 +139,9 @@ extension SunnyLevel {
   var answerTitle: LocalizedStringResource {
     self == .laundry ? "Next Laundry Day" : "Next Sunny Day"
   }
+
+  /// The title of the extra large widget's chart without an answer: 「次の晴れの日の時間ごと」.
+  var answerDayHoursTitle: LocalizedStringResource {
+    self == .laundry ? "Hours of the Next Laundry Day" : "Hours of the Next Sunny Day"
+  }
 }

@@ -401,6 +401,36 @@
         }
       }
     },
+    "Hourly on %@" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ の時間ごと"
+          }
+        }
+      }
+    },
+    "Hours of the Next Laundry Day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の洗濯日和の時間ごと"
+          }
+        }
+      }
+    },
+    "Hours of the Next Sunny Day" : {
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "次の晴れの日の時間ごと"
+          }
+        }
+      }
+    },
     "In ? days" : {
       "localizations" : {
         "ja" : {

@@ -15,10 +15,19 @@ struct NextSunnyDayWidget: Widget {
     }
     .configurationDisplayName("NextSunnyDay")
     .description("See when the next sunny day is.")
-    .supportedFamilies([
-      .systemSmall, .systemMedium, .systemLarge,
+    .supportedFamilies(Self.families)
+  }
+
+  /// The iPhone's full-page extra large size is new in iOS 27; iPad shows the landscape one.
+  private static var families: [WidgetFamily] {
+    var families: [WidgetFamily] = [
+      .systemSmall, .systemMedium, .systemLarge, .systemExtraLarge,
       .accessoryInline, .accessoryCircular, .accessoryRectangular,
-    ])
+    ]
+    if #available(iOS 27.0, *) {
+      families.append(.systemExtraLargePortrait)
+    }
+    return families
   }
 }
 
@@ -31,10 +40,16 @@ struct NextSunnyDayWidgetEntryView: View {
     switch family {
     case .systemMedium: MediumWidgetView(entry: entry).homeScreenStyle()
     case .systemLarge: LargeWidgetView(entry: entry).homeScreenStyle()
+    case .systemExtraLarge: ExtraLargeWidgetView(entry: entry).homeScreenStyle()
     case .accessoryInline: InlineWidgetView(entry: entry)
     case .accessoryCircular: CircularWidgetView(entry: entry)
     case .accessoryRectangular: RectangularWidgetView(entry: entry)
-    default: SmallWidgetView(entry: entry).homeScreenStyle()
+    default:
+      if #available(iOS 27.0, *), family == .systemExtraLargePortrait {
+        ExtraLargePortraitWidgetView(entry: entry).homeScreenStyle()
+      } else {
+        SmallWidgetView(entry: entry).homeScreenStyle()
+      }
     }
   }
 }

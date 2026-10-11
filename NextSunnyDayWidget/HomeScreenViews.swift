@@ -108,6 +108,363 @@ struct LargeWidgetView: View {
   }
 }
 
+/// iPad's extra large widget: the medium layout on top, then seven days from tomorrow as
+/// columns, the next sunny day outlined so it lines up with the answer.
+struct ExtraLargeWidgetView: View {
+  let entry: SunnyEntry
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 10) {
+      ExtraLargeTop(entry: entry, headlineSize: 48)
+      Line()
+      HStack(spacing: 4) {
+        switch entry.state {
+        case .sunny, .noneInRange:
+          ForEach(entry.laterDays.prefix(7), id: \.date) { day in
+            DayColumn(day: day, entry: entry)
+          }
+        case .noData, .noRegion:
+          ForEach(0..<7, id: \.self) { _ in
+            DayColumn(day: nil, entry: entry)
+          }
+        }
+      }
+      .frame(height: 112)
+    }
+  }
+}
+
+/// iPhone's extra large widget, a full Home Screen page: the top area, the next sunny day's
+/// hours, and seven days from tomorrow with range bars. The chart shows the answer day, so it
+/// only changes with the answer; without one it keeps its place, empty.
+struct ExtraLargePortraitWidgetView: View {
+  let entry: SunnyEntry
+
+  private var next: NextSunnyDay? {
+    if case .sunny(let next) = entry.state { next } else { nil }
+  }
+
+  /// Every second hour of the next sunny day.
+  private var hours: [HourForecast] {
+    guard let next, let hourly = entry.cached?.forecast.hourly else { return [] }
+    return
+      hourly
+      .filter { Calendar.current.isDate($0.date, inSameDayAs: next.day.date) }
+      .filter { Calendar.current.component(.hour, from: $0.date).isMultiple(of: 2) }
+  }
+
+  private var days: [DayForecast] { Array(entry.laterDays.prefix(7)) }
+
+  /// The scale of the range bars: the shown days' lowest low to highest high, in Celsius.
+  private var range: ClosedRange<Double> {
+    let low = days.map { $0.lowTemperature.converted(to: .celsius).value }.min() ?? 0
+    let high = days.map { $0.highTemperature.converted(to: .celsius).value }.max() ?? 1
+    return low...max(high, low + 1)
+  }
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 8) {
+      ExtraLargeTop(entry: entry, headlineSize: 40)
+        .frame(height: 112)
+      Line()
+      Group {
+        if let next {
+          Text("Hourly on \(next.day.date.monthDayWeekday)")
+        } else {
+          Text(entry.level.answerDayHoursTitle)
+        }
+      }
+      .font(.caption.weight(.semibold))
+      .opacity(0.9)
+      HourChart(hours: hours, temperatureUnit: entry.temperatureUnit)
+        .frame(height: 104)
+      Line()
+      VStack(spacing: 3) {
+        switch entry.state {
+        case .sunny, .noneInRange:
+          ForEach(days, id: \.date) { day in
+            RangeRow(day: day, entry: entry, range: range)
+          }
+        case .noData, .noRegion:
+          ForEach(0..<7, id: \.self) { _ in
+            PlaceholderDayRow()
+          }
+        }
+      }
+    }
+  }
+}
+
+/// The extra large widgets' top: the answer with its day and temperatures, and today's column.
+private struct ExtraLargeTop: View {
+  let entry: SunnyEntry
+  let headlineSize: CGFloat
+
+  var body: some View {
+    HStack(spacing: 18) {
+      VStack(alignment: .leading, spacing: 0) {
+        HStack(alignment: .top) {
+          AnswerLabel(entry: entry)
+          Spacer(minLength: 4)
+          AttributionMarkImage(data: entry.attributionMark)
+            .frame(height: 9)
+        }
+        Spacer(minLength: 4)
+        Headline(state: entry.state, size: headlineSize)
+        Detail(state: entry.state)
+        switch entry.state {
+        case .sunny(let next):
+          Text(
+            "High \(next.day.highTemperature.degrees(in: entry.temperatureUnit)) Low \(next.day.lowTemperature.degrees(in: entry.temperatureUnit))"
+          )
+          .font(.caption)
+          .opacity(0.9)
+        case .noData:
+          Text("Tap to update")
+            .font(.caption)
+            .opacity(0.9)
+        default:
+          EmptyView()
+        }
+      }
+      .frame(maxWidth: .infinity, alignment: .leading)
+      Line(vertical: true)
+      TodayColumn(today: entry.today)
+        .frame(width: 88)
+    }
+  }
+}
+
+/// A day of the iPad extra large widget: date, symbol, condition, high and low. Days that count
+/// are on a light band; the next sunny day is also outlined and marked.
+private struct DayColumn: View {
+  let day: DayForecast?
+  let entry: SunnyEntry
+
+  var body: some View {
+    let isSunny = day.map(entry.level.counts) ?? false
+    let isNext = day.map(isNextSunnyDay) ?? false
+    VStack(spacing: 3) {
+      Text(entry.level.answerTitle)
+        .font(.system(size: 10, weight: .bold))
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
+        .opacity(isNext ? 1 : 0)
+      if let day {
+        Text(verbatim: day.date.dayAndWeekday)
+          .font(.caption.weight(isSunny ? .bold : .medium))
+        Image(systemName: day.symbolName.filledSymbol)
+          .font(.title3)
+          .frame(height: 24)
+        Text(verbatim: day.condition.localizedName)
+          .font(.caption2.weight(isSunny ? .bold : .regular))
+          .lineLimit(1)
+          .minimumScaleFactor(0.7)
+        HStack(spacing: 3) {
+          Text(verbatim: day.highTemperature.degrees(in: entry.temperatureUnit))
+          Text(verbatim: day.lowTemperature.degrees(in: entry.temperatureUnit)).opacity(0.8)
+        }
+        .font(.caption.weight(.semibold).monospacedDigit())
+      } else {
+        Group {
+          Text(verbatim: "00(0)").font(.caption)
+          Image(systemName: "sun.max.fill").font(.title3).frame(height: 24)
+          Text(verbatim: "000").font(.caption2)
+          Text(verbatim: "00° 00°").font(.caption)
+        }
+        .redacted(reason: .placeholder)
+      }
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background {
+      if isSunny {
+        RoundedRectangle(cornerRadius: 14, style: .continuous)
+          .fill(.white.opacity(isNext ? 0.32 : 0.2))
+      }
+    }
+    .overlay {
+      if isNext {
+        RoundedRectangle(cornerRadius: 14, style: .continuous)
+          .strokeBorder(.white.opacity(0.9), lineWidth: 2)
+      }
+    }
+    .accessibilityElement(children: .combine)
+  }
+
+  private func isNextSunnyDay(_ day: DayForecast) -> Bool {
+    if case .sunny(let next) = entry.state { next.day.date == day.date } else { false }
+  }
+}
+
+/// A day of the iPhone extra large widget with a range bar; the next sunny day outlined.
+private struct RangeRow: View {
+  let day: DayForecast
+  let entry: SunnyEntry
+  let range: ClosedRange<Double>
+
+  var body: some View {
+    let isSunny = entry.level.counts(day)
+    let isNext: Bool = {
+      if case .sunny(let next) = entry.state { next.day.date == day.date } else { false }
+    }()
+    HStack(spacing: 8) {
+      Text(verbatim: day.date.dayAndWeekday)
+        .frame(width: 58, alignment: .leading)
+      Image(systemName: day.symbolName.filledSymbol)
+        .frame(width: 22)
+      Text(verbatim: day.condition.localizedName)
+        .lineLimit(1)
+        .frame(maxWidth: .infinity, alignment: .leading)
+      Text(verbatim: day.lowTemperature.degrees(in: entry.temperatureUnit))
+        .opacity(0.85)
+        .frame(width: 30, alignment: .trailing)
+      WidgetRangeBar(
+        low: day.lowTemperature.converted(to: .celsius).value,
+        high: day.highTemperature.converted(to: .celsius).value, range: range
+      )
+      .frame(width: 64)
+      Text(verbatim: day.highTemperature.degrees(in: entry.temperatureUnit))
+        .frame(width: 30, alignment: .leading)
+    }
+    .font(.caption.weight(isSunny ? .bold : .medium).monospacedDigit())
+    .lineLimit(1)
+    .minimumScaleFactor(0.8)
+    .padding(.horizontal, 10)
+    .frame(maxHeight: .infinity)
+    .background {
+      if isSunny {
+        RoundedRectangle(cornerRadius: 12, style: .continuous)
+          .fill(.white.opacity(isNext ? 0.32 : 0.18))
+      }
+    }
+    .overlay {
+      if isNext {
+        RoundedRectangle(cornerRadius: 12, style: .continuous)
+          .strokeBorder(.white.opacity(0.9), lineWidth: 1.5)
+      }
+    }
+    .accessibilityElement(children: .combine)
+  }
+}
+
+/// A day's low to high in white on a light track.
+private struct WidgetRangeBar: View {
+  let low: Double
+  let high: Double
+  let range: ClosedRange<Double>
+
+  var body: some View {
+    GeometryReader { proxy in
+      let span = max(range.upperBound - range.lowerBound, 1)
+      let start = (low - range.lowerBound) / span * proxy.size.width
+      let end = (high - range.lowerBound) / span * proxy.size.width
+      Capsule()
+        .fill(.white.opacity(0.3))
+        .overlay(alignment: .leading) {
+          Capsule()
+            .fill(.white)
+            .frame(width: max(end - start, 5))
+            .offset(x: start)
+        }
+    }
+    .frame(height: 5)
+    .accessibilityHidden(true)
+  }
+}
+
+/// Hours as columns of time, symbol and temperature over a white temperature line; empty, with
+/// placeholders, without hours.
+private struct HourChart: View {
+  let hours: [HourForecast]
+  let temperatureUnit: UnitTemperature
+
+  var body: some View {
+    if hours.isEmpty {
+      VStack(spacing: 8) {
+        HStack(spacing: 0) {
+          ForEach(0..<12, id: \.self) { _ in
+            Capsule().fill(.white.opacity(0.28)).frame(width: 14, height: 8)
+              .frame(maxWidth: .infinity)
+          }
+        }
+        RoundedRectangle(cornerRadius: 10, style: .continuous)
+          .fill(.white.opacity(0.12))
+          .overlay {
+            Rectangle()
+              .fill(.white.opacity(0.45))
+              .frame(height: 2)
+              .padding(.horizontal, 10)
+          }
+      }
+      .accessibilityHidden(true)
+    } else {
+      VStack(spacing: 4) {
+        HStack(spacing: 0) {
+          ForEach(hours, id: \.date) { hour in
+            VStack(spacing: 3) {
+              Text(verbatim: hour.date.formatted(.dateTime.hour(.defaultDigits(amPM: .omitted))))
+                .font(.system(size: 10))
+                .opacity(0.9)
+              Image(systemName: hour.symbolName.filledSymbol)
+                .font(.footnote)
+                .frame(height: 16)
+              Text(verbatim: hour.temperature.degrees(in: temperatureUnit))
+                .font(.caption2.weight(.semibold))
+            }
+            .frame(maxWidth: .infinity)
+          }
+        }
+        HourCurve(values: hours.map { $0.temperature.converted(to: .celsius).value })
+          .stroke(.white, style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
+          .background {
+            HourCurve(
+              values: hours.map { $0.temperature.converted(to: .celsius).value }, closed: true
+            )
+            .fill(.white.opacity(0.18))
+          }
+      }
+      .accessibilityElement(children: .combine)
+    }
+  }
+}
+
+/// The temperature line through the middle of each column, smoothed; closed to the bottom for
+/// the area under it.
+private struct HourCurve: Shape {
+  let values: [Double]
+  var closed = false
+
+  func path(in rect: CGRect) -> Path {
+    guard let low = values.min(), let high = values.max() else { return Path() }
+    let span = max(high - low, 1)
+    let step = rect.width / CGFloat(values.count)
+    let points = values.enumerated().map { index, value in
+      CGPoint(
+        x: rect.minX + step * (CGFloat(index) + 0.5),
+        y: rect.maxY - 4 - (value - low) / span * (rect.height - 8))
+    }
+    var path = Path()
+    guard let first = points.first, let last = points.last else { return path }
+    path.move(to: first)
+    for index in points.indices.dropLast() {
+      let p0 = points[max(index - 1, 0)]
+      let p1 = points[index]
+      let p2 = points[index + 1]
+      let p3 = points[min(index + 2, points.count - 1)]
+      path.addCurve(
+        to: p2,
+        control1: CGPoint(x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6),
+        control2: CGPoint(x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6))
+    }
+    if closed {
+      path.addLine(to: CGPoint(x: last.x, y: rect.maxY))
+      path.addLine(to: CGPoint(x: first.x, y: rect.maxY))
+      path.closeSubpath()
+    }
+    return path
+  }
+}
+
 // MARK: - Parts
 
 /// 「港区 · 次の晴れ」, or 「次の晴れ」 without a region; 「次の洗濯日和」 at the laundry level.

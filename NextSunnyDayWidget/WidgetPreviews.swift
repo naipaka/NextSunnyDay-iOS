@@ -60,3 +60,24 @@ import WidgetKit
   SunnyEntry.noData
   SunnyEntry.noRegion
 }
+
+#Preview("Extra Large", as: .systemExtraLarge) {
+  NextSunnyDayWidget()
+} timeline: {
+  SunnyEntry.sunny
+  SunnyEntry.laundry
+  SunnyEntry.noneInRange
+  SunnyEntry.noData
+  SunnyEntry.noRegion
+}
+
+@available(iOS 27.0, *)
+#Preview("Extra Large Portrait", as: .systemExtraLargePortrait) {
+  NextSunnyDayWidget()
+} timeline: {
+  SunnyEntry.sunny
+  SunnyEntry.laundry
+  SunnyEntry.noneInRange
+  SunnyEntry.noData
+  SunnyEntry.noRegion
+}
