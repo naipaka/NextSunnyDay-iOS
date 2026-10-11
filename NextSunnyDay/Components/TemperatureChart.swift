@@ -11,15 +11,9 @@ struct TemperatureChart: View {
 
   @ScaledMetric private var minimumCellWidth: CGFloat = 30
   @ScaledMetric private var symbolHeight: CGFloat = 24
-  @State private var availableWidth: CGFloat = 0
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
 
   private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
-
-  private var cellWidth: CGFloat {
-    guard !hours.isEmpty, availableWidth > 0 else { return minimumCellWidth }
-    return max(minimumCellWidth, availableWidth / CGFloat(hours.count))
-  }
 
   var body: some View {
     ScrollView(.horizontal, showsIndicators: false) {
@@ -27,20 +21,20 @@ struct TemperatureChart: View {
         HStack(spacing: 0) {
           ForEach(Array(hours.enumerated()), id: \.element.date) { index, hour in
             column(hour, index: index)
-              .frame(width: cellWidth)
+              .frame(minWidth: 0, maxWidth: .infinity)
           }
         }
         TemperatureCurve(values: hours.map { $0.temperature.converted(to: .celsius).value })
-          .frame(width: cellWidth * CGFloat(hours.count), height: 56)
+          .frame(height: 56)
           .accessibilityHidden(true)
       }
+      // The scroll view's width, not a measured one: feeding a measured width back into the
+      // layout made it alternate by half a point forever when the window resized.
+      .containerRelativeFrame(.horizontal) { width, _ in
+        max(width, minimumCellWidth * CGFloat(hours.count))
+      }
     }
-    .scrollDisabled(cellWidth * CGFloat(hours.count) <= availableWidth)
-    .onGeometryChange(for: CGFloat.self) {
-      $0.size.width
-    } action: {
-      availableWidth = $0
-    }
+    .scrollBounceBehavior(.basedOnSize, axes: .horizontal)
   }
 
   private func column(_ hour: HourForecast, index: Int) -> some View {

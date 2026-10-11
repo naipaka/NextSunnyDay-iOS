@@ -136,12 +136,8 @@ struct DayRow: View {
   @ScaledMetric private var symbolHeight: CGFloat = 28
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
-  @State private var rowWidth: CGFloat = 0
 
   private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
-
-  /// A quarter of the row, between 48 and 260 pt, so the day and its condition keep their room.
-  private var rangeBarWidth: CGFloat { min(max(rowWidth / 4, 48), 260) }
 
   var body: some View {
     HStack(spacing: 14) {
@@ -176,11 +172,6 @@ struct DayRow: View {
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
     .contentShape(Rectangle())
-    .onGeometryChange(for: CGFloat.self) {
-      $0.size.width
-    } action: {
-      rowWidth = $0
-    }
   }
 
   private var titles: some View {
@@ -208,7 +199,10 @@ struct DayRow: View {
             high: day.highTemperature.converted(to: .celsius).value,
             range: range, isSunny: isSunny
           )
-          .frame(width: rangeBarWidth)
+          // A quarter of the scrolling list, between 48 and 260 pt, so the day and its condition
+          // keep their room. Measuring the row instead fed its width back into itself, which
+          // never settled when the window resized.
+          .containerRelativeFrame(.horizontal) { width, _ in min(max(width / 4, 48), 260) }
           Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
             .frame(minWidth: 34, alignment: .leading)
         }
