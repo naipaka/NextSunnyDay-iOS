@@ -136,8 +136,12 @@ struct DayRow: View {
   @ScaledMetric private var symbolHeight: CGFloat = 28
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   @Environment(TemperatureUnitSelection.self) private var temperatureUnitSelection
+  @State private var rowWidth: CGFloat = 0
 
   private var temperatureUnit: UnitTemperature { temperatureUnitSelection.unit }
+
+  /// A quarter of the row, between 48 and 260 pt, so the day and its condition keep their room.
+  private var rangeBarWidth: CGFloat { min(max(rowWidth / 4, 48), 260) }
 
   var body: some View {
     HStack(spacing: 14) {
@@ -172,11 +176,20 @@ struct DayRow: View {
     .padding(.horizontal, 16)
     .padding(.vertical, 10)
     .contentShape(Rectangle())
+    .onGeometryChange(for: CGFloat.self) {
+      $0.size.width
+    } action: {
+      rowWidth = $0
+    }
   }
 
   private var titles: some View {
     VStack(alignment: .leading, spacing: 2) {
-      if isToday { Text("Today") } else { Text(verbatim: day.date.dayWithWeekday) }
+      Group {
+        if isToday { Text("Today") } else { Text(verbatim: day.date.dayWithWeekday) }
+      }
+      .lineLimit(1)
+      .minimumScaleFactor(0.8)
       Text(verbatim: day.condition.localizedName)
         .font(.subheadline)
         .foregroundStyle(isSunny ? AnyShapeStyle(.orange) : AnyShapeStyle(.secondary))
@@ -195,11 +208,10 @@ struct DayRow: View {
             high: day.highTemperature.converted(to: .celsius).value,
             range: range, isSunny: isSunny
           )
-          .frame(minWidth: 60, maxWidth: 300)
+          .frame(width: rangeBarWidth)
           Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
             .frame(minWidth: 34, alignment: .leading)
         }
-        .layoutPriority(1)
       } else {
         HStack(spacing: 6) {
           Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
