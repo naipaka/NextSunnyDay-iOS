@@ -12,7 +12,8 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Hourly forecast | Home shows the next 24 hours as a horizontal strip, so the strip stays useful in the evening. Each day's hours are in the day detail screen, which opens from a row in the 10-day list. |
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
 | Manual refresh | Pull to refresh on Home. |
-| Widgets | Home Screen small, medium and large. Lock Screen circular, rectangular and inline. No Control Center control. |
+| Widgets | Home Screen small, medium and large, extra large on iPad and, from iOS 27, the iPhone's full-page extra large (#108). Lock Screen circular, rectangular and inline. No Control Center control. |
+| iPad and landscape | iPad in every orientation and window size, iPhone in landscape (#108). The layout follows the width available, not the device: from 1,120 pt wide, and on iPhone in landscape, the answer stays in a panel beside the forecast; below that, Home's layout. The wider layouts add a temperature chart, range bars and the answer day's sunrise, sunset, UV and wind. See [iPad and landscape](#ipad-and-landscape). |
 | Apple Watch | A one-screen watch app and complications (circular, corner, rectangular, inline), with the regions, the sunny level and the unit from the iPhone (#107). See [Apple Watch](#apple-watch). |
 | Siri and Shortcuts | One App Shortcut answers when the next sunny day is, for a saved region or the first one, with a dialog and a snippet (#104). See [Siri and Shortcuts](#siri-and-shortcuts). |
 | Notifications | One notification the day before a sunny spell starts, for one region at a chosen time, from the cached forecast (#105). See [Notifications](#notifications). |
@@ -119,6 +120,71 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 - **時間ごと** card: one row per hour with time, symbol, condition, precipitation chance (20 % or more) and temperature.
 - **その他** card: sunrise, sunset, UV index and wind, each with a multicolor symbol.
 - The footer has the same attribution as Home.
+
+## iPad and landscape
+
+The images are drawings from the design, in light and dark; they are replaced with simulator screenshots once the layouts are built (#108).
+
+| iPad, 1,120 pt wide or more | iPad portrait |
+| --- | --- |
+| ![iPad landscape](images/wide-ipad.jpg) | ![iPad portrait](images/wide-ipad-portrait.jpg) |
+
+![iPhone in landscape: Home and the day detail screen](images/wide-iphone.jpg)
+
+### Which layout
+
+The layout follows the space the window has, never the device or its orientation:
+
+| Space | Layout | Where |
+| --- | --- | --- |
+| 1,120 pt wide or more, or compact height | **Panel**: the answer in a panel on the leading side, the forecast beside it | iPad in landscape (11", 13" and mini at 1,133 pt), large iPad windows, every iPhone in landscape |
+| Regular width under 1,120 pt | **Stacked**: Home's header and sheet, with the panel's additions | iPad in portrait (13" at 1,032 pt too), medium iPad windows |
+| Compact width | Home as above | iPhone in portrait, narrow iPad windows |
+
+1,120 pt is where the 24-hour chart (about 700 pt) fits beside the 420 pt panel. The app supports every orientation on iPad and portrait plus both landscapes on iPhone; it never asks for full screen, so it works in iPad windows of any size.
+
+### Panel
+
+- **Panel** (420 pt on iPad; 330 pt on iPhone, from the screen edge, keeping clear of the Dynamic Island), in the [header gradient](#visual-language) of the state's color over its full height. It doesn't scroll. From the top, in time order:
+  - **Today:** today's symbol (60 pt on iPad, 36 pt on iPhone) with 「今日」 over the condition, sized against the answer as on Home. A 1 pt white line at 40 % under it.
+  - **The answer:** 「次の晴れ」, the big 「あと4日」 (84 pt on iPad, 50 pt on iPhone, scaled down to fit), the day's symbol with the date and condition, high and low.
+  - **How long it lasts** (iPad): 「晴れは 17日(土) まで続きそう」, the last day of the run of days that count from the answer; 「洗濯日和は … まで続きそう」 at the laundry level. Left out when only the answer day counts.
+  - **The answer day** (iPad): 「10月14日(水) の様子」 with sunrise, sunset, UV index and wind in two columns, as in the day detail screen.
+- **Toolbar:** the region menu over the panel, the gear on the trailing side.
+- **Forecast** (scrolls), on `systemGroupedBackground`:
+  - **時間ごとの予報** as a chart: each hour's time, symbol, precipitation chance (20 % or more) and temperature in a column, with the temperature as an orange line over a light orange area below. 「今」 first and the next day's date at its first hour, as in the strip. Twenty-four hours; where they don't fit, the chart scrolls sideways.
+  - **10日間の天気** with range bars: each row's low, a bar from the low to the high on the scale of the shown days' lowest low to highest high, and the high. Days that count have an orange bar (light to system orange), the others `systemGray3`.
+  - The footer as on Home.
+
+### Stacked
+
+Home's layered header and sheet, with the panel's additions:
+
+- The header keeps the answer on the leading side and today in its column on the trailing side. Under a 1 pt line, the answer day's sunrise, sunset, UV index and wind in one row after 「10月14日(水) の様子」.
+- The sheet has the temperature chart (24 hours fit at 834 pt) and the 10-day list with range bars.
+
+### States
+
+| iPad | iPhone in landscape |
+| --- | --- |
+| ![iPad states: none in range, loading, no data, refresh failed](images/wide-states-ipad.jpg) | ![iPhone states](images/wide-states-iphone.jpg) |
+
+The states, colors and copy are Home's ([States](#states)). The panel keeps its shape:
+
+- **None in range** (`systemGray`): 「まだ先かも」 (64 pt on iPad), 「10日先まで晴れの予報なし」 and 「予報が変わったらここに出るよ」. The answer day's place stays, titled 「次の晴れの日の様子」, with 「—」 for each value. The chart and the list show the forecast as usual.
+- **Loading** (`systemGray2`): a spinner with 「天気を取得中…」, and today, the lines and the forecast redacted.
+- **No data** (`systemGray2`): 「あと？日」, 「天気を取得できなかったよ」 and a white 「もう一度試す」 button; 「—」 for today and the answer day. The forecast side holds the card that says why (no connection, location access off with 「設定を開く」, or the place not found).
+- **Refresh failed** with cached data: the banner at the top of the forecast side.
+
+### Day detail
+
+In the panel layout the day detail screen is a panel too: the date, the day's symbol, the condition as the big text and high / low / precipitation, in orange on a day that counts and `systemGray` otherwise. Beside it, the day's hours as the chart and the その他 values as four tiles. The toolbar keeps the back button and the up/down buttons. In the stacked layout it is the layout above.
+
+### Everything else
+
+- **Dark:** as on Home: the header colors stay, cards are `secondarySystemGroupedBackground` on black, clouds are white.
+- Settings is a sheet (a form sheet on iPad); 地域, 地域を追加, onboarding and About keep their layouts, centered in the window.
+- Charts use the orange accent for the line in every state.
 
 ## Settings
 
@@ -246,6 +312,18 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
 - The images are the widget views at widget sizes, not a real widget extension. In the accented and clear Home Screen looks the system replaces the orange or gray background with its own material; the headline and the symbol are the accented parts.
 - **Region:** each widget has a 「地域」 setting (Edit Widget) listing the saved regions. Until one is picked, and after the picked region is removed, it shows the first region in the app's list (#103).
 - A widget without a region says 「あと？日」 / 「アプリで地域を選んでね」, with 「—」 for today. The large widget draws its days redacted, where the forecast goes once a region is chosen.
+
+### Extra large
+
+| iPad | iPhone (iOS 27) |
+| --- | --- |
+| ![Extra large widget on iPad: sunny, none in range, no data](images/widgets-extra-large.jpg) | ![Extra large widget on iPhone: sunny, none in range, no data, no region](images/widgets-extra-large-iphone.jpg) |
+
+These images are drawings from the design too, replaced once built.
+
+- **iPad** (`systemExtraLarge`, landscape only): the medium layout as the top area (the answer with its label, the day's date, condition, high and low; today in a 96 pt column), a 1 pt line, then the seven days from tomorrow as columns: date, symbol, condition, high and low. Days that count are on a light band; the next sunny day is also outlined, with 「次の晴れ」 above its date, so it lines up with the answer.
+- **iPhone** (`systemExtraLargePortrait`, iOS 27, a full Home Screen page, about 338 × 550 pt): the top area, a line, 「10月14日(水) の時間ごと」, a chart of the next sunny day's hours every two hours (time, symbol, temperature, a white line), a line, then the seven days from tomorrow as rows with range bars, the next sunny day outlined with 「次の晴れ」. The chart shows the answer day, not the next 24 hours, so it changes only with the answer and the timeline stays two entries a day ([Widgets](#widgets), ADR 0006).
+- **States:** as the other sizes. The chart keeps its place, empty (no line, no values), titled 「次の晴れの日の時間ごと」. With none in range the days show as usual; without data or a region they are redacted, with 「—」 for today.
 
 ## Apple Watch
 
