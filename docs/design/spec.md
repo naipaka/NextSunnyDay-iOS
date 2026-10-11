@@ -123,7 +123,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 
 ## iPad and landscape
 
-The images are drawings from the design, in light and dark; they are replaced with simulator screenshots once the layouts are built (#108).
+The screenshots were taken on iPad Pro 11-inch (M5) and iPhone 17 simulators (iOS 27.0) with the recorded forecasts, light on the left and dark on the right.
 
 | iPad, 1,120 pt wide or more | iPad portrait |
 | --- | --- |
@@ -153,14 +153,14 @@ The layout follows the space the window has, never the device or its orientation
 - **Toolbar:** the region menu over the panel, the gear on the trailing side.
 - **Forecast** (scrolls), on `systemGroupedBackground`:
   - **時間ごとの予報** as a chart: each hour's time, symbol, precipitation chance (20 % or more) and temperature in a column, with the temperature as an orange line over a light orange area below. 「今」 first and the next day's date at its first hour, as in the strip. Twenty-four hours; where they don't fit, the chart scrolls sideways.
-  - **10日間の天気** with range bars: each row's low, a bar from the low to the high on the scale of the shown days' lowest low to highest high, and the high. Days that count have an orange bar (light to system orange), the others `systemGray3`.
+  - **10日間の天気** with range bars: each row's low, a bar from the low to the high on the scale of the shown days' lowest low to highest high, and the high. The bar takes a quarter of the row (48 to 260 pt), so the date stays on one line. Days that count have an orange bar (light to system orange), the others `systemGray3`.
   - The footer as on Home.
 
 ### Stacked
 
 Home's layered header and sheet, with the panel's additions:
 
-- The header keeps the answer on the leading side and today in its column on the trailing side. Under a 1 pt line, the answer day's sunrise, sunset, UV index and wind in one row after 「10月14日(水) の様子」.
+- The header keeps the answer on the leading side and today in its column on the trailing side. Under a 1 pt line, 「10月14日(水) の様子」 over the answer day's sunrise, sunset, UV index and wind in one row of four.
 - The sheet has the temperature chart (24 hours fit at 834 pt) and the 10-day list with range bars.
 
 ### States
@@ -319,7 +319,7 @@ The Home Screen widgets follow Home's header: the answer and today, the answer l
 | --- | --- |
 | ![Extra large widget on iPad: sunny, none in range, no data](images/widgets-extra-large.jpg) | ![Extra large widget on iPhone: sunny, none in range, no data, no region](images/widgets-extra-large-iphone.jpg) |
 
-These images are drawings from the design too, replaced once built.
+The widgets were placed on the Home Screens of an iPad Pro 11-inch (M5) and an iPhone 18 Pro Max simulator (iOS 27.0) with live forecasts; the iPad images show a sunny day ahead and none in range.
 
 - **iPad** (`systemExtraLarge`, landscape only): the medium layout as the top area (the answer with its label, the day's date, condition, high and low; today in a 96 pt column), a 1 pt line, then the seven days from tomorrow as columns: date, symbol, condition, high and low. Days that count are on a light band; the next sunny day is also outlined, with 「次の晴れ」 above its date, so it lines up with the answer.
 - **iPhone** (`systemExtraLargePortrait`, iOS 27, a full Home Screen page, about 338 × 550 pt): the top area, a line, 「10月14日(水) の時間ごと」, a chart of the next sunny day's hours every two hours (time, symbol, temperature, a white line), a line, then the seven days from tomorrow as rows with range bars, the next sunny day outlined with 「次の晴れ」. The chart shows the answer day, not the next 24 hours, so it changes only with the answer and the timeline stays two entries a day ([Widgets](#widgets), ADR 0006).
