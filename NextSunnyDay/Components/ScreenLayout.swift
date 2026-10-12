@@ -49,3 +49,17 @@ struct AdaptiveLayout<Content: View>: View {
     }
   }
 }
+
+extension View {
+  /// Keeps the toolbar and the status bar along the top where iPhone Duo would put them on the
+  /// trailing edge. Home and the day detail screen have a few buttons in the top row, which the
+  /// bars share at no cost in height; on the edge, the bars would leave an empty column beside the
+  /// content for the screen's full height.
+  @ViewBuilder func barsAlongTheTop() -> some View {
+    if #available(iOS 27.1, *) {
+      toolbarVerticalBehavior(.disabled)
+    } else {
+      self
+    }
+  }
+}

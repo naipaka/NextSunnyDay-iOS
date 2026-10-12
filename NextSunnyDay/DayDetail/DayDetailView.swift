@@ -55,6 +55,7 @@ struct DayDetailView: View {
             .disabled(index == days.count - 1)
         }
       }
+      .barsAlongTheTop()
     } else {
       ContentUnavailableView("No Forecast", systemImage: "cloud")
     }

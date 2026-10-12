@@ -49,6 +49,7 @@ struct HomeView: View {
         }
       }
       .toolbar { toolbar }
+      .barsAlongTheTop()
       .navigationDestination(for: HomeRoute.self) { route in
         switch route {
         case .day(let index): DayDetailView(initialIndex: index)
