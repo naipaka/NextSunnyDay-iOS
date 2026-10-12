@@ -11,10 +11,21 @@ struct PanelScreen<Panel: View, Content: View>: View {
   @Environment(\.colorSchemeContrast) private var contrast
   @Environment(\.colorScheme) private var colorScheme
   @State private var leadingInset: CGFloat = 0
+  @State private var fold: CGFloat?
 
   /// The panel's width inside the safe area: 420 pt, or 268 pt on iPhone in landscape, where
-  /// the leading inset by the Dynamic Island brings it to 330 pt.
-  private var panelWidth: CGFloat { verticalSizeClass == .compact ? 268 : 420 }
+  /// the leading inset by the Dynamic Island brings it to 330 pt. On iPhone Duo partially open
+  /// like a book, the panel runs to the fold, so the answer and the forecast each have a side.
+  private var panelWidth: CGFloat { fold ?? (verticalSizeClass == .compact ? 268 : 420) }
+
+  /// Where the fold divides the screen side by side, while iPhone Duo is partially open, in whole
+  /// points: at the fold's 475.5 pt the forecast beside the panel never settled its layout.
+  nonisolated private static func fold(in proxy: GeometryProxy) -> CGFloat? {
+    guard #available(iOS 27.1, *) else { return nil }
+    return proxy.reservedRegions(kind: .division)
+      .first { $0.frame.height > $0.frame.width }?
+      .frame.midX.rounded()
+  }
 
   private var horizontalPadding: CGFloat { verticalSizeClass == .compact ? 0 : 40 }
 
@@ -60,6 +71,12 @@ struct PanelScreen<Panel: View, Content: View>: View {
       $0.safeAreaInsets.leading
     } action: {
       leadingInset = $0
+    }
+    .onGeometryChange(for: CGFloat?.self) {
+      Self.fold(in: $0)
+    } action: { newFold in
+      // The fold changes without the window resizing, so nothing animates it otherwise.
+      withAnimation(.smooth) { fold = newFold }
     }
   }
 }
