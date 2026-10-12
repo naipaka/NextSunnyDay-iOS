@@ -11,9 +11,19 @@ struct LayeredScreen<Header: View, Content: View>: View {
   @State private var offset: CGFloat = 0
   @State private var headerHeight: CGFloat = 300
   @State private var topInset: CGFloat = 0
+  @State private var foldBottom: CGFloat?
   @Environment(\.colorSchemeContrast) private var contrast
   @Environment(\.colorScheme) private var colorScheme
   private let overlap: CGFloat = 34
+
+  /// The bottom of the fold where it divides the screen top from bottom, while iPhone Duo is
+  /// partially open, in whole points.
+  nonisolated private static func foldBottom(in proxy: GeometryProxy) -> CGFloat? {
+    guard #available(iOS 27.1, *) else { return nil }
+    return proxy.reservedRegions(kind: .division)
+      .first { $0.frame.width > $0.frame.height }?
+      .frame.maxY.rounded()
+  }
 
   var body: some View {
     let scrolledUp = max(offset, 0)
@@ -23,6 +33,9 @@ struct LayeredScreen<Header: View, Content: View>: View {
           .padding(.horizontal, 20)
           .padding(.top, 24)
           .padding(.bottom, 32 + overlap)
+          // On iPhone Duo partially open like a laptop, the sheet starts below the fold, so the
+          // header fills the top half and the content the bottom.
+          .frame(minHeight: foldBottom.map { $0 + overlap }, alignment: .top)
           .onGeometryChange(for: CGFloat.self) {
             $0.size.height
           } action: {
@@ -57,6 +70,12 @@ struct LayeredScreen<Header: View, Content: View>: View {
       $0.contentInsets.top
     } action: { _, new in
       topInset = new
+    }
+    .onGeometryChange(for: CGFloat?.self) {
+      Self.foldBottom(in: $0)
+    } action: { newFold in
+      // The fold changes without the window resizing, so nothing animates it otherwise.
+      withAnimation(.smooth) { foldBottom = newFold }
     }
     .background {
       // Behind the scroll view, so that the refresh control shows on it. It ends under the
