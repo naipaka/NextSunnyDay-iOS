@@ -199,10 +199,13 @@ struct DayRow: View {
             high: day.highTemperature.converted(to: .celsius).value,
             range: range, isSunny: isSunny
           )
-          // A quarter of the scrolling list, between 48 and 260 pt, so the day and its condition
-          // keep their room. Measuring the row instead fed its width back into itself, which
-          // never settled when the window resized.
-          .containerRelativeFrame(.horizontal) { width, _ in min(max(width / 4, 48), 260) }
+          // A quarter of the scrolling list, between 48 and 260 pt, but never so wide that the
+          // day's name loses its room: about 380 pt of the list go to the margins, the symbol,
+          // the temperatures, the chevron and a date such as 「10月12日(月)」. Measuring the row
+          // instead fed its width back into itself, which never settled when the window resized.
+          .containerRelativeFrame(.horizontal) { width, _ in
+            min(max(min(width / 4, width - 380), 48), 260)
+          }
           Text(verbatim: day.highTemperature.degrees(in: temperatureUnit))
             .frame(minWidth: 34, alignment: .leading)
         }
