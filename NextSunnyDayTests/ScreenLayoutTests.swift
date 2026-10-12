@@ -6,35 +6,57 @@ import Testing
 struct ScreenLayoutTests {
   @Test func iPhoneInPortraitIsCompact() {
     #expect(
-      ScreenLayout(width: 402, horizontalSizeClass: .compact, verticalSizeClass: .regular)
-        == .compact)
+      ScreenLayout(
+        size: CGSize(width: 402, height: 874), horizontalSizeClass: .compact,
+        verticalSizeClass: .regular) == .compact)
   }
 
   @Test func everyIPhoneInLandscapeGetsThePanel() {
     // The iPhone 17 is compact both ways in landscape; the Pro Max is regular wide.
     #expect(
-      ScreenLayout(width: 874, horizontalSizeClass: .compact, verticalSizeClass: .compact) == .panel
-    )
+      ScreenLayout(
+        size: CGSize(width: 874, height: 402), horizontalSizeClass: .compact,
+        verticalSizeClass: .compact) == .panel)
     #expect(
-      ScreenLayout(width: 956, horizontalSizeClass: .regular, verticalSizeClass: .compact) == .panel
-    )
+      ScreenLayout(
+        size: CGSize(width: 956, height: 440), horizontalSizeClass: .regular,
+        verticalSizeClass: .compact) == .panel)
   }
 
   @Test(arguments: [
     // iPad Pro 11" and 13" and iPad mini in landscape
-    (1210.0, ScreenLayout.panel), (1376, .panel), (1133, .panel),
+    (CGSize(width: 1210, height: 834), ScreenLayout.panel),
+    (CGSize(width: 1376, height: 1032), .panel),
+    (CGSize(width: 1133, height: 744), .panel),
     // the same in portrait
-    (834, .stacked), (1032, .stacked), (744, .stacked),
+    (CGSize(width: 834, height: 1210), .stacked),
+    (CGSize(width: 1032, height: 1376), .stacked),
+    (CGSize(width: 744, height: 1133), .stacked),
+    // iPhone Duo open, held normally (landscape) and turned
+    (CGSize(width: 951, height: 669), .panel),
+    (CGSize(width: 669, height: 951), .stacked),
   ])
-  func iPadFollowsTheWidth(width: Double, layout: ScreenLayout) {
+  func regularWidthFollowsTheShape(size: CGSize, layout: ScreenLayout) {
     #expect(
-      ScreenLayout(width: width, horizontalSizeClass: .regular, verticalSizeClass: .regular)
+      ScreenLayout(size: size, horizontalSizeClass: .regular, verticalSizeClass: .regular)
         == layout)
+  }
+
+  @Test func iPhoneDuoClosedIsAnIPhone() {
+    #expect(
+      ScreenLayout(
+        size: CGSize(width: 466, height: 678), horizontalSizeClass: .compact,
+        verticalSizeClass: .regular) == .compact)
+    #expect(
+      ScreenLayout(
+        size: CGSize(width: 678, height: 466), horizontalSizeClass: .compact,
+        verticalSizeClass: .compact) == .panel)
   }
 
   @Test func aNarrowIPadWindowIsCompact() {
     #expect(
-      ScreenLayout(width: 500, horizontalSizeClass: .compact, verticalSizeClass: .regular)
-        == .compact)
+      ScreenLayout(
+        size: CGSize(width: 500, height: 834), horizontalSizeClass: .compact,
+        verticalSizeClass: .regular) == .compact)
   }
 }

@@ -5,23 +5,23 @@ import SwiftUI
 nonisolated enum ScreenLayout: Equatable {
   /// iPhone in portrait and narrow windows: the layered header and sheet.
   case compact
-  /// Regular width under `panelMinimumWidth`: the layered header and sheet, with the additions of
-  /// the wider layouts.
+  /// Regular width, taller than wide: the layered header and sheet, with the additions of the
+  /// wider layouts.
   case stacked
-  /// `panelMinimumWidth` or wider, or compact height: the answer in a panel beside the forecast.
+  /// Regular width and wider than tall, or compact height: the answer in a panel beside the
+  /// forecast.
   case panel
 
-  /// Where the 24-hour chart (about 700 pt) fits beside the 420 pt panel.
-  static let panelMinimumWidth: CGFloat = 1120
-
+  /// `size` is the whole window's, safe areas included. iPad in landscape and iPhone Duo open in
+  /// landscape get the panel, iPad in portrait and iPhone Duo open in portrait the stacked layout.
   init(
-    width: CGFloat, horizontalSizeClass: UserInterfaceSizeClass?,
+    size: CGSize, horizontalSizeClass: UserInterfaceSizeClass?,
     verticalSizeClass: UserInterfaceSizeClass?
   ) {
     if verticalSizeClass == .compact {
       self = .panel
     } else if horizontalSizeClass == .regular {
-      self = width >= Self.panelMinimumWidth ? .panel : .stacked
+      self = size.width > size.height ? .panel : .stacked
     } else {
       self = .compact
     }
@@ -31,7 +31,7 @@ nonisolated enum ScreenLayout: Equatable {
   var isWide: Bool { self != .compact }
 }
 
-/// Gives its content the layout for the width of the window it is in.
+/// Gives its content the layout for the size of the window it is in.
 struct AdaptiveLayout<Content: View>: View {
   @ViewBuilder let content: (ScreenLayout) -> Content
 
@@ -42,7 +42,9 @@ struct AdaptiveLayout<Content: View>: View {
     GeometryReader { proxy in
       content(
         ScreenLayout(
-          width: proxy.size.width + proxy.safeAreaInsets.leading + proxy.safeAreaInsets.trailing,
+          size: CGSize(
+            width: proxy.size.width + proxy.safeAreaInsets.leading + proxy.safeAreaInsets.trailing,
+            height: proxy.size.height + proxy.safeAreaInsets.top + proxy.safeAreaInsets.bottom),
           horizontalSizeClass: horizontalSizeClass, verticalSizeClass: verticalSizeClass))
     }
   }
