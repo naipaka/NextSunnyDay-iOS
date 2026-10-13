@@ -19,6 +19,8 @@ struct HomeView: View {
   /// The screen Settings opens on, when it isn't its first.
   @State private var settingsRoute: SettingsRoute?
   @State private var today = Calendar.current.startOfDay(for: .now)
+  /// The day the forecast was scrolled to, kept when the layout changes, as when iPhone Duo folds.
+  @State private var scrolledDay: Date?
 
   /// When any of these change, the forecast is fetched if it is stale. A new day only moves
   /// "today" within the cached days; the fetch waits for 4:00 (ADR 0006).
@@ -33,7 +35,7 @@ struct HomeView: View {
       AdaptiveLayout { layout in
         switch layout {
         case .panel:
-          PanelScreen(tone: headerTone) {
+          PanelScreen(tone: headerTone, scrolledDay: $scrolledDay) {
             HomePanel(
               state: headerState, today: todayForecast, level: sunnyLevelSelection.level,
               retry: retry)
@@ -41,7 +43,7 @@ struct HomeView: View {
             content(layout)
           }
         case .compact, .stacked:
-          LayeredScreen(tone: headerTone) {
+          LayeredScreen(tone: headerTone, scrolledDay: $scrolledDay) {
             header(layout)
           } content: {
             content(layout)

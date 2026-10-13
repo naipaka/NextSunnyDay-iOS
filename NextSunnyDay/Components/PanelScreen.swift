@@ -4,6 +4,8 @@ import SwiftUI
 /// the screen's edge, with the forecast scrolling beside it.
 struct PanelScreen<Panel: View, Content: View>: View {
   let tone: HeaderTone
+  /// The day the forecast was last scrolled to, kept by its owner across layouts.
+  var scrolledDay: Binding<Date?> = .constant(nil)
   @ViewBuilder let panel: Panel
   @ViewBuilder let content: Content
 
@@ -65,6 +67,7 @@ struct PanelScreen<Panel: View, Content: View>: View {
         .padding(.bottom, 40)
         .frame(maxWidth: .infinity, alignment: .leading)
       }
+      .keepsScrolledDay(scrolledDay)
       .background(Color(.systemGroupedBackground).ignoresSafeArea())
     }
     .onGeometryChange(for: CGFloat.self) {

@@ -116,11 +116,14 @@ struct DaysCard: View {
             DayRow(day: day, isToday: index == 0, isSunny: level.counts(day), range: range)
           }
           .buttonStyle(.plain)
+          .id(day.date)
           if index != days.count - 1 {
             Divider().padding(.leading, 66)
           }
         }
       }
+      // The days are what the screen's scroll position follows across layouts.
+      .scrollTargetLayout()
       .padding(.vertical, 4)
     }
   }

@@ -5,6 +5,8 @@ import SwiftUI
 /// and fades; pulling down stretches the header color into the space above it.
 struct LayeredScreen<Header: View, Content: View>: View {
   let tone: HeaderTone
+  /// The day the screen was last scrolled to, kept by its owner across layouts.
+  var scrolledDay: Binding<Date?> = .constant(nil)
   @ViewBuilder let header: Header
   @ViewBuilder let content: Content
 
@@ -61,6 +63,7 @@ struct LayeredScreen<Header: View, Content: View>: View {
         }
       }
     }
+    .keepsScrolledDay(scrolledDay)
     .onScrollGeometryChange(for: CGFloat.self) {
       $0.contentOffset.y + $0.contentInsets.top
     } action: { _, new in
@@ -111,5 +114,31 @@ struct CardSection<Content: View>: View {
           Color(.secondarySystemGroupedBackground),
           in: RoundedRectangle(cornerRadius: 26, style: .continuous))
     }
+  }
+}
+
+extension View {
+  /// Keeps `day`, the day row at the top of this scroll view when someone last stopped scrolling
+  /// it, and scrolls a new scroll view there: switching layouts, as when iPhone Duo folds, replaces
+  /// the scroll view, which would otherwise start at the top.
+  func keepsScrolledDay(_ day: Binding<Date?>) -> some View {
+    modifier(KeepsScrolledDay(day: day))
+  }
+}
+
+private struct KeepsScrolledDay: ViewModifier {
+  @Binding var day: Date?
+  @State private var position = ScrollPosition(idType: Date.self)
+
+  func body(content: Content) -> some View {
+    content
+      .scrollPosition($position, anchor: .top)
+      .onScrollPhaseChange { old, new in
+        // Only when someone stopped scrolling: a scroll view going away reports idle too.
+        if new == .idle && old != .idle { day = position.viewID(type: Date.self) }
+      }
+      .onAppear {
+        if let day { position.scrollTo(id: day, anchor: .top) }
+      }
   }
 }
