@@ -6,6 +6,8 @@
 	<array>
 		<string>group.com.naipaka.NextSunnyDay</string>
 	</array>
+	<key>com.apple.developer.declared-age-range</key>
+	<true/>
 	<key>com.apple.developer.weatherkit</key>
 	<true/>
 </dict>

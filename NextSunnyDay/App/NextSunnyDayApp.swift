@@ -1,4 +1,5 @@
 import AppIntents
+import DeclaredAgeRange
 import Forecast
 import Notice
 import Notifications
@@ -80,6 +81,7 @@ struct RootView: View {
   @Environment(NoticeSelection.self) private var noticeSelection
   @Environment(\.scenePhase) private var scenePhase
   @Environment(\.settingsSync) private var settingsSync
+  @Environment(\.requestAgeRange) private var requestAgeRange
 
   /// What the notifications depend on. Becoming active covers a fetch by the widget or Siri and a
   /// permission changed in the system's settings.
@@ -112,6 +114,9 @@ struct RootView: View {
     // at launch and when they change.
     .task(id: regionSelection.regions) {
       NextSunnyDayShortcuts.updateAppShortcutParameters()
+    }
+    .task {
+      await AgeAssurance.verify(using: requestAgeRange)
     }
   }
 
