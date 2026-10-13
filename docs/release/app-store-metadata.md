@@ -126,6 +126,14 @@ Japanese:
 
 Data Not Collected. App Store Connect defines collecting as sending data off the device so that the developer or a partner can access it longer than the request needs. The app has no server: the coordinate goes to WeatherKit and the search text to MapKit only to answer the request, and data collected by Apple is not the developer's to disclose. No tracking. Each bundle's `PrivacyInfo.xcprivacy` declares the App Group's `UserDefaults` (`1C8F.1`).
 
+## Age rating
+
+4+. The answers to the questionnaire, by the definitions in [Age ratings values and definitions](https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions/):
+
+- **In-app controls:** no parental controls. No age assurance: the app asks for the age range where a law requires it, but shows the same content at every age, so it doesn't confirm an age to unlock anything.
+- **Capabilities:** no unrestricted web access (the legal link opens in Safari, not in the app), no user-generated content, no social media, no messaging or chat, no advertising.
+- **Mature themes, medical or wellness, sexuality or nudity, violence, chance-based activities:** none. The forecast is weather data, not health advice.
+
 ## Before submitting
 
 - Check in App Store Connect that the English name "Next Sunny Day" is available; App Store names are unique across the store.
