@@ -309,9 +309,10 @@ private struct RangeRow: View {
     }()
     HStack(spacing: 8) {
       Text(verbatim: day.date.dayAndWeekday)
-        .frame(width: 58, alignment: .leading)
+        .frame(width: 54, alignment: .leading)
       Image(systemName: day.symbolName.filledSymbol)
         .frame(width: 22)
+      // Four characters such as 「ほぼ快晴」 fit beside a 48 pt bar; with a wider bar they were cut.
       Text(verbatim: day.condition.localizedName)
         .lineLimit(1)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -322,7 +323,7 @@ private struct RangeRow: View {
         low: day.lowTemperature.converted(to: .celsius).value,
         high: day.highTemperature.converted(to: .celsius).value, range: range
       )
-      .frame(width: 64)
+      .frame(width: 48)
       Text(verbatim: day.highTemperature.degrees(in: entry.temperatureUnit))
         .frame(width: 30, alignment: .leading)
     }
