@@ -116,6 +116,26 @@ Japanese:
 >
 > バージョン 1 で選んでいた地域は引き継がれません。アップデート後にもう一度選んでください。
 
+## Screenshots
+
+In `screenshots/<device>/<language>/`, numbered in upload order. Each is a composition: the screen captured in the simulator, the part that makes the point enlarged over it, and a headline. They were captured with the recorded forecasts written into the app's cache, the clock moved to the morning so the hours start at 9:41, and the status bar at 9:41 with full bars. The notifications on the lock screens were posted to the simulator with the app's own wording.
+
+| Device | Folder | Size | Images |
+| --- | --- | --- | --- |
+| iPhone | `iphone` | 1206 × 2622 | 10 |
+| iPad 13" | `ipad` | 2064 × 2752 | 9 |
+| iPhone Duo outer display | `duo-outer` | 1398 × 2034 | 6 |
+| iPhone Duo inner display | `duo-inner` | 2007 × 2853 | 4 (Japanese), 5 (English) |
+| Apple Watch | `watch` | 416 × 496 | 3, without headlines |
+
+iPhone: 1–3 are one picture under 「「次いつ晴れる？」がすぐわかる」 / "The next sunny day in one word" (the app, the Home Screen, the Lock Screen), then widget sizes, what counts as sunny, the laundry day, hourly and 10-day forecasts in Dark Mode, the notification the day before, up to three regions, Apple Watch.
+
+iPad: 1–3 as on iPhone in landscape, with the extra large widget, then what counts as sunny, the laundry day, Dark Mode, the notification, regions, and how long the sunny spell lasts.
+
+iPhone Duo: the outer display has the answer, what counts as sunny, the laundry day, Dark Mode, the notification and regions; the inner display the sunny day's details under the answer, the laundry day, Dark Mode, another region and, in English, the notification.
+
+Apple Watch: the answer, the next days, the watch face.
+
 ## Notes for App Review
 
 > No account or sign-in is needed. The forecast comes from WeatherKit. The Apple Weather mark and the link to its data sources and legal information are at the bottom of Home and of a day's detail, in Settings > About Weather Data, and in the medium and larger widgets.
