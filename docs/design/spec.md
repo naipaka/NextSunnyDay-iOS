@@ -13,7 +13,7 @@ Approved design for the 2.0 revival (#93). The implementation tasks #94–#98 bu
 | Precipitation chance | Shown under the weather symbol in hourly cells and daily rows when it is 20 % or more. |
 | Manual refresh | Pull to refresh on Home. |
 | Widgets | Home Screen small, medium and large, extra large on iPad and, from iOS 27, the iPhone's full-page extra large (#108). Lock Screen circular, rectangular and inline. No Control Center control. |
-| iPad and landscape | iPad in every orientation and window size, iPhone in landscape (#108). The layout follows the width available, not the device: from 1,120 pt wide, and on iPhone in landscape, the answer stays in a panel beside the forecast; below that, Home's layout. The wider layouts add a temperature chart, range bars and the answer day's sunrise, sunset, UV and wind. See [iPad and landscape](#ipad-and-landscape). |
+| iPad and landscape | iPad in every orientation and window size, iPhone in landscape (#108). The layout follows the window's size, not the device: in a regular-width window wider than tall, and on iPhone in landscape, the answer stays in a panel beside the forecast; otherwise Home's layout. iPhone Duo (#109) is an iPhone closed and an iPad open. The wider layouts add a temperature chart, range bars and the answer day's sunrise, sunset, UV and wind. See [iPad and landscape](#ipad-and-landscape). |
 | Apple Watch | A one-screen watch app and complications (circular, corner, rectangular, inline), with the regions, the sunny level and the unit from the iPhone (#107). See [Apple Watch](#apple-watch). |
 | Siri and Shortcuts | One App Shortcut answers when the next sunny day is, for a saved region or the first one, with a dialog and a snippet (#104). See [Siri and Shortcuts](#siri-and-shortcuts). |
 | Notifications | One notification the day before a sunny spell starts, for one region at a chosen time, from the cached forecast (#105). See [Notifications](#notifications). |
@@ -125,7 +125,7 @@ A `ContentUnavailableView`: a multicolor sun, 「どこの天気を調べる？�
 
 The screenshots were taken on iPad Pro 11-inch (M5) and iPhone 17 simulators (iOS 27.0) with the recorded forecasts, light on the left and dark on the right.
 
-| iPad, 1,120 pt wide or more | iPad portrait |
+| iPad landscape | iPad portrait |
 | --- | --- |
 | ![iPad landscape](images/wide-ipad.jpg) | ![iPad portrait](images/wide-ipad-portrait.jpg) |
 
@@ -137,11 +137,20 @@ The layout follows the space the window has, never the device or its orientation
 
 | Space | Layout | Where |
 | --- | --- | --- |
-| 1,120 pt wide or more, or compact height | **Panel**: the answer in a panel on the leading side, the forecast beside it | iPad in landscape (11", 13" and mini at 1,133 pt), large iPad windows, every iPhone in landscape |
-| Regular width under 1,120 pt | **Stacked**: Home's header and sheet, with the panel's additions | iPad in portrait (13" at 1,032 pt too), medium iPad windows |
-| Compact width | Home as above | iPhone in portrait, narrow iPad windows |
+| Regular width and wider than tall, or compact height | **Panel**: the answer in a panel on the leading side, the forecast beside it | iPad in landscape, wide iPad windows, every iPhone in landscape, iPhone Duo open (951×669 pt) and closed in landscape |
+| Regular width, taller than wide | **Stacked**: Home's header and sheet, with the panel's additions | iPad in portrait, tall iPad windows, iPhone Duo open and turned (669×951 pt) |
+| Compact width | Home as above | iPhone in portrait, narrow iPad windows, iPhone Duo closed (466×678 pt) |
 
-1,120 pt is where the 24-hour chart (about 700 pt) fits beside the 420 pt panel. The app supports every orientation on iPad and portrait plus both landscapes on iPhone; it never asks for full screen, so it works in iPad windows of any size.
+Where the forecast beside the panel is narrower than the 24-hour chart (about 700 pt), the chart scrolls sideways. A range bar is a quarter of the list but leaves the day's name its room. The app supports every orientation on iPad and portrait plus both landscapes on iPhone; it never asks for full screen, so it works in iPad windows of any size.
+
+### iPhone Duo
+
+Closed, iPhone Duo is an iPhone; open, an iPad. Folding only moves a boundary to the fold, and the change animates:
+
+- Partially open like a book (landscape), the panel widens from 420 pt to the fold, so the answer and the forecast each have a side.
+- Partially open like a laptop (portrait), the sheet starts below the fold: the answer on the top half, the forecast on the bottom.
+
+Home and the day detail screen keep the toolbar and the status bar along the top instead of the trailing edge, where they would leave an empty column beside the content; their top row already holds the buttons. Closed in landscape there is no status bar, as on iPhone, and the panel adds its own leading margin.
 
 ### Panel
 
