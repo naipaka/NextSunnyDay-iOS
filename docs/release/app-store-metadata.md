@@ -1,6 +1,6 @@
 # App Store metadata
 
-Drafts of the App Store listing in English and Japanese, for the 2.0 release (#100). They describe the app as of #98; #100 adds the features from #101 before submitting.
+The App Store listing in English and Japanese for the 2.0 release (#100), with What's New, the notes for App Review and the answers to App Store Connect's questionnaires.
 
 Limits in App Store Connect: name and subtitle 30 characters each, promotional text 170, keywords 100 (comma-separated, no spaces needed after commas), description 4,000. The Japanese keywords are kept under 100 bytes as well, in case the field counts UTF-8 bytes.
 
@@ -12,12 +12,12 @@ Limits in App Store Connect: name and subtitle 30 characters each, promotional t
 
 **Promotional text:**
 
-> See at a glance when the next sunny day is, right on your Home Screen and Lock Screen.
+> See at a glance when the next sunny day is: on your Home Screen and Lock Screen, on Apple Watch, or ask Siri.
 
 **Keywords:**
 
 ```
-weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain,outdoor,dry
+weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain,outdoor,dry,watch
 ```
 
 **Description:**
@@ -30,10 +30,14 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 >
 > • The next sunny day, big and clear, with its weather, high and low and chance of rain
 > • The next 24 hours and the next 10 days
-> • Widgets for the Home Screen and the Lock Screen, so you don't even need to open the app
+> • Widgets for the Home Screen in every size and for the Lock Screen, so you don't even need to open the app
 > • Choose what counts as sunny: clear only, sunny, up to partly cloudy, or any day without rain
 > • Or look for a laundry day: no rain, sunny, dry and calm from 7:00 to 19:00
-> • Your current location, or any city you search for
+> • Up to three regions: your current location and any city you search for
+> • A notification the day before a sunny spell starts, at the time you choose
+> • Ask Siri: "Check Next Sunny Day"
+> • On Apple Watch, in the app and as complications on your watch face
+> • On iPad, on iPhone in landscape and on iPhone Duo, the answer sits beside the forecast
 > • Temperatures in your own units, in English and Japanese
 >
 > The forecast comes from Apple Weather and is updated once a day in the early morning. Pull down in the app to update it yourself.
@@ -46,12 +50,12 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 
 **Promotional text:**
 
-> 次に晴れる日を、ホーム画面とロック画面のウィジェットでひと目で確かめられます。
+> 次に晴れる日を、ホーム画面とロック画面のウィジェットや Apple Watch でひと目で確かめられます。Siri に聞くこともできます。
 
 **Keywords:**
 
 ```
-天気,天気予報,晴れ,快晴,洗濯物,ウィジェット,降水確率,週間天気
+天気,天気予報,晴れ,快晴,洗濯物,ウィジェット,降水確率,週間天気,通知
 ```
 
 **Description:**
@@ -64,15 +68,66 @@ weather,forecast,sunny,sunshine,clear sky,laundry,widget,lock screen,10-day,rain
 >
 > ・次の晴れの日を大きく表示。天気、最高・最低気温、降水確率もわかります
 > ・24 時間先までと 10 日間の天気
-> ・ホーム画面とロック画面のウィジェット。アプリを開かなくても確かめられます
+> ・ホーム画面のすべてのサイズとロック画面のウィジェット。アプリを開かなくても確かめられます
 > ・何を「晴れ」と数えるかを選べます（快晴だけ／晴れ／晴れ時々くもりまで／雨が降らなければOK）
 > ・洗濯日和も探せます。雨が降らず、7時から19時が晴れて乾いていて風の弱い日です
-> ・現在地か、検索した市区町村の天気
+> ・地域は 3 つまで。現在地と、検索した市区町村
+> ・晴れが始まる前日に、決めた時刻にお知らせ
+> ・Siri に「次いつ晴れる？で次の晴れを調べて」
+> ・Apple Watch のアプリと文字盤のコンプリケーション
+> ・iPad、iPhone の横向き、iPhone Duo では予報の横に答えを表示
 > ・日本語と英語に対応
 >
 > 天気予報は Apple Weather のデータを使っています。予報は毎日早朝に新しくなり、アプリの画面を下に引っぱると手動でも更新できます。
+
+## What's New
+
+English:
+
+> Next Sunny Day is back, rebuilt from the ground up.
+>
+> • Forecasts from Apple Weather
+> • A new design with Liquid Glass
+> • Widgets in every Home Screen size and on the Lock Screen
+> • Up to three regions
+> • A notification the day before a sunny spell
+> • The laundry-day level
+> • Siri and Shortcuts
+> • Apple Watch app and complications
+> • iPad, iPhone in landscape and iPhone Duo
+> • English
+>
+> The region from version 1 isn't carried over: choose it again after updating.
+
+Japanese:
+
+> 「次いつ晴れる？」が、まるごと作り直して帰ってきました。
+>
+> ・天気予報は Apple Weather のデータに
+> ・Liquid Glass の新しいデザイン
+> ・ホーム画面のすべてのサイズとロック画面のウィジェット
+> ・地域は 3 つまで
+> ・晴れの前日にお知らせ
+> ・洗濯日和の基準
+> ・Siri とショートカット
+> ・Apple Watch のアプリとコンプリケーション
+> ・iPad、iPhone の横向き、iPhone Duo
+> ・英語に対応
+>
+> バージョン 1 で選んでいた地域は引き継がれません。アップデート後にもう一度選んでください。
+
+## Notes for App Review
+
+> No account or sign-in is needed. The forecast comes from WeatherKit. The Apple Weather mark and the link to its data sources and legal information are at the bottom of Home and of a day's detail, in Settings > About Weather Data, and in the medium and larger widgets.
+>
+> Location is optional: on the first screen, choose Use Current Location or search for a city. Notifications are off until they are turned on in Settings > Notifications. Where a law requires it, the app asks for the age range with the Declared Age Range API; it shows the same content at every age.
+
+## App Privacy
+
+Data Not Collected. App Store Connect defines collecting as sending data off the device so that the developer or a partner can access it longer than the request needs. The app has no server: the coordinate goes to WeatherKit and the search text to MapKit only to answer the request, and data collected by Apple is not the developer's to disclose. No tracking. Each bundle's `PrivacyInfo.xcprivacy` declares the App Group's `UserDefaults` (`1C8F.1`).
 
 ## Before submitting
 
 - Check in App Store Connect that the English name "Next Sunny Day" is available; App Store names are unique across the store.
 - Add the English (U.S.) localization to the app record; the listing is in Japanese only so far.
+- Release manually after approval, so that the `v2.0.0` tag and the GitHub release go out the same day.
