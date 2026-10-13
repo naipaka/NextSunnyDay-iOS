@@ -150,6 +150,16 @@ Closed, iPhone Duo is an iPhone; open, an iPad. Folding only moves a boundary to
 - Partially open like a book (landscape), the panel widens from 420 pt to the fold, so the answer and the forecast each have a side.
 - Partially open like a laptop (portrait), the sheet starts below the fold: the answer on the top half, the forecast on the bottom.
 
+Taken on the iPhone Duo simulator (iOS 27.1) with the recorded forecast for Tokyo:
+
+| Closed | Open |
+| --- | --- |
+| ![iPhone Duo closed](images/duo-closed.jpg) | ![iPhone Duo open](images/duo-open.jpg) |
+
+| Partially open like a book | Partially open like a laptop |
+| --- | --- |
+| ![iPhone Duo partially open, landscape](images/duo-book.jpg) | ![iPhone Duo partially open, portrait](images/duo-tabletop.jpg) |
+
 Home and the day detail screen keep the toolbar and the status bar along the top instead of the trailing edge, where they would leave an empty column beside the content; their top row already holds the buttons. Closed in landscape there is no status bar, as on iPhone, and the panel adds its own leading margin.
 
 ### Panel
