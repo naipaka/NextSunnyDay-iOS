@@ -214,4 +214,18 @@ final class RegionForecastTests {
     #expect(model.forecast == tokyoForecast)
     #expect(cache.load(regionID: osaka.id) == osakaForecast)
   }
+
+  @Test func switchingToARegionFetchedEarlierTodayShowsItsCacheWithoutFetching() async throws {
+    let tokyo = SavedRegion.place(
+      name: "港区", coordinate: CLLocationCoordinate2D(latitude: 35.658, longitude: 139.751))
+    _ = try await cacheForecast(for: tokyo, fetchedAt: date(11))
+    let osakaForecast = try await cacheForecast(for: osaka, fetchedAt: date(6))
+    let model = regionForecast(FakeWeatherProvider(error: URLError(.notConnectedToInternet)))
+    await model.refreshIfNeeded(for: tokyo)
+
+    await model.refreshIfNeeded(for: osaka)
+
+    #expect(model.forecast == osakaForecast)
+    #expect(model.failure == nil)
+  }
 }

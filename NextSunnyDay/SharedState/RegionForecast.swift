@@ -40,14 +40,15 @@ final class RegionForecast {
   /// shows loading only when nothing is cached.
   func showCached(for region: SavedRegion) {
     let cached = updater.cached(regionID: region.id)
-    if forecast?.regionID != region.id {
+    guard let shown = forecast, shown.regionID == region.id else {
+      // Another region was shown: this one starts from its own cache, however old the other's.
+      forecast = cached
       failure = nil
+      return
     }
     // The widget may have fetched a newer one in the meantime.
-    if let cached, cached.fetchedAt >= forecast?.fetchedAt ?? .distantPast {
+    if let cached, cached.fetchedAt >= shown.fetchedAt {
       forecast = cached
-    } else if forecast?.regionID != region.id {
-      forecast = nil
     }
   }
 
