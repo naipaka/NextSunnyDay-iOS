@@ -55,11 +55,14 @@ jobs:
           -destination 'generic/platform=iOS Simulator'
           build
 
-  test:
-    name: Lint and test
+  # PRs and manual runs test in two jobs side by side: the app's tests spend
+  # most of their time waiting for the simulator to boot on a fresh runner,
+  # long enough to lint and test every package on another runner meanwhile.
+  test-packages:
+    name: Lint and test the packages
     if: github.event_name != 'push'
     runs-on: xcode-27
-    timeout-minutes: 45
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v7
@@ -76,6 +79,15 @@ jobs:
           for package in Packages/Core/* Packages/Features/*; do
             swift test --package-path "$package"
           done
+
+  test-app:
+    name: Test the app
+    if: github.event_name != 'push'
+    runs-on: xcode-27
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v7
 
       # The simulator boots on the first test run, which takes minutes on a
       # fresh runner; booting it ahead of the build doesn't save time, because
