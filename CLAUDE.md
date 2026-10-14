@@ -131,7 +131,16 @@ Shared code lives in local Swift packages, one package per module (ADR 0001). Th
 
 ## Docs
 
-`docs/` holds design docs (`architecture/`, Mermaid diagrams), the approved 2.0 design spec (`design/spec.md`, the source of truth for screens, states, copy and the sunny-level rules), the app icon previews (`design/app-icon-1024.png` and `design/app-icon/`, rendered from `NextSunnyDay/AppIcon.icon`) and the App Store listing drafts (`release/app-store-metadata.md`). See `docs/README.md` for the index. This is an OSS repo: write docs, code comments, and commit messages in English (UI text in code is English source strings; Japanese lives in the String Catalog). Issue comments, commits and docs read as written by the owner: state decisions and their reasons, never the chat that led to them, and refer only to things visible in the repo or on GitHub (see the Writing on GitHub section of `.claude/skills/next-task/SKILL.md`).
+`docs/` holds design docs (`architecture/`, Mermaid diagrams), the approved 2.0 design spec (`design/spec.md`, the source of truth for screens, states, copy and the sunny-level rules), the app icon previews (`design/app-icon-1024.png` and `design/app-icon/`, rendered from `NextSunnyDay/AppIcon.icon`) and the App Store listing and screenshots of 2.0 (`release/app-store-metadata.md`, `release/screenshots/`). See `docs/README.md` for the index. This is an OSS repo: write docs, code comments, and commit messages in English (UI text in code is English source strings; Japanese lives in the String Catalog).
+
+### Writing on GitHub
+
+The repository is public and everything is posted from the owner's account. Write issue comments, issue bodies, commit messages and docs as if the owner wrote them:
+
+- State what was decided and why, in the first person or with no subject. Don't write "owner decision", "the owner chose / felt / added", or mention Claude or the chat.
+- Don't record the conversation: options shown in chat, drafts the owner turned down, their reactions, revisions made during the discussion, "under review". Record only the final decision; mention a rejected alternative only when it explains the decision, and then on technical grounds.
+- Only refer to things a reader can see in the repository or on GitHub. No chat mockups, prototypes outside the repo, artifact links, or option labels such as "option A"; describe the thing itself.
+- Don't edit a posted comment, because GitHub keeps the earlier text in its edit history. Delete it and post a new one.
 
 ## Branching
 
