@@ -7,6 +7,6 @@
 | [`design/spec.md`](design/spec.md) | 2.0 design spec (#93): screens, states, sunny levels, widgets, Apple Watch, app icon, with light/dark screenshots in `design/images/` |
 | [`design/app-icon/`](design/app-icon/) | Previews of the app icon in every appearance (light, dark, tinted, clear), rendered from `NextSunnyDay/AppIcon.icon` |
 | [`design/app-icon-1024.png`](design/app-icon-1024.png) | 1024×1024 rendering of the app icon's default appearance. The source is the Icon Composer document `NextSunnyDay/AppIcon.icon`. |
-| [`release/app-store-metadata.md`](release/app-store-metadata.md) | App Store listing drafts in English and Japanese (name, subtitle, promotional text, keywords, description) |
-| [`release/screenshots/`](release/screenshots/) | The App Store screenshots for every device in English and Japanese, in upload order (listed in `app-store-metadata.md`) |
-| [`images/`](images/) | Screenshots of the app and the widget used by the READMEs, in English (`en/`, for `README.md`, set in Los Angeles) and Japanese (`ja/`, for `README.ja.md`, set in Tokyo); iPhone 17 simulator, sample data from the preview scenarios and live weather |
+| [`release/app-store-metadata.md`](release/app-store-metadata.md) | The App Store listing of 2.0 in English and Japanese, What's New, the notes for App Review, App Privacy and the age rating answers |
+| [`release/screenshots/`](release/screenshots/) | The App Store screenshots for every device in English and Japanese, in upload order (listed in `app-store-metadata.md`), also shown in the READMEs |
+| [`images/app-icon.png`](images/app-icon.png) | The app icon at the top of the READMEs |

@@ -2,17 +2,58 @@
 
 [English](README.md)
 
-<img src="docs/images/app-icon.png" width="300">
+<img src="docs/images/app-icon.png" width="160">
 
-<img src="docs/images/ja/widget.jpg" width="600">
+「次いつ晴れる？」は、次に晴れる日を「あした」「あと3日」のひと言で教えてくれるアプリです。
 
-次に晴れる日を、ホーム画面のウィジェットで確かめられる iOS アプリです。
 天気アプリのウィジェットには今日と明日の天気しか出ず、洗濯物をいつ外に干せるかがわかりにくかったため作りました。
-アプリでは、最大 3 つの地域について、次の晴れの日と今日の天気に加えて、24 時間先までと 10 日間の天気を見られます。何を「晴れ」と数えるかを選んだり、外に干せる洗濯日和を探したりもできます。
-晴れる日の前日に通知で知らせることもでき、次の晴れは Siri やショートカットでも聞けます。Apple Watch では文字盤に次の晴れを表示します。iPad や横向きでは、答えを予報の横に表示したまま使えます。
-日本語と英語に対応しています。
+ホーム画面、ロック画面、Apple Watch で、今日の天気と一緒に次の晴れを確かめられます。
 
-<a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+iPhone、iPad、iPhone Duo、Apple Watch で使えて、日本語と英語に対応しています。
+
+<a href="https://apps.apple.com/app/id1537055268"><img src="https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/ja-jp?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="App Store からダウンロード" height="60"></a>
+
+<img src="docs/release/screenshots/iphone/ja/01.jpg" width="260"><img src="docs/release/screenshots/iphone/ja/02.jpg" width="260"><img src="docs/release/screenshots/iphone/ja/03.jpg" width="260">
+
+## 主な機能
+
+- 次の晴れの日を大きく表示。天気、最高・最低気温、降水確率もわかる
+- 24 時間先までと 10 日間の天気
+- ホーム画面のすべてのサイズとロック画面のウィジェット
+- 何を「晴れ」と数えるかを選べる（快晴だけ／晴れ／晴れ時々くもりまで／雨が降らなければOK）
+- 洗濯日和も探せる。雨が降らず、7時から19時が晴れて乾いていて風の弱い日
+- 地域は 3 つまで。現在地と、検索した市区町村
+- 晴れが始まる前日に、決めた時刻にお知らせ
+- Siri とショートカット：「次いつ晴れる？で次の晴れを調べて」
+- Apple Watch のアプリと文字盤のコンプリケーション
+- iPad、iPhone の横向き、iPhone Duo では予報の横に答えを表示
+- 天気予報は Apple Weather のデータ。アカウントは不要
+
+## スクリーンショット
+
+### iPhone
+
+<img src="docs/release/screenshots/iphone/ja/04.jpg" width="200"><img src="docs/release/screenshots/iphone/ja/05.jpg" width="200"><img src="docs/release/screenshots/iphone/ja/06.jpg" width="200"><img src="docs/release/screenshots/iphone/ja/07.jpg" width="200">
+
+<img src="docs/release/screenshots/iphone/ja/08.jpg" width="200"><img src="docs/release/screenshots/iphone/ja/09.jpg" width="200"><img src="docs/release/screenshots/iphone/ja/10.jpg" width="200">
+
+### iPad
+
+<img src="docs/release/screenshots/ipad/ja/01.jpg" width="270"><img src="docs/release/screenshots/ipad/ja/02.jpg" width="270"><img src="docs/release/screenshots/ipad/ja/03.jpg" width="270">
+
+<img src="docs/release/screenshots/ipad/ja/04.jpg" width="270"><img src="docs/release/screenshots/ipad/ja/05.jpg" width="270"><img src="docs/release/screenshots/ipad/ja/06.jpg" width="270">
+
+<img src="docs/release/screenshots/ipad/ja/07.jpg" width="270"><img src="docs/release/screenshots/ipad/ja/08.jpg" width="270"><img src="docs/release/screenshots/ipad/ja/09.jpg" width="270">
+
+### iPhone Duo
+
+<img src="docs/release/screenshots/duo-inner/ja/01.jpg" width="270"><img src="docs/release/screenshots/duo-inner/ja/02.jpg" width="270">
+
+<img src="docs/release/screenshots/duo-inner/ja/03.jpg" width="270"><img src="docs/release/screenshots/duo-inner/ja/04.jpg" width="270">
+
+### Apple Watch
+
+<img src="docs/release/screenshots/watch/ja/01.jpg" width="200"><img src="docs/release/screenshots/watch/ja/02.jpg" width="200"><img src="docs/release/screenshots/watch/ja/03.jpg" width="200">
 
 ## 開発
 
@@ -42,7 +83,7 @@
 | ローカルの保存 | App Group の `UserDefaults` + JSON ファイル |
 | テスト | Swift Testing |
 | 依存ライブラリ | なし (Apple のフレームワークのみ) |
-| ブランチ | `main` のみ |
+| ブランチ | `main`。変更は Pull Request で入れる |
 
 アーキテクチャの決定とその理由は [`docs/architecture/decisions/`](docs/architecture/decisions/) にあります。
 
@@ -105,13 +146,3 @@ $ xcrun swift-format lint --strict -r -p NextSunnyDay NextSunnyDayWidget NextSun
 ```sh
 $ for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" && swift test); done
 ```
-
-## スクリーンショット
-
-| 画面 | Light | Dark |
-| --- | --- | --- |
-| ホーム | <img src="docs/images/ja/home-light.jpg" width="300"> | <img src="docs/images/ja/home-dark.jpg" width="300"> |
-| 日別詳細 | <img src="docs/images/ja/day-light.jpg" width="300"> | <img src="docs/images/ja/day-dark.jpg" width="300"> |
-| 設定 | <img src="docs/images/ja/settings-light.jpg" width="300"> | <img src="docs/images/ja/settings-dark.jpg" width="300"> |
-| 地域検索 | <img src="docs/images/ja/region-light.jpg" width="300"> | <img src="docs/images/ja/region-dark.jpg" width="300"> |
-| 天気データについて | <img src="docs/images/ja/about-light.jpg" width="300"> | <img src="docs/images/ja/about-dark.jpg" width="300"> |
