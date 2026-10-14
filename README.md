@@ -2,17 +2,58 @@
 
 [日本語](README.ja.md)
 
-<img src="docs/images/app-icon.png" width="300">
+<img src="docs/images/app-icon.png" width="160">
 
-<img src="docs/images/en/widget.jpg" width="600">
+Next Sunny Day tells you when the sun comes out next, in one word: Tomorrow, or In 3 days.
 
-An iOS widget that shows the next sunny day on your home screen.
-Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang your laundry outside.
-The app shows when the next sunny day is, with today's weather beside it, the next 24 hours and ten days for up to three regions, and lets you choose what counts as sunny, or look for a day to dry the laundry outside.
-It can also notify you the day before a sunny day, Siri and Shortcuts answer when the next sunny day is, and Apple Watch shows it on the watch face. It runs on iPad and in landscape, where the answer stays beside the forecast.
-The app is available in English and Japanese.
+Weather widgets usually show only today and tomorrow, so it was hard to tell when you could hang the laundry outside.
+This app answers that question on the Home Screen, the Lock Screen and Apple Watch, with today's weather beside it.
 
-<a href="https://apps.apple.com/app/id1537055268" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-US?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+It runs on iPhone, iPad, iPhone Duo and Apple Watch, in English and Japanese.
+
+<a href="https://apps.apple.com/app/id1537055268"><img src="https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1603584000&h=dd86e3942b5c6abc5ce1781972220b17" alt="Download on the App Store" height="60"></a>
+
+<img src="docs/release/screenshots/iphone/en/01.jpg" width="260"><img src="docs/release/screenshots/iphone/en/02.jpg" width="260"><img src="docs/release/screenshots/iphone/en/03.jpg" width="260">
+
+## Features
+
+- The next sunny day, big and clear, with its weather, high and low and chance of rain
+- The next 24 hours and the next 10 days
+- Widgets in every Home Screen size and on the Lock Screen
+- Choose what counts as sunny: clear only, sunny, up to partly cloudy, or any day without rain
+- Or look for a laundry day: no rain, sunny, dry and calm from 7:00 to 19:00
+- Up to three regions: your current location and any city you search for
+- A notification the day before a sunny spell starts, at the time you choose
+- Siri and Shortcuts: "Check Next Sunny Day"
+- Apple Watch: the app and complications on the watch face
+- On iPad, on iPhone in landscape and on iPhone Duo, the answer sits beside the forecast
+- Forecasts from Apple Weather, no account needed
+
+## Screenshots
+
+### iPhone
+
+<img src="docs/release/screenshots/iphone/en/04.jpg" width="200"><img src="docs/release/screenshots/iphone/en/05.jpg" width="200"><img src="docs/release/screenshots/iphone/en/06.jpg" width="200"><img src="docs/release/screenshots/iphone/en/07.jpg" width="200">
+
+<img src="docs/release/screenshots/iphone/en/08.jpg" width="200"><img src="docs/release/screenshots/iphone/en/09.jpg" width="200"><img src="docs/release/screenshots/iphone/en/10.jpg" width="200">
+
+### iPad
+
+<img src="docs/release/screenshots/ipad/en/01.jpg" width="270"><img src="docs/release/screenshots/ipad/en/02.jpg" width="270"><img src="docs/release/screenshots/ipad/en/03.jpg" width="270">
+
+<img src="docs/release/screenshots/ipad/en/04.jpg" width="270"><img src="docs/release/screenshots/ipad/en/05.jpg" width="270"><img src="docs/release/screenshots/ipad/en/06.jpg" width="270">
+
+<img src="docs/release/screenshots/ipad/en/07.jpg" width="270"><img src="docs/release/screenshots/ipad/en/08.jpg" width="270"><img src="docs/release/screenshots/ipad/en/09.jpg" width="270">
+
+### iPhone Duo
+
+<img src="docs/release/screenshots/duo-inner/en/01.jpg" width="270"><img src="docs/release/screenshots/duo-inner/en/02.jpg" width="270"><img src="docs/release/screenshots/duo-inner/en/03.jpg" width="270">
+
+<img src="docs/release/screenshots/duo-inner/en/04.jpg" width="270"><img src="docs/release/screenshots/duo-inner/en/05.jpg" width="270">
+
+### Apple Watch
+
+<img src="docs/release/screenshots/watch/en/01.jpg" width="200"><img src="docs/release/screenshots/watch/en/02.jpg" width="200"><img src="docs/release/screenshots/watch/en/03.jpg" width="200">
 
 ## Development
 
@@ -42,7 +83,7 @@ The app is available in English and Japanese.
 | Local storage | App Group `UserDefaults` + JSON files |
 | Tests | Swift Testing |
 | Dependencies | None (Apple frameworks only) |
-| Branching | `main` only |
+| Branching | `main`, changed through pull requests |
 
 The architecture decisions and their reasons are in [`docs/architecture/decisions/`](docs/architecture/decisions/).
 
@@ -105,13 +146,3 @@ Open `NextSunnyDay.xcodeproj` in Xcode, then build and run the app. The app's te
 ```sh
 $ for p in Packages/Core/* Packages/Features/* Tools/ImportCheck; do (cd "$p" && swift test); done
 ```
-
-## Screenshots
-
-| Screen | Light | Dark |
-| --- | --- | --- |
-| Home | <img src="docs/images/en/home-light.jpg" width="300"> | <img src="docs/images/en/home-dark.jpg" width="300"> |
-| Day detail | <img src="docs/images/en/day-light.jpg" width="300"> | <img src="docs/images/en/day-dark.jpg" width="300"> |
-| Settings | <img src="docs/images/en/settings-light.jpg" width="300"> | <img src="docs/images/en/settings-dark.jpg" width="300"> |
-| Region search | <img src="docs/images/en/region-light.jpg" width="300"> | <img src="docs/images/en/region-dark.jpg" width="300"> |
-| About weather data | <img src="docs/images/en/about-light.jpg" width="300"> | <img src="docs/images/en/about-dark.jpg" width="300"> |
