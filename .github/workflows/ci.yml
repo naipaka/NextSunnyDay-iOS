@@ -7,12 +7,11 @@ on:
     paths-ignore:
       - "**.md"
       - "docs/**"
+  # PRs always run, so that the required test jobs report a result: a PR that
+  # changes only Markdown or docs/ skips them in the `changes` job instead.
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - "**.md"
-      - "docs/**"
   workflow_dispatch:
 
 concurrency:
@@ -29,8 +28,7 @@ env:
   SIMULATOR_OS: "27.0"
 
 jobs:
-  # Pushes to main only check that the app builds (no simulator).
-  # Tests run locally before pushing, and on PRs and manual runs.
+  # Pushes to main (the merges of tested PRs) only check that the app builds.
   build:
     name: Lint and build
     if: github.event_name == 'push'
@@ -55,12 +53,39 @@ jobs:
           -destination 'generic/platform=iOS Simulator'
           build
 
+  # Whether a PR changes anything but Markdown and docs/. A test job skipped
+  # by its condition counts as passed for the required checks.
+  changes:
+    name: Changes
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      code: ${{ steps.diff.outputs.code }}
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      # A PR checks out its merge commit, whose first parent is the base.
+      - id: diff
+        run: |
+          if [ "${{ github.event_name }}" != pull_request ]; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          elif git diff --name-only HEAD^1 HEAD | grep -qvE '(\.md$|^docs/)'; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          fi
+
   # PRs and manual runs test in two jobs side by side: the app's tests spend
   # most of their time waiting for the simulator to boot on a fresh runner,
   # long enough to lint and test every package on another runner meanwhile.
   test-packages:
     name: Lint and test the packages
-    if: github.event_name != 'push'
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: xcode-27
     timeout-minutes: 30
 
@@ -82,7 +107,8 @@ jobs:
 
   test-app:
     name: Test the app
-    if: github.event_name != 'push'
+    needs: changes
+    if: needs.changes.outputs.code == 'true'
     runs-on: xcode-27
     timeout-minutes: 45
 
