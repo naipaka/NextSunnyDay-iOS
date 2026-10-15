@@ -144,6 +144,22 @@ Japanese:
 バージョン 1 で選んでいた地域は引き継がれません。アップデート後にもう一度選んでください。
 ```
 
+## What's New in 2.0.1
+
+English:
+
+```text
+• Fixed widgets staying blank and their region not being selectable
+• Fixed the weather being fetched again when switching to a region that already had it
+```
+
+Japanese:
+
+```text
+・ウィジェットが空白のまま表示されず、地域も選べない問題を修正しました
+・地域を切り替えたとき、取得済みの天気をもう一度取得していた問題を修正しました
+```
+
 ## Screenshots
 
 In `screenshots/<device>/<language>/`, numbered in upload order. Each is a composition: the screen captured in the simulator, the part that makes the point enlarged over it, and a headline. They were captured with the recorded forecasts written into the app's cache, the clock moved to the morning so the hours start at 9:41, and the status bar at 9:41 with full bars. The notifications on the lock screens were posted to the simulator with the app's own wording.
